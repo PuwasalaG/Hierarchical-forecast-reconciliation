@@ -292,7 +292,7 @@ Let the density of coordinates of $\hat{\bm{y}}_{t+h}$ with respect to basis $\b
 \end{flalign}
 \noindent
 where $det(.)$ denote the determinant of a matrix. Now that we have the density of $\begin{pmatrix}\tilde{\bm{b}}^T_{t+h} & \vdots& \tilde{\bm{t}}^T_{t+h}\end{pmatrix}^T $, the marginal density of $(\tilde{\bm{b}}_{t+h})$ can be obtained by integrating (\ref{4.5}) over the range of $\tilde{\bm{t}}_{t+h}$. This will result the reconciled density of the bottom level series $(\tilde{\bm{b}}_{t+h})$. i.e.,
-\begin{flalign}
+\begin{flalign}\label{4.6}
 \tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})=\int_{lim(\tilde{\bm{t}}_{t+h})}\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) \quad det(\begin{array}{ccc}\bm{S} & \vdots& \bm{R}\end{array})\quad d\tilde{\bm{t}}_{t+h}.
 \end{flalign}
 
@@ -303,7 +303,73 @@ Finally to get the reconciled density of the whole hierarchy, we simply follow t
 \end{flalign}
 
 \noindent
-This final step will transform every point in the density $\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})$ to the $\mathscr{C}(\bm{S})<\bm{\mathbb{R}}^n$
+This final step will transform every point in the density $\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})$ to the $\mathscr{C}(\bm{S})<\bm{\mathbb{R}}^n$\\
+
+\noindent
+\textbf{Example 2}\\
+
+\noindent  
+Suppose $\hat{\bm{Y}}_{t+h} \sim \mathscr{N}(\hat{\bm{\mu}}_{t+h}, \hat{\bm{\Sigma}}_{t+h}) \leftrightarrow^d \hat{\bm{f}}(\hat{\bm{y}}_{t+h})$. Then from (\ref{4.5}) it follows,
+
+\begin{flalign*}
+\bm{f_B}(\tilde{\bm{b}}_{t+h},\tilde{\bm{t}}_{t+h})=\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) \quad \Big|\begin{array}{ccc}\bm{S} & \vdots& \bm{R}\end{array}\Big| = \frac{\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) }{\Big|(\begin{array}{ccc}\bm{S} & \vdots& \bm{R}\end{array})^{-1} \Big|}. 
+\end{flalign*}
+\noindent
+By substituting the Gaussian distribution function to $\bm{f_B}(\tilde{\bm{b}}_{t+h},\tilde{\bm{t}}_{t+h})$ we get, 
+
+\begin{flalign*}
+\bm{f_B}(.)&=\frac{\exp\left\{-\frac{1}{2}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}-\bm{\hat{\mu}}_{t+h})^T \bm{\hat{\Sigma}_{t+h}}^{-1}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}-\bm{\hat{\mu}}_{t+h})\right\}}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|(\begin{array}{ccc}\bm{S} & \vdots& \bm{R}\end{array})^{-1} \Big|},\\
+&= \frac{\exp\left\{-\frac{1}{2}\Big(\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}\begin{pmatrix}\tilde{\bm{b}}^T_{t+h} & \vdots& \tilde{\bm{t}}^T_{t+h}\end{pmatrix}^T-\bm{\hat{\mu}}_{t+h}\Big)^T \bm{\hat{\Sigma}_{t+h}}^{-1}\Big(\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}\begin{pmatrix}\tilde{\bm{b}}^T_{t+h} & \vdots& \tilde{\bm{t}}^T_{t+h}\end{pmatrix}^T-\bm{\hat{\mu}}_{t+h}\Big)\right\}}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|(\begin{array}{ccc}\bm{S} & \vdots& \bm{R}\end{array})^{-1} \Big|},\\
+\end{flalign*}
+
+\begin{flalign*}
+\bm{f_B}(.)=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|(\begin{array}{ccc}\bm{S} & \vdots& \bm{R}\end{array})^{-1} \Big|}
+\exp \Big\{&-\frac{1}{2}\Big(\begin{pmatrix}\tilde{\bm{b}}^T_{t+h} & \vdots& \tilde{\bm{t}}^T_{t+h}\end{pmatrix}^T-\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}^{-1}\bm{\hat{\mu}}_{t+h}\Big)^T\\
+&\Big[\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}\bm{\hat{\Sigma}_{t+h}}\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}^T\Big]^{-1}\\ 
+&\Big(\begin{pmatrix}\tilde{\bm{b}}^T_{t+h} & \vdots& \tilde{\bm{t}}^T_{t+h}\end{pmatrix}^T-\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}^{-1}\bm{\hat{\mu}}_{t+h}\Big) \Big\}.
+\end{flalign*}
+\noindent
+Recall that, $\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}^{-1} = \begin{pmatrix}
+(\bm{R}_\bot \bm{S})^{-1}\bm{R}_\bot\\ \cdots \\ (\bm{S}_\bot \bm{R})^{-1}\bm{S}_\bot
+\end{pmatrix} = \begin{pmatrix}
+\bm{P}\\\bm{Q}
+\end{pmatrix},$(say). Then, 
+
+\begin{flalign*}
+\bm{f_B}(.)=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix} \Big|}
+\exp \Big\{&-\frac{1}{2}\Big[\begin{pmatrix}\tilde{\bm{b}}_{t+h}\\ \tilde{\bm{t}}_{t+h}\end{pmatrix}-\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\mu}}_{t+h}\Big]^T\Big[\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\Sigma}_{t+h}}\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}^T\Big]^{-1}\\ 
+&\Big[\begin{pmatrix}\tilde{\bm{b}}_{t+h}\\ \tilde{\bm{t}}_{t+h}\end{pmatrix}-\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\mu}}_{t+h}\Big] \Big\},
+\end{flalign*}
+
+\begin{flalign*}
+\bm{f_B}(.)=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\Sigma}_{t+h}}\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}^T\Big|^{\frac{1}{2}}}
+\exp \Big\{&-\frac{1}{2} \begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix}^T \Big[\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\Sigma}_{t+h}}\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}^T\Big]^{-1}\\
+& \begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix} \Big\}.
+\end{flalign*}
+\noindent
+Since, $\Big[\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\Sigma}_{t+h}}\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}^T\Big] = \begin{pmatrix}
+\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}^T & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}^T\\
+\bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{P}^T & \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{Q}^T
+\end{pmatrix}$ we have, 
+
+\begin{flalign*}
+\bm{f_B}(.)=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\begin{pmatrix}
+	\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}^T & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}^T\\
+	\bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{P}^T & \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{Q}^T
+	\end{pmatrix}\Big|^{\frac{1}{2}}}
+\exp \Big\{&-\frac{1}{2} \begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix}^T\\ 
+&\Big[\begin{pmatrix}
+\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}^T & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}^T\\
+\bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{P}^T & \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{Q}^T
+\end{pmatrix}\Big]^{-1} \begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix} \Big\}.
+\end{flalign*}
+\noindent
+$\bm{f_B}(.)$ gives the joint distribution of $\begin{pmatrix}\tilde{\bm{b}}^T_{t+h} & \vdots& \tilde{\bm{t}}^T_{t+h}\end{pmatrix}^T $, which is a multivariate Gaussian distribution. Then from (\ref{4.6}) and the properties of marginalization of multivariate Gaussian distribution it follows,
+
+\begin{flalign}
+\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}^T\Big|^{\frac{1}{2}}}
+\exp \Big\{-\frac{1}{2} (\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h})^T (\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}^T)^{-1}(\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}) \Big\}
+\end{flalign}
 
 
 \section{Evaluation of hierarchical probabilistic forecasts}
