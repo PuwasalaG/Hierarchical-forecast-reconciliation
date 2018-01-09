@@ -303,7 +303,7 @@ Finally to get the reconciled density of the whole hierarchy, we simply follow t
 \end{flalign}
 
 \noindent
-This final step will transform every point in the density $\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})$ to the $\mathscr{C}(\bm{S})<\bm{\mathbb{R}}^n$\\
+This final step will transform every point in the density $\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})$ to the $\mathscr{C}(\bm{S})<\bm{\mathbb{R}}^n$. Following example illustrates how this method can be used to reconcile an incoherent Gaussian forecast distribution.\\
 
 \noindent
 \textbf{Example 2}\\
@@ -329,11 +329,11 @@ By substituting the Gaussian distribution function to $\bm{f_B}(.)$ we get,
 &\Big(\begin{pmatrix}\tilde{\bm{b}}^T_{t+h} & \vdots& \tilde{\bm{t}}^T_{t+h}\end{pmatrix}^T-\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}^{-1}\bm{\hat{\mu}}_{t+h}\Big) \Big\}.
 \end{flalign*}
 \noindent
-Recall that, $\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}^{-1} = \begin{pmatrix}
+Recall that, $$\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}^{-1} = \begin{pmatrix}
 (\bm{R}^T_\bot \bm{S})^{-1}\bm{R}^T_\bot\\ \cdots \\ (\bm{S}^T_\bot \bm{R})^{-1}\bm{S}^T_\bot
 \end{pmatrix} = \begin{pmatrix}
 \bm{P}\\\bm{Q}
-\end{pmatrix},$(say). Then, 
+\end{pmatrix},$$ where, $\bm{P}=(\bm{R}^T_\bot \bm{S})^{-1}\bm{R}^T_\bot$ and $\bm{Q}=(\bm{S}^T_\bot \bm{R})^{-1}\bm{S}^T_\bot$. Then, 
 
 \begin{flalign*}
 \bm{f_B}(.)=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix} \Big|}
@@ -365,20 +365,18 @@ Since, $\Big[\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\Sigma}_{t+h}}\b
 \end{flalign*}
 \noindent
 $\bm{f_B}(.)$ gives the joint distribution of $\begin{pmatrix}\tilde{\bm{b}}^T_{t+h} & \vdots& \tilde{\bm{t}}^T_{t+h}\end{pmatrix}^T $, which is a multivariate Gaussian distribution. Then from (\ref{4.6}) and the properties of marginalization of multivariate Gaussian distribution it follows,
-
 \begin{flalign}\label{ex:2.1}
 \tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}^T\Big|^{\frac{1}{2}}}
-\exp \Big\{-\frac{1}{2} (\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h})^T (\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}^T)^{-1}(\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}) \Big\}
+\exp \Big\{-\frac{1}{2} (\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h})^T (\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}^T)^{-1}(\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}) \Big\}.
 \end{flalign}
 
 \noindent
-(\ref{ex:2.1} ) implies $\tilde{\bm{b}}_{t+h} \sim \mathscr{N}(\bm{P}\hat{\bm{\mu}}_{t+h}, \bm{P}\hat{\bm{\Sigma}}_{t+h}\bm{P}^T)$ where $\bm{P} = (\bm{R}^T_\bot \bm{S})^{-1}\bm{R}^T_\bot$. Then from (\ref{4.7}) it follows that 
-
+(\ref{ex:2.1}) implies $\tilde{\bm{b}}_{t+h} \sim \mathscr{N}(\bm{P}\hat{\bm{\mu}}_{t+h}, \bm{P}\hat{\bm{\Sigma}}_{t+h}\bm{P}^T)$ where $\bm{P} = (\bm{R}^T_\bot \bm{S})^{-1}\bm{R}^T_\bot$. Then from (\ref{4.7}) it follows that,
 \begin{flalign}
 \tilde{\bm{f}}(\tilde{\bm{y}}_{t+h})=\tilde{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}).
 \end{flalign}
 \noindent
-That is the reconciled Gaussian forecast distribution of the whole hierarchy is $\mathscr{N}(\bm{SP}\hat{\bm{\mu}}_{t+h}, \bm{SP}\hat{\bm{\Sigma}}_{t+h}\bm{P}^T\bm{S}^T)$.
+Therefore, the reconciled Gaussian forecast distribution of the whole hierarchy is $\mathscr{N}(\bm{SP}\hat{\bm{\mu}}_{t+h}, \bm{SP}\hat{\bm{\Sigma}}_{t+h}\bm{P}^T\bm{S}^T)$.
 
 
 
@@ -387,30 +385,27 @@ That is the reconciled Gaussian forecast distribution of the whole hierarchy is 
 The necessary final step in hierarchical forecasting is to make sure that our forecast distributions are accurate enough to predict the uncertain future. In general, forecasters prefer to maximize the sharpness of the predictive distribution subject to the calibration \citep{Gneiting2014}. Therefore the probabilistic forecasts should be evaluated with respect to these two properties.\\
 
 \noindent
-Calibration refers to the statistical compatibility between probabilistic forecasts and realizations. In other words, random draws from a perfectly calibrated predictive distribution should be equivalent to the realizations. The uniformity in Probability Integral Transformation (PIT) of predictive densities evaluated at realizations implies well calibrated probabilistic forecasts. Therefore, assessing the uniformity in PIT of predictive densities, by inspecting their histograms and correlograms can be used as a simple tool for evaluating the calibration of probabilistic forecasts.  \\
-
-\noindent
-On the other hand, sharpness refers to the spread or the concentration of prediction distributions and it is a property of forecasts only. The more concentrated the predictive distributions, the sharper the forecasts are \citep{Gneiting2008}. The sharpness of density forecasts can be assessed in terms of the prediction intervals. Sharper density forecasts will have shorter prediction intervals. However, independently assessing the calibration and sharpness will not help to properly evaluate the probabilistic forecasts. Therefore to assess these properties simultaneously, we use scoring rules. \\
+Calibration refers to the statistical compatibility between probabilistic forecasts and realizations. In other words, random draws from a perfectly calibrated predictive distribution should be equivalent to the realizations. On the other hand, sharpness refers to the spread or the concentration of prediction distributions and it is a property of forecasts only. The more concentrated the predictive distributions, the sharper the forecasts are \citep{Gneiting2008}. However, independently assessing the calibration and sharpness will not help to properly evaluate the probabilistic forecasts. Therefore to assess these properties simultaneously, we use scoring rules. \\
 
 \noindent
 Scoring rules are summary measures obtained based on the relationship between predictive distribution and the realizations. In some studies, researchers take the scoring rules to be positively oriented which they would wish to maximize \citep{Gneiting2007}. However, scoring rules were also defined to be negatively oriented which forecasters wish to minimize \citep{Gneiting2014}. We consider these negatively oriented scoring rules to evaluate probabilistic forecasts in hierarchical time series. \\
 
 \noindent
-Let $\bm{Y}$ be a $n$-dimensional random vector from the predictive distribution $\mathbold{F}$ and $\mathbold{y}$ be $n$-dimension vector of realizations. Scoring rule is a numerical value $S(\mathbold{Y,y})$ assign to each pair $(\mathbold{Y,y})$. Suppose the true distribution of $\mathbold{y}$ is given by $\mathbold{G}$. Then the proper scoring rule is defined as,
+Let $\bm{{\breve{Y}}}$ and $\bm{Y}$ be a $n$-dimensional random vectors from the predictive distribution $\mathbold{F}$ and the true distribution $\mathbold{G}$. Further let $\mathbold{y}$ be a $n$-dimensional realization. Then the scoring rule is a numerical value $S(\mathbold{{\breve{Y}},y})$ assign to each pair $(\mathbold{{\breve{Y}},y})$ and the proper scoring rule is defined as,
 \begin{equation}\label{eq:(3.1.)}
-S(\mathbold{G,G}) \le S(\mathbold{Y,G}),
+E_{\mathbold{G}}[S(\mathbold{Y,y})] \le E_{\mathbold{G}}[S(\mathbold{{\breve{Y}},y})],
 \end{equation}
 \noindent
-where $S(\mathbold{Y,G})=E_{\mathbold{G}}[S(\mathbold{Y,y})]$ is the expected score under the true distribution $\mathbold{G}$ \citep{Gneiting2008, Gneiting2014}. \\
+where $E_{\mathbold{G}}[S(\mathbold{Y,y})]$ is the expected score under the true distribution $\mathbold{G}$ \citep{Gneiting2008, Gneiting2014}. \\
 
 \noindent
-Let $\bm{\tilde{Y}}_{T+h}$ and $\bm{\tilde{Y}}'_{T+h}$ be two independent random vectors from the coherent forecast distribution $\tilde{\bm{F}}$ with the density function $\tilde{\bm{f}}(.)$ at time $t+h$ and $\bm{y}_{T+h}$ is the vector of realizations. Further $\tilde{Y}_{T+h,i}$ and $\tilde{Y}_{T+h,j}$ are $i^{\text{th}}$ and $j^{\text{th}}$ components of the vector $\tilde{\bm{Y}}_{T+h}$. Then the following table summarizes few existing proper scoring rules. 
+Following table summarizes few existing proper scoring rules. 
 
 
 \begin{center}
 	\captionof{table}{\textit{Scoring rules to evaluate multivariate forecast densities }} 
 	
-	
+	\small
 	\resizebox{\linewidth}{!}{
 		
 		\begin{tabular}{ L | L | L}
@@ -420,39 +415,39 @@ Let $\bm{\tilde{Y}}_{T+h}$ and $\bm{\tilde{Y}}'_{T+h}$ be two independent random
 			\\
 			\hline
 			\hline \\
-			\text{Log score} & LS(\tilde{\bm{F}},\bm{y}_{T+h}) = -log {\tilde{\bm{f}}(\bm{y}_{T+h})} & \text{\citet{Gneiting2007}} \\
+			\text{Log score} & LS(\breve{\bm{F}},\bm{y}_{T+h}) = -log {\breve{\bm{f}}(\bm{y}_{T+h})} & \text{\citet{Gneiting2007}} \\
 			\\ 
 			\hline \\
-			\text{Energy score} & eS(\bm{\tilde{Y}_{T+h},y_{T+h}}) = E_{\tilde{\bm{F}}}||\tilde{\bm{Y}}_{T+h}-\bm{y}_{T+h}||^\alpha - \frac{1}{2}E_{\tilde{\bm{F}}}||\tilde{\bm{Y}}_{T+h}-\tilde{\bm{Y}}'_{T+h}||^\alpha, \alpha \in (0,2] & \text{\citet{Gneiting2008}} \\
+			\text{Energy score} & eS(\bm{\breve{Y}_{T+h},y_{T+h}}) = E_{\breve{\bm{F}}}||\breve{\bm{Y}}_{T+h}-\bm{y}_{T+h}||^\alpha - \frac{1}{2}E_{\breve{\bm{F}}}||\breve{\bm{Y}}_{T+h}-\breve{\bm{Y}}'_{T+h}||^\alpha, \alpha \in (0,2] & \text{\citet{Gneiting2008}} \\
 			\\
 			\hline
-			\text{Variogram score} & VS(\tilde{\bm{F}}, \bm{y}_{T+h}) = \displaystyle\sum_{i=1}^{n}\displaystyle\sum_{j=1}^{n}w_{ij}\left(|y_{T+h,i} - y_{T+h,j}|^p - E_{\tilde{\bm{F}}}|\tilde{Y}_{T+h,i}-\tilde{Y}_{T+h,j}|^p\right)^2 & \text{\citet{SCHEUERER2015}} \\
+			\text{Variogram score} & VS(\breve{\bm{F}}, \bm{y}_{T+h}) = \displaystyle\sum_{i=1}^{n}\displaystyle\sum_{j=1}^{n}w_{ij}\left(|y_{T+h,i} - y_{T+h,j}|^p - E_{\breve{\bm{F}}}|\breve{Y}_{T+h,i}-\breve{Y}_{T+h,j}|^p\right)^2 & \text{\citet{SCHEUERER2015}} \\
 			\hline
 		\end{tabular}
 	
 		}
 \end{center}
+\textit{NOTE: $\bm{\breve{Y}}_{T+h}$ and $\bm{\breve{Y}}'_{T+h}$ be two independent random vectors from the coherent forecast distribution $\breve{\bm{F}}$ with the density function $\breve{\bm{f}}(.)$ at time $t+h$ and $\bm{y}_{T+h}$ is the vector of realizations. Further $\breve{Y}_{T+h,i}$ and $\breve{Y}_{T+h,j}$ are $i^{\text{th}}$ and $j^{\text{th}}$ components of the vector $\breve{\bm{Y}}_{T+h}$. Further the variogram score given is for order $p$ where, $w_{ij}$ are non-negative weights.}\\
 
 \noindent
-Log scores can be used to evaluate the hierarchical probabilistic forecasts if it is reasonable to assume a parametric forecast density for the hierarchy. However the \qq{degenerecy} of the coherent forecast densities would be problematic when using log scores. We will discuss more about this in the next sub section.\\
+Even though the log score can be used evaluate simulated forecast densities with large samples \citep{Jordan2017}, it is more convenient to use if it is reasonable to assume a parametric forecast density for the hierarchy. However, the \qq{degenerecy} of coherent forecast densities would be problematic when using log scores. We will discuss more about this in the next sub section.\\
 
 \noindent
 In the energy score, for $\alpha=2$, it can be easily shown that
 \begin{equation} \label{eq:(5.1)}
-eS(\bm{\tilde{Y}_{T+h},y_{T+h}}) = ||\bm{y}_{T+h}-\tilde{\bm{\mu}}_{T+h}||^2,
+eS(\bm{\breve{Y}_{T+h},y_{T+h}}) = ||\bm{y}_{T+h}-\breve{\bm{\mu}}_{T+h}||^2,
 \end{equation}
 
 \noindent
-where $\tilde{\bm{\mu}}_{T+h} =E_{\bm{F}}(\tilde{\bm{Y}}_{T+h}) $. Therefore in the limiting case, the energy score only measures the accuracy of the forecast mean, but not the entire distribution. Further \citet{Pinson2013a} argued that the Energy score given in table 1 has a very low discrimination ability for incorrectly specified covariances, even though it discriminates the misspecified means well. \\
+where $\breve{\bm{\mu}}_{T+h} =E_{\bm{F}}(\breve{\bm{Y}}_{T+h}) $. Therefore in the limiting case, the energy score only measures the accuracy of the forecast mean, but not the entire distribution. Further \citet{Pinson2013a} argued that the Energy score given in table 1 has a very low discrimination ability for incorrectly specified covariances, even though it discriminates the misspecified means well. \\
 
 \noindent
-The variogram score given in Table $1$ is for order $p$ where, $w_{ij}$ are non-negative weights. \citet{SCHEUERER2015} have shown that the variogram score has a high discrimination ability of misspecified means, variance and correlation structure than the Energy score. Further they suggested the variogram score with $p=0.5$ is more powerful.\\
-
+However, \citet{SCHEUERER2015} have shown that the variogram score has a high discrimination ability of misspecified means, variance and correlation structure than the Energy score. Further they suggested the variogram score with $p=0.5$ is more powerful.\\
 \noindent
-For a possible finite sample of size $B$ from the multivariate forecast density $\tilde{\bm{F}}$, the variogram score is defined as, 
+For a possible finite sample of size $B$ from the multivariate forecast density $\breve{\bm{F}}$, the variogram score is defined as, 
 
 \begin{flalign}
-VS(\tilde{\bm{F}}, \bm{y}_{T+h}) = \displaystyle\sum_{i=1}^{n}\displaystyle\sum_{j=1}^{n}w_{ij}\left(|y_{T+h,i} - y_{T+h,j}|^p - \frac{1}{m} \displaystyle\sum_{k=1}^{B} |\tilde{Y}^k_{T+h,i}-\tilde{Y}^k_{T+h,j}|^p\right)^2.
+VS(\breve{\bm{F}}, \bm{y}_{T+h}) = \displaystyle\sum_{i=1}^{n}\displaystyle\sum_{j=1}^{n}w_{ij}\left(|y_{T+h,i} - y_{T+h,j}|^p - \frac{1}{m} \displaystyle\sum_{k=1}^{B} |\breve{Y}^k_{T+h,i}-\breve{Y}^k_{T+h,j}|^p\right)^2.
 \end{flalign}
   
 
@@ -471,11 +466,11 @@ VS(\tilde{\bm{F}}, \bm{y}_{T+h}) = \displaystyle\sum_{i=1}^{n}\displaystyle\sum_
 
 \subsection{Evaluating coherent forecast densities}
 
-As it was mentioned in the previous section, any coherent hierarchical forecast density is a degenerate density. To the best of our knowledge, there is no proper multivariate scoring rule that has been introduced in literature to evaluate densities with degeneracy. Further it can be easily seen that some of the existing scoring rules breakdown under the degeneracy. For example take the log score in the univariate case. Suppose the true density is degenerate at $x=0$, i.e. $f(x)=\mathbb{1}\{x=0\}$.  Now consider two predictive densities $p_1(x)$ and $p_2(x)$. Let $p_1(x)$ is equivalent to the true density, i.e. $p_1(x)=\mathbb{1}\{x=0\}$ and $p_2(x) =^d N(0,\sigma^2)$ with $\sigma^2 < (2\pi)^{-1}$. The expected log score of $p_1$ is:
-$$S(f,f) = S(p_1,f) -ln[p_1(x=0)]=0,$$
+As it was mentioned in the previous section, any coherent hierarchical forecast density is a degenerate density. To the best of our knowledge, there is no proper multivariate scoring rule in literature to evaluate degenerate densities. Further it can be easily seen that some of the existing scoring rules breakdown under the degeneracy. For example take the log score in the univariate case. Suppose the true density is degenerate at $x=0$, i.e. $f(x)=\mathbb{1}\{x=0\}$.  Now consider two predictive densities $p_1(x)$ and $p_2(x)$. Let $p_1(x)$ is equivalent to the true density, i.e. $p_1(x)=\mathbb{1}\{x=0\}$ and $p_2(x) =^d N(0,\sigma^2)$ with $\sigma^2 < (2\pi)^{-1}$. The expected log score of $p_1$ is:
+$$E_f[S(f,f)] = E_f[S(p_1,f)] = -ln[p_1(x=0)]=0,$$
 \noindent
 and that of $p_2$ is:
-$$S(p_2,f) = -ln[p_2(x=0)]<0.$$ 
+$$E_f[S(p_2,f)] = -ln[p_2(x=0)]<0.$$ 
 \noindent
 Therefore $S(f,f) > S(p_2,f)$ and hence there exist at least one forecast density which breaks the condition (\ref{eq:(3.1.)}) for proper scoring rule. This implies log score cannot be used to evaluate the degenerate densities.  \\
 
@@ -491,14 +486,14 @@ For example, since the bottom level series is a set of basis series for a given 
 It is also important to assess how the coherent or reconciled forecast densities improve the predictive ability compared to the incoherent forecasts. Clearly we cannot use multivariate scoring rules, even for the basis set of series, since the coherent and incoherent forecast densities lie in two different matrix spaces.\\
 
 \noindent
-However you could compare individual margins of the forecast density of the hierarchy using univariate proper scoring rules. Most widely used Continuous Ranked Probability Score (CRPS) for evaluating univariate forecast densities would be helpful for this. \\
+However we could compare individual margins of the forecast density of the hierarchy using univariate proper scoring rules. Most widely used Continuous Ranked Probability Score (CRPS) for evaluating univariate forecast densities would be helpful for this. \\
 
 \begin{equation} \label{eq:(3.6)}
-CRPS(\tilde{F}_i,y_{T+h,i}) = E_{\tilde{F}_i}|\tilde{Y}_{T+h,i}-y_{T+h,i}| - \frac{1}{2}E_{\tilde{F}_i}|\tilde{Y}_{T+h,i}-\tilde{Y}'_{T+h,i}|,
+CRPS(\breve{F}_i,y_{T+h,i}) = E_{\breve{F}_i}|\breve{Y}_{T+h,i}-y_{T+h,i}| - \frac{1}{2}E_{\breve{F}_i}|\breve{Y}_{T+h,i}-\breve{Y}'_{T+h,i}|,
 \end{equation}
        
 \noindent
-where $\tilde{Y}_{T+h,i}$ and $\tilde{Y}'_{T+h,i}$ are two independent copies from the $i^{\text{th}}$ reconciled marginal forecast distribution $\tilde{F}_i$ of the hierarchy and $y_{T+h,i}$ is the $i^{\text{th}}$ realization from the true marginal distribution $G_i$. 
+where $\breve{Y}_{T+h,i}$ and $\breve{Y}'_{T+h,i}$ are two independent copies from the $i^{\text{th}}$ reconciled marginal forecast distribution $\tilde{F}_i$ of the hierarchy and $y_{T+h,i}$ is the $i^{\text{th}}$ realization from the true marginal distribution $G_i$. 
  
 
 
