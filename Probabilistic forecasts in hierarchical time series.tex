@@ -41,8 +41,8 @@ To understand the notations clearly, consider the hierarchy given in Figure 1.\\
 
 \begin{figure}
 	\begin{center}
-		\leaf{AA} \leaf{AB} \leaf{AC}
-		\branch{3}{A}
+		\leaf{AA} \leaf{AB} 
+		\branch{2}{A}
 		\leaf{BA} \leaf{BB}
 		\branch{2}{B}
 		\branch{2}{Tot}
@@ -51,7 +51,7 @@ To understand the notations clearly, consider the hierarchy given in Figure 1.\\
 	\caption{Two level hierarchical diagram}
 \end{figure}
 \noindent
-In any hierarchy, the most aggregated level is termed as level 0, the second most aggregated level is termed as level 1 and so on. This example consists of two levels. At a particular time $t$, let $y_{T,t}$ denote the observation at level 0; $y_{A,t}, y_{B,t} $ denote observations at level 1; and $y_{AA,t}, y_{AB,t}, y_{AC,t}, y_{BA,t}, y_{BB,t}$ denote observations at level 2. Then $\mathbold{y}_t = [y_{T,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{AC,t}, y_{BA,t}, y_{BB,t}]^T$, \\$\mathbold{b}_t = [y_{AA,t}, y_{AB,t}, y_{AC,t}, y_{BA,t}, y_{BB,t}]^T$, $m=7$, n=11$, $ and $$ \mathbold{S} = \begin{pmatrix} 1& 1 &1 &1 &1 \\ 1 &1 &1 & 0 &0 \\   0&0 &0 & 1 & 1 \\ & & I_5 &  & \end{pmatrix}, $$ where $I_5$ is a $5$-dimension identity matrix. \\  
+In any hierarchy, the most aggregated level is termed as level 0, the second most aggregated level is termed as level 1 and so on. This example consists of two levels. At a particular time $t$, let $y_{T,t}$ denote the observation at level 0; $y_{A,t}, y_{B,t} $ denote observations at level 1; and $y_{AA,t}, y_{AB,t}, y_{AC,t}, y_{BA,t}, y_{BB,t}$ denote observations at level 2. Then $\mathbold{y}_t = [y_{T,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{AC,t}, y_{BA,t}, y_{BB,t}]^T$, \\$\mathbold{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]^T$, $m=4$, $n=7$, and $$ \mathbold{S} = \begin{pmatrix} 1& 1 &1 &1  \\ 1 &1 & 0 &0 \\   0&0  & 1 & 1 \\ & & I_4 &   \end{pmatrix}, $$ where $I_4$ is a $4$-dimension identity matrix. \\  
 
 
 \section{Coherent forecasts}
@@ -498,7 +498,268 @@ where $\breve{Y}_{T+h,i}$ and $\breve{Y}'_{T+h,i}$ are two independent copies fr
 
 
 
-\subsection{Simulation study}
+\section{Simulation study}
+Main purpose of this simulation study to establish the importance of reconciliation in probabilistic hierarchical forecasting. We narrow down the simulation setting for the Gaussian framework in this context. Suppose all the historical data in the hierarchy follows a multivariate Gaussian distribution, i.e. $\bm{y}_T \sim \mathscr{N}(\bm{\mu}_T, \bm{\Sigma}_T)$ where both $\bm{\mu}_T$ and $\bm{\Sigma}_T$ lives in $\mathscr{C}(\bm{S})$ by the nature of the hierarchical time series. We are interested in estimating the predictive Gaussian distribution of $\bm{Y}_{T+h}| \bm{\mathcal{I}}_T$ where $\bm{\mathcal{I}}_T= \{\bm{y}_1,\bm{y}_2,....,\bm{y}_T\}$, which should also lives in $\mathscr{C}(\bm{S})$. \\
+
+\noindent
+Suppose we independently fit the models for each series in the hierarchy and obtained the point and variance forecasts denoted by $\hat{\bm{\mu}}_{T+h}$ and $\hat{\bm{\Sigma}}_{T+h}$ respectively. Note that the variance forecast can be obtained through the in-sample errors. General convention on Gaussian density estimation is to take the point and variance forecasts as the estimates of mean and variance of the respective predictive distribution \citep{Hall2007}. Thus the incoherent predictive distribution is given by  $\hat{\bm{Y}}_{T+h}| \bm{\mathcal{I}}_T \sim \mathscr{N}(\hat{\bm{y}}_{T+h}, \hat{\bm{\Sigma}}_{T+h})$. We call this distribution is incoherent since it is very unlikely the point and variance forecasts from the independently fitted models to be coherent. Then it directly follows from example 2 that the reconciled Gaussian predictive distribution is given by, $\tilde{\bm{Y}}_{T+h}| \bm{\mathcal{I}}_T \sim \mathscr{N}(\bm{SP}\hat{\bm{y}}_{T+h}, \bm{SP}\hat{\bm{\Sigma}}_{T+h}\bm{P}^T\bm{S}^T)$ where $\bm{P} = (\bm{R}^T_\bot \bm{S})^{-1}\bm{R}^T_\bot$.\\
+
+\noindent
+\textbf{Result 1}: Choosing $\bm{R}^T_\bot = \bm{S}^T\hat{\bm{\Sigma}}_{T+h}^{-1}$ will ensure at least the mean of the predictive Gaussian distribution is optimally reconciled with respect to the energy score.\\
+
+\noindent
+Result 1 can be easily shown as follows. From (\ref{eq:(5.1)}) the energy score at the upper limit of $\alpha$ is given by, $||\bm{y}_{T+h}-\bm{SP}\hat{\bm{y}}_{T+h}||^2$. Then the expectation of energy score with respect to the true distribution is equivalent to the trace of mean squared forecast error, i.e. $$E_{\bm{G}}[eS(\bm{\tilde{Y}_{T+h},y_{T+h}})]= Tr\{E_{\bm{y}_{T+h}}[(\bm{y}_{T+h}-\bm{SP}\hat{\bm{y}}_{T+h})(\bm{y}_{T+h}-\bm{SP}\hat{\bm{y}}_{T+h})^T|\mathcal{I}_{T}]\}.$$ 
+\noindent
+From Theorem 1 of \citet{Wickramasuriya2017} it immediately follows that $\bm{P} = (\bm{S}^T\bm\hat{\bm{\Sigma}}_{T+h}^{-1}\bm{S})^{-1}\bm{S}^T\bm\hat{\bm{\Sigma}}_{T+h}^{-1}$ minimizes the expected energy score constrained on the unbiasedness of reconciled forecasts. Thus we have $\bm{R}^T_\bot = \bm{S}^T\hat{\bm{\Sigma}}_{T+h}^{-1}$. \\
+
+\noindent
+It should be noted that $\hat{\bm{\Sigma}}_{T+h}$ can be estimated in different methods which yields different estimation of $\bm{R}^T_\bot$. Following table summarizes these methods. 
+
+\begin{center}
+	\captionof{table}{\textit{Summarizing different estimates of $\bm{R}^T_\bot$} }
+	
+	
+	\resizebox{\linewidth}{!}{
+		\small
+		\small
+		\begin{tabular}{c c c }
+			\hline\hline\\
+			\textbf{Method}& \textbf{Estimate of $\hat{\bm{\Sigma}}_{T+h}$} & \textbf{Estimate of $\bm{R}^T_\bot$} \\  
+			\hline \hline\\
+			OLS & $\bm{I}$ & $\bm{S}^T$\\
+			\hline\\
+			
+			MinT(Sample) & 	$\hat{\bm{\Sigma}}_{T+1}$ & $\bm{S}^T\hat{\bm{\Sigma}}_{T+1}^{-1}$\\
+			& (1-step ahead insample variance covariance matrix) &\\
+			\hline\\
+			
+			MinT(Shrink) & $\hat{\mathbold{\Sigma}}_{T+1}^{shr} = \tau\text{Diag}(\hat{\mathbold{\Sigma}}_{T+1}) + (1-\tau)\hat{\mathbold{\Sigma}}_{T+1}$ & $\bm{S}^T(\hat{\bm{\Sigma}}_{T+1}^{shr})^{-1}$\\
+			\hline\\
+			
+			MinT(WLS) & $\hat{\mathbold{\Sigma}}_{T+1}^{wls} = \text{Diag}(\hat{\mathbold{\Sigma}}_{T+1}^{shr})$ & 	$\bm{S}^T(\hat{\bm{\Sigma}}_{T+1}^{wls})^{-1}$\\
+			\hline
+			\hline
+			
+		\end{tabular}
+	}
+\end{center}
+\textit{Note: $\hat{\mathbold{\Sigma}}_{T+1}^{shr}$ is a shrinkage estimator proposed by \citet{Schafer2005} and also used by \citet{Wickramasuriya2017}, where $\tau = \frac{\sum_{i \ne j}\hat{Var}(\hat{r}_{ij})}{\sum_{i \ne j}\hat{r}_{ij}^2}$, $\hat{r}_{ij}$ is the $ij$-th element of sample correlation matrix. Further Diag($\bm{A}$) denote the diagonal matrix of $\bm{A}$}.\\
+
+\noindent
+It is worth mentioning that all these forecasting methods were well established in the context of point forecast reconciliation \citep{Hyndman2011, Wickramasuriya2017, Hyndman2016}. However our attempt is to emphasis the use of these reconciliation methods in the context of probabilistic forecasts. \\
+
+\noindent
+\textbf{Simulation setup}\\
+
+\noindent
+We consider the hierarchy given in figure (1) for this simulation study. This hierarchy consists two aggregation levels with four bottom level series. Each bottom level series will be generated first and add them up to obtain the data for respective upper level series. Hierarchical time series in practice contain much noisier series in the bottom level than in aggregate series. In order to simulate this feature in the hierarchy, we refer to \citet{Wickramasuriya2017} and the data generating process will be given as follows. \\
+
+\noindent
+Suppose $\{w_{AA,t},w_{AB,t},w_{BA,t},w_{BB,t}\}$ are generated from $ARIMA(p,d,q)$ processes where, $(p,q)$ and $d$ take integers from $\{1,2\}$ and $\{0,1\}$ respectively with equal probability and the contemporaneous errors $\{\epsilon_{AA,t},\epsilon_{AB,t},\epsilon_{BA,t},\epsilon_{BB,t}\} \sim \mathcal{N}(\bm{0}, \bm{\Sigma})$. Further, the parameters for $AR$ and $MA$ components will be randomly and uniformly generated from $[0.3,0.5]$ and $[0.3,0.7]$ respectively. Then the bottom level series $\{y_{AA,t},y_{AB,t},y_{BA,t},y_{BB,t}\}$ will be obtained as: 
+$$y_{AA,t} = w_{AA,t} + u_t - 0.5v_t,$$
+$$y_{AB,t} = w_{AB,t} - u_t - 0.5v_t,$$
+$$y_{BA,t} = w_{BA,t} + u_t + 0.5v_t,$$
+$$y_{BB,t} = w_{BB,t} - u_t + 0.5v_t,$$ 
+\noindent
+where $u_t \sim N(0,\sigma^2_u)$ and $v_t \sim N(0,\sigma^2_v)$. 
+
+\noindent
+To obtain the aggregate series at level 1, we add their respective bottom level series such as: 
+$$y_{A,t} = w_{AA,t} + w_{AB,t} - v_t,$$
+$$y_{B,t} = w_{BA,t} + w_{BB,t} + v_t,$$
+\noindent
+and the total series will be obtained as: 
+$$y_{Tot,t} = w_{AA,t} + w_{AB,t} + w_{BA,t} + w_{BB,t}.$$
+\noindent
+To get less noisier aggregate series than disaggregate series, we choose $\bm{\Sigma}, \sigma^2_u$ and $\sigma^2_v$ such that, 
+
+$$Var(\epsilon_{AA,t}+\epsilon_{AB,t}+\epsilon_{BA,t}+\epsilon_{BB,t}) \le Var(\epsilon_{AA,t}+\epsilon_{AB,t}-v_t) \le Var(\epsilon_{AA,t}+u_t-0.5v_t),$$
+$$\bm{l}_1\bm{\Sigma} \bm{l}_1^T \le \bm{l}_2\bm{\Sigma} \bm{l}_2^T + \sigma^2_v \le  \bm{l}_3\bm{\Sigma} \bm{l}_3^T + \sigma^2_u + \frac{1}{4}\sigma^2_v,$$
+\noindent
+where $\bm{l}_1 = \begin{pmatrix} 1&1&1&1 \end{pmatrix}, \bm{l}_2 = \begin{pmatrix} 1&1&0&0 \end{pmatrix}$ and $\bm{l}_3 = \begin{pmatrix} 1&0&0&0 \end{pmatrix}$.
+\noindent 
+This follows, 
+$$\bm{l}_1\bm{\Sigma} \bm{l}_1^T - \bm{l}_2\bm{\Sigma} \bm{l}_2^T \le \sigma^2_v \le \frac{4}{3}(\sigma^2_u + \bm{l}_3\bm{\Sigma} \bm{l}_3^T - \bm{l}_2\bm{\Sigma} \bm{l}_2^T).$$
+\noindent
+Thus we choose, 
+$\mathbold{\Sigma} =  \begin{pmatrix} 5.0 & 3.1 & 0.6 & 0.4\\
+3.1 & 4.0 & 0.9 & 1.4\\
+0.6 & 0.9 & 2.0 & 1.8\\
+0.4 & 1.4 & 1.8 & 3.0\\
+\end{pmatrix}, \quad \sigma^2_u = 19$ and $\sigma^2_u = 18$ in our simulation setting. \\
+
+\noindent
+As such we generate data for the hierarchy with sample size $T=501$. Then univariate $ARIMA$ models were fitted for each series independently using the first 500 observations and obtain 1-step ahead base (incoherent) forecasts. We use \textit{forecast} package in \textbf{R}-software \citet{hyndman2017forecasting} for model fitting and forecasting. Further, different estimates of $\hat{\Sigma}_{T+1}$ and the corresponding $\bm{R}^T_\bot$ were obtained as summarized in Table 2. This process was then replicated using $1000$ different data sets from the same data generating process. \\
+
+\noindent
+To assess the predictive performance of different forecasting methods, we use scoring rules as discussed in section 5. In addition to that we use Skill score \citep{Gneiting2007} for any comparison. For a given forecasting method, evaluated by a particular scoring rule $S(.)$ , the skill score will be calculated as follows, 
+\begin{flalign}
+Ss[S_B(.)] = \frac{S_B(\mathbold{{\breve{Y}},y}) - S_B(\mathbold{{{Y}},y})^{ref}}{S_B(\mathbold{{{Y}},y})^{ref}}\times 100\%,
+\end{flalign} 
+\noindent
+where $S_B(.)$ is average score over $B$ samples and $S_B(\mathbold{{{Y}},y})^{ref}$ is the average score of the reference forecasting methods. Thus $Ss[S_B(.)]$ gives the percentage improvement of the preferred forecasting method relative to the reference method. \\
+
+\noindent
+As it was mentioned before we wish to establish the importance of reconciliation methods from this simulation study. In particular we compare different reconciliation methods over the conventional bottom-up method and the importance of coherent forecasts over incoherent forecasts. For the former comparison we use bottom level probabilistic forecasts and calculated the energy score, log score, variogram score (presented in Table 3) and the skill score is calculated with reference to bottom up method (presented in Table 4). For the latter comparison we calculate the CRPS for each aggregate series (presented in Table 5) and the skill score is calculated with reference to the incoherent forecasts.\\  
+
+\pagebreak
+\noindent
+\textbf{Comparison of reconciled forecasts using bottom level series}
+
+\begin{center}
+	\captionof{table}{\textit{Comparison of reconciled forecasts using bottom level series} }
+	
+	
+	\resizebox{\linewidth}{!}{
+		\small
+		\scriptsize
+		\begin{tabular}{@{}l S[table-format=2.2] S[table-format=2.2]  S[table-format=2.2] @{}}
+			
+			\hline
+			\hline 
+			
+			
+			\text{Forecasting method} &  \text{Energy score} & \text{Log score} & \text{Variogram score} \\ 
+			\hline
+			\hline
+			
+			MinT(Shrink) & 7.58  & 11.34  &  2.96  \\ 
+			
+			MinT(Sample) & 7.60  & 11.34  & 2.97   \\
+			
+			MinT(WLS) & 7.93  & 12.62  & 3.16   \\ 
+			
+			OLS & 7.81  & 11.53  & 3.06   \\ 
+			
+			Bottom up &  8.29 & 12.10  & 3.05   \\
+			
+			\hline
+			\hline 
+			
+			
+		\end{tabular}
+	}
+\end{center}
+
+
+\small
+\begin{center}
+	\captionof{table}{\textit{Comparison of reconciliation methods against Bottom up method} }
+	
+	
+	\resizebox{\linewidth}{!}{
+		\scriptsize
+		\begin{tabular}{@{}l S[table-format=2.2] S[table-format=2.2]  S[table-format=2.2] @{}}
+			
+			\hline
+			\hline 
+			
+			
+			\text{Forecasting method} &  \text{Energy score} & \text{Log score} & \text{Variogram score} \\ 
+			\hline
+			\hline
+			
+			MinT(Shrink) & 8.56  & 6.28  & 2.95  \\ 
+			
+			MinT(Sample)  & 8.32  & 6.28  & 2.62  \\
+			
+			MinT(WLS)  & 4.34  & -4.30  & -3.61  \\
+			
+			OLS  & 5.79  & 4.71  & -0.33  \\
+			
+			
+			\hline
+			\hline 
+			
+			
+		\end{tabular}
+	}
+\end{center}
+\textit{Note: Each entry represent the percentage skill score with respect to the bottom up forecasts}\\\\
+
+
+
+\noindent
+\textbf{Comparison of unreconciled vs. reconciled forecasts for the aggregate series}
+
+\begin{center}
+	\captionof{table}{\textit{Comparison of unreconciled vs. reconciled forecasts for the aggregate series}} 
+	
+	\small
+	\resizebox{\linewidth}{!}{
+		\scriptsize
+		\begin{tabular}{@{}l S[table-format=1.2] S[table-format=1.2]  S[table-format=1.2] S[table-format=1.2] S[table-format=1.2]  S[table-format=1.2] @{}}
+			
+			\hline
+			\hline 
+			
+			
+			\multirow{2}{*}{\text{Forecasting method}} & \multicolumn{2}{ c }{\text{Total}} & \multicolumn{2}{c}{\text{Series - A}} & \multicolumn{2}{c}{\text{Series - B}} \\ \cline{2-7} & \text{CRPS} &  \text{LogS} &   \text{CRPS} &   \text{LogS} &   \text{CRPS} &   \text{LogS} \\ 
+			\hline
+			\hline
+			Unreconciled & 5.57 & 3.99 & 12.68 & 4.87 & 10.35 & 4.66 \\ 
+			
+			MinT(Shrink) & 5.44 & 3.97 & 10.04 & 4.64 & 8.92 & 4.52 \\
+			
+			MinT(Sample) & 5.44 & 3.97 & 10.07 & 4.64 & 8.95 & 4.52 \\
+			
+			MinT(WLS) & 4.26 & 3.70 & 5.45 & 3.94 & 5.06 & 3.86 \\
+			
+			OLS & 6.50 & 4.18 & 10.91 & 4.72 & 9.29 & 4.56 \\
+			
+			Bottom up  & 19.95 & 5.33 & 15.21 & 5.05 & 12.40 & 4.84 \\
+			
+			
+			\hline
+			\hline
+			
+			
+		\end{tabular}
+	}
+\end{center}
+
+
+\pagebreak
+\begin{center}
+	\captionof{table}{\textit{Comparison of unreconciled vs. reconciled forecasts for the aggregate series using Skill score}} 
+	
+	
+	\resizebox{\linewidth}{!}{
+	\scriptsize	
+		\begin{tabular}{@{}l S[table-format=1.2] S[table-format=1.2]  S[table-format=1.2] S[table-format=1.2] S[table-format=1.2]  S[table-format=1.2] @{}}
+			
+			\hline
+			\hline 
+			
+			
+			\multirow{2}{*}{\text{Forecasting method}} & \multicolumn{2}{ c }{\text{Total}} & \multicolumn{2}{c}{\text{Series - A}} & \multicolumn{2}{c}{\text{Series - B}} \\ \cline{2-7} & \text{CRPS} &  \text{LogS} &   \text{CRPS} &   \text{LogS} &   \text{CRPS} &   \text{LogS} \\ 
+			\hline
+			\hline
+			
+			
+			MinT(Shrink) & 2.33 & 0.50 & 20.82 & 4.72 & 13.82 & 3.00 \\
+			
+			MinT(Sample)  & 2.33 & 0.50 & 20.58 & 4.72 & 13.53 & 3.00 \\
+			
+			MinT(WLS)  & 23.52 & 7.27 & 57.02 & 19.10 & 51.11 & 17.17 \\ 
+			
+			OLS  & -16.70 & -4.76 & 13.96 & 3.08 & 10.24 & 2.15 \\
+			
+			Bottom up   & -258.17 & -33.58 & -19.95 & -3.70 & -19.81 & -3.86 \\
+			
+			\hline
+			\hline
+			
+			
+		\end{tabular}
+	}
+\end{center}
+
+
+
+
+
+
 
 \section{Conclusions.}
 
