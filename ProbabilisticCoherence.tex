@@ -21,30 +21,30 @@
 \author{Puwasala Gamakumara\\ Anastasios Panagiotelis\\ George Athanasopoulos\\ Rob J Hyndman}
 
 \addresses{\textbf{Puwasala Gamakumara}\\
-	Department of Econometrics and Business Statistics,\\
-	Monash University,\\ VIC 3800, Australia.\\
-	Email: Puwasala.Gamakumara@monash.edu \\[1cm]
-	\textbf{Anastasios Panagiotelis}\\
-	Department of Econometrics and Business Statistics,\\
-	Monash University,\\ VIC 3800, Australia.\\
-	Email: Anastasios.Panagiotelis@monash.edu\\[1cm]
-	\textbf{George Athanasopoulos}\\
-	Department of Econometrics and Business Statistics,\\
-	Monash University,\\ VIC 3800, Australia.\\
-	Email: George.Athanasopoulos@monash.edu\\[1cm]
-	\textbf{Rob J Hyndman}\\
-	Department of Econometrics and Business Statistics,\\
-	Monash University,\\ VIC 3800, Australia.\\
-	Email: Rob.Hyndman@monash.edu}
+  Department of Econometrics and Business Statistics,\\
+  Monash University,\\ VIC 3800, Australia.\\
+  Email: Puwasala.Gamakumara@monash.edu \\[1cm]
+  \textbf{Anastasios Panagiotelis}\\
+  Department of Econometrics and Business Statistics,\\
+  Monash University,\\ VIC 3800, Australia.\\
+  Email: Anastasios.Panagiotelis@monash.edu\\[1cm]
+  \textbf{George Athanasopoulos}\\
+  Department of Econometrics and Business Statistics,\\
+  Monash University,\\ VIC 3800, Australia.\\
+  Email: George.Athanasopoulos@monash.edu\\[1cm]
+  \textbf{Rob J Hyndman}\\
+  Department of Econometrics and Business Statistics,\\
+  Monash University,\\ VIC 3800, Australia.\\
+  Email: Rob.Hyndman@monash.edu}
 
 \lfoot{\sf Gamakumara, Panagiotelis, Athanasopoulos \& Hyndman: \today}
 
 \begin{document}
-	
+  
 \maketitle
 
 \begin{abstract}
-	TBC
+  TBC
 \end{abstract}
 
 
@@ -61,6 +61,8 @@ It is apparent that these three approaches use only part of the information avai
 As an alternative to these traditional methods, \citet{Hyndman2011} proposed to utilize the information from all levels of the hierarchy to obtain coherent point forecasts in  a two stage process. In the first stage, the forecasts of all series are independently obtained by fitting univariate models for individual series in the hierarchy. It is very unlikely that these forecasts are coherent. Thus in the second stage, these forecasts are optimally combined through a regression model to obtain coherent forecasts. This second step is referred to as ``reconciliation'' since it takes a set of incoherent forecasts and revises them to be coherent. The approach was further improved by \citet{Wickramasuriya2017} who proposed the ``MinT'' algorithm to obtain optimally reconciled point forecasts by minimizing the mean squared coherent forecast errors. 
 
 Traditional bottom-up, top-down and middle-out forecasting methods are not strictly reconciliation methods since they use only a part of the information from the hierarchy to produce coherent forecasts. 
+
+Previous studies on coherent point forecasting have shown that reconciliation provides better coherent forecasts than the traditional bottom-up and top-down methods \citep{Hyndman2011,VanErven2015a,Wickramasuriya2017}. However, this idea has not been explored in the context of probabilistic forecasting. 
 
 Point forecasts are limited because they provide no indication of forecast uncertainty. Providing prediction intervals helps, but a richer description of forecast uncertainty is obtained by estimating the entire forecast distribution. These are often called ``probabilistic forecasts'' \citep{Gneiting2014}. For example, \citet{McSharry2005} produced probabilistic forecasts for electricity demand, \citet{BenTaieb2017} for smart meter data, \citet{Pinson2009} for wind power generation, and \citet{Gel2004}, \citet{Gneiting2005a} and \citet{Gneiting2005} for various weather variables.
 
@@ -124,62 +126,62 @@ Suppose an $n$-dimensional time series $\bm{y}_t \in \mathbb{R}^n$ is subject to
 Notice that the coherent space $\mathbb{C}^m$ is equivalent to the column space of $\bm{S}$, which we denote by $\mathscr{C}(\bm{S})$. Further, the space orthogonal to $\mathbb{C}^m$ is equivalent to the null space of $\bm{S}$, which we denote by $\bm{\mathbb{N}}^{n-m}$.
 
 \begin{definition}[Coherent Point Forecasts]\label{def:cohpoint}
-	Suppose $\breve{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ denotes point forecasts of each series in the hierarchy at time $t+h$.  Then $\breve{\bm{y}}_{t+h|t}$ is \emph{coherent} if $\breve{\bm{y}}_{t+h|t} \in \mathbb{C}$. 
+  Suppose $\breve{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ denotes point forecasts of each series in the hierarchy at time $t+h$.  Then $\breve{\bm{y}}_{t+h|t}$ is \emph{coherent} if $\breve{\bm{y}}_{t+h|t} \in \mathbb{C}$. 
 \end{definition}
 
 \begin{definition}[Coherent Probabilistic Forecasts]\label{def:cohprob}
-	Let $(\mathbb{R}^m, \bm{\mathscr{F}}^m, \nu^m)$ be a probability triple where $\mathscr{F}^m$ is a $\sigma$-algebra on $\mathbb{R}^m$. Then, $(\mathbb{C}, \mathscr{F}_{\bm{S}}, \breve{\nu})$ is said to be a coherent probability measure space iff
-	$$
+  Let $(\mathbb{R}^m, \bm{\mathscr{F}}^m, \nu^m)$ be a probability triple where $\mathscr{F}^m$ is a $\sigma$-algebra on $\mathbb{R}^m$. Then, $(\mathbb{C}, \mathscr{F}_{\bm{S}}, \breve{\nu})$ is said to be a coherent probability measure space iff
+  $$
       \breve{\nu}(\bm{S}(\bm{A})) = \nu^m(\bm{A}) \quad \forall  \bm{A} \in \mathscr{F}^m,
     $$ 
-	where $\bm{S}(\bm{A})$ denotes the image of subset $\bm{A}$ under $\bm{S}$. 
+  where $\bm{S}(\bm{A})$ denotes the image of subset $\bm{A}$ under $\bm{S}$. 
 \end{definition}
 
 We illustrate Definition \ref{def:cohprob} in Figure \ref{fig2}, showing $\bm{S}$ mapping any set $\bm{A}\in\mathbb{R}^m$ to the coherent space.
 
 \begin{figure}[H]
-	\begin{center}
-		\begin{tikzpicture}[
-		>=stealth,
-		bullet/.style={
-			fill=black,
-			circle,
-			minimum width=1.5cm,
-			inner sep=0pt
-		},
-		projection/.style={
-			->,
-			thick,
-			label,
-			shorten <=2pt,
-			shorten >=2pt
-		},
-		every fit/.style={
-			ellipse,
-			draw,
-			inner sep=0pt
-		}
-		]
-		
-		\node at (2,3) {$\bm{S}$};
-		
-		\node at (0,5) {$\mathbb{R}^m$(domain of $\bm{S}$)};
-		\node at (4,5) {$\mathbb{R}^n$(codomain of $\bm{S}$)};
-		\node at (4,1.0) {$\mathbb{C}^m$};
-		%\node[bullet,label=below:$f(x)$] at (4,2.5){};
-		
-		
-		\draw (0,2.5) ellipse (1.02cm and 2.2cm);
-		\draw (4,2.5) ellipse (1.02cm and 2.2cm);
-		\draw (4,2.5) ellipse (0.51cm and 1.1cm);
-		
-		
-		\draw[projection, label=below:$f$] (0.3,2.5) -- (3.8,2.5) ;
-		
-		\end{tikzpicture}
-		\newline
-	\end{center}
-	\caption{Any set $\bm{A} \in \mathbb{R}^m$ will be mapped to $\mathbb{C}^m$ through the mapping $\bm{S}$}\label{fig2}
+  \begin{center}
+    \begin{tikzpicture}[
+    >=stealth,
+    bullet/.style={
+      fill=black,
+      circle,
+      minimum width=1.5cm,
+      inner sep=0pt
+    },
+    projection/.style={
+      ->,
+      thick,
+      label,
+      shorten <=2pt,
+      shorten >=2pt
+    },
+    every fit/.style={
+      ellipse,
+      draw,
+      inner sep=0pt
+    }
+    ]
+    
+    \node at (2,3) {$\bm{S}$};
+    
+    \node at (0,5) {$\mathbb{R}^m$(domain of $\bm{S}$)};
+    \node at (4,5) {$\mathbb{R}^n$(codomain of $\bm{S}$)};
+    \node at (4,1.0) {$\mathbb{C}^m$};
+    %\node[bullet,label=below:$f(x)$] at (4,2.5){};
+    
+    
+    \draw (0,2.5) ellipse (1.02cm and 2.2cm);
+    \draw (4,2.5) ellipse (1.02cm and 2.2cm);
+    \draw (4,2.5) ellipse (0.51cm and 1.1cm);
+    
+    
+    \draw[projection, label=below:$f$] (0.3,2.5) -- (3.8,2.5) ;
+    
+    \end{tikzpicture}
+    \newline
+  \end{center}
+  \caption{Any set $\bm{A} \in \mathbb{R}^m$ will be mapped to $\mathbb{C}^m$ through the mapping $\bm{S}$}\label{fig2}
 \end{figure}
 
 Definition \ref{def:cohprob} implies the probability measure on $\mathbb{C}^m$ is equivalent to the probability measure on $(\mathbb{R}^m, \bm{\mathscr{F}}^m)$. Hence, there is no density anywhere outside the linear subspace $\mathbb{C}^m$. That is, a \textit{coherent probability density forecast} is any density $\bm{f}(\breve{\bm{y}}_{t+h})$ such that $\bm{f}(\breve{\bm{y}}_{t+h})=0$ for all $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}^{n-m}$. 
@@ -202,21 +204,20 @@ Definitions \ref{def:cohpoint} and \ref{def:cohprob} facilitate extension to pro
 
 \section{Forecast reconciliation}\label{sec:reconciliation}
 
-Previous studies on coherent point forecasting have shown that reconciliation provides better coherent forecasts than the conventional bottom-up and top-down methods \citep{Hyndman2011,VanErven2015a,Wickramasuriya2017}. However, this idea has not been explored in the context of probabilistic forecasting. Consequently, we Thus our main focus is to rigorously define the probabilistic forecast reconciliation and discuss how that definition can be used in practice.  
+Initially we define point forecast reconciliation, before extending the idea to the probabilistic setting.
 
 \subsection{Point forecast reconciliation}
 
-Initially we define point forecast reconciliation as a groundwork to the probabilistic forecast reconciliation. 
 
 \begin{definition}\label{def:reconpoint}
-	Let $\bm{g}:\mathbb{R}^n \rightarrow \mathbb{R}^m $ and $\hat{\bm{y}}_{t+h} \in \mathbb{R}^n$ be any set of incoherent forecasts at time $t+h$. Then $\tilde{\bm{b}}_{t+h}$ is said to be reconciled bottom level forecasts if 
-	\begin{equation}
-	\tilde{\bm{b}}_{t+h}=\bm{g}(\hat{\bm{y}}_{t+h}),
-	\end{equation}
-	where $\bm{g}(\hat{\bm{y}}_{t+h})$ is the image of $\hat{\bm{y}}_{t+h}$ under $\bm{g}$ on $\mathbb{R}^m$. The reconciled forecasts for the whole hierarchy is then given by $\tilde{\bm{y}}_{t+h}=\bm{S} \circ \bm{g}(\hat{\bm{y}}_{t+h})$ such that $\tilde{\bm{y}}_{t+h} \in \mathbb{C}^m$, where $\bm{S}\circ \bm{g}(.)$ is a projection of $\bm{g}(.)$ onto the $\mathbb{C}^m$.
+  Let $\hat{\bm{y}}_{t+h} \in \mathbb{R}^n$ be any set of incoherent forecasts at time $t+h$, and let 
+  \begin{equation}
+    \tilde{\bm{y}}_{t+h}=\bm{S} \circ \bm{g}(\hat{\bm{y}}_{t+h}),
+  \end{equation} 
+  where $\bm{g}:\mathbb{R}^n \rightarrow \mathbb{R}^m$. Then $\tilde{\bm{y}}_{t+h}$ is said to be ``reconciled'' if  $\tilde{\bm{y}}_{t+h} \in \mathbb{C}^m$, where $\bm{S}\circ \bm{g}(.)$ is a projection of $\bm{g}(.)$ onto $\mathbb{C}^m$.
 \end{definition}
 
-Importance of definition (\ref{def:reconpoint}) is that it facilitates for both linear and non-linear reconciliation. In other words, if $\bm{g}$ is a non-linear function, then the reconciliation of $\hat{\bm{y}}_{t+h}$ will be non-linear. On the other hand, if $\bm{g}$ is a linear function, then $\bm{S}\circ \bm{g}(.)$ will linearly projects incoherent point forecasts onto $\mathbb{C}^m$. Latter was the main focus in previous studies in hierarchical point forecasting, where $\bm{g}$ is considered as a $m \times n$ matrix $\bm{P}$ and thus $\tilde{\bm{y}}_{t+h}=\bm{S}\bm{P} \hat{\bm{y}}_{t+h}$. 
+The importance of Definition \ref{def:reconpoint} is that it allows for both linear and non-linear reconciliation. In other words, if $\bm{g}$ is a non-linear function, then the reconciliation of $\hat{\bm{y}}_{t+h}$ will be non-linear. On the other hand, if $\bm{g}$ is a linear function, then $\bm{S}\circ \bm{g}(.)$ will linearly projects incoherent point forecasts onto $\mathbb{C}^m$. Latter was the main focus in previous studies in hierarchical point forecasting, where $\bm{g}$ is considered as a $m \times n$ matrix $\bm{P}$ and thus $\tilde{\bm{y}}_{t+h}=\bm{S}\bm{P} \hat{\bm{y}}_{t+h}$. 
 
 In the following content we provide an alternative explanation for linear reconciliation based on definition (\ref{def:reconpoint}). Let $\bm{R} \in \mathbb{R}^{n \times (n-m)}$ consists the columns that spans $\bm{\mathbb{N}}^{n-m}$ which is orthogonal to $\mathbb{C}^m$. Note that $\bm{R}$ is also not unique and one example is a matrix whose columns represent the aggregation constraints for a given hierarchy. Then for the hierarchy in example 1, 
 $$ 
@@ -318,16 +319,16 @@ They referred this to as MinT solution. It is also worth to notice that the loss
 In terms of probabilistic forecasts, the reconciliation implies finding the probability measure of the coherent forecasts using the information of incoherent probabilistic forecast measure. A more formal definition is given below.
 
 \begin{definition} \label{def:reconprob}
-	Suppose $(\mathbb{R}^n, \mathscr{F}^n, \hat{\nu})$ be an incoherent probability triple and $(\mathbb{R}^m, \mathscr{F}^m, \nu^m)$ be a probability triple defined on $\mathbb{R}^m$. Let $\bm{g}:\mathbb{R}^n \rightarrow \mathbb{R}^m $. Then the probability measure on reconciled bottom levels is such that,
-	\begin{equation}
-	\nu^m(\bm{A}) = \hat{\nu}(\bm{g}^{-1}(\bm{A})), \quad \forall \quad \bm{A} \in \mathscr{F}^m.
-	\end{equation}
-	
-	Further the reconciled probability measure of the whole hierarchy is given by,
-	\begin{equation}
-	\tilde{\nu}(\bm{S}(\bm{A})) = \hat{\nu}(\bm{g}^{-1}(\bm{A})), \quad \forall \quad \bm{A} \in \mathscr{F}^m,
-	\end{equation}
-	where $\bm{S}:\mathbb{R}^m \rightarrow \mathbb{C}^m$ and $\tilde{\nu}(.)$ is the probability measure on the measure space $(\mathbb{C}^m, \mathscr{F}_S)$.
+  Suppose $(\mathbb{R}^n, \mathscr{F}^n, \hat{\nu})$ be an incoherent probability triple and $(\mathbb{R}^m, \mathscr{F}^m, \nu^m)$ be a probability triple defined on $\mathbb{R}^m$. Let $\bm{g}:\mathbb{R}^n \rightarrow \mathbb{R}^m $. Then the probability measure on reconciled bottom levels is such that,
+  \begin{equation}
+  \nu^m(\bm{A}) = \hat{\nu}(\bm{g}^{-1}(\bm{A})), \quad \forall \quad \bm{A} \in \mathscr{F}^m.
+  \end{equation}
+  
+  Further the reconciled probability measure of the whole hierarchy is given by,
+  \begin{equation}
+  \tilde{\nu}(\bm{S}(\bm{A})) = \hat{\nu}(\bm{g}^{-1}(\bm{A})), \quad \forall \quad \bm{A} \in \mathscr{F}^m,
+  \end{equation}
+  where $\bm{S}:\mathbb{R}^m \rightarrow \mathbb{C}^m$ and $\tilde{\nu}(.)$ is the probability measure on the measure space $(\mathbb{C}^m, \mathscr{F}_S)$.
 \end{definition}
 
 Since the above definition seems not to be straightforward in reconciling incoherent forecasts, the following content explains how this can be used in practice to obtain reconciled probabilistic forecasts for hierarchical time series.
@@ -393,9 +394,9 @@ Since, $\Big[\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\Sigma}_{t+h}}\b
 \end{pmatrix}$ we have,
 \begin{align*}
 \bm{f_B}(.)=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\begin{pmatrix}
-	\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}' \\
-	\bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{Q}'
-	\end{pmatrix}\Big|^{\frac{1}{2}}}
+  \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}' \\
+  \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{Q}'
+  \end{pmatrix}\Big|^{\frac{1}{2}}}
 \exp \Big\{&-\frac{1}{2} \begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix}'\\
 &\begin{pmatrix}
 \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}' \\
@@ -433,30 +434,30 @@ where $\E_{\bm{G}}[S(\bm{Y,y})]$ is the expected score under the true distributi
 Table \ref{table:scoringrules} summarizes few existing proper scoring rules.
 
 \begin{table}[!b]
-	\caption{Scoring rules to evaluate multivariate forecast densities. $\breve{\bm{y}}_{T+h}$ and $\breve{\bm{y}}^*_{T+h}$ be two independent random vectors from the coherent forecast distribution $\breve{\bm{F}}$ with the density function $\breve{\bm{f}}(.)$ at time $T+h$ and $\bm{y}_{T+h}$ is the vector of realizations. Further $\breve{Y}_{T+h,i}$ and $\breve{Y}_{T+h,j}$ are $i$th and $j$th components of the vector $\breve{\bm{Y}}_{T+h}$. Further the variogram score is given for order $p$ where, $w_{ij}$ are non-negative weights.}\label{table:scoringrules}
-	\centering\small\setstretch{1.3}
-	\begin{tabular}{@{}lp{8.1cm}l@{}}
-		\toprule
-		\textbf{Scoring rule}  & \textbf{Expression} & \textbf{Reference}           \\
-		\midrule
-		\text{Log score}       &
-		$\text{LS}(\breve{\bm{F}},\bm{y}_{T+h}) = -\log {\breve{\bm{f}}(\bm{y}_{T+h})}$ &
-		\citet{Gneiting2007}  \\\\[-0.2cm]
-		\text{Energy score}    &
-		$\text{eS}(\breve{\bm{Y}}_{T+h},\bm{y}_{T+h}) =
-		\E_{\breve{\bm{F}}}
-		\|\breve{\bm{Y}}_{T+h}-\bm{y}_{T+h}\|^\alpha -$ \par\hfill
-		$\frac{1}{2}\E_{\breve{\bm{F}}}\|\breve{\bm{Y}}_{T+h}-\breve{\bm{Y}}^*_{T+h}\|^\alpha$, \,\, $\alpha \in (0,2]$ &
-		\citet{Gneiting2008}  \\\\[-0.2cm]
-		\text{Variogram score} &
-		$\text{VS}(\breve{\bm{F}}, \bm{y}_{T+h}) =
-		\sum\limits_{i=1}^{n}
-		\sum\limits_{j=1}^{n}
-		w_{ij}\Big(|y_{T+h,i} - y_{T+h,j}|^p -$ \par\hfill
-		$\E_{\breve{\bm{F}}}|\breve{Y}_{T+h,i}-\breve{Y}_{T+h,j}|^p\Big)^2$     &
-		\citet{SCHEUERER2015} \\
-		\bottomrule
-	\end{tabular}
+  \caption{Scoring rules to evaluate multivariate forecast densities. $\breve{\bm{y}}_{T+h}$ and $\breve{\bm{y}}^*_{T+h}$ be two independent random vectors from the coherent forecast distribution $\breve{\bm{F}}$ with the density function $\breve{\bm{f}}(.)$ at time $T+h$ and $\bm{y}_{T+h}$ is the vector of realizations. Further $\breve{Y}_{T+h,i}$ and $\breve{Y}_{T+h,j}$ are $i$th and $j$th components of the vector $\breve{\bm{Y}}_{T+h}$. Further the variogram score is given for order $p$ where, $w_{ij}$ are non-negative weights.}\label{table:scoringrules}
+  \centering\small\setstretch{1.3}
+  \begin{tabular}{@{}lp{8.1cm}l@{}}
+    \toprule
+    \textbf{Scoring rule}  & \textbf{Expression} & \textbf{Reference}           \\
+    \midrule
+    \text{Log score}       &
+    $\text{LS}(\breve{\bm{F}},\bm{y}_{T+h}) = -\log {\breve{\bm{f}}(\bm{y}_{T+h})}$ &
+    \citet{Gneiting2007}  \\\\[-0.2cm]
+    \text{Energy score}    &
+    $\text{eS}(\breve{\bm{Y}}_{T+h},\bm{y}_{T+h}) =
+    \E_{\breve{\bm{F}}}
+    \|\breve{\bm{Y}}_{T+h}-\bm{y}_{T+h}\|^\alpha -$ \par\hfill
+    $\frac{1}{2}\E_{\breve{\bm{F}}}\|\breve{\bm{Y}}_{T+h}-\breve{\bm{Y}}^*_{T+h}\|^\alpha$, \,\, $\alpha \in (0,2]$ &
+    \citet{Gneiting2008}  \\\\[-0.2cm]
+    \text{Variogram score} &
+    $\text{VS}(\breve{\bm{F}}, \bm{y}_{T+h}) =
+    \sum\limits_{i=1}^{n}
+    \sum\limits_{j=1}^{n}
+    w_{ij}\Big(|y_{T+h,i} - y_{T+h,j}|^p -$ \par\hfill
+    $\E_{\breve{\bm{F}}}|\breve{Y}_{T+h,i}-\breve{Y}_{T+h,j}|^p\Big)^2$     &
+    \citet{SCHEUERER2015} \\
+    \bottomrule
+  \end{tabular}
 \end{table}
 
 Even though the log score can be used evaluate simulated forecast densities with large samples \citep{Jordan2017}, it is more convenient to use if it is reasonable to assume a parametric forecast density for the hierarchy. However, the \qq{degenerecy} of coherent forecast densities would be problematic when using log scores. We will discuss more on this in the next subsection.
@@ -587,26 +588,26 @@ From Theorem 1 of \citet{Wickramasuriya2017} it immediately follows that $\bm{P}
 It should be noted that $\bm{W}_{T+h}$ can be estimated in different methods which yields different estimation of $\bm{R}'_\bot$. Table \ref{table:2} summarizes these methods.
 
 \begin{table}
-	\caption{Summarizing different estimates of $\bm{R}'_\bot$. For $n<T$, $\bm{\hat{W}}_{T+1}^{sam}$ is an unbiased and consistent estimator for $\bm{W}_{T+1}$. $\bm{\hat{W}}_{T+1}^{shr}$ is a shrinkage estimator which is much suitable for large dimensions. $\bm{\hat{W}}_{T+1}^{shr}$ was proposed by \citet{Schafer2005} and also used by \citet{Wickramasuriya2017}, where $\tau = \frac{\sum_{i \ne j}\hat{\text{Var}}(\hat{r}_{ij})}{\sum_{i \ne j}\hat{r}_{ij}^2}$, $\hat{r}_{ij}$ is the $ij$th element of sample correlation matrix. Further Diag($\bm{A}$) denote the diagonal matrix of $\bm{A}$}\label{table:2}
-	\centering\setstretch{1.5}
-	\begin{tabular}{lll}
-		\toprule
-		\textbf{Method} & \textbf{Estimate of $\bm{W}_{h}$} & \textbf{Estimate of $\bm{R}'_\bot$}      \\
-		\midrule
-		OLS             &
-		$\bm{I}$  &
-		$\bm{S}'$  \\
-		MinT(Sample)    &
-		$\bm{\hat{W}}_{T+1}^{sam}$ &
-		$\bm{S}'(\bm{\hat{W}}_{T+1}^{sam})^{-1}$ \\
-		MinT(Shrink)    &
-		$\bm{\hat{W}}_{T+1}^{shr} = \tau\text{Diag}(\bm{\hat{W}}_{T+1}^{sam}) + (1-\tau)\bm{\hat{W}}_{T+1}^{sam}$ &
-		$\bm{S}'(\bm{\hat{W}}_{T+1}^{shr})^{-1}$ \\
-		MinT(WLS)       &
-		$\bm{\hat{W}}_{T+1}^{wls} = \text{Diag}(\bm{\hat{W}}_{T+1}^{shr})$ &
-		$\bm{S}'(\bm{\hat{W}}_{T+1}^{wls})^{-1}$ \\
-		\bottomrule
-	\end{tabular}
+  \caption{Summarizing different estimates of $\bm{R}'_\bot$. For $n<T$, $\bm{\hat{W}}_{T+1}^{sam}$ is an unbiased and consistent estimator for $\bm{W}_{T+1}$. $\bm{\hat{W}}_{T+1}^{shr}$ is a shrinkage estimator which is much suitable for large dimensions. $\bm{\hat{W}}_{T+1}^{shr}$ was proposed by \citet{Schafer2005} and also used by \citet{Wickramasuriya2017}, where $\tau = \frac{\sum_{i \ne j}\hat{\text{Var}}(\hat{r}_{ij})}{\sum_{i \ne j}\hat{r}_{ij}^2}$, $\hat{r}_{ij}$ is the $ij$th element of sample correlation matrix. Further Diag($\bm{A}$) denote the diagonal matrix of $\bm{A}$}\label{table:2}
+  \centering\setstretch{1.5}
+  \begin{tabular}{lll}
+    \toprule
+    \textbf{Method} & \textbf{Estimate of $\bm{W}_{h}$} & \textbf{Estimate of $\bm{R}'_\bot$}      \\
+    \midrule
+    OLS             &
+    $\bm{I}$  &
+    $\bm{S}'$  \\
+    MinT(Sample)    &
+    $\bm{\hat{W}}_{T+1}^{sam}$ &
+    $\bm{S}'(\bm{\hat{W}}_{T+1}^{sam})^{-1}$ \\
+    MinT(Shrink)    &
+    $\bm{\hat{W}}_{T+1}^{shr} = \tau\text{Diag}(\bm{\hat{W}}_{T+1}^{sam}) + (1-\tau)\bm{\hat{W}}_{T+1}^{sam}$ &
+    $\bm{S}'(\bm{\hat{W}}_{T+1}^{shr})^{-1}$ \\
+    MinT(WLS)       &
+    $\bm{\hat{W}}_{T+1}^{wls} = \text{Diag}(\bm{\hat{W}}_{T+1}^{shr})$ &
+    $\bm{S}'(\bm{\hat{W}}_{T+1}^{wls})^{-1}$ \\
+    \bottomrule
+  \end{tabular}
 \end{table}
 
 It is worth mentioning that all these forecasting methods were well established in the context of point forecast reconciliation \citep{Hyndman2011, Wickramasuriya2017, Hyndman2016}. However our attempt is to emphasis the use of these reconciliation methods in the context of probabilistic forecasts at least in the Gaussian framework.
@@ -666,73 +667,73 @@ As it was mentioned before we wish to establish the importance of reconciliation
 It is clearly evident from the results in Table \ref{table:3} that the multivariate reconciled forecasts for the bottom level series from MinT(Shrink) and MinT(Sample) outperform the bottom-up forecasts. Further, these two methods produce probabilistic forecasts with best predictive ability in comparison to incoherent forecasts (from Tables \ref{table:4} and \ref{table:5}). Moreover, it turns out that OLS and bottom-up methods produce the worst forecasts.
 
 \begin{table}
-	\caption{Comparison of incoherent forecasts using bottom level series. The ``Skill score'' columns give the percentage skill score with reference to the bottom up forecasting method. A positive entry in these columns shows the percentage increase of score for different reconciliation methods with relative to the bottom up method.}\label{table:3}
-	\centering\small
-	\begin{tabular}{@{}lSSSSSS@{}}
-		\toprule
-		Forecasting &
-		\multicolumn{2}{c}{\text{Energy score}} &
-		\multicolumn{2}{c}{\text{Log score}} &
-		\multicolumn{2}{c}{\text{Variogram score}} \\
-		\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(l){6-7}
-		method &
-		\text{Mean score} & \text{Skill score} &
-		\text{Mean score} & \text{Skill score} &
-		\text{Mean score} & \text{Skill score}\\
-		\midrule
-		MinT(Shrink) &  7.47 &  10.11 &  11.34 &     6.44 & 3.05 &   4.69 \\
-		MinT(Sample) &  7.47 &  10.11 &  11.33 &     6.52 & 3.05 &   4.69 \\
-		MinT(WLS)    &  7.91 &   4.81 &  12.64 &    -4.29 & 3.23 &  -0.94 \\
-		OLS          & 10.14 & -22.02 & 135.13 & -1014.93 & 4.60 & -43.75 \\
-		Bottom up    &  8.31 &        &  12.12 &          & 3.20 &        \\
-		\bottomrule
-	\end{tabular}
+  \caption{Comparison of incoherent forecasts using bottom level series. The ``Skill score'' columns give the percentage skill score with reference to the bottom up forecasting method. A positive entry in these columns shows the percentage increase of score for different reconciliation methods with relative to the bottom up method.}\label{table:3}
+  \centering\small
+  \begin{tabular}{@{}lSSSSSS@{}}
+    \toprule
+    Forecasting &
+    \multicolumn{2}{c}{\text{Energy score}} &
+    \multicolumn{2}{c}{\text{Log score}} &
+    \multicolumn{2}{c}{\text{Variogram score}} \\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(l){6-7}
+    method &
+    \text{Mean score} & \text{Skill score} &
+    \text{Mean score} & \text{Skill score} &
+    \text{Mean score} & \text{Skill score}\\
+    \midrule
+    MinT(Shrink) &  7.47 &  10.11 &  11.34 &     6.44 & 3.05 &   4.69 \\
+    MinT(Sample) &  7.47 &  10.11 &  11.33 &     6.52 & 3.05 &   4.69 \\
+    MinT(WLS)    &  7.91 &   4.81 &  12.64 &    -4.29 & 3.23 &  -0.94 \\
+    OLS          & 10.14 & -22.02 & 135.13 & -1014.93 & 4.60 & -43.75 \\
+    Bottom up    &  8.31 &        &  12.12 &          & 3.20 &        \\
+    \bottomrule
+  \end{tabular}
 \end{table}
 
 \begin{table}
-	\caption{Comparison of incoherent vs coherent forecasts for the aggregate series using Skill score. "Incoherent" row represent the average score for incoherent forecasts. Each entry above this row represent the percentage skill score with reference to the incoherent forecasts. A positive(negative) entry shows the percentage increase(decrease) of score for different forecasting methods with relative to incoherent forecasts.}\label{table:4}
-	\centering\small
-	\begin{tabular}{@{}lSSSSSS@{}}
-		\toprule
-		Forecasting &
-		\multicolumn{2}{c}{\text{Total}} &
-		\multicolumn{2}{c}{\text{Series - A}} &
-		\multicolumn{2}{c}{\text{Series - B}} \\
-		\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(l){6-7}
-		method      &  CRPS   & LogS    & CRPS   & LogS     & CRPS   & LogS     \\
-		\midrule
-		MinT(Shrink) & 1.12   & 0.34    & 10.07  & 2.93     & 5.41   & 1.52     \\
-		MinT(Sample) & 1.12   & 0.34    & 10.07  & 2.93     & 5.41   & 1.52     \\
-		MinT(WLS)    & -2.61  & -2.02   & 5.28   & -4.40    & 2.70   & -4.24    \\
-		OLS          & -38.06 & -698.99 & -24.70 & -1368.33 & -24.86 & -1159.09 \\
-		Bottom up    & -89.55 & -21.83  & -8.87  & -2.35    & -9.46  & -2.73    \\
-		\midrule
-		\textit{Incoherent} & $\mathbi{2.68}$ & $\mathbi{2.97}$ & $\mathbi{4.17}$ & $\mathbi{3.41}$ & $\mathbi{3.70}$ & $\mathbi{3.30}$ \\
-		\bottomrule
-	\end{tabular}
+  \caption{Comparison of incoherent vs coherent forecasts for the aggregate series using Skill score. "Incoherent" row represent the average score for incoherent forecasts. Each entry above this row represent the percentage skill score with reference to the incoherent forecasts. A positive(negative) entry shows the percentage increase(decrease) of score for different forecasting methods with relative to incoherent forecasts.}\label{table:4}
+  \centering\small
+  \begin{tabular}{@{}lSSSSSS@{}}
+    \toprule
+    Forecasting &
+    \multicolumn{2}{c}{\text{Total}} &
+    \multicolumn{2}{c}{\text{Series - A}} &
+    \multicolumn{2}{c}{\text{Series - B}} \\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(l){6-7}
+    method      &  CRPS   & LogS    & CRPS   & LogS     & CRPS   & LogS     \\
+    \midrule
+    MinT(Shrink) & 1.12   & 0.34    & 10.07  & 2.93     & 5.41   & 1.52     \\
+    MinT(Sample) & 1.12   & 0.34    & 10.07  & 2.93     & 5.41   & 1.52     \\
+    MinT(WLS)    & -2.61  & -2.02   & 5.28   & -4.40    & 2.70   & -4.24    \\
+    OLS          & -38.06 & -698.99 & -24.70 & -1368.33 & -24.86 & -1159.09 \\
+    Bottom up    & -89.55 & -21.83  & -8.87  & -2.35    & -9.46  & -2.73    \\
+    \midrule
+    \textit{Incoherent} & $\mathbi{2.68}$ & $\mathbi{2.97}$ & $\mathbi{4.17}$ & $\mathbi{3.41}$ & $\mathbi{3.70}$ & $\mathbi{3.30}$ \\
+    \bottomrule
+  \end{tabular}
 \end{table}
 
 \begin{table}
-	\caption{Comparison of incoherent vs coherent forecasts for the individual bottom level series using Skill score.}\label{table:5}
-	\centering\tabcolsep=0.08cm\small
-	\begin{tabular}{@{}lSSSSSSSS@{}}
-		\toprule
-		Forecasting &
-		\multicolumn{2}{c}{\text{Series - AA}} &
-		\multicolumn{2}{c}{\text{Series - AB}} &
-		\multicolumn{2}{c}{\text{Series - BA}} &
-		\multicolumn{2}{c}{\text{Series - BB}} \\
-		\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7} \cmidrule(l){8-9}
-		method       & CRPS   & LogS    & CRPS   & LogS    & CRPS   & LogS    & CRPS   & LogS \\
-		\midrule
-		MinT(Shrink) & 8.71   & 2.71    & 10.57  & 3.04    & 5.95   & 1.86    & 7.91   & 2.46 \\
-		MinT(Sample) & 8.71   & 2.71    & 10.57  & 3.04    & 5.95   & 1.86    & 8.19   & 2.46 \\
-		MinT(WLS)    & 5.54   & 0.30    & 5.96   & 0.30    & 2.43   & -0.62   & 5.08   & 0.62 \\
-		OLS          & -22.43 & -931.63 & -22.49 & -886.32 & -26.01 & -834.67 & -23.45 & -812.92 \\
-		\midrule
-		\textit{Incoherent} & $\mathbi{3.79}$ & $\mathbi{3.32}$ & $\mathbi{3.69}$ & $\mathbi{3.29}$ & $\mathbi{3.46}$ & $\mathbi{3.23}$ & $\mathbi{3.54}$ & $\mathbi{3.25}$ \\
-		\bottomrule
-	\end{tabular}
+  \caption{Comparison of incoherent vs coherent forecasts for the individual bottom level series using Skill score.}\label{table:5}
+  \centering\tabcolsep=0.08cm\small
+  \begin{tabular}{@{}lSSSSSSSS@{}}
+    \toprule
+    Forecasting &
+    \multicolumn{2}{c}{\text{Series - AA}} &
+    \multicolumn{2}{c}{\text{Series - AB}} &
+    \multicolumn{2}{c}{\text{Series - BA}} &
+    \multicolumn{2}{c}{\text{Series - BB}} \\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7} \cmidrule(l){8-9}
+    method       & CRPS   & LogS    & CRPS   & LogS    & CRPS   & LogS    & CRPS   & LogS \\
+    \midrule
+    MinT(Shrink) & 8.71   & 2.71    & 10.57  & 3.04    & 5.95   & 1.86    & 7.91   & 2.46 \\
+    MinT(Sample) & 8.71   & 2.71    & 10.57  & 3.04    & 5.95   & 1.86    & 8.19   & 2.46 \\
+    MinT(WLS)    & 5.54   & 0.30    & 5.96   & 0.30    & 2.43   & -0.62   & 5.08   & 0.62 \\
+    OLS          & -22.43 & -931.63 & -22.49 & -886.32 & -26.01 & -834.67 & -23.45 & -812.92 \\
+    \midrule
+    \textit{Incoherent} & $\mathbi{3.79}$ & $\mathbi{3.32}$ & $\mathbi{3.69}$ & $\mathbi{3.29}$ & $\mathbi{3.46}$ & $\mathbi{3.23}$ & $\mathbi{3.54}$ & $\mathbi{3.25}$ \\
+    \bottomrule
+  \end{tabular}
 \end{table}
 
 \section{Conclusions}\label{sec:conclusions}
