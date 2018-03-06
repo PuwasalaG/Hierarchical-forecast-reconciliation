@@ -77,47 +77,65 @@ We conclude with some thoughts on extensions and limitations in Section \ref{sec
 
 \section{Notation}\label{sec:notation}
 
-Our notation largely follows that introduced in \citet{Wickramasuriya2017}. Suppose $\bm{y}_t \in \bm{\mathbb{R}}^n$ comprises all observations of the hierarchy at time $t$ and $\bm{b}_t \in \bm{\mathbb{R}}^m$ comprises only the bottom level observations at time $t$. Then due to the aggregation nature of the hierarchy we have, 
+Our notation largely follows that introduced in \citet{Wickramasuriya2017}. Suppose $\bm{y}_t \in \mathbb{R}^n$ comprises all observations of the hierarchy at time $t$ and $\bm{b}_t \in \mathbb{R}^m$ comprises only the bottom level observations at time $t$. Then due to the aggregation nature of the hierarchy we have
 \begin{equation}
   \bm{y}_t = \bm{Sb}_t,
 \end{equation}
-where $\bm{S}$ is a $n \times m$ constant matrix whose columns span the linear subspace for which all constraints hold.  
+where $\bm{S}$ is an $n \times m$ constant matrix whose columns span the linear subspace for which all constraints hold.  
 
-\noindent 
-To understand the notations clearly, consider the hierarchy given in Figure 1.
+In any hierarchy, the most aggregated level is labelled level 0, the second most aggregated level is labelled level 1 and so on. 
+
+Consider the hierarchy given in Figure \ref{fig1}. 
+
 \begin{figure}[H]
-	\begin{center}
-		\leaf{AA} \leaf{AB} 
-		\branch{2}{A}
-		\leaf{BA} \leaf{BB}
-		\branch{2}{B}
-		\branch{2}{Tot}
-		\qobitree
-	\end{center}
-	\caption{Two level hierarchical diagram}
+  \begin{center}
+    \leaf{AA} \leaf{AB} 
+    \branch{2}{A}
+    \leaf{BA} \leaf{BB}
+    \branch{2}{B}
+    \branch{2}{Tot}
+    \qobitree
+  \end{center}
+  \caption{Two level hierarchical diagram}\label{fig1}
 \end{figure}
-\noindent
-In any hierarchy, the most aggregated level is termed as level 0, the second most aggregated level is termed as level 1 and so on. This example consists of two levels. At a particular time $t$, let $y_{Tot,t}$ denote the observation at level 0; $y_{A,t}, y_{B,t} $ denote observations at level 1; and $y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}$ denote observations at level 2. Then $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, \\$\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $m=4$, $n=7$, and $$ \bm{S} = \begin{pmatrix} 1& 1 &1 &1  \\ 1 &1 & 0 &0 \\   0&0  & 1 & 1 \\ & & I_4 &   \end{pmatrix}, $$ where $I_4$ is a $4$-dimension identity matrix.  
+
+This example consists of two levels. At a particular time $t$, let $y_{Tot,t}$ denote the observation at level~0; $y_{A,t}, y_{B,t} $ denote observations at level~1; and $y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}$ denote observations at level~2. Then $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $m=4$, $n=7$, and 
+$$ 
+  \bm{S} = \begin{pmatrix} 
+               1& 1 &1 &1  \\ 
+               1 &1 & 0 &0 \\   
+               0&0  & 1 & 1 \\ 
+               & \multicolumn{2}{c}{I_4} &   
+           \end{pmatrix}, 
+$$ 
+where $I_4$ is a $4$-dimension identity matrix.  
+
 
 \section{Coherent forecasts}\label{sec:definitions}
 
-The main purpose of this section is to provide formal definitions for coherent forecasts. We first give an alternative definition for coherent point forecasts using the properties of vector spaces which is then followed by the definition of coherent probabilistic forecasts. 
+While coherent point forecasts have been discussed many times previously, the definitions of coherence previously given are vague and are not easily extended to the situation of probabilistic forecasting.
+
+We first give a new definition for coherent point forecasts using the properties of vector spaces, and then provide a definition of coherent probabilistic forecasts. 
 
 \begin{definition}[Coherent subspace]
-	Let $\bm{\mathbb{C}}^m$ is a $m$-dimensional subspace of $\bm{\mathbb{R}}^n$, $\bm{\mathbb{C}}^m < \bm{\mathbb{R}}^n$. $\bm{\mathbb{C}}^m$ is said to be a coherent space, if it is spanned by the columns of $\bm{S}$. 
+Suppose an $n$-dimensional time series $\bm{y}_t \in \mathbb{R}^n$ is subject to the linear aggregation constraint $\bm{y}_t = \bm{S}\bm{b}_t$ where $\bm{b}_t \in \mathbb{R}^m$ and $\bm{S}$ is an $n \times m$ constant matrix. Let $\mathbb{C}^m$ be an $m$-dimensional subspace of $\mathbb{R}^n$, where $\mathbb{C}^m < \mathbb{R}^n$. Then $\mathbb{C}^m$ is said to be a coherent space if it is spanned by the columns of $\bm{S}$. 
 \end{definition}
 
-It is worth to notice that the coherent space $\bm{\mathbb{C}}^m$ is equivalent to the column space of $\bm{S}$ which we denote by $\mathscr{C}(\bm{S})$. Further the space orthogonal to $\bm{\mathbb{C}}^m$ is denoted by $\bm{\mathbb{N}}^{n-m}$ and it is equivalent to the null space of $\bm{S}$.
+Notice that the coherent space $\mathbb{C}^m$ is equivalent to the column space of $\bm{S}$, which we denote by $\mathscr{C}(\bm{S})$. Further, the space orthogonal to $\mathbb{C}^m$ is equivalent to the null space of $\bm{S}$, which we denote by $\bm{\mathbb{N}}^{n-m}$.
 
 \begin{definition}[Coherent Point Forecasts]\label{def:cohpoint}
-	Suppose $\bm{\breve{y}}_{t+h} \in \mathbb{R}^n$ consists point forecasts of each series in the hierarchy at time $t+h$.  $\bm{\breve{y}}_{t+h}$ is said to be \textit{Coherent} if $\bm{\breve{y}}_{t+h} \in \bm{\mathbb{C}}$. 
+	Suppose $\breve{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ denotes point forecasts of each series in the hierarchy at time $t+h$.  Then $\breve{\bm{y}}_{t+h|t}$ is \emph{coherent} if $\breve{\bm{y}}_{t+h|t} \in \mathbb{C}$. 
 \end{definition}
 
 \begin{definition}[Coherent Probabilistic Forecasts]\label{def:cohprob}
-	Let $(\bm{\mathbb{R}}^m, \bm{\mathscr{F}}^m, \nu^m)$ be a probability triple where $\mathscr{F}^m$ is sigma algebra on $\bm{\mathbb{R}}^m$. Then, $(\bm{\mathbb{C}}, \mathscr{F}_{\bm{S}}, \breve{\nu})$ is said to be coherent probability measure space iff, 
-	$$\breve{\nu}(\bm{S}(\bm{A})) = \nu^m(\bm{A}) \quad \forall \quad \bm{A} \in \mathscr{F}^m,$$ 
+	Let $(\mathbb{R}^m, \bm{\mathscr{F}}^m, \nu^m)$ be a probability triple where $\mathscr{F}^m$ is a $\sigma$-algebra on $\mathbb{R}^m$. Then, $(\mathbb{C}, \mathscr{F}_{\bm{S}}, \breve{\nu})$ is said to be a coherent probability measure space iff
+	$$
+      \breve{\nu}(\bm{S}(\bm{A})) = \nu^m(\bm{A}) \quad \forall  \bm{A} \in \mathscr{F}^m,
+    $$ 
 	where $\bm{S}(\bm{A})$ denotes the image of subset $\bm{A}$ under $\bm{S}$. 
 \end{definition}
+
+We illustrate Definition \ref{def:cohprob} in Figure \ref{fig2}, showing $\bm{S}$ mapping any set $\bm{A}\in\mathbb{R}^m$ to the coherent space.
 
 \begin{figure}[H]
 	\begin{center}
@@ -147,7 +165,7 @@ It is worth to notice that the coherent space $\bm{\mathbb{C}}^m$ is equivalent 
 		
 		\node at (0,5) {$\mathbb{R}^m$(domain of $\bm{S}$)};
 		\node at (4,5) {$\mathbb{R}^n$(codomain of $\bm{S}$)};
-		\node at (4,1.0) {$\bm{\mathbb{C}}^m$};
+		\node at (4,1.0) {$\mathbb{C}^m$};
 		%\node[bullet,label=below:$f(x)$] at (4,2.5){};
 		
 		
@@ -161,42 +179,46 @@ It is worth to notice that the coherent space $\bm{\mathbb{C}}^m$ is equivalent 
 		\end{tikzpicture}
 		\newline
 	\end{center}
-	\caption{Any set $\bm{A} \in \mathbb{R}^m$ will be mapped to the $\bm{\mathbb{C}}^m$ through the mapping $\bm{S}$}
+	\caption{Any set $\bm{A} \in \mathbb{R}^m$ will be mapped to $\mathbb{C}^m$ through the mapping $\bm{S}$}\label{fig2}
 \end{figure}
 
-Definition (\ref{def:cohprob}) implies the probability measure on $\bm{\mathbb{C}}^m$ is equivalent to the probability measure on $(\bm{\mathbb{R}}^m, \bm{\mathscr{F}}^m)$. Hence, there is no density anywhere outside the linear subspace $\bm{\mathbb{C}}^m$. That is, a \textit{Coherent probability density forecast} is any density $\bm{f}(\bm{\breve{y}}_{t+h})$ such that $\bm{f}(\bm{\breve{y}}_{t+h})=0$ for all $\bm{\breve{y}}_{t+h} \in \bm{\mathbb{N}}^{n-m}$. Following example will help to understand these definitions more clearly.
+Definition \ref{def:cohprob} implies the probability measure on $\mathbb{C}^m$ is equivalent to the probability measure on $(\mathbb{R}^m, \bm{\mathscr{F}}^m)$. Hence, there is no density anywhere outside the linear subspace $\mathbb{C}^m$. That is, a \textit{coherent probability density forecast} is any density $\bm{f}(\breve{\bm{y}}_{t+h})$ such that $\bm{f}(\breve{\bm{y}}_{t+h})=0$ for all $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}^{n-m}$. 
 
-\subsubsection*{Example 1}
+The following example will help to understand these definitions more clearly.
 
-Consider a simple hierarchy with two bottom level series $A$ and $B$ that add up to the top level series $Tot$. Suppose the forecasts at time $t+h$ of these series are given by $\bm{\breve{y}}_{t+h} = [\breve{y}_{Tot,t+h},\breve{y}_{A,t+h}, \breve{y}_{B,t+h}]$ and $\bm{\breve{y}}_{t+h} \in \bm{\mathbb{R}}^3$. Due to the aggregation constraint of the hierarchy we have $\breve{y}_{Tot,t+h}=\breve{y}_{A,t+h}+\breve{y}_{B,t+h}$. This implies, even though  $\bm{\breve{y}}_{t+h}$ is in $\bm{\mathbb{R}}^3$, the points actually lie in $\bm{\mathbb{C}}^2$, which is a two dimensional subspace within that $\bm{\mathbb{R}}^3$ space. Therefore, for any $\bm{\breve{y}}_{t+h} \in \bm{\mathbb{N}}$ have a zero probability. I.e. $f(\bm{\breve{y}}_{t+h})=0$ for any $\bm{\breve{y}}_{t+h} \in \bm{\mathbb{N}}$.
+Consider a simple hierarchy with two bottom level series $A$ and $B$ that add up to the top level series $Tot$. Suppose the forecasts of these series at time $t+h$ are given by $\breve{\bm{y}}_{t+h} = [\breve{y}_{Tot,t+h},\breve{y}_{A,t+h}, \breve{y}_{B,t+h}]$. Due to the aggregation constraint of the hierarchy we have $\breve{y}_{Tot,t+h}=\breve{y}_{A,t+h}+\breve{y}_{B,t+h}$. This implies that, even though  $\breve{\bm{y}}_{t+h} \in \mathbb{R}^3$, the points actually lie in $\mathbb{C}^2$, which is a two dimensional subspace within that $\mathbb{R}^3$ space. Therefore, any $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}$ is impossible, so that $f(\breve{\bm{y}}_{t+h})=0$ for any $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}$.
 
-For a particular coherent subspace $\bm{\mathbb{C}}^m$, there exist several distinct basis vectors. For example, in the smallest hierarchy considered above, $\left\{\begin{pmatrix} 1&1&0 \end{pmatrix}', \begin{pmatrix} 1&0&1 \end{pmatrix}'\right\}$, $\left\{\begin{pmatrix} 1&0&1 \end{pmatrix}',\\ \begin{pmatrix}
-0&1&-1 \end{pmatrix}'\right\}$ and the singular value decomposition of these two are some alternative basis vectors that spans the same $\bm{\mathbb{C}}^m$. Given a basis for $\bm{\mathbb{C}}^m$, every series of the hierarchy can be linearly determined as a linear combination of that basis vectors. We referred to the coefficients of these linear combinations as the \textit{basis series}. It is apparent that these basis series are $m$ dimensional and linearly independent in a given hierarchy. For example, in the smallest hierarchy, $(\bm{A,B})$ and $(\bm{Tot,A})$ are the basis series corresponds to the basis vectors $\left\{\begin{pmatrix} 1&1&0 \end{pmatrix}', \begin{pmatrix} 1&0&1 \end{pmatrix}'\right\}$ and $\left\{\begin{pmatrix} 1&0&1 \end{pmatrix}', \begin{pmatrix}
-0&1&-1 \end{pmatrix}'\right\}$ respectively. Thus it is clear that the set of bottom level series is a basis series that corresponds to the column vectors of $\bm{S}$. 
+For a particular coherent subspace $\mathbb{C}^m$, there exist several distinct basis vectors. For example, in the small hierarchy considered above, 
+ $\{(1 ~1 ~0)', (1 ~0 ~1)'\}$, 
+ $\{(1 ~ 0 ~ 1)',(0~1~-\!\!1)'\}$ 
+and the singular value decomposition of these two are some alternative basis vectors that span the same $\mathbb{C}^m$. Given a basis for $\mathbb{C}^m$, every series of the hierarchy can be linearly determined as a linear combination of those basis vectors. We refer to the coefficients of these linear combinations as the \textit{basis series}. It is apparent that these basis series are $m$-dimensional and linearly independent in a given hierarchy. For example, in the smallest hierarchy, $(A,B)$ and $(Tot,A)$ are the basis series corresponding to the basis vectors 
+ $\{(1 ~1 ~0)', (1 ~0 ~1)'\}$, 
+ $\{(1 ~ 0 ~ 1)',(0~1~-\!\!1)'\}$
+respectively. Thus it is clear that the set of bottom level series is a basis series that corresponds to the column vectors of $\bm{S}$. 
 
-An important thing to notice here is, since the basis are not unique for a give coherent subspace, the definition (\ref{def:cohprob}) is not unique and one can redefine the coherent probabilistic forecasts with respect to any basis. However, we stick to the definition (\ref{def:cohprob}) and consider the basis defined by the columns of $\bm{S}$ in what follows.
+Because the basis is not unique for a given coherent subspace, Definition \ref{def:cohprob} is not unique, and one can redefine the coherent probabilistic forecasts with respect to any basis. However, we stick to Definition \ref{def:cohprob} and consider the basis defined by the columns of $\bm{S}$ in what follows.
 
-It is also worth to mention that the definition (\ref{def:cohpoint}) and (\ref{def:cohprob}) facilitate extension to the forecast reconciliation which we talk about in the next section. In contrast to our definition, \citet{BenTaieb2017} defines the coherent probabilistic forecasts in terms of convolution. According to their definition, if the forecasts are coherent, then the convolution of forecast distributions of disaggregate series is same as the forecast distribution of the corresponding aggregate series.  
+Definitions \ref{def:cohpoint} and \ref{def:cohprob} facilitate extension to probabilistic forecast reconciliation which we discuss in the next section. In contrast to our definition, \citet{BenTaieb2017} define coherent probabilistic forecasts in terms of convolutions. According to their definition, if the forecasts are coherent, then the convolution of forecast distributions of disaggregate series is identical to the forecast distribution of the corresponding aggregate series.  While this is consistent with our definition, it is not easy to extend their definition to deal with probabilistic reconciliation.
 
 \section{Forecast reconciliation}\label{sec:reconciliation}
 
-Previous studies on point forecast literature have shown that the reconciliation provides better coherent forecasts than the conventional bottom-up and top-down methods (\cite{Hyndman2011}; \cite{VanErven2015a}; \cite{Wickramasuriya2017}). However, not extended in the context of probabilistic forecasts in published literature. Thus our main focus is to rigorously define the probabilistic forecast reconciliation and discuss how that definition can be used in practice.  
+Previous studies on coherent point forecasting have shown that reconciliation provides better coherent forecasts than the conventional bottom-up and top-down methods \citep{Hyndman2011,VanErven2015a,Wickramasuriya2017}. However, this idea has not been explored in the context of probabilistic forecasting. Consequently, we Thus our main focus is to rigorously define the probabilistic forecast reconciliation and discuss how that definition can be used in practice.  
 
 \subsection{Point forecast reconciliation}
 
 Initially we define point forecast reconciliation as a groundwork to the probabilistic forecast reconciliation. 
 
 \begin{definition}\label{def:reconpoint}
-	Let $\bm{g}:\bm{\mathbb{R}}^n \rightarrow \bm{\mathbb{R}}^m $ and $\hat{\bm{y}}_{t+h} \in \bm{\mathbb{R}}^n$ be any set of incoherent forecasts at time $t+h$. Then $\tilde{\bm{b}}_{t+h}$ is said to be reconciled bottom level forecasts if 
+	Let $\bm{g}:\mathbb{R}^n \rightarrow \mathbb{R}^m $ and $\hat{\bm{y}}_{t+h} \in \mathbb{R}^n$ be any set of incoherent forecasts at time $t+h$. Then $\tilde{\bm{b}}_{t+h}$ is said to be reconciled bottom level forecasts if 
 	\begin{equation}
 	\tilde{\bm{b}}_{t+h}=\bm{g}(\hat{\bm{y}}_{t+h}),
 	\end{equation}
-	where $\bm{g}(\hat{\bm{y}}_{t+h})$ is the image of $\hat{\bm{y}}_{t+h}$ under $\bm{g}$ on $\bm{\mathbb{R}}^m$. The reconciled forecasts for the whole hierarchy is then given by $\tilde{\bm{y}}_{t+h}=\bm{S} \circ \bm{g}(\hat{\bm{y}}_{t+h})$ such that $\tilde{\bm{y}}_{t+h} \in \bm{\mathbb{C}}^m$, where $\bm{S}\circ \bm{g}(.)$ is a projection of $\bm{g}(.)$ onto the $\bm{\mathbb{C}}^m$.
+	where $\bm{g}(\hat{\bm{y}}_{t+h})$ is the image of $\hat{\bm{y}}_{t+h}$ under $\bm{g}$ on $\mathbb{R}^m$. The reconciled forecasts for the whole hierarchy is then given by $\tilde{\bm{y}}_{t+h}=\bm{S} \circ \bm{g}(\hat{\bm{y}}_{t+h})$ such that $\tilde{\bm{y}}_{t+h} \in \mathbb{C}^m$, where $\bm{S}\circ \bm{g}(.)$ is a projection of $\bm{g}(.)$ onto the $\mathbb{C}^m$.
 \end{definition}
 
-Importance of definition (\ref{def:reconpoint}) is that it facilitates for both linear and non-linear reconciliation. In other words, if $\bm{g}$ is a non-linear function, then the reconciliation of $\hat{\bm{y}}_{t+h}$ will be non-linear. On the other hand, if $\bm{g}$ is a linear function, then $\bm{S}\circ \bm{g}(.)$ will linearly projects incoherent point forecasts onto $\bm{\mathbb{C}}^m$. Latter was the main focus in previous studies in hierarchical point forecasting, where $\bm{g}$ is considered as a $m \times n$ matrix $\bm{P}$ and thus $\tilde{\bm{y}}_{t+h}=\bm{S}\bm{P} \hat{\bm{y}}_{t+h}$. 
+Importance of definition (\ref{def:reconpoint}) is that it facilitates for both linear and non-linear reconciliation. In other words, if $\bm{g}$ is a non-linear function, then the reconciliation of $\hat{\bm{y}}_{t+h}$ will be non-linear. On the other hand, if $\bm{g}$ is a linear function, then $\bm{S}\circ \bm{g}(.)$ will linearly projects incoherent point forecasts onto $\mathbb{C}^m$. Latter was the main focus in previous studies in hierarchical point forecasting, where $\bm{g}$ is considered as a $m \times n$ matrix $\bm{P}$ and thus $\tilde{\bm{y}}_{t+h}=\bm{S}\bm{P} \hat{\bm{y}}_{t+h}$. 
 
-In the following content we provide an alternative explanation for linear reconciliation based on definition (\ref{def:reconpoint}). Let $\bm{R} \in \bm{\mathbb{R}}^{n \times (n-m)}$ consists the columns that spans $\bm{\mathbb{N}}^{n-m}$ which is orthogonal to $\bm{\mathbb{C}}^m$. Note that $\bm{R}$ is also not unique and one example is a matrix whose columns represent the aggregation constraints for a given hierarchy. Then for the hierarchy in example 1, 
+In the following content we provide an alternative explanation for linear reconciliation based on definition (\ref{def:reconpoint}). Let $\bm{R} \in \mathbb{R}^{n \times (n-m)}$ consists the columns that spans $\bm{\mathbb{N}}^{n-m}$ which is orthogonal to $\mathbb{C}^m$. Note that $\bm{R}$ is also not unique and one example is a matrix whose columns represent the aggregation constraints for a given hierarchy. Then for the hierarchy in example 1, 
 $$ 
 \bm{S} = 
 \begin{pmatrix} 
@@ -208,12 +230,12 @@ $$
 1 \\ -1 \\ -1 
 \end{pmatrix}.
 $$ 
-\noindent
-Further let $\{\bm{s}_1,...,\bm{s}_m\}$ and $\{\bm{r}_1,...,\bm{r}_{n-m}\}$ denote the columns of $\bm{S}$ and $\bm{R}$ respectively. Then $\bm{B}=\{\bm{s}_1,...,\bm{s}_m, \bm{r}_1,...,\bm{r}_{n-m}\}$ is a basis for $\bm{\mathbb{R}}^n$. Now, using the insights of definition (\ref{def:reconpoint}), we can use the following steps to reconcile the point forecasts.
+
+Further let $\{\bm{s}_1,...,\bm{s}_m\}$ and $\{\bm{r}_1,...,\bm{r}_{n-m}\}$ denote the columns of $\bm{S}$ and $\bm{R}$ respectively. Then $\bm{B}=\{\bm{s}_1,...,\bm{s}_m, \bm{r}_1,...,\bm{r}_{n-m}\}$ is a basis for $\mathbb{R}^n$. Now, using the insights of definition (\ref{def:reconpoint}), we can use the following steps to reconcile the point forecasts.
 
 \subsubsection*{Step 1: Obtaining reconciled bottom level point forecasts}
 
-For a given incoherent set of point forecasts $\hat{\bm{y}}_{t+h} \in \bm{\mathbb{R}}^n$, first we find the coordinates of $\hat{\bm{y}}_{t+h}$ with respect to the basis $\bm{B}$. Let $\begin{pmatrix}\tilde{\bm{b}}'_{t+h} & \vdots& \tilde{\bm{t}}'_{t+h}\end{pmatrix}'$ denote these coordinates. Note that $\tilde{\bm{b}}_{t+h}$ is a basis series which is really the reconciled bottom level series that corresponds to the coefficients of linear combination of the basis $\{\bm{s}_1,...,\bm{s}_m\}$. Similarly, $\tilde{\bm{t}}_{t+h}$ is another basis series corresponds to the coefficients of linear combination of the basis $\{\bm{r}_1,...,\bm{r}_{n-m}\}$. Then from basic properties of linear algebra it follows that, 
+For a given incoherent set of point forecasts $\hat{\bm{y}}_{t+h} \in \mathbb{R}^n$, first we find the coordinates of $\hat{\bm{y}}_{t+h}$ with respect to the basis $\bm{B}$. Let $\begin{pmatrix}\tilde{\bm{b}}'_{t+h} & \vdots& \tilde{\bm{t}}'_{t+h}\end{pmatrix}'$ denote these coordinates. Note that $\tilde{\bm{b}}_{t+h}$ is a basis series which is really the reconciled bottom level series that corresponds to the coefficients of linear combination of the basis $\{\bm{s}_1,...,\bm{s}_m\}$. Similarly, $\tilde{\bm{t}}_{t+h}$ is another basis series corresponds to the coefficients of linear combination of the basis $\{\bm{r}_1,...,\bm{r}_{n-m}\}$. Then from basic properties of linear algebra it follows that, 
 
 \[
 \begin{pmatrix}
@@ -261,9 +283,9 @@ From \eqref{4.4} it follows that,
 
 \subsubsection*{Step 2: Obtaining reconciled point forecasts for the whole hierarchy}
 
-This step directly follows by the definition for coherent forecasts. That is, to obtain reconciled point forecasts for the entire hierarchy, we map $\tilde{\bm{b}}_{t+h} \in \bm{\mathbb{R}}^n$ to the $\bm{\mathbb{C}}^m$ through $\bm{S}$. Thus we have, 
+This step directly follows by the definition for coherent forecasts. That is, to obtain reconciled point forecasts for the entire hierarchy, we map $\tilde{\bm{b}}_{t+h} \in \mathbb{R}^n$ to the $\mathbb{C}^m$ through $\bm{S}$. Thus we have, 
 \begin{equation}
-\tilde{\bm{y}}_{t+h}=\bm{S}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h}, \quad \tilde{\bm{y}}_{t+h} \in \bm{\mathbb{C}}^m<\bm{\mathbb{R}}^n.
+\tilde{\bm{y}}_{t+h}=\bm{S}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h}, \quad \tilde{\bm{y}}_{t+h} \in \mathbb{C}^m<\mathbb{R}^n.
 \end{equation}
 
 Finding a suitable $\bm{R}_\bot$ with respect to a certain loss function will result optimally reconciled point forecasts of the hierarchy. Notice that, if $\bm{P}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$, then the definition for linear reconciliation of point forecasts in previous studies coincides with our explanation.
@@ -402,9 +424,9 @@ Calibration refers to the statistical compatibility between probabilistic foreca
 
 Scoring rules are summary measures obtained based on the relationship between predictive distribution and the realizations. In some studies, researchers take the scoring rules to be positively oriented which they would wish to maximize \citep{Gneiting2007}. However, scoring rules were also defined to be negatively oriented which forecasters wish to minimize \citep{Gneiting2014}. We consider these negatively oriented scoring rules to evaluate probabilistic forecasts in hierarchical time series.
 
-Let $\bm{\breve{Y}}$ and $\bm{Y}$ be a $n$-dimensional random vectors from the predictive distribution $\bm{F}$ and the true distribution $\bm{G}$. Further let $\bm{y}$ be a $n$-dimensional realization. Then the scoring rule is a numerical value $S(\bm{\breve{Y}},\bm{y})$ assign to each pair $(\bm{\breve{Y}},\bm{y})$ and the proper scoring rule is defined as,
+Let $\breve{\bm{Y}}$ and $\bm{Y}$ be a $n$-dimensional random vectors from the predictive distribution $\bm{F}$ and the true distribution $\bm{G}$. Further let $\bm{y}$ be a $n$-dimensional realization. Then the scoring rule is a numerical value $S(\breve{\bm{Y}},\bm{y})$ assign to each pair $(\breve{\bm{Y}},\bm{y})$ and the proper scoring rule is defined as,
 \begin{equation}\label{eq:(3.1.)}
-\E_{\bm{G}}[S(\bm{Y},\bm{y})] \le \E_{\bm{G}}[S(\bm{\breve{Y}},\bm{y})],
+\E_{\bm{G}}[S(\bm{Y},\bm{y})] \le \E_{\bm{G}}[S(\breve{\bm{Y}},\bm{y})],
 \end{equation}
 where $\E_{\bm{G}}[S(\bm{Y,y})]$ is the expected score under the true distribution $\bm{G}$ \citep{Gneiting2008, Gneiting2014}.
 
@@ -421,7 +443,7 @@ Table \ref{table:scoringrules} summarizes few existing proper scoring rules.
 		$\text{LS}(\breve{\bm{F}},\bm{y}_{T+h}) = -\log {\breve{\bm{f}}(\bm{y}_{T+h})}$ &
 		\citet{Gneiting2007}  \\\\[-0.2cm]
 		\text{Energy score}    &
-		$\text{eS}(\bm{\breve{Y}}_{T+h},\bm{y}_{T+h}) =
+		$\text{eS}(\breve{\bm{Y}}_{T+h},\bm{y}_{T+h}) =
 		\E_{\breve{\bm{F}}}
 		\|\breve{\bm{Y}}_{T+h}-\bm{y}_{T+h}\|^\alpha -$ \par\hfill
 		$\frac{1}{2}\E_{\breve{\bm{F}}}\|\breve{\bm{Y}}_{T+h}-\breve{\bm{Y}}^*_{T+h}\|^\alpha$, \,\, $\alpha \in (0,2]$ &
@@ -441,7 +463,7 @@ Even though the log score can be used evaluate simulated forecast densities with
 
 In the energy score, for $\alpha=2$, it can be easily shown that
 \begin{equation} \label{eq:(5.1)}
-\text{eS}(\bm{\breve{Y}_{T+h},y_{T+h}}) = \|\bm{y}_{T+h}-\breve{\bm{\mu}}_{T+h}\|^2,
+\text{eS}(\breve{\bm{Y}_{T+h},y_{T+h}}) = \|\bm{y}_{T+h}-\breve{\bm{\mu}}_{T+h}\|^2,
 \end{equation}
 where $\breve{\bm{\mu}}_{T+h} =\E_{\bm{F}}(\breve{\bm{Y}}_{T+h}) $. Therefore in the limiting case, the energy score only measures the accuracy of the forecast mean, but not the entire distribution. Further \citet{Pinson2013a} argued that the Energy score given in Table \ref{table:scoringrules} has a very low discrimination ability for incorrectly specified covariances, even though it discriminates the misspecified means well.
 
@@ -635,7 +657,7 @@ As such we generate data for the hierarchy with sample size $T=501$. Then univar
 
 To assess the predictive performance of different forecasting methods, we use scoring rules as discussed in Section \ref{sec:evaluation}. In addition to that we use Skill score \citep{Gneiting2007} for any comparison. For a given forecasting method, evaluated by a particular scoring rule $S(.)$ , the skill score will be calculated as follows,
 \begin{equation}
-Ss[S_B(.)] = \frac{S_B(\bm{Y},\bm{y})^{\text{ref}} - S_B(\bm{\breve{Y}},\bm{y})}{S_B(\bm{Y},\bm{y})^{\text{ref}}}\times 100\%,
+Ss[S_B(.)] = \frac{S_B(\bm{Y},\bm{y})^{\text{ref}} - S_B(\breve{\bm{Y}},\bm{y})}{S_B(\bm{Y},\bm{y})^{\text{ref}}}\times 100\%,
 \end{equation}
 where $S_B(.)$ is average score over $B$ samples and $S_B(\bm{Y},\bm{y})^{\text{ref}}$ is the average score of the reference forecasting methods. Thus $Ss[S_B(.)]$ gives the percentage improvement of the preferred forecasting method relative to the reference method. Any negative value of $Ss[S_B(.)]$ indicate that the method we compared is poor than the reference method, whereas any positive value indicates that method is superior to the reference method.
 
