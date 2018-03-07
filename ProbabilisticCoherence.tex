@@ -13,6 +13,9 @@
 \def\E{\text{E}}
 \mathtoolsset{showonlyrefs=true}
 
+\def\PQ{\begin{pmatrix}\bm{P}\\[-0.2cm]\bm{Q}\end{pmatrix}}
+\def\bt{\begin{pmatrix}\tilde{\bm{b}}_{t+h}\\[-0.2cm]\tilde{\bm{t}}_{t+h}\end{pmatrix}}
+
 \newtheorem{definition}{Definition}[section]
 
 \bibliography{References_paper1}
@@ -214,12 +217,12 @@ Initially we define point forecast reconciliation, before extending the idea to 
   \begin{equation}
     \tilde{\bm{y}}_{t+h}=\bm{S} \circ \bm{g}(\hat{\bm{y}}_{t+h}),
   \end{equation} 
-  where $\bm{g}:\mathbb{R}^n \rightarrow \mathbb{R}^m$. Then $\tilde{\bm{y}}_{t+h}$ is said to be ``reconciled'' if  $\tilde{\bm{y}}_{t+h} \in \mathbb{C}^m$, where $\bm{S}\circ \bm{g}(.)$ is a projection of $\bm{g}(.)$ onto $\mathbb{C}^m$.
+  where $\bm{g}:\mathbb{R}^n \rightarrow \mathbb{R}^m$ and $\bm{S}\circ \bm{g}(\cdot)$ is a projection of $\bm{g}(\cdot)$ onto $\mathbb{C}^m$. Then $\tilde{\bm{y}}_{t+h}$ is said to be ``reconciled'' if  $\tilde{\bm{y}}_{t+h} \in \mathbb{C}^m$.
 \end{definition}
 
-The importance of Definition \ref{def:reconpoint} is that it allows for both linear and non-linear reconciliation. In other words, if $\bm{g}$ is a non-linear function, then the reconciliation of $\hat{\bm{y}}_{t+h}$ will be non-linear. On the other hand, if $\bm{g}$ is a linear function, then $\bm{S}\circ \bm{g}(.)$ will linearly projects incoherent point forecasts onto $\mathbb{C}^m$. Latter was the main focus in previous studies in hierarchical point forecasting, where $\bm{g}$ is considered as a $m \times n$ matrix $\bm{P}$ and thus $\tilde{\bm{y}}_{t+h}=\bm{S}\bm{P} \hat{\bm{y}}_{t+h}$. 
+Definition \ref{def:reconpoint} allows for both linear and non-linear reconciliation. In other words, if $\bm{g}$ is a non-linear function, then the reconciliation of $\hat{\bm{y}}_{t+h}$ will be non-linear, while if $\bm{g}$ is a linear function, then $\bm{S}\circ \bm{g}(\cdot)$ will linearly project incoherent point forecasts onto $\mathbb{C}^m$. Previous studies in hierarchical point forecasting have only focussed on the linear case, $\bm{g}(\bm{y}) = \bm{P}\bm{y}$, where $\bm{P}$ is an $m \times n$ matrix, and so $\tilde{\bm{y}}_{t+h}=\bm{S}\bm{P} \hat{\bm{y}}_{t+h}$. 
 
-In the following content we provide an alternative explanation for linear reconciliation based on definition (\ref{def:reconpoint}). Let $\bm{R} \in \mathbb{R}^{n \times (n-m)}$ consists the columns that spans $\bm{\mathbb{N}}^{n-m}$ which is orthogonal to $\mathbb{C}^m$. Note that $\bm{R}$ is also not unique and one example is a matrix whose columns represent the aggregation constraints for a given hierarchy. Then for the hierarchy in example 1, 
+Using Definition \ref{def:reconpoint}, we can now explain previous results for linear forecast reconciliation. Let $\bm{R} \in \mathbb{R}^{n \times (n-m)}$ comprise the columns that span $\bm{\mathbb{N}}^{n-m}$, which is orthogonal to $\mathbb{C}^m$. Note that $\bm{R}$ is not unique; one example is a matrix whose columns represent the aggregation constraints for a given hierarchy. For the hierarchy in example 1, 
 $$ 
 \bm{S} = 
 \begin{pmatrix} 
@@ -232,19 +235,14 @@ $$
 \end{pmatrix}.
 $$ 
 
-Further let $\{\bm{s}_1,...,\bm{s}_m\}$ and $\{\bm{r}_1,...,\bm{r}_{n-m}\}$ denote the columns of $\bm{S}$ and $\bm{R}$ respectively. Then $\bm{B}=\{\bm{s}_1,...,\bm{s}_m, \bm{r}_1,...,\bm{r}_{n-m}\}$ is a basis for $\mathbb{R}^n$. Now, using the insights of definition (\ref{def:reconpoint}), we can use the following steps to reconcile the point forecasts.
+Further let $\{\bm{s}_1,\dots,\bm{s}_m\}$ and $\{\bm{r}_1,\dots,\bm{r}_{n-m}\}$ denote the columns of $\bm{S}$ and $\bm{R}$ respectively. Then $\bm{B}=\{\bm{s}_1,\dots,\bm{s}_m, \bm{r}_1,\dots,\bm{r}_{n-m}\}$ is a basis for $\mathbb{R}^n$. Now, using the insights of Definition \ref{def:reconpoint}, we can use the following steps to reconcile the point forecasts.
 
 \subsubsection*{Step 1: Obtaining reconciled bottom level point forecasts}
 
-For a given incoherent set of point forecasts $\hat{\bm{y}}_{t+h} \in \mathbb{R}^n$, first we find the coordinates of $\hat{\bm{y}}_{t+h}$ with respect to the basis $\bm{B}$. Let $\begin{pmatrix}\tilde{\bm{b}}'_{t+h} & \vdots& \tilde{\bm{t}}'_{t+h}\end{pmatrix}'$ denote these coordinates. Note that $\tilde{\bm{b}}_{t+h}$ is a basis series which is really the reconciled bottom level series that corresponds to the coefficients of linear combination of the basis $\{\bm{s}_1,...,\bm{s}_m\}$. Similarly, $\tilde{\bm{t}}_{t+h}$ is another basis series corresponds to the coefficients of linear combination of the basis $\{\bm{r}_1,...,\bm{r}_{n-m}\}$. Then from basic properties of linear algebra it follows that, 
-
+For a given incoherent set of point forecasts $\hat{\bm{y}}_{t+h} \in \mathbb{R}^n$, first we find the coordinates of $\hat{\bm{y}}_{t+h}$ with respect to the basis $\bm{B}$. Let $(\tilde{\bm{b}}'_{t+h} , \tilde{\bm{t}}'_{t+h})'$ denote these coordinates. Note that $\tilde{\bm{b}}_{t+h}$ is a basis series which is equivalent to the reconciled bottom level series, and which corresponds to the linear combination coefficients of the basis $\{\bm{s}_1,\dots,\bm{s}_m\}$. Similarly, $\tilde{\bm{t}}_{t+h}$ is another basis series corresponding to the linear combination coefficients of the basis $\{\bm{r}_1,\dots,\bm{r}_{n-m}\}$. Then from basic properties of linear algebra it follows that, 
 \[
-\begin{pmatrix}
-\bm{S} & \vdots& \bm{R}
-\end{pmatrix}
-\begin{pmatrix}
-\tilde{\bm{b}}'_{t+h} & \vdots& \tilde{\bm{t}}'_{t+h}
-\end{pmatrix}'
+(\bm{S} ~ \vdots~ \bm{R})
+(\tilde{\bm{b}}'_{t+h},~ \tilde{\bm{t}}'_{t+h})'
 = \hat{\bm{y}}_{t+h},
 \]
 \[
@@ -252,19 +250,15 @@ For a given incoherent set of point forecasts $\hat{\bm{y}}_{t+h} \in \mathbb{R}
 \]
 and
 \begin{equation}\label{4.3}
-\begin{pmatrix}
-\tilde{\bm{b}}'_{t+h} & \vdots& \tilde{\bm{t}}'_{t+h}
-\end{pmatrix}' =
-\begin{pmatrix}
-\bm{S} & \vdots& \bm{R}
-\end{pmatrix}^{-1}
+(\tilde{\bm{b}}'_{t+h}, ~ \tilde{\bm{t}}'_{t+h})' =
+(\bm{S} ~ \vdots~ \bm{R})^{-1}
 \hat{\bm{y}}_{t+h}.
 \end{equation}
 
-In order to find $\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}^{-1}$, let $\bm{S}_{\bot}$ and $\bm{R}_{\bot}$ be the orthogonal complements of $\bm{S}$ and $\bm{R}$
-respectively. Then $\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}^{-1}$ is given by,
+In order to find $(\bm{S} ~ \vdots~ \bm{R})^{-1}$, let $\bm{S}_{\bot}$ and $\bm{R}_{\bot}$ be the orthogonal complements of $\bm{S}$ and $\bm{R}$
+respectively. Then $(\bm{S} ~ \vdots~ \bm{R})^{-1}$ is given by,
 \begin{equation}
-\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}^{-1} = \begin{pmatrix}
+(\bm{S} ~ \vdots~ \bm{R})^{-1} = \begin{pmatrix}
 (\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \\ \cdots \\ (\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot
 \end{pmatrix}.
 \end{equation}
@@ -284,26 +278,26 @@ From \eqref{4.4} it follows that,
 
 \subsubsection*{Step 2: Obtaining reconciled point forecasts for the whole hierarchy}
 
-This step directly follows by the definition for coherent forecasts. That is, to obtain reconciled point forecasts for the entire hierarchy, we map $\tilde{\bm{b}}_{t+h} \in \mathbb{R}^n$ to the $\mathbb{C}^m$ through $\bm{S}$. Thus we have, 
+This step directly follows from the definition for coherent forecasts. To obtain reconciled point forecasts for the entire hierarchy, we map $\tilde{\bm{b}}_{t+h} \in \mathbb{R}^n$ to the $\mathbb{C}^m$ through $\bm{S}$. Thus we have, 
 \begin{equation}
-\tilde{\bm{y}}_{t+h}=\bm{S}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h}, \quad \tilde{\bm{y}}_{t+h} \in \mathbb{C}^m<\mathbb{R}^n.
+\tilde{\bm{y}}_{t+h}=\bm{S}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h}, \qquad \tilde{\bm{y}}_{t+h} \in \mathbb{C}^m<\mathbb{R}^n.
 \end{equation}
 
-Finding a suitable $\bm{R}_\bot$ with respect to a certain loss function will result optimally reconciled point forecasts of the hierarchy. Notice that, if $\bm{P}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$, then the definition for linear reconciliation of point forecasts in previous studies coincides with our explanation.
+Finding a suitable $\bm{R}_\bot$ with respect to a certain loss function will lead to optimally reconciled point forecasts of the hierarchy. If $\bm{P}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$, then the definition for linear reconciliation of point forecasts in previous studies coincides with our explanation.
 
-Further in our context, we need to find $\bm{R}_\bot$ such that $\bm{R}'_\bot \bm{S}$ is invertible. i.e, $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \bm{S}=\bm{I}$. This condition coincides with the unbiased condition $\bm{SPS}=\bm{S}$ proposed by \citet{Hyndman2011}.
+In our context, we need to find $\bm{R}_\bot$ such that $\bm{R}'_\bot \bm{S}$ is invertible; i.e, $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \bm{S}=\bm{I}$. This condition coincides with the unbiased condition $\bm{SPS}=\bm{S}$ proposed by \citet{Hyndman2011}.
 
-In their study, \citet{Hyndman2011} proposed to choose,
+\citet{Hyndman2011} proposed to choose
 \begin{equation*}
 \tilde{\bm{b}}^{OLS}_{t+h}=(\bm{S}' \bm{S})^{-1}\bm{S}' \hat{\bm{y}}_{t+h},
 \end{equation*}
-where in this context, $\bm{R}'_\bot = \bm{S}'$. Thus the reconciled point forecasts for the entire hierarchy is given by,
+where in this context, $\bm{R}'_\bot = \bm{S}'$. Thus the reconciled point forecasts for the entire hierarchy are given by,
 \begin{equation}
 \tilde{\bm{y}}^{OLS}_{t+h}=\bm{S}(\bm{S}' \bm{S})^{-1}\bm{S}' \hat{\bm{y}}_{t+h}.
 \end{equation}
-They referred this to as OLS solution and the loss function they considered is equivalent to the euclidean norm between $\hat{\bm{y}}_{t+h}$ and $\tilde{\bm{y}}_{t+h}$, i.e. $<\hat{\bm{y}}_{T+h}, \tilde{\bm{y}}_{T+h}>$.
+They referred this to as the OLS solution and the loss function they considered is equivalent to the Euclidean norm between $\hat{\bm{y}}_{t+h}$ and $\tilde{\bm{y}}_{t+h}$; i.e. $<\hat{\bm{y}}_{T+h}, \tilde{\bm{y}}_{T+h}>$.
 
-According to a recent study by \citet{Wickramasuriya2017}, choosing $\bm{R}'_\bot = \bm{S}'\bm{W}^{-1}_{h}$ will minimize the trace of mean squared reconciled forecast errors under the property of unbiasedness where, $\bm{W}^{-1}_{h}$ is the variance of the incoherent forecast errors. This will result,
+According to a recent study by \citet{Wickramasuriya2017}, selecting $\bm{R}'_\bot = \bm{S}'\bm{W}^{-1}_{h}$ will minimize the trace of mean squared reconciled forecast errors under the property of unbiasedness, where $\bm{W}^{-1}_{h}$ is the variance of the incoherent forecast errors. This will result in
 \begin{equation*}
 \tilde{\bm{b}}^{MinT}_{t+h}=(\bm{S}'\bm{W}^{-1}_{h} \bm{S})^{-1}\bm{S}'\bm{W}^{-1}_{h} \hat{\bm{y}}_{t+h},
 \end{equation*}
@@ -312,110 +306,109 @@ and thus,
 \tilde{\bm{y}}^{MinT}_{t+h}=\bm{S}(\bm{S}' \bm{W}^{-1}_{h}\bm{S})^{-1}\bm{S}'\bm{W}^{-1}_{h} \hat{\bm{y}}_{t+h}.
 \end{equation}
 
-They referred this to as MinT solution. It is also worth to notice that the loss function they considered is equivalent to the Mahalanobis distance between $\hat{\bm{y}}_{T+h}$ and $\tilde{\bm{y}}_{T+h}$. i.e. $<\hat{\bm{y}}_{T+h}, \tilde{\bm{y}}_{T+h}>_{\bm{W}_h}$.
+They referred this to as the MinT solution. The loss function they considered is equivalent to the Mahalanobis distance between $\hat{\bm{y}}_{T+h}$ and $\tilde{\bm{y}}_{T+h}$. i.e. $<\hat{\bm{y}}_{T+h}, \tilde{\bm{y}}_{T+h}>_{\bm{W}_h}$.
 
 \subsection{Probabilistic forecast reconciliation}
 
-In terms of probabilistic forecasts, the reconciliation implies finding the probability measure of the coherent forecasts using the information of incoherent probabilistic forecast measure. A more formal definition is given below.
+For probabilistic forecasts, reconciliation implies finding the probability measure of the coherent forecasts using the information from an incoherent probabilistic forecast measure. A more formal definition is given below.
 
 \begin{definition} \label{def:reconprob}
-  Suppose $(\mathbb{R}^n, \mathscr{F}^n, \hat{\nu})$ be an incoherent probability triple and $(\mathbb{R}^m, \mathscr{F}^m, \nu^m)$ be a probability triple defined on $\mathbb{R}^m$. Let $\bm{g}:\mathbb{R}^n \rightarrow \mathbb{R}^m $. Then the probability measure on reconciled bottom levels is such that,
+  Suppose $(\mathbb{R}^n, \mathscr{F}^n, \hat{\nu})$ is an incoherent probability triple and $(\mathbb{R}^m, \mathscr{F}^m, \nu^m)$ is a probability triple defined on $\mathbb{R}^m$. Let $\bm{g}:\mathbb{R}^n \rightarrow \mathbb{R}^m $. Then the probability measure on the reconciled bottom levels is such that
   \begin{equation}
   \nu^m(\bm{A}) = \hat{\nu}(\bm{g}^{-1}(\bm{A})), \quad \forall \quad \bm{A} \in \mathscr{F}^m.
   \end{equation}
-  
-  Further the reconciled probability measure of the whole hierarchy is given by,
+  Further the probability measure of the whole reconciled hierarchy is given by
   \begin{equation}
-  \tilde{\nu}(\bm{S}(\bm{A})) = \hat{\nu}(\bm{g}^{-1}(\bm{A})), \quad \forall \quad \bm{A} \in \mathscr{F}^m,
+  \tilde{\nu}(\bm{S}(\bm{A})) = \hat{\nu}(\bm{g}^{-1}(\bm{A})) \qquad \forall \bm{A} \in \mathscr{F}^m,
   \end{equation}
-  where $\bm{S}:\mathbb{R}^m \rightarrow \mathbb{C}^m$ and $\tilde{\nu}(.)$ is the probability measure on the measure space $(\mathbb{C}^m, \mathscr{F}_S)$.
+  where $\bm{S}:\mathbb{R}^m \rightarrow \mathbb{C}^m$ and $\tilde{\nu}(\cdot)$ is the probability measure on the measure space $(\mathbb{C}^m, \mathscr{F}_S)$.
 \end{definition}
 
-Since the above definition seems not to be straightforward in reconciling incoherent forecasts, the following content explains how this can be used in practice to obtain reconciled probabilistic forecasts for hierarchical time series.
+We now discuss how this definition can be used in practice to obtain reconciled probabilistic forecasts for hierarchical time series.
 
-Recall that $\hat{\bm{y}}_{t+h}$ is a set of incoherent point forecasts and the coordinates of that with respect to the basis $\bm{B}$ is given by \eqref{4.3}. Suppose $\hat{\bm{f}}(.)$ is the probability density of $\hat{\bm{y}}_{t+h}$. Our goal is to reconcile $\hat{\bm{f}}(.)$ such that the density lives on the $\mathbb{C}^m$. In order to obtain this reconciled density, we need to project $\hat{\bm{f}}(\hat{\bm{y}}_{t+h})$ onto the $\mathbb{C}^m$ along the direction of $\mathbb{N}^{n-m}$.
+Recall that $\hat{\bm{y}}_{t+h}$ is a set of incoherent point forecasts and the coordinates of $\hat{\bm{y}}_{t+h}$ with respect to the basis $\bm{B}$ are given by \eqref{4.3}. Suppose $\hat{\bm{f}}(\cdot)$ is the probability density of $\hat{\bm{y}}_{t+h}$. Our goal is to reconcile $\hat{\bm{f}}(\cdot)$ such that the density lives on $\mathbb{C}^m$. In order to obtain this reconciled density, we need to project $\hat{\bm{f}}(\hat{\bm{y}}_{t+h})$ onto $\mathbb{C}^m$ along the direction of $\mathbb{N}^{n-m}$.
 
-Let the density of coordinates of $\hat{\bm{y}}_{t+h}$ with respect to basis $\bm{B}$ is denoted by $\bm{f_B}(.)$. Then it follows from  \eqref{4.3} and the facts on density of transformed variables,
+Let the density of $\hat{\bm{y}}_{t+h}$ with respect to basis $\bm{B}$ be denoted by $\bm{f_B}(\cdot)$. Then it follows from  \eqref{4.3}, and standard results for densities of transformed variables, that
 \begin{equation}\label{4.5}
-\bm{f_B}(\tilde{\bm{b}}_{t+h},\tilde{\bm{t}}_{t+h})=\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) \quad \Big|\begin{array}{ccc}\bm{S} & \vdots& \bm{R}\end{array}\Big|,
+\bm{f_B}(\tilde{\bm{b}}_{t+h},\tilde{\bm{t}}_{t+h})=\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) \,\Big|\bm{S} ~ \vdots~ \bm{R}\Big|,
 \end{equation}
-where $|.|$ denote the determinant of a matrix. Now that we have the density of $\begin{pmatrix}\tilde{\bm{b}}'_{t+h} & \vdots& \tilde{\bm{t}}'_{t+h}\end{pmatrix}' $, the marginal density of $\tilde{\bm{b}}_{t+h}$ can be obtained by integrating \eqref{4.5} over the range of $\tilde{\bm{t}}_{t+h}$. This will result the reconciled density of the bottom level series $\tilde{\bm{b}}_{t+h}$. i.e.,
+where $|\cdot|$ denotes the determinant of a matrix. Now that we have the density of $(\tilde{\bm{b}}'_{t+h} , \tilde{\bm{t}}'_{t+h})'$, the marginal density of $\tilde{\bm{b}}_{t+h}$ can be obtained by integrating \eqref{4.5} over the range of $\tilde{\bm{t}}_{t+h}$. This will result in the reconciled density of the bottom level series $\tilde{\bm{b}}_{t+h}$,
 \begin{equation}\label{4.6}
-\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})=\int_{lim(\tilde{\bm{t}}_{t+h})}\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) \quad \Big|\begin{array}{ccc}\bm{S} & \vdots& \bm{R}\end{array}\Big| \quad d\tilde{\bm{t}}_{t+h}.
+\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})=\int_{\lim(\tilde{\bm{t}}_{t+h})}\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h})\,  \Big|\bm{S} ~ \vdots~ \bm{R}\Big| \, d\tilde{\bm{t}}_{t+h}.
 \end{equation}
 
-Finally to get the reconciled density of the whole hierarchy, we simply follow the definition (\ref{def:cohprob}) and have,
+Finally to get the reconciled density of the whole hierarchy, we simply follow Definition \ref{def:cohprob} to obtain
 \begin{equation}\label{4.7}
 \tilde{\bm{f}}(\tilde{\bm{y}}_{t+h})=\bm{S}\circ \tilde{\bm{f}}(\tilde{\bm{b}}_{t+h}).
 \end{equation}
-This final step will transform every point in the density $\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})$ to the $\mathbb{C}^m<\mathbb{R}^n$. Following example illustrates how this method can be used to reconcile an incoherent Gaussian forecast distribution.
+This final step will transform every point in the density $\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})$ to the space $\mathbb{C}^m<\mathbb{R}^n$. The following example illustrates how this method can be used to reconcile an incoherent Gaussian forecast distribution.
 
 \subsubsection*{Example 2}
 
-Suppose $\mathscr{N}(\hat{\bm{\mu}}_{t+h}, \hat{\bm{\Sigma}}_{t+h}) \overset{d}{\leftrightarrow} \hat{\bm{f}}(\hat{\bm{y}}_{t+h})$ is an incoherent forecast distribution at time $t+h$. Then from \eqref{4.5} it follows,
+Suppose $\mathscr{N}(\hat{\bm{\mu}}_{t+h}, \hat{\bm{\Sigma}}_{t+h}) \overset{d}{\leftrightarrow} \hat{\bm{f}}(\hat{\bm{y}}_{t+h})$ is an incoherent forecast distribution at time $t+h$. Then from \eqref{4.5} it follows that
 \begin{equation*}
-\bm{f_B}(\tilde{\bm{b}}_{t+h},\tilde{\bm{t}}_{t+h})=\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) \quad \Big|\begin{array}{ccc}\bm{S} & \vdots& \bm{R}\end{array}\Big| = \frac{\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) }{\Big|(\begin{array}{ccc}\bm{S} & \vdots& \bm{R}\end{array})^{-1} \Big|}.
+\bm{f_B}(\tilde{\bm{b}}_{t+h},\tilde{\bm{t}}_{t+h})=\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) \, \Big|\bm{S} ~ \vdots~ \bm{R}\Big| = \frac{\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) }{\Big|(\bm{S} ~ \vdots~ \bm{R})^{-1}\Big|}.
 \end{equation*}
-By substituting the Gaussian distribution function to $\bm{f_B}(.)$ we get,
+By substituting the Gaussian distribution function for $\bm{f_B}(\cdot)$ we get
 \begin{align*}
-\bm{f_B}(.)
+\bm{f_B}(\cdot)
 & =
-\frac{\exp\left\{-\frac{1}{2}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}-\bm{\hat{\mu}}_{t+h})' \bm{\hat{\Sigma}_{t+h}}^{-1}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}-\bm{\hat{\mu}}_{t+h})\right\}}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|(\begin{array}{ccc}\bm{S} & \vdots& \bm{R}\end{array})^{-1} \Big|},\\
+\frac{\exp\left\{-\frac{1}{2}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}-\bm{\hat{\mu}}_{t+h})' \bm{\hat{\Sigma}_{t+h}}^{-1}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}-\bm{\hat{\mu}}_{t+h})\right\}}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|(\bm{S} ~ \vdots~ \bm{R})^{-1}\Big|},\\
 & =
-\frac{\exp\left\{-\frac{1}{2}\Big(\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}\begin{pmatrix}\tilde{\bm{b}}_{t+h}\\ \tilde{\bm{t}}_{t+h}\end{pmatrix}-\bm{\hat{\mu}}_{t+h}\Big)' \bm{\hat{\Sigma}_{t+h}}^{-1}\Big(\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}\begin{pmatrix}\tilde{\bm{b}}_{t+h}\\ \tilde{\bm{t}}_{t+h}\end{pmatrix}-\bm{\hat{\mu}}_{t+h}\Big)\right\}}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|(\begin{array}{ccc}\bm{S} & \vdots& \bm{R}\end{array})^{-1} \Big|},\\
+\frac{\exp\left\{-\frac{1}{2}\Big((\bm{S} ~ \vdots~ \bm{R})\bt-\bm{\hat{\mu}}_{t+h}\Big)' \bm{\hat{\Sigma}_{t+h}}^{-1}\Big((\bm{S} ~ \vdots~ \bm{R})\bt-\bm{\hat{\mu}}_{t+h}\Big)\right\}}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|(\bm{S} ~ \vdots~ \bm{R})^{-1}\Big|},\\
 & =
-\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|(\begin{array}{ccc}\bm{S} & \vdots& \bm{R}\end{array})^{-1} \Big|}
-\exp \Big\{-\frac{1}{2}\Big(\begin{pmatrix}\tilde{\bm{b}}_{t+h}\\ \tilde{\bm{t}}_{t+h}\end{pmatrix}-\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}^{-1}\bm{\hat{\mu}}_{t+h}\Big)'\\
-& \hspace*{1cm} \Big[\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}\bm{\hat{\Sigma}_{t+h}}\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}'\Big]^{-1}
-\Big(\begin{pmatrix}\tilde{\bm{b}}_{t+h}\\ \tilde{\bm{t}}_{t+h}\end{pmatrix}-\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}^{-1}\bm{\hat{\mu}}_{t+h}\Big) \Big\}.
+\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|(\bm{S} ~ \vdots~ \bm{R})^{-1} \Big|}
+\exp \Big\{-\frac{1}{2}\Big(\bt-(\bm{S} ~ \vdots~ \bm{R})^{-1}\bm{\hat{\mu}}_{t+h}\Big)'\\
+& \hspace*{6cm} \Big[(\bm{S} ~ \vdots~ \bm{R})\bm{\hat{\Sigma}_{t+h}}(\bm{S} ~ \vdots~ \bm{R})'\Big]^{-1}
+\Big(\bt-(\bm{S} ~ \vdots~ \bm{R})^{-1}\bm{\hat{\mu}}_{t+h}\Big) \Big\}.
 \end{align*}
-Recall that,
+Recall that
 $$
-\begin{pmatrix}\bm{S} & \vdots& \bm{R}\end{pmatrix}^{-1} =
+(\bm{S} ~ \vdots~ \bm{R})^{-1} =
 \begin{pmatrix}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \\ \cdots \\ (\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot \end{pmatrix} =
 \begin{pmatrix}
 \bm{P} \\\bm{Q}
 \end{pmatrix},
 $$
-where, $\bm{P}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$ and $\bm{Q}=(\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot$. Then,
+where $\bm{P}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$ and $\bm{Q}=(\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot$. Then
 \begin{align*}
-\bm{f_B}(.)=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix} \Big|}
-\exp \Big\{&-\frac{1}{2}\Big[\begin{pmatrix}\tilde{\bm{b}}_{t+h}\\ \tilde{\bm{t}}_{t+h}\end{pmatrix}-\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\mu}}_{t+h}\Big]'\Big[\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\Sigma}_{t+h}}\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}'\Big]^{-1}\\
-&\Big[\begin{pmatrix}\tilde{\bm{b}}_{t+h}\\ \tilde{\bm{t}}_{t+h}\end{pmatrix}-\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\mu}}_{t+h}\Big] \Big\},
+\bm{f_B}(\cdot)& =\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|\PQ \Big|}
+\exp \Big\{-\frac{1}{2}\Big[\bt-\PQ\bm{\hat{\mu}}_{t+h}\Big]'\\[-0.5cm]
+& \hspace*{7cm}
+\Big[\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big]^{-1}\Big[\bt-\PQ\bm{\hat{\mu}}_{t+h}\Big] \Big\},\\[0.5cm]
+ & =\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big|^{\frac{1}{2}}}
+\exp \Big\{-\frac{1}{2} \begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h} \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix}' &\\[-0.5cm]
+& \hspace*{7cm}
+ \Big[\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big]^{-1}\begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix} \Big\}.
 \end{align*}
-\begin{align*}
-\bm{f_B}(.)=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\Sigma}_{t+h}}\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}'\Big|^{\frac{1}{2}}}
-\exp \Big\{&-\frac{1}{2} \begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix}' \Big[\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\Sigma}_{t+h}}\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}'\Big]^{-1}\\
-& \begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix} \Big\}.
-\end{align*}
-Since, $\Big[\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}\bm{\hat{\Sigma}_{t+h}}\begin{pmatrix}\bm{P}\\\bm{Q}\end{pmatrix}'\Big] = \begin{pmatrix}
+Since $\Big[\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big] = \begin{pmatrix}
 \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}' \\
 \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{Q}'
-\end{pmatrix}$ we have,
+\end{pmatrix}$ we have
 \begin{align*}
-\bm{f_B}(.)=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\begin{pmatrix}
+\bm{f_B}(\cdot)&=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\begin{pmatrix}
   \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}' \\
   \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{Q}'
   \end{pmatrix}\Big|^{\frac{1}{2}}}
-\exp \Big\{&-\frac{1}{2} \begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix}'\\
-&\begin{pmatrix}
+\exp \Big\{-\frac{1}{2} \begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix}'\\
+&\hspace*{7cm}\begin{pmatrix}
 \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}' \\
 \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{Q}'
-\end{pmatrix}^{-1}\\
-&\begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix} \Big\}.
+\end{pmatrix}^{-1}
+\begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix} \Big\}.
 \end{align*}
-$\bm{f_B}(.)$ gives the joint distribution of $\begin{pmatrix}\tilde{\bm{b}}'_{t+h} & \vdots& \tilde{\bm{t}}'_{t+h}\end{pmatrix}' $, which is a multivariate Gaussian distribution. Then from \eqref{4.6} and the properties of marginalization of multivariate Gaussian distribution it follows,
+This is the joint multivariate Gaussian distribution of $(\tilde{\bm{b}}'_{t+h} ~ \vdots~ \tilde{\bm{t}}'_{t+h})'$. Then from \eqref{4.6} and the properties of the multivariate Gaussian distribution, it follows that
 \begin{equation}\label{ex:2.1}
 \tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}'\Big|^{\frac{1}{2}}}
 \exp \Big\{-\frac{1}{2} (\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h})' (\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}')^{-1}(\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}) \Big\}.
 \end{equation}
 
-Equation \eqref{ex:2.1} implies $\tilde{\bm{b}}_{t+h} \sim \mathscr{N}(\bm{P}\bm{\hat{\mu}}_{t+h}, \bm{P}\hat{\bm{\Sigma}}_{t+h}\bm{P}')$ where $\bm{P} = (\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$. Then from \eqref{4.7} it follows that,
+Equation \eqref{ex:2.1} implies $\tilde{\bm{b}}_{t+h} \sim \mathscr{N}(\bm{P}\bm{\hat{\mu}}_{t+h}, \bm{P}\hat{\bm{\Sigma}}_{t+h}\bm{P}')$ where $\bm{P} = (\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$. Then from \eqref{4.7} it follows that
 \begin{equation}
 \tilde{\bm{f}}(\tilde{\bm{y}}_{t+h})=\tilde{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}).
 \end{equation}
 Therefore, the reconciled Gaussian forecast distribution of the whole hierarchy is\\
-$\mathscr{N}(\bm{SP}\bm{\hat{\mu}}_{t+h}, \bm{SP}\hat{\bm{\Sigma}}_{t+h}\bm{P}'\bm{S}')$.
+$\mathscr{N}(\bm{SP}\bm{\hat{\mu}}_{t+h},~ \bm{SP}\hat{\bm{\Sigma}}_{t+h}\bm{P}'\bm{S}')$.
 
 \section{Evaluation of hierarchical probabilistic forecasts}\label{sec:evaluation}
 
@@ -434,7 +427,7 @@ where $\E_{\bm{G}}[S(\bm{Y,y})]$ is the expected score under the true distributi
 Table \ref{table:scoringrules} summarizes few existing proper scoring rules.
 
 \begin{table}[!b]
-  \caption{Scoring rules to evaluate multivariate forecast densities. $\breve{\bm{y}}_{T+h}$ and $\breve{\bm{y}}^*_{T+h}$ be two independent random vectors from the coherent forecast distribution $\breve{\bm{F}}$ with the density function $\breve{\bm{f}}(.)$ at time $T+h$ and $\bm{y}_{T+h}$ is the vector of realizations. Further $\breve{Y}_{T+h,i}$ and $\breve{Y}_{T+h,j}$ are $i$th and $j$th components of the vector $\breve{\bm{Y}}_{T+h}$. Further the variogram score is given for order $p$ where, $w_{ij}$ are non-negative weights.}\label{table:scoringrules}
+  \caption{Scoring rules to evaluate multivariate forecast densities. $\breve{\bm{y}}_{T+h}$ and $\breve{\bm{y}}^*_{T+h}$ be two independent random vectors from the coherent forecast distribution $\breve{\bm{F}}$ with the density function $\breve{\bm{f}}(\cdot)$ at time $T+h$ and $\bm{y}_{T+h}$ is the vector of realizations. Further $\breve{Y}_{T+h,i}$ and $\breve{Y}_{T+h,j}$ are $i$th and $j$th components of the vector $\breve{\bm{Y}}_{T+h}$. Further the variogram score is given for order $p$ where, $w_{ij}$ are non-negative weights.}\label{table:scoringrules}
   \centering\small\setstretch{1.3}
   \begin{tabular}{@{}lp{8.1cm}l@{}}
     \toprule
@@ -656,11 +649,11 @@ $\sigma^2_u = 19$ and $\sigma^2_u = 18$ in our simulation setting.
 
 As such we generate data for the hierarchy with sample size $T=501$. Then univariate $ARIMA$ models were fitted for each series independently using the first 500 observations and obtain 1-step ahead base (incoherent) forecasts. We use \textit{forecast} package in \textbf{R}-software \citet{hyndman2017forecasting} for model fitting and forecasting. Further, different estimates of $\bm{W}_{T+1}$ and the corresponding $\bm{R}'_\bot$ were obtained as summarized in Table \ref{table:2}. This process was then replicated using $1000$ different data sets from the same data generating process.
 
-To assess the predictive performance of different forecasting methods, we use scoring rules as discussed in Section \ref{sec:evaluation}. In addition to that we use Skill score \citep{Gneiting2007} for any comparison. For a given forecasting method, evaluated by a particular scoring rule $S(.)$ , the skill score will be calculated as follows,
+To assess the predictive performance of different forecasting methods, we use scoring rules as discussed in Section \ref{sec:evaluation}. In addition to that we use Skill score \citep{Gneiting2007} for any comparison. For a given forecasting method, evaluated by a particular scoring rule $S(\cdot)$ , the skill score will be calculated as follows,
 \begin{equation}
-Ss[S_B(.)] = \frac{S_B(\bm{Y},\bm{y})^{\text{ref}} - S_B(\breve{\bm{Y}},\bm{y})}{S_B(\bm{Y},\bm{y})^{\text{ref}}}\times 100\%,
+Ss[S_B(\cdot)] = \frac{S_B(\bm{Y},\bm{y})^{\text{ref}} - S_B(\breve{\bm{Y}},\bm{y})}{S_B(\bm{Y},\bm{y})^{\text{ref}}}\times 100\%,
 \end{equation}
-where $S_B(.)$ is average score over $B$ samples and $S_B(\bm{Y},\bm{y})^{\text{ref}}$ is the average score of the reference forecasting methods. Thus $Ss[S_B(.)]$ gives the percentage improvement of the preferred forecasting method relative to the reference method. Any negative value of $Ss[S_B(.)]$ indicate that the method we compared is poor than the reference method, whereas any positive value indicates that method is superior to the reference method.
+where $S_B(\cdot)$ is average score over $B$ samples and $S_B(\bm{Y},\bm{y})^{\text{ref}}$ is the average score of the reference forecasting methods. Thus $Ss[S_B(\cdot)]$ gives the percentage improvement of the preferred forecasting method relative to the reference method. Any negative value of $Ss[S_B(\cdot)]$ indicate that the method we compared is poor than the reference method, whereas any positive value indicates that method is superior to the reference method.
 
 As it was mentioned before we wish to establish the importance of reconciliation methods from this simulation study. In particular, we compare different reconciliation methods over the conventional bottom-up method and also evaluate the predictive ability of coherent forecasts over incoherent forecasts. For the former comparison, we use bottom level probabilistic forecasts and calculate the percentage skill score based on energy score, log score and variogram score for each reconciliation method with reference to the bottom up method (presented in Table \ref{table:3}). For the latter comparison, we use percentage skill score based on CRPS and univariate log score for coherent probabilistic forecasts of each individual series with reference to incoherent forecasts (presented in Tables \ref{table:4} and \ref{table:5}).
 
