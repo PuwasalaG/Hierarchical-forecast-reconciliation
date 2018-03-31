@@ -81,17 +81,10 @@ Some theoretical results on probabilistic forecast reconciliation in the Gaussia
 We conclude with some thoughts on extensions and limitations in Section~\ref{sec:conclusions}.
 
 
-\section{Notation}\label{sec:notation}
+\section{Hierarchical Time Series}\label{sec:notation}
 
-Our notation largely follows that introduced in \citet{Wickramasuriya2017}. Suppose $\bm{y}_t \in \mathbb{R}^n$ comprises all observations of the hierarchy at time $t$ and $\bm{b}_t \in \mathbb{R}^m$ comprises only the bottom-level observations at time $t$. Then due to the aggregation nature of the hierarchy we have
-\begin{equation}
-  \bm{y}_t = \bm{Sb}_t,
-\end{equation}
-where $\bm{S}$ is an $n \times m$ constant matrix whose columns span the linear subspace for which all constraints hold.  
-
-In any hierarchy, the most aggregated level is labelled level 0, the second most aggregated level is labelled level 1 and so on. 
-
-Consider the hierarchy given in Figure~\ref{fig1}. 
+In the section, and throughout the paper, we will try to follow notational conventions used in \citet{Wickramasuriya2017} as much as possible.  A hierarchical time series is a collection of $n$ variables where some variables are aggregates of other variables.  For example in the hierarchy depicted in Figure~\ref{fig1} below, the variable labelled $Tot$ is the sum of the series $A$
+and series $B$, the series $A$ is the sum of series $AA$ and series $AB$ and the series $B$ is the sum of the series $BA$ and $BB$.  The bottom level series are defined as those $m$ variables that cannot be formed as aggregates of other variables, in the example in Figure~\ref{fig1} these are the series $AA$, $AB$, $BA$ and $BB$. 
 
 \begin{figure}[H]
   \begin{center}
@@ -105,15 +98,20 @@ Consider the hierarchy given in Figure~\ref{fig1}.
   \caption{Two level hierarchical diagram.}\label{fig1}
 \end{figure}
 
-This example consists of two levels. At a particular time $t$, let $y_{Tot,t}$ denote the observation at level~0; $y_{A,t}, y_{B,t} $ denote observations at level~1; and $y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}$ denote observations at level~2. Then $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $m=4$, $n=7$, and 
+We let $\bm{y}_t \in \mathbb{R}^n$ be a vector comprised of observations of all variables in the hierarchy at time $t$,  and $\bm{b}_t \in \mathbb{R}^m$ is a vector comprised of observations of all bottom-level series at time $t$. The hierarchical structure of the data imply the following
+\begin{equation}
+  \bm{y}_t = \bm{Sb}_t,
+\end{equation}
+where $\bm{S}$ is an $n \times m$ constant matrix encoding the aggregation constraints.  For example for the hierarchy in Figure~\ref{fig1}, $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $m=4$, $n=7$, and 
 $$ 
   \bm{S} = \begin{pmatrix} 
                1& 1 &1 &1  \\ 
                1 &1 & 0 &0 \\   
                0&0  & 1 & 1 \\ 
-               & \multicolumn{2}{c}{I_4} &   
+               & \multicolumn{2}{c}{\bm{I}_4} &   
            \end{pmatrix}, 
 $$ 
+
 where $I_4$ is a $4$-dimension identity matrix.  
 
 
