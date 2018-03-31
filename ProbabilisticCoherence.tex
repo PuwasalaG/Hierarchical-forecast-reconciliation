@@ -116,6 +116,7 @@ $$
 where $I_4$ is a $4$-dimension identity matrix.  
 
 
+
 \section{Coherent forecasts}\label{sec:definitions}
 
 It is desirable that forecasts, whether point forecasts or probabilistic forecasts, should in some sense respect aggregation constraints.  We follow other authors in describing this property as {\em coherence}.   
@@ -127,21 +128,7 @@ We now provide new definitions for coherent forecasts in terms of vector spaces 
 Let an $n$-dimensional time series $\bm{y}_t \in \mathbb{R}^n$ be subject to the linear aggregation constraint $\bm{y}_t = \bm{S}\bm{b}_t$, where $\bm{b}_t \in \mathbb{R}^m$ and $\bm{S}$ is an $n \times m$ constant matrix. The $m$-dimensional subspace $\mathfrak{s}\subset \mathbb{R}^n$ that is spanned by the columns of $\bm{S}$, i.e. $\mathfrak{s}=\mbox{span}(\bm{S})$, is defined as the {\em coherent space}. 
 \end{definition}
 
-We will also denote the $n\times(n-m)$ orthogonal complement of $\bm{S}$ as $\bm{S}_{\perp}$, where $\mathfrak{s}=\mbox{span}\left(\bm{S}_{\perp}\right)$ is the nullspace of $\bm{S}$
-
-\begin{definition}[Coherent Point Forecasts]\label{def:cohpoint}
-  Suppose $\breve{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ denotes point forecasts of each series in the hierarchy at time $t+h$.  Then $\breve{\bm{y}}_{t+h|t}$ is \emph{coherent} if $\breve{\bm{y}}_{t+h|t} \in \mathbb{C}$. 
-\end{definition}
-
-\begin{definition}[Coherent Probabilistic Forecasts]\label{def:cohprob}
-  Let $(\mathbb{R}^m, \bm{\mathscr{F}}^m, \nu^m)$ be a probability triple, where $\mathscr{F}^m$ is a $\sigma$-algebra on $\mathbb{R}^m$. Then, $(\mathbb{C}, \mathscr{F}_{\bm{S}}, \breve{\nu})$ is said to be a coherent probability measure space iff
-  $$
-      \breve{\nu}(\bm{S}(\bm{A})) = \nu^m(\bm{A}) \quad \forall  \bm{A} \in \mathscr{F}^m,
-    $$ 
-  where $\bm{S}(\bm{A})$ denotes the image of subset $\bm{A}$ under $\bm{S}$. 
-\end{definition}
-
-We illustrate Definition~\ref{def:cohprob} in Figure~\ref{fig2}, showing $\bm{S}$ mapping any set $\bm{A}\in\mathbb{R}^m$ to the coherent space.
+We also denote the $n\times(n-m)$ orthogonal complement of $\bm{S}$ as $\bm{S}_{\perp}$, where $\mathfrak{s}=\mbox{span}\left(\bm{S}_{\perp}\right)$ is the nullspace of $\bm{S}$. We also note that when $\bm{S}$ is understood as a linear mapping $\bm{S}:\mathbb{R}^m\rightarrow\mathbb{R}^n$ whose image given by the coherent space $\mathfrak{s}$. This is depicted in Figure~\ref{fig2}.
 
 \begin{figure}[H]
   \begin{center}
@@ -171,7 +158,7 @@ We illustrate Definition~\ref{def:cohprob} in Figure~\ref{fig2}, showing $\bm{S}
     
     \node at (0,5) {$\mathbb{R}^m$(domain of $\bm{S}$)};
     \node at (4,5) {$\mathbb{R}^n$(codomain of $\bm{S}$)};
-    \node at (4,1.0) {$\mathbb{C}^m$};
+    \node at (4,1.0) {$\mathfrak{s}$};
     %\node[bullet,label=below:$f(x)$] at (4,2.5){};
     
     
@@ -185,14 +172,25 @@ We illustrate Definition~\ref{def:cohprob} in Figure~\ref{fig2}, showing $\bm{S}
     \end{tikzpicture}
     \newline
   \end{center}
-  \caption{Any set $\bm{A} \in \mathbb{R}^m$ will be mapped to $\mathbb{C}^m$ through the mapping $\bm{S}$.}\label{fig2}
+  \caption{The domain, codomain and image of the mapping $\bm{S}$.}\label{fig2}
 \end{figure}
 
-Definition~\ref{def:cohprob} implies the probability measure on $\mathbb{C}^m$ is equivalent to the probability measure on $(\mathbb{R}^m, \bm{\mathscr{F}}^m)$. Hence, there is no density anywhere outside the linear subspace $\mathbb{C}^m$. That is, a \textit{coherent probability density forecast} is any density $\bm{f}(\breve{\bm{y}}_{t+h})$ such that $\bm{f}(\breve{\bm{y}}_{t+h})=0$ for all $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}^{n-m}$. 
+\begin{definition}[Coherent Point Forecasts]\label{def:cohpoint}
+  Let $\breve{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ be a point forecast of the values of all series in the hierarchy at time $t+h$,  made using information up to and including time $t$.  Then $\breve{\bm{y}}_{t+h|t}$ is \emph{coherent} if $\breve{\bm{y}}_{t+h|t} \in \mathfrak{s}$. 
+\end{definition}
 
-The following example will help to understand these definitions more clearly.
+\begin{definition}[Coherent Probabilistic Forecasts]\label{def:cohprob}
+  Let $(\mathbb{R}^m, \bm{\mathscr{F}}, \nu)$ be a probability triple, where $\mathscr{F}$ is the usual $\sigma$-algebra on $\mathbb{R}^m$. Let $\breve{\nu}$ be a probability measure on $\mathfrak{s}$ with $\sigma$-algebra $\mathscr{F}_{\mathfrak{s}}$.  Here $\mathscr{F}_{\mathfrak{s}}$ is formed as collection of sets $\bm{S}(\bm{A})$, where $\bm{S}(\bm{A})$ denotes the image of the set $\bm{A}\in \mathscr{F}$ under the mapping $\bm{S}$.  Then $\breve{\nu}$ is said to be a \emph{coherent probability measure} iff
+  $$
+      \breve{\nu}(\bm{S}(\bm{A})) = \nu(\bm{A}) \quad \forall  \bm{A} \in \mathscr{F},
+    $$  
+\end{definition}
 
-Consider a simple hierarchy with two bottom-level series $A$ and $B$ that add up to the top level series $Tot$. Suppose the forecasts of these series at time $t+h$ are given by $\breve{\bm{y}}_{t+h} = [\breve{y}_{Tot,t+h},\breve{y}_{A,t+h}, \breve{y}_{B,t+h}]$. Due to the aggregation constraint of the hierarchy we have $\breve{y}_{Tot,t+h}=\breve{y}_{A,t+h}+\breve{y}_{B,t+h}$. This implies that, even though  $\breve{\bm{y}}_{t+h} \in \mathbb{R}^3$, the points actually lie in $\mathbb{C}^2$, which is a two dimensional subspace within that $\mathbb{R}^3$ space. Therefore, any $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}$ is impossible, so that $f(\breve{\bm{y}}_{t+h})=0$ for any $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}$.
+%Definition~\ref{def:cohprob} implies the probability measure on $\mathbb{C}^m$ is equivalent to the probability measure on $(\mathbb{R}^m, \bm{\mathscr{F}}^m)$. Hence, there is no density anywhere outside the linear subspace $\mathbb{C}^m$. That is, a \textit{coherent probability density forecast} is any density $\bm{f}(\breve{\bm{y}}_{t+h})$ such that $\bm{f}(\breve{\bm{y}}_{t+h})=0$ for all $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}^{n-m}$. 
+
+%The following example will help to understand these definitions more clearly.
+
+%Consider a simple hierarchy with two bottom-level series $A$ and $B$ that add up to the top level series $Tot$. Suppose the forecasts of these series at time $t+h$ are given by $\breve{\bm{y}}_{t+h} = [\breve{y}_{Tot,t+h},\breve{y}_{A,t+h}, \breve{y}_{B,t+h}]$. Due to the aggregation constraint of the hierarchy we have $\breve{y}_{Tot,t+h}=\breve{y}_{A,t+h}+\breve{y}_{B,t+h}$. This implies that, even though  $\breve{\bm{y}}_{t+h} \in \mathbb{R}^3$, the points actually lie in $\mathbb{C}^2$, which is a two dimensional subspace within that $\mathbb{R}^3$ space. Therefore, any $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}$ is impossible, so that $f(\breve{\bm{y}}_{t+h})=0$ for any $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}$.
 
 For a particular coherent subspace $\mathbb{C}^m$, there exist several distinct basis vectors. For example, in the small hierarchy considered above, 
  $\{(1 ~1 ~0)', (1 ~0 ~1)'\}$, 
