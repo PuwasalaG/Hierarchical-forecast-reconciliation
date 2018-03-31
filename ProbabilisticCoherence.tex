@@ -5,6 +5,7 @@
 \usepackage[bb=boondox]{mathalfa}
 \usepackage{tikz}
 \usetikzlibrary{arrows,positioning,shapes,fit,calc}
+\usepackage{amsfonts}
 \hypersetup{citecolor=blue,linkcolor=blue,urlcolor=blue}
 \DeclareNameAlias{sortname}{last-first}
 \DeclareMathOperator*{\argmin}{arg\,min}
@@ -117,15 +118,16 @@ where $I_4$ is a $4$-dimension identity matrix.
 
 \section{Coherent forecasts}\label{sec:definitions}
 
-While coherent point forecasts have been discussed many times previously, the definitions of coherence previously given are vague and are not easily extended to the situation of probabilistic forecasting.
+It is desirable that forecasts, whether point forecasts or probabilistic forecasts, should in some sense respect aggregation constraints.  We follow other authors in describing this property as {\em coherence}.   
+%While coherent point forecasts have been discussed many times previously, the definitions of coherence previously given are vague and are not easily extended to the situation of probabilistic forecasting.
 
-We first give a new definition for coherent point forecasts using the properties of vector spaces, and then provide a definition of coherent probabilistic forecasts. 
+We now provide new definitions for coherent forecasts in terms of vector spaces that give a geometric understanding of the problem thus facilitating the development of the reconciliation techniques of section~\ref{sec:reconciliation}. 
 
 \begin{definition}[Coherent subspace]
-Suppose an $n$-dimensional time series $\bm{y}_t \in \mathbb{R}^n$ is subject to the linear aggregation constraint $\bm{y}_t = \bm{S}\bm{b}_t$, where $\bm{b}_t \in \mathbb{R}^m$ and $\bm{S}$ is an $n \times m$ constant matrix. Let $\mathbb{C}^m$ be an $m$-dimensional subspace of $\mathbb{R}^n$, where $\mathbb{C}^m < \mathbb{R}^n$. Then $\mathbb{C}^m$ is said to be a coherent space if it is spanned by the columns of $\bm{S}$. 
+Let an $n$-dimensional time series $\bm{y}_t \in \mathbb{R}^n$ be subject to the linear aggregation constraint $\bm{y}_t = \bm{S}\bm{b}_t$, where $\bm{b}_t \in \mathbb{R}^m$ and $\bm{S}$ is an $n \times m$ constant matrix. The $m$-dimensional subspace $\mathfrak{s}\subset \mathbb{R}^n$ that is spanned by the columns of $\bm{S}$, i.e. $\mathfrak{s}=\mbox{span}(\bm{S})$, is defined as the {\em coherent space}. 
 \end{definition}
 
-Notice that the coherent space $\mathbb{C}^m$ is equivalent to the column space of $\bm{S}$, which we denote by $\mathscr{C}(\bm{S})$. Further, the space orthogonal to $\mathbb{C}^m$ is equivalent to the null space of $\bm{S}$, which we denote by $\bm{\mathbb{N}}^{n-m}$.
+We will also denote the $n\times(n-m)$ orthogonal complement of $\bm{S}$ as $\bm{S}_{\perp}$, where $\mathfrak{s}=\mbox{span}\left(\bm{S}_{\perp}\right)$ is the nullspace of $\bm{S}$
 
 \begin{definition}[Coherent Point Forecasts]\label{def:cohpoint}
   Suppose $\breve{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ denotes point forecasts of each series in the hierarchy at time $t+h$.  Then $\breve{\bm{y}}_{t+h|t}$ is \emph{coherent} if $\breve{\bm{y}}_{t+h|t} \in \mathbb{C}$. 
