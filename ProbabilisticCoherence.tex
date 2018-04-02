@@ -115,8 +115,6 @@ $$
 
 where $I_4$ is a $4$-dimension identity matrix.  
 
-
-
 \section{Coherent forecasts}\label{sec:definitions}
 
 It is desirable that forecasts, whether point forecasts or probabilistic forecasts, should in some sense respect aggregation constraints.  We follow other authors in describing this property as {\em coherence}.   
@@ -180,9 +178,9 @@ We also denote the $n\times(n-m)$ orthogonal complement of $\bm{S}$ as $\bm{S}_{
 \end{definition}
 
 \begin{definition}[Coherent Probabilistic Forecasts]\label{def:cohprob}
-  Let $(\mathbb{R}^m, \bm{\mathscr{F}}, \nu)$ be a probability triple, where $\mathscr{F}$ is the usual $\sigma$-algebra on $\mathbb{R}^m$. Let $\breve{\nu}$ be a probability measure on $\mathfrak{s}$ with $\sigma$-algebra $\mathscr{F}_{\mathfrak{s}}$.  Here $\mathscr{F}_{\mathfrak{s}}$ is formed as collection of sets $\bm{S}(\bm{A})$, where $\bm{S}(\bm{A})$ denotes the image of the set $\bm{A}\in \mathscr{F}$ under the mapping $\bm{S}$.  Then $\breve{\nu}$ is said to be a \emph{coherent probability measure} iff
+  Let $(\mathbb{R}^m, \mathscr{F}^{\mathbb{R}^m}, \nu)$ be a probability triple, where $\mathscr{F}^{\mathbb{R}^m}$ is the usual $\sigma$-algebra on $\mathbb{R}^m$. Let $\breve{\nu}$ be a probability measure on $\mathfrak{s}$ with $\sigma$-algebra $\mathscr{F}^{\mathfrak{s}}$.  Here $\mathscr{F}_{\mathfrak{s}}$ is formed as collection of sets $s(A)$, where $s(A)$ denotes the image of the set $A\in \mathscr{F}$ under the mapping $s(.)$ and the mapping $s:\mathbb{R}^m\rightarrow\mathbb{R}^n$ denotes premultiplication by the matrix $\bm{S}$.  Then $\breve{\nu}$ is said to be a \emph{coherent probability measure} iff
   $$
-      \breve{\nu}(\bm{S}(\bm{A})) = \nu(\bm{A}) \quad \forall  \bm{A} \in \mathscr{F},
+      \breve{\nu}(s(A)) = \nu(A) \quad \forall  A \in \mathscr{F}^{\mathbb{R}^m},
     $$  
 \end{definition}
 
@@ -211,10 +209,10 @@ Initially we define point forecast reconciliation, before extending the idea to 
   \begin{equation}
     \tilde{\bm{y}}_{t+h}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h},
   \end{equation} 
-  where $\bm{G}$ is an $m\times n$ matrix. We say $\tilde{\bm{y}}_{t+h}$ is ``reconciled'' with respect to the mapping $\bm{G}$.
+  where $\bm{G}$ is an $m\times n$ matrix. We say $\tilde{\bm{y}}_{t+h}$ is ``reconciled'' with respect to the mapping $g(.)$, where $g:\mathbb{R}^n \rightarrow \mathbb{R}^m$ is defined as premultiplication be $\bm{G}$.
 \end{definition}
 
-In definition~\ref{def:reconpoint} we assume $\bm{G}$ to be a linear mapping, which implies that  $\bm{S}\bm{G}$ is a projection matrix from $\mathbb{R}^n$ onto $\mathfrak{s}$. This is consistent with previous studies where the notation $\bm{P}$ is often used in place of $\bm{G}$. In principle ${\bm G}$ can be a non-linear mapping $\bm{G}:\mathbb{R}^n \rightarrow \mathbb{R}^m$ a possibility we consider in Section~\ref{nonlinear} {\color{red}[AP: I WILL ADD THIS LATER]}.
+In definition~\ref{def:reconpoint}  $\bm{S}\bm{G}$ is a projection matrix that maps $\mathbb{R}^n$ onto $\mathfrak{s}$. We note that a similar characterisation of reconciliation has been used in previous studies but where the notation $\bm{P}$ is used in place of $\bm{G}$. In principle $g(.)$ can also be a non-linear mapping, a possibility we consider in Section~\ref{nonlinear} {\color{red}[AP: I WILL ADD THIS LATER]}.
 
 Definition~\ref{def:reconpoint}, actually defines an entire family of forecast reconciliation methods including many methods currently extant in the literature. To provide a geometric interpretation, we introduce an $n \times (n-m)$ matrix $\bm{R}$ whose columns span the null space $\mathfrak{s}_{\perp}$.  The matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. However, since $\bm{R}$ is not unique, the columns of any given $\bm{R}$ matrix can also be thought of as `directions' along which incoherent point forecasts are projected onto the coherent space. For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$ is the vector $(1,-1,-1)$, which is orthogonal to the columns of $\bm{S}$ in the usual sense of Euclidean geometry.
 %$$ 
@@ -308,18 +306,20 @@ They referred this to as the MinT solution. The loss function they considered is
 
 \subsection{Probabilistic forecast reconciliation}
 
-For probabilistic forecasts, reconciliation implies finding the probability measure of the coherent forecasts using the information from an incoherent probabilistic forecast measure. A more formal definition is given below.
+We now extend the methodology of point forecast reconciliation to probabilistic forecasts
+
+%For probabilistic forecasts, reconciliation implies finding the probability measure of the coherent forecasts using the information from an incoherent probabilistic forecast measure. A more formal definition is given below.
 
 \begin{definition} \label{def:reconprob}
-  Suppose $(\mathbb{R}^n, \mathscr{F}^n, \hat{\nu})$ is an incoherent probability triple and $(\mathbb{R}^m, \mathscr{F}^m, \nu^m)$ is a probability triple defined on $\mathbb{R}^m$. Let $\bm{g}:\mathbb{R}^n \rightarrow \mathbb{R}^m $. Then the probability measure on the reconciled bottom levels is such that
+  Let $(\mathbb{R}^n, \mathscr{F}^{\mathbb{R}^n}, \hat{\nu})$ be an incoherent probability triple   defined on $\mathbb{R}^n$ associated with $\bm{y}_{t+h}$ conditional on all information up to time $t$.  Let $(\mathbb{R}^m, \mathscr{F}^{\mathbb{R}^m}, \nu)$ be a probability triple defined on $\mathbb{R}^m$. Let $g:\mathbb{R}^n \rightarrow \mathbb{R}^m $ be a linear mapping. Let $\nu$ have the following property:
   \begin{equation}
-  \nu^m(\bm{A}) = \hat{\nu}(\bm{g}^{-1}(\bm{A})), \quad \forall \quad \bm{A} \in \mathscr{F}^m.
+  \nu(A) = \hat{\nu}(g^{-1}(A)), \quad \forall \quad A \in \mathscr{F}^{\mathbb{R}^m}\,,
   \end{equation}
-  Further the probability measure of the whole reconciled hierarchy is given by
+  where $g^{-1}(A)$ denotes the pre-image of the measurable set $A$, that is the set of all points in $\mathbb{R}^n$ that map to a point in $A$ under the mapping $g(.)$ or $g^{-1}(A):=\left\{\bm{y}\in \mathbb{R}^n:\bm{Gy}\in A \right\}$. We define $\tilde{\nu}$ as the reconciled probability measure of $\hat{\nu}$ with respect to the mapping $g(.)$ if the following holds
   \begin{equation}
-  \tilde{\nu}(\bm{S}(\bm{A})) = \hat{\nu}(\bm{g}^{-1}(\bm{A})) \qquad \forall \bm{A} \in \mathscr{F}^m,
+  \tilde{\nu}(s(A)) = \nu(A)= \hat{\nu}(\bm{g}^{-1}(A)) \qquad \forall A \in \mathscr{F}^{\mathbb{R}^m},
   \end{equation}
-  where $\bm{S}:\mathbb{R}^m \rightarrow \mathbb{C}^m$ and $\tilde{\nu}(\cdot)$ is the probability measure on the measure space $(\mathbb{C}^m, \mathscr{F}_S)$.
+  where $\tilde{\nu}(\cdot)$ is the probability measure on the measure space $(\mathfrak{s}, \mathscr{F}_\mathfrak{s})$.
 \end{definition}
 
 We now discuss how this definition can be used in practice to obtain reconciled probabilistic forecasts for hierarchical time series.
