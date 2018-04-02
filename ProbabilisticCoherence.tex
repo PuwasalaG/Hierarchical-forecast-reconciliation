@@ -209,12 +209,12 @@ Initially we define point forecast reconciliation, before extending the idea to 
 \begin{definition}\label{def:reconpoint}
   Let $\hat{\bm{y}}_{t+h} \in \mathbb{R}^n$ be any set of incoherent forecasts at time $t+h$, and let 
   \begin{equation}
-    \tilde{\bm{y}}_{t+h}=\bm{S} \circ \bm{g}(\hat{\bm{y}}_{t+h}),
+    \tilde{\bm{y}}_{t+h}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h},
   \end{equation} 
-  where $\bm{g}:\mathbb{R}^n \rightarrow \mathbb{R}^m$ and $\bm{S}\circ \bm{g}(\cdot)$ is a projection of $\bm{g}(\cdot)$ onto $\mathbb{C}^m$. Then $\tilde{\bm{y}}_{t+h}$ is said to be ``reconciled'' if  $\tilde{\bm{y}}_{t+h} \in \mathbb{C}^m$.
+  where $\bm{G}$ is an $m\times n$ matrix. We say $\tilde{\bm{y}}_{t+h}$ is ``reconciled'' with respect to the mapping $\bm{G}$.
 \end{definition}
 
-Definition~\ref{def:reconpoint} allows for both linear and non-linear reconciliation. In other words, if $\bm{g}$ is a non-linear function, then the reconciliation of $\hat{\bm{y}}_{t+h}$ will be non-linear, while if $\bm{g}$ is a linear function, then $\bm{S}\circ \bm{g}(\cdot)$ will linearly project incoherent point forecasts onto $\mathbb{C}^m$. Previous studies in hierarchical point forecasting have only focussed on the linear case, $\bm{g}(\bm{y}) = \bm{P}\bm{y}$, where $\bm{P}$ is an $m \times n$ matrix, and so $\tilde{\bm{y}}_{t+h}=\bm{S}\bm{P} \hat{\bm{y}}_{t+h}$. 
+In definition~\ref{def:reconpoint} we assume $\bm{G}$ to be a linear mapping, which implies that  $\bm{S}\bm{G}$ is a projection matrix from $\mathbb{R}^n$ onto $\mathfrak{s}$. This is consistent with previous studies where the notation $\bm{P}$ is often used in place of $\bm{G}$. In principle ${\bm G}$ can be a non-linear mapping $\bm{G}:\mathbb{R}^n \rightarrow \mathbb{R}^m$ a possibility we consider in Section~\ref{nonlinear} [TO BE ADDED LATER].
 
 Using Definition~\ref{def:reconpoint}, we can now explain previous results for linear forecast reconciliation. Let $\bm{R} \in \mathbb{R}^{n \times (n-m)}$ comprise the columns that span $\bm{\mathbb{N}}^{n-m}$, which is orthogonal to $\mathbb{C}^m$. Note that $\bm{R}$ is not unique; one example is a matrix whose columns represent the aggregation constraints for a given hierarchy. For the hierarchy in example 1, 
 $$ 
