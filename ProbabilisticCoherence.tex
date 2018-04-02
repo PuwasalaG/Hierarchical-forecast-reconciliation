@@ -103,7 +103,7 @@ We let $\bm{y}_t \in \mathbb{R}^n$ be a vector comprised of observations of all 
 \begin{equation}
   \bm{y}_t = \bm{Sb}_t,
 \end{equation}
-where $\bm{S}$ is an $n \times m$ constant matrix encoding the aggregation constraints.  For example for the hierarchy in Figure~\ref{fig1}, $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $m=4$, $n=7$, and 
+where $\bm{S}$ is an $n \times m$ constant matrix that encodes the aggregation constraints.  For example for the hierarchy in Figure~\ref{fig1}, $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $m=4$, $n=7$, and 
 $$ 
   \bm{S} = \begin{pmatrix} 
                1& 1 &1 &1  \\ 
@@ -113,20 +113,20 @@ $$
            \end{pmatrix}, 
 $$ 
 
-where $I_4$ is a $4$-dimension identity matrix.  
+where $\bm{I}_4$ is a $4\times 4$ identity matrix.  
 
 \section{Coherent forecasts}\label{sec:definitions}
 
-It is desirable that forecasts, whether point forecasts or probabilistic forecasts, should in some sense respect aggregation constraints.  We follow other authors in describing this property as {\em coherence}.   
+It is desirable that forecasts, whether point forecasts or probabilistic forecasts, should in some sense respect aggregation constraints.  We follow other authors in using the nomenclature{\em coherence} to describe this property.   
 %While coherent point forecasts have been discussed many times previously, the definitions of coherence previously given are vague and are not easily extended to the situation of probabilistic forecasting.
 
-We now provide new definitions for coherent forecasts in terms of vector spaces that give a geometric understanding of the problem thus facilitating the development of the reconciliation techniques of section~\ref{sec:reconciliation}. 
+We now provide new definitions for coherent forecasts in terms of vector spaces that give a geometric understanding of the problem thus facilitating the development of the probabilistic forecast reconciliation in section~\ref{sec:reconciliation}. 
 
-\begin{definition}[Coherent subspace]
+\begin{definition}[Coherent subspace]\label{def:cohspace}
 Let an $n$-dimensional time series $\bm{y}_t \in \mathbb{R}^n$ be subject to the linear aggregation constraint $\bm{y}_t = \bm{S}\bm{b}_t$, where $\bm{b}_t \in \mathbb{R}^m$ and $\bm{S}$ is an $n \times m$ constant matrix. The $m$-dimensional subspace $\mathfrak{s}\subset \mathbb{R}^n$ that is spanned by the columns of $\bm{S}$, i.e. $\mathfrak{s}=\mbox{span}(\bm{S})$, is defined as the {\em coherent space}. 
 \end{definition}
 
-We also denote the $n\times(n-m)$ orthogonal complement of $\bm{S}$ as $\bm{S}_{\perp}$, where $\mathfrak{s}_\perp=\mbox{span}\left(\bm{S}_{\perp}\right)$ is the nullspace of $\bm{S}$. We also note that when $\bm{S}$ is understood as a linear mapping $\bm{S}:\mathbb{R}^m\rightarrow\mathbb{R}^n$ whose image given by the coherent space $\mathfrak{s}$. This is depicted in Figure~\ref{fig2}.
+We also denote the $n\times(n-m)$ orthogonal complement of $\bm{S}$ as $\bm{S}_{\perp}$, where $\mathfrak{s}_\perp=\mbox{span}\left(\bm{S}_{\perp}\right)$ is the nullspace of $\bm{S}$. Also at times is  will be useful to think of pre-multiplication by $\bm{S}$ as a linear mapping from $\mathbb{R}^m$ to $\mathbb{R}^n$ in which case we use the notation $s(.)$.  Although the codomain of $s(.)$ is $\mathbb{R}^n$ its image is the coherent space $\mathfrak{s}$ as depicted in Figure~\ref{fig2}.
 
 \begin{figure}[H]
   \begin{center}
@@ -152,11 +152,11 @@ We also denote the $n\times(n-m)$ orthogonal complement of $\bm{S}$ as $\bm{S}_{
     }
     ]
     
-    \node at (2,3) {$\bm{S}$};
+    \node at (2,3) {$s$};
     
-    \node at (0,5) {$\mathbb{R}^m$(domain of $\bm{S}$)};
-    \node at (4,5) {$\mathbb{R}^n$(codomain of $\bm{S}$)};
-    \node at (4,1.0) {$\mathfrak{s}$};
+    \node at (0,5) {$\mathbb{R}^m$(domain of $s$)};
+    \node at (4,5) {$\mathbb{R}^n$(codomain of $s$)};
+    \node at (4.5,1.0) {$\mathfrak{s}$(image of $s$)};
     %\node[bullet,label=below:$f(x)$] at (4,2.5){};
     
     
@@ -170,7 +170,7 @@ We also denote the $n\times(n-m)$ orthogonal complement of $\bm{S}$ as $\bm{S}_{
     \end{tikzpicture}
     \newline
   \end{center}
-  \caption{The domain, codomain and image of the mapping $\bm{S}$.}\label{fig2}
+  \caption{The domain, codomain and image of the mapping $s$.}\label{fig2}
 \end{figure}
 
 \begin{definition}[Coherent Point Forecasts]\label{def:cohpoint}
@@ -178,10 +178,11 @@ We also denote the $n\times(n-m)$ orthogonal complement of $\bm{S}$ as $\bm{S}_{
 \end{definition}
 
 \begin{definition}[Coherent Probabilistic Forecasts]\label{def:cohprob}
-  Let $(\mathbb{R}^m, \mathscr{F}^{\mathbb{R}^m}, \nu)$ be a probability triple, where $\mathscr{F}^{\mathbb{R}^m}$ is the usual $\sigma$-algebra on $\mathbb{R}^m$. Let $\breve{\nu}$ be a probability measure on $\mathfrak{s}$ with $\sigma$-algebra $\mathscr{F}^{\mathfrak{s}}$.  Here $\mathscr{F}_{\mathfrak{s}}$ is formed as collection of sets $s(A)$, where $s(A)$ denotes the image of the set $A\in \mathscr{F}$ under the mapping $s(.)$ and the mapping $s:\mathbb{R}^m\rightarrow\mathbb{R}^n$ denotes premultiplication by the matrix $\bm{S}$.  Then $\breve{\nu}$ is said to be a \emph{coherent probability measure} iff
+  Let $(\mathbb{R}^m, \mathscr{F}^{\mathbb{R}^m}, \nu)$ be a probability triple, where $\mathscr{F}^{\mathbb{R}^m}$ is the usual $\sigma$-algebra on $\mathbb{R}^m$. Let $\breve{\nu}$ be a probability measure on $\mathfrak{s}$ with $\sigma$-algebra $\mathscr{F}^{\mathfrak{s}}$.  Here $\mathscr{F}^{\mathfrak{s}}$ is formed as collection of sets $s(A)$, where $s(A)$ denotes the image of the set $A\in \mathscr{F}^{\mathbb{R}^m}$ under the mapping $s(.)$.  Let the measure $\breve{\nu}$ have the property
   $$
       \breve{\nu}(s(A)) = \nu(A) \quad \forall  A \in \mathscr{F}^{\mathbb{R}^m},
     $$  
+  A probabilistic forecast is coherent if uncertainty in $\bm{y_{t+h}}$ conditional on all information up to time $t$ is characterised by the probability triple $(\mathfrak{s},\mathscr{F}^{\mathfrak{s}},\breve{\nu})$.
 \end{definition}
 
 %Definition~\ref{def:cohprob} implies the probability measure on $\mathbb{C}^m$ is equivalent to the probability measure on $(\mathbb{R}^m, \bm{\mathscr{F}}^m)$. Hence, there is no density anywhere outside the linear subspace $\mathbb{C}^m$. That is, a \textit{coherent probability density forecast} is any density $\bm{f}(\breve{\bm{y}}_{t+h})$ such that $\bm{f}(\breve{\bm{y}}_{t+h})=0$ for all $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}^{n-m}$. 
@@ -190,12 +191,12 @@ We also denote the $n\times(n-m)$ orthogonal complement of $\bm{S}$ as $\bm{S}_{
 
 %Consider a simple hierarchy with two bottom-level series $A$ and $B$ that add up to the top level series $Tot$. Suppose the forecasts of these series at time $t+h$ are given by $\breve{\bm{y}}_{t+h} = [\breve{y}_{Tot,t+h},\breve{y}_{A,t+h}, \breve{y}_{B,t+h}]$. Due to the aggregation constraint of the hierarchy we have $\breve{y}_{Tot,t+h}=\breve{y}_{A,t+h}+\breve{y}_{B,t+h}$. This implies that, even though  $\breve{\bm{y}}_{t+h} \in \mathbb{R}^3$, the points actually lie in $\mathbb{C}^2$, which is a two dimensional subspace within that $\mathbb{R}^3$ space. Therefore, any $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}$ is impossible, so that $f(\breve{\bm{y}}_{t+h})=0$ for any $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}$.
 
-These definitions of the coherent space $\mathfrak{s}$ and coherent point and probabilistic forecasts are defined in terms of the mapping $\bm{S}$ and may give the impression that the bottom level series play an important role in the definition.  However, alternative definitions could be formed using any set of basis vectors that spans $\mathfrak{s}$. For example, consider the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$.  In this case the matrix $\bm{S}$ has columns  $(1,1,0)'$ and $(1,0,1)'$ spanning $\mathfrak{s}$ and the mapping $\bm{S}$ transforms $y_{2,t}$ and $y_{3,t}$ into a coherent vector for the full hierarchy.  However the columns $(1,0,1)'$ and $(0,1,-1)'$ also span $\mathfrak{s}$ and define a mapping that transforms $y_{1,t}$ and $y_{2,t}$ into a coherent vector for the full hierarchy.  In general, since there are an infinite number linear bases for $\mathfrak{s}$ the definitions above could be made in terms of any series and not just the bottom level series.  In general we will call the series (or linear combinations thereof) used in the definitions of coherence as \textit{basis series}.  Unless stated otherwise, we will always consider the bottom level series to be the basis series, since this facilitates comparison with existing approaches in the literature.
+These definitions of the coherent space $\mathfrak{s}$ and coherent point and probabilistic forecasts are defined in terms of the mapping $s(.)$ and may give the impression that the bottom level series play an important role in the definition.  However, alternative definitions could be formed using any set of basis vectors that spans $\mathfrak{s}$. For example, consider the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$.  In this case the matrix $\bm{S}$ has columns  $(1,1,0)'$ and $(1,0,1)'$ spanning $\mathfrak{s}$ and the mapping $\bm{S}$ transforms $y_{2,t}$ and $y_{3,t}$ into a coherent vector for the full hierarchy.  However the columns $(1,0,1)'$ and $(0,1,-1)'$ also span $\mathfrak{s}$ and define a mapping that transforms $y_{1,t}$ and $y_{2,t}$ into a coherent vector for the full hierarchy.  In general, since there are an infinite number linear bases for $\mathfrak{s}$ the definitions above could be made in terms of any series and not just the bottom level series.  In general we will call the series (or linear combinations thereof) used in the definitions of coherence as \textit{basis series}.  Unless stated otherwise, we will always consider the basis series to be the bottom level series as in Definition~\ref{def:cohpoint} and Defintion~\ref{def:cohprob}, since this facilitates comparison with existing approaches in the literature.
 
 %Because the basis is not unique for a given coherent subspace, Definition~\ref{def:cohprob} is not unique, and one can redefine the coherent probabilistic forecasts with respect to any basis. However, we stick to Definition~\ref{def:cohprob} and consider the basis defined by the columns of $\bm{S}$ in what follows.
 
 %Definitions~\ref{def:cohpoint} and~\ref{def:cohprob} facilitate extension to probabilistic forecast reconciliation which we discuss in the next section. 
-To  the best of our knowledge, the only other definition of coherent probabilistic forecasts is given by \citet{BenTaieb2017} who define coherent probabilistic forecasts in terms of convolutions. According to their definition, probabilistic forecasts are coherent when a convolution of forecast distributions of disaggregate series is identical to the forecast distribution of the corresponding aggregate series.  Their definition is consistent with our definition, our reason for providing a different definition is that the geometric understanding of coherence will facilitate our definitions of probabilistic forecast reconciliation to which we now turn our attention.
+To  the best of our knowledge, the only other definition of coherent probabilistic forecasts is given by \citet{BenTaieb2017} who define coherent probabilistic forecasts in terms of convolutions. According to their definition, probabilistic forecasts are coherent when a convolution of forecast distributions of disaggregate series is identical to the forecast distribution of the corresponding aggregate series.  Their definition is consistent with our definition, our reason for providing a different definition is that the geometric understanding of coherence will facilitate our definitions of point and probabilistic forecast reconciliation to which we now turn our attention.
 
 \section{Forecast reconciliation}\label{sec:reconciliation}
 
@@ -204,15 +205,16 @@ Initially we define point forecast reconciliation, before extending the idea to 
 \subsection{Point forecast reconciliation}
 
 
-\begin{definition}\label{def:reconpoint}
-  Let $\hat{\bm{y}}_{t+h} \in \mathbb{R}^n$ be any set of incoherent forecasts at time $t+h$, and let 
+  Let $\hat{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ be any set of incoherent forecasts at time $t+h$ using information up to and including time $t$.  Let $\bm{G}$ be an $m\times n$ matrix and $g:\mathbb{R}^n \rightarrow \mathbb{R}^m$ be the mapping corresponding to pre-multiplication by $\bm{G}$.
+  \begin{definition}\label{def:reconpoint}
+  The point forecast $\tilde{\bm{y}}_{t+h|t}$ ``reconciles'' $\hat{\bm{y}}_{t+h|t}$ with respect to the mapping $g(.)$ iff
   \begin{equation}
-    \tilde{\bm{y}}_{t+h}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h},
+    \tilde{\bm{y}}_{t+h|t}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}\,.
   \end{equation} 
-  where $\bm{G}$ is an $m\times n$ matrix. We say $\tilde{\bm{y}}_{t+h}$ is ``reconciled'' with respect to the mapping $g(.)$, where $g:\mathbb{R}^n \rightarrow \mathbb{R}^m$ is defined as premultiplication be $\bm{G}$.
+    
 \end{definition}
 
-In definition~\ref{def:reconpoint}  $\bm{S}\bm{G}$ is a projection matrix that maps $\mathbb{R}^n$ onto $\mathfrak{s}$. We note that a similar characterisation of reconciliation has been used in previous studies but where the notation $\bm{P}$ is used in place of $\bm{G}$. In principle $g(.)$ can also be a non-linear mapping, a possibility we consider in Section~\ref{nonlinear} {\color{red}[AP: I WILL ADD THIS LATER]}.
+In definition~\ref{def:reconpoint}  $\bm{S}\bm{G}$ is a projection matrix that maps $\mathbb{R}^n$ onto $\mathfrak{s}$. We note that a similar characterisation of reconciliation has been used in previous studies but where the notation $\bm{P}$ is used in place of $\bm{G}$. In principle the definition can be generalised where $g(.)$ is a non-linear mapping, a possibility we consider in Section~\ref{nonlinear} {\color{red}[AP: I WILL ADD THIS LATER]}.
 
 Definition~\ref{def:reconpoint}, actually defines an entire family of forecast reconciliation methods including many methods currently extant in the literature. To provide a geometric interpretation, we introduce an $n \times (n-m)$ matrix $\bm{R}$ whose columns span the null space $\mathfrak{s}_{\perp}$.  The matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. However, since $\bm{R}$ is not unique, the columns of any given $\bm{R}$ matrix can also be thought of as `directions' along which incoherent point forecasts are projected onto the coherent space. For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$ is the vector $(1,-1,-1)$, which is orthogonal to the columns of $\bm{S}$ in the usual sense of Euclidean geometry.
 %$$ 
@@ -231,15 +233,17 @@ Definition~\ref{def:reconpoint}, actually defines an entire family of forecast r
 
 %\subsubsection*{Step 1: Change of basis}
 
-To illustrate further note that the columns of $\bm{S}$ and $\bm{R}$ provide a basis for $\mathbb{R}^n$.  As such any vector of incoherent set of point forecasts $\hat{\bm{y}}_{t+h|t} \in \mathbb{R}^n$, can be expressed in terms of coordinates in the basis defined by $\bm{S}$ and $\bm{R}$. Let $\tilde{\bm{b}}'_{t+h|t}$ and $\tilde{\bm{a}}_{t+h|t}$ be the coordinates corresponding to $\bm{S}$ and $\bm{R}$, respectively. The process of reconciliation involves setting $\tilde{\bm{b}}_{t+h|t}$ to be the values of the reconciled bottom-level series and setting $\tilde{\bm{a}}_{t+h}=\bm{0}$ to ensure coherence. From properties of linear algebra it follows that 
+To illustrate further note that the columns of $\bm{S}$ and $\bm{R}$ provide a basis for $\mathbb{R}^n$.  As such any incoherent set of point forecasts $\hat{\bm{y}}_{t+h|t} \in \mathbb{R}^n$, can be expressed in terms of coordinates in the basis defined by $\bm{S}$ and $\bm{R}$. Let $\tilde{\bm{b}}'_{t+h|t}$ and $\tilde{\bm{a}}_{t+h|t}$ be the coordinates corresponding to $\bm{S}$ and $\bm{R}$, respectively. The process of reconciliation involves setting $\tilde{\bm{b}}_{t+h|t}$ to be the values of the reconciled bottom-level series and setting $\tilde{\bm{a}}_{t+h}=\bm{0}$ to ensure coherence. From properties of linear algebra it follows that 
 %\[
 %(\bm{S} ~ \vdots~ \bm{R})
 %(\tilde{\bm{b}}'_{t+h},~ \tilde{\bm{t}}'_{t+h})'
 %= \hat{\bm{y}}_{t+h},
 %\]
 \[
-\hat{\bm{y}}_{t+h|t} = (\bm{S} ~ \vdots~ \bm{R})
-(\tilde{\bm{b}}'_{t+h|t},~ \tilde{\bm{a}}'_{t+h|t})'= \bm{S}\tilde{\bm{b}}_{t+h|t} +  \bm{R}\tilde{\bm{a}}_{t+h|t},
+\hat{\bm{y}}_{t+h|t} = (\bm{S} ~ \bm{R})
+\begin{pmatrix}
+\tilde{\bm{b}}_{t+h|t}\\ \tilde{\bm{a}}_{t+h|t}
+\end{pmatrix}= \bm{S}\tilde{\bm{b}}_{t+h|t} +  \bm{R}\tilde{\bm{a}}_{t+h|t},
 \]
 while setting $\tilde{\bm{a}}_{t+h|t}=\bm{0}$ gives the reconciled point forecast
 \[
@@ -252,10 +256,10 @@ while setting $\tilde{\bm{a}}_{t+h|t}=\bm{0}$ gives the reconciled point forecas
 %\hat{\bm{y}}_{t+h}.
 %\end{equation}
 
-In order to find $\tilde{\bm{b}}'_{t+h|t}$ we require the inverse $(\bm{S} ~ \vdots~ \bm{R})^{-1}$ which is given by
+In order to find $\tilde{\bm{b}}_{t+h|t}$ we require the inverse $(\bm{S} ~ \bm{R})^{-1}$ which is given by
 \begin{equation}
-(\bm{S} ~ \vdots~ \bm{R})^{-1} = \begin{pmatrix}
-(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \\ \cdots \\ (\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot
+(\bm{S} ~  \bm{R})^{-1} = \begin{pmatrix}
+(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \\ (\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot
 \end{pmatrix}\,,
 \end{equation}
 where $\bm{S}_{\bot}$ and $\bm{R}_{\bot}$ be the orthogonal complements of $\bm{S}$ and $\bm{R}$
@@ -310,16 +314,17 @@ We now extend the methodology of point forecast reconciliation to probabilistic 
 
 %For probabilistic forecasts, reconciliation implies finding the probability measure of the coherent forecasts using the information from an incoherent probabilistic forecast measure. A more formal definition is given below.
 
-\begin{definition} \label{def:reconprob}
-  Let $(\mathbb{R}^n, \mathscr{F}^{\mathbb{R}^n}, \hat{\nu})$ be an incoherent probability triple   defined on $\mathbb{R}^n$ associated with $\bm{y}_{t+h}$ conditional on all information up to time $t$.  Let $(\mathbb{R}^m, \mathscr{F}^{\mathbb{R}^m}, \nu)$ be a probability triple defined on $\mathbb{R}^m$. Let $g:\mathbb{R}^n \rightarrow \mathbb{R}^m $ be a linear mapping. Let $\nu$ have the following property:
+  Let $(\mathbb{R}^n, \mathscr{F}^{\mathbb{R}^n}, \hat{\nu})$ be an incoherent probability triple that characterises forecast uncertainty in for all variables in the hierarchy at time $t+h$ conditional on all information up to time $t$.  Let $g:\mathbb{R}^n \rightarrow \mathbb{R}^m $ be a linear mapping.  Let $(\mathbb{R}^m, \mathscr{F}^{\mathbb{R}^m}, \nu)$ be a probability triple defined on $\mathbb{R}^m$ where $\nu$ has the following property:
   \begin{equation}
-  \nu(A) = \hat{\nu}(g^{-1}(A)), \quad \forall \quad A \in \mathscr{F}^{\mathbb{R}^m}\,,
+  \nu(A) = \hat{\nu}(g^{-1}(A)), \quad \forall \quad A \in \mathscr{F}^{\mathbb{R}^m}\,.
   \end{equation}
-  where $g^{-1}(A)$ denotes the pre-image of the measurable set $A$, that is the set of all points in $\mathbb{R}^n$ that map to a point in $A$ under the mapping $g(.)$ or $g^{-1}(A):=\left\{\bm{y}\in \mathbb{R}^n:\bm{Gy}\in A \right\}$. We define $\tilde{\nu}$ as the reconciled probability measure of $\hat{\nu}$ with respect to the mapping $g(.)$ if the following holds
+  Here $g^{-1}(A)$ denotes the pre-image of the measurable set $A$, that is $g^{-1}(A):=\left\{\bm{y}\in \mathbb{R}^n:\bm{Gy}\in A \right\}$. In words, the preimage $g^{-1}(A)$ is the set of all points in $\mathbb{R}^n$ that $g(.)$ maps to a point in $A$.
+  \begin{definition} \label{def:reconprob}
+  We define $\tilde{\nu}$ as the reconciled probability measure of $\hat{\nu}$ with respect to the mapping $g(.)$ if the following holds
   \begin{equation}
-  \tilde{\nu}(s(A)) = \nu(A)= \hat{\nu}(\bm{g}^{-1}(A)) \qquad \forall A \in \mathscr{F}^{\mathbb{R}^m},
+  \tilde{\nu}(s(A)) = \nu(A)= \hat{\nu}(g^{-1}(A)) \qquad \forall A \in \mathscr{F}^{\mathbb{R}^m},
   \end{equation}
-  where $\tilde{\nu}(\cdot)$ is the probability measure on the measure space $(\mathfrak{s}, \mathscr{F}_\mathfrak{s})$.
+  where $\tilde{\nu}(\cdot)$ is a probability measure on the $\mathfrak{s}$ with $\sigma$-algebra $\mathscr{F}_\mathfrak{s}$.
 \end{definition}
 
 We now discuss how this definition can be used in practice to obtain reconciled probabilistic forecasts for hierarchical time series.
