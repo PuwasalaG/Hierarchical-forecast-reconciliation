@@ -128,7 +128,7 @@ We now provide new definitions for coherent forecasts in terms of vector spaces 
 Let an $n$-dimensional time series $\bm{y}_t \in \mathbb{R}^n$ be subject to the linear aggregation constraint $\bm{y}_t = \bm{S}\bm{b}_t$, where $\bm{b}_t \in \mathbb{R}^m$ and $\bm{S}$ is an $n \times m$ constant matrix. The $m$-dimensional subspace $\mathfrak{s}\subset \mathbb{R}^n$ that is spanned by the columns of $\bm{S}$, i.e. $\mathfrak{s}=\mbox{span}(\bm{S})$, is defined as the {\em coherent space}. 
 \end{definition}
 
-We also denote the $n\times(n-m)$ orthogonal complement of $\bm{S}$ as $\bm{S}_{\perp}$, where $\mathfrak{s}=\mbox{span}\left(\bm{S}_{\perp}\right)$ is the nullspace of $\bm{S}$. We also note that when $\bm{S}$ is understood as a linear mapping $\bm{S}:\mathbb{R}^m\rightarrow\mathbb{R}^n$ whose image given by the coherent space $\mathfrak{s}$. This is depicted in Figure~\ref{fig2}.
+We also denote the $n\times(n-m)$ orthogonal complement of $\bm{S}$ as $\bm{S}_{\perp}$, where $\mathfrak{s}_\perp=\mbox{span}\left(\bm{S}_{\perp}\right)$ is the nullspace of $\bm{S}$. We also note that when $\bm{S}$ is understood as a linear mapping $\bm{S}:\mathbb{R}^m\rightarrow\mathbb{R}^n$ whose image given by the coherent space $\mathfrak{s}$. This is depicted in Figure~\ref{fig2}.
 
 \begin{figure}[H]
   \begin{center}
@@ -216,20 +216,21 @@ Initially we define point forecast reconciliation, before extending the idea to 
 
 In definition~\ref{def:reconpoint} we assume $\bm{G}$ to be a linear mapping, which implies that  $\bm{S}\bm{G}$ is a projection matrix from $\mathbb{R}^n$ onto $\mathfrak{s}$. This is consistent with previous studies where the notation $\bm{P}$ is often used in place of $\bm{G}$. In principle ${\bm G}$ can be a non-linear mapping $\bm{G}:\mathbb{R}^n \rightarrow \mathbb{R}^m$ a possibility we consider in Section~\ref{nonlinear} [TO BE ADDED LATER].
 
-Using Definition~\ref{def:reconpoint}, we can now explain previous results for linear forecast reconciliation. Let $\bm{R} \in \mathbb{R}^{n \times (n-m)}$ comprise the columns that span $\bm{\mathbb{N}}^{n-m}$, which is orthogonal to $\mathbb{C}^m$. Note that $\bm{R}$ is not unique; one example is a matrix whose columns represent the aggregation constraints for a given hierarchy. For the hierarchy in example 1, 
-$$ 
-\bm{S} = 
-\begin{pmatrix} 
-1& 1 \\ 1 & 0 \\ 0&1 
-\end{pmatrix} 
-\quad \text{and} \quad 
-\bm{R} = 
-\begin{pmatrix}  
-1 \\ -1 \\ -1 
-\end{pmatrix}.
-$$ 
-
-Further let $\{\bm{s}_1,\dots,\bm{s}_m\}$ and $\{\bm{r}_1,\dots,\bm{r}_{n-m}\}$ denote the columns of $\bm{S}$ and $\bm{R}$ respectively. Then $\bm{B}=\{\bm{s}_1,\dots,\bm{s}_m, \bm{r}_1,\dots,\bm{r}_{n-m}\}$ is a basis for $\mathbb{R}^n$. Now, using the insights of Definition~\ref{def:reconpoint}, we can use the following steps to reconcile the point forecasts.
+Definition~\ref{def:reconpoint}, in fact defines an entire family of forecast reconciliation methods including many methods currently extant in the literature. To provide a geometric interpretation, we introduce an $\mathbb{R}^{n \times (n-m)}$ matrix $\bm{R}$ whose columns span the null space $\mathfrak{s}_{\perp}$. The columns of $\bm{R}$ can be thought of as `directions' along which incoherent point forecasts are projected onto the coherent space. 
+A straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$ is the vector $(1,-1,-1)$.  This vector is orthogonal to the columns of $\bm{S}$ in the usual sense of Euclidean geometry.
+%$$ 
+%\bm{S} = 
+%\begin{pmatrix} 
+%1& 1 \\ 1 & 0 \\ 0&1 
+%\end{pmatrix} 
+%\quad \text{and} \quad 
+%\bm{R} = 
+%\begin{pmatrix}  
+%1 \\ -1 \\ -1 
+%\end{pmatrix}.
+%$$ 
+%
+%Further let $\{\bm{s}_1,\dots,\bm{s}_m\}$ and $\{\bm{r}_1,\dots,\bm{r}_{n-m}\}$ denote the columns of $\bm{S}$ and $\bm{R}$ respectively. Then $\bm{B}=\{\bm{s}_1,\dots,\bm{s}_m, \bm{r}_1,\dots,\bm{r}_{n-m}\}$ is a basis for $\mathbb{R}^n$. Now, using the insights of Definition~\ref{def:reconpoint}, we can use the following steps to reconcile the point forecasts.
 
 \subsubsection*{Step 1: Obtaining reconciled bottom-level point forecasts}
 
