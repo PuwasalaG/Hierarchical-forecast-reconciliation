@@ -214,10 +214,9 @@ Initially we define point forecast reconciliation, before extending the idea to 
   where $\bm{G}$ is an $m\times n$ matrix. We say $\tilde{\bm{y}}_{t+h}$ is ``reconciled'' with respect to the mapping $\bm{G}$.
 \end{definition}
 
-In definition~\ref{def:reconpoint} we assume $\bm{G}$ to be a linear mapping, which implies that  $\bm{S}\bm{G}$ is a projection matrix from $\mathbb{R}^n$ onto $\mathfrak{s}$. This is consistent with previous studies where the notation $\bm{P}$ is often used in place of $\bm{G}$. In principle ${\bm G}$ can be a non-linear mapping $\bm{G}:\mathbb{R}^n \rightarrow \mathbb{R}^m$ a possibility we consider in Section~\ref{nonlinear} [TO BE ADDED LATER].
+In definition~\ref{def:reconpoint} we assume $\bm{G}$ to be a linear mapping, which implies that  $\bm{S}\bm{G}$ is a projection matrix from $\mathbb{R}^n$ onto $\mathfrak{s}$. This is consistent with previous studies where the notation $\bm{P}$ is often used in place of $\bm{G}$. In principle ${\bm G}$ can be a non-linear mapping $\bm{G}:\mathbb{R}^n \rightarrow \mathbb{R}^m$ a possibility we consider in Section~\ref{nonlinear} {\color{red}[AP: I WILL ADD THIS LATER]}.
 
-Definition~\ref{def:reconpoint}, in fact defines an entire family of forecast reconciliation methods including many methods currently extant in the literature. To provide a geometric interpretation, we introduce an $\mathbb{R}^{n \times (n-m)}$ matrix $\bm{R}$ whose columns span the null space $\mathfrak{s}_{\perp}$. The columns of $\bm{R}$ can be thought of as `directions' along which incoherent point forecasts are projected onto the coherent space. 
-A straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$ is the vector $(1,-1,-1)$.  This vector is orthogonal to the columns of $\bm{S}$ in the usual sense of Euclidean geometry.
+Definition~\ref{def:reconpoint}, actually defines an entire family of forecast reconciliation methods including many methods currently extant in the literature. To provide a geometric interpretation, we introduce an $n \times (n-m)$ matrix $\bm{R}$ whose columns span the null space $\mathfrak{s}_{\perp}$.  The matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. However, since $\bm{R}$ is not unique, the columns of any given $\bm{R}$ matrix can also be thought of as `directions' along which incoherent point forecasts are projected onto the coherent space. For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$ is the vector $(1,-1,-1)$, which is orthogonal to the columns of $\bm{S}$ in the usual sense of Euclidean geometry.
 %$$ 
 %\bm{S} = 
 %\begin{pmatrix} 
@@ -232,55 +231,59 @@ A straightforward choice of $\bm{R}$ for the most simple three variable hierarch
 %
 %Further let $\{\bm{s}_1,\dots,\bm{s}_m\}$ and $\{\bm{r}_1,\dots,\bm{r}_{n-m}\}$ denote the columns of $\bm{S}$ and $\bm{R}$ respectively. Then $\bm{B}=\{\bm{s}_1,\dots,\bm{s}_m, \bm{r}_1,\dots,\bm{r}_{n-m}\}$ is a basis for $\mathbb{R}^n$. Now, using the insights of Definition~\ref{def:reconpoint}, we can use the following steps to reconcile the point forecasts.
 
-\subsubsection*{Step 1: Obtaining reconciled bottom-level point forecasts}
+%\subsubsection*{Step 1: Change of basis}
 
-For a given incoherent set of point forecasts $\hat{\bm{y}}_{t+h} \in \mathbb{R}^n$, first we find the coordinates of $\hat{\bm{y}}_{t+h}$ with respect to the basis $\bm{B}$. Let $(\tilde{\bm{b}}'_{t+h} , \tilde{\bm{t}}'_{t+h})'$ denote these coordinates. Note that $\tilde{\bm{b}}_{t+h}$ is a basis series which is equivalent to the reconciled bottom-level series, and which corresponds to the linear combination coefficients of the basis $\{\bm{s}_1,\dots,\bm{s}_m\}$. Similarly, $\tilde{\bm{t}}_{t+h}$ is another basis series corresponding to the linear combination coefficients of the basis $\{\bm{r}_1,\dots,\bm{r}_{n-m}\}$. Then from basic properties of linear algebra it follows that 
+To illustrate further note that the columns of $\bm{S}$ and $\bm{R}$ provide a basis for $\mathbb{R}^n$.  As such any vector of incoherent set of point forecasts $\hat{\bm{y}}_{t+h|t} \in \mathbb{R}^n$, can be expressed in terms of coordinates in the basis defined by $\bm{S}$ and $\bm{R}$. Let $\tilde{\bm{b}}'_{t+h|t}$ and $\tilde{\bm{a}}_{t+h|t}$ be the coordinates corresponding to $\bm{S}$ and $\bm{R}$, respectively. The process of reconciliation involves setting $\tilde{\bm{b}}_{t+h|t}$ to be the values of the reconciled bottom-level series and setting $\tilde{\bm{a}}_{t+h}=\bm{0}$ to ensure coherence. From properties of linear algebra it follows that 
+%\[
+%(\bm{S} ~ \vdots~ \bm{R})
+%(\tilde{\bm{b}}'_{t+h},~ \tilde{\bm{t}}'_{t+h})'
+%= \hat{\bm{y}}_{t+h},
+%\]
 \[
-(\bm{S} ~ \vdots~ \bm{R})
-(\tilde{\bm{b}}'_{t+h},~ \tilde{\bm{t}}'_{t+h})'
-= \hat{\bm{y}}_{t+h},
+\hat{\bm{y}}_{t+h|t} = (\bm{S} ~ \vdots~ \bm{R})
+(\tilde{\bm{b}}'_{t+h|t},~ \tilde{\bm{a}}'_{t+h|t})'= \bm{S}\tilde{\bm{b}}_{t+h|t} +  \bm{R}\tilde{\bm{a}}_{t+h|t},
 \]
+while setting $\tilde{\bm{a}}_{t+h|t}=\bm{0}$ gives the reconciled point forecast
 \[
-\hat{\bm{y}}_{t+h} = \bm{S}\tilde{\bm{b}}_{t+h} +  \bm{R}\tilde{\bm{t}}_{t+h},
+\tilde{\bm{y}}_{t+h|t} = \bm{S}\tilde{\bm{b}}_{t+h|t}
 \]
-and
-\begin{equation}\label{4.3}
-(\tilde{\bm{b}}'_{t+h}, ~ \tilde{\bm{t}}'_{t+h})' =
-(\bm{S} ~ \vdots~ \bm{R})^{-1}
-\hat{\bm{y}}_{t+h}.
-\end{equation}
 
-In order to find $(\bm{S} ~ \vdots~ \bm{R})^{-1}$, let $\bm{S}_{\bot}$ and $\bm{R}_{\bot}$ be the orthogonal complements of $\bm{S}$ and $\bm{R}$
-respectively. Then $(\bm{S} ~ \vdots~ \bm{R})^{-1}$ is given by
+%\begin{equation}\label{4.3}
+%(\tilde{\bm{b}}'_{t+h}, ~ \tilde{\bm{t}}'_{t+h})' =
+%(\bm{S} ~ \vdots~ \bm{R})^{-1}
+%\hat{\bm{y}}_{t+h}.
+%\end{equation}
+
+In order to find $\tilde{\bm{b}}'_{t+h|t}$ we require the inverse $(\bm{S} ~ \vdots~ \bm{R})^{-1}$ which is given by
 \begin{equation}
 (\bm{S} ~ \vdots~ \bm{R})^{-1} = \begin{pmatrix}
 (\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \\ \cdots \\ (\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot
-\end{pmatrix}.
+\end{pmatrix}\,,
 \end{equation}
-Thus we have,
-\begin{equation} \label{4.4}
-\begin{pmatrix}
-\tilde{\bm{b}}_{t+h} \\ \cdots \\ \tilde{\bm{t}}_{t+h}
-\end{pmatrix} = \begin{pmatrix}
-(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \\ \cdots \\ (\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot
-\end{pmatrix}\hat{\bm{y}}_{t+h}.
-\end{equation}
+where $\bm{S}_{\bot}$ and $\bm{R}_{\bot}$ be the orthogonal complements of $\bm{S}$ and $\bm{R}$
+respectively. Thus it follows that $\tilde{\bm{b}}_{t+h}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h}$ and $\tilde{\bm{y}}_{t+h|t}=\bm{S}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h|t}$.  Here $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$ is equivalent to $\bm{G}$ in Definition~\ref{def:reconpoint}.
 
-From \eqref{4.4} it follows that
-\begin{equation}
-\tilde{\bm{b}}_{t+h}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h}
-\end{equation}
+%\begin{equation} \label{4.4}
+%\begin{pmatrix}
+%\tilde{\bm{b}}_{t+h} \\ \cdots \\ \tilde{\bm{t}}_{t+h}
+%\end{pmatrix} = \begin{pmatrix}
+%(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \\ \cdots \\ (\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot
+%\end{pmatrix}\hat{\bm{y}}_{t+h}.
+%\end{equation}
+%From \eqref{4.4} it follows that
+%\begin{equation}
+%\tilde{\bm{b}}_{t+h}=(\bm{R}'_\bot %\bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h}
+%\end{equation}
 
-\subsubsection*{Step 2: Obtaining reconciled point forecasts for the whole hierarchy}
+%\subsubsection*{Step 2: Obtaining reconciled point forecasts for the whole hierarchy}
+%
+%This step directly follows from the definition for coherent forecasts. To obtain reconciled point forecasts for the entire hierarchy, we map $\tilde{\bm{b}}_{t+h} \in \mathbb{R}^n$ to the $\mathbb{C}^m$ through $\bm{S}$. Thus we have, 
+%\begin{equation}
+%\tilde{\bm{y}}_{t+h}=\bm{S}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h}, \qquad \tilde{\bm{y}}_{t+h} \in \mathbb{C}^m<\mathbb{R}^n.
+%\end{equation}
 
-This step directly follows from the definition for coherent forecasts. To obtain reconciled point forecasts for the entire hierarchy, we map $\tilde{\bm{b}}_{t+h} \in \mathbb{R}^n$ to the $\mathbb{C}^m$ through $\bm{S}$. Thus we have, 
-\begin{equation}
-\tilde{\bm{y}}_{t+h}=\bm{S}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h}, \qquad \tilde{\bm{y}}_{t+h} \in \mathbb{C}^m<\mathbb{R}^n.
-\end{equation}
-
-Finding a suitable $\bm{R}_\bot$ with respect to a certain loss function will lead to optimally reconciled point forecasts of the hierarchy. If $\bm{P}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$, then the definition for linear reconciliation of point forecasts in previous studies coincides with our explanation.
-
-In our context, we need to find $\bm{R}_\bot$ such that $\bm{R}'_\bot \bm{S}$ is invertible; i.e, $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \bm{S}=\bm{I}$. This condition coincides with the unbiased condition $\bm{SPS}=\bm{S}$ proposed by \citet{Hyndman2011}.
+Finding a suitable $\bm{R}_\bot$ with respect to a certain loss function will lead to optimally reconciled point forecasts of the hierarchy. %If $\bm{P}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$, then the definition for linear reconciliation of point forecasts in previous studies coincides with our explanation.
+In our context, we need to find $\bm{R}_\bot$ such that $\bm{R}'_\bot \bm{S}$ is invertible; i.e, $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \bm{S}=\bm{I}$. This condition coincides with the unbiased condition $\bm{SPS}=\bm{S}$ proposed by \citet{Hyndman2011}{\color{red}[AP:NONE OF THIS MAKES SENSE TO ME.  $R_{\perp}'S$ WILL BE INVERTIBLE AS LONG AS NONE OF THE COLUMNS OF R SIT ON THE COLUMN SPACE OF S. AS LONG AS R IS STICKING INTO THE NULL SPACE OF S, THEN SPS=S ALWAYS SINCE SP IS JUST A PROJECTION THAT PUTS VECTORS ON THE COLUMN SPACE OF S.  SINCE THE COLUMNS OF S ARE ALREADY ON THE COLUMN SPACE OF S, THEN MULTIPLYING SP SIMPLY DOES NOTHING TO THEM. THE CONNECTION TO UNBIASEDNESS IS STILL NOT CLEAR TO ME.]}.
 
 \citet{Hyndman2011} proposed to choose
 \begin{equation}
