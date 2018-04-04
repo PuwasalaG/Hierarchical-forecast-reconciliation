@@ -216,7 +216,7 @@ Initially we define point forecast reconciliation, before extending the idea to 
 
 In definition~\ref{def:reconpoint}  $\bm{S}\bm{G}$ is a projection matrix that maps $\mathbb{R}^n$ onto $\mathfrak{s}$. We note that a similar characterisation of reconciliation has been used in previous studies but where the notation $\bm{P}$ is used in place of $\bm{G}$. In principle the definition can be generalised where $g(.)$ is a non-linear mapping, a possibility we consider in Section~\ref{nonlinear} {\color{red}[AP: I WILL ADD THIS LATER]}.
 
-Definition~\ref{def:reconpoint}, actually defines an entire family of forecast reconciliation methods including many methods currently extant in the literature. To provide a geometric interpretation, we introduce an $n \times (n-m)$ matrix $\bm{R}$ whose columns span the null space $\mathfrak{s}_{\perp}$.  The matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. However, since $\bm{R}$ is not unique, the columns of any given $\bm{R}$ matrix can also be thought of as `directions' along which incoherent point forecasts are projected onto the coherent space. For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$ is the vector $(1,-1,-1)$, which is orthogonal to the columns of $\bm{S}$ in the usual sense of Euclidean geometry.
+Definition~\ref{def:reconpoint}, actually defines an entire family of forecast reconciliation methods including many methods currently extant in the literature. To provide a geometric interpretation, we introduce an $n \times (n-m)$ matrix $\bm{R}$ whose columns span the null space $\mathfrak{s}_{\perp}$.  For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$ is the vector $(1,-1,-1)$, which is orthogonal to the columns of $\bm{S}$ in the usual sense of Euclidean geometry.  In this case, the matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. In general, the columns of any given $\bm{R}$ matrix can also be thought of as `directions' along which incoherent point forecasts are projected onto the coherent space, and these directions need not be orthogonal to $\mathfrak{s}$. 
 %$$ 
 %\bm{S} = 
 %\begin{pmatrix} 
@@ -314,20 +314,19 @@ We now extend the methodology of point forecast reconciliation to probabilistic 
 
 %For probabilistic forecasts, reconciliation implies finding the probability measure of the coherent forecasts using the information from an incoherent probabilistic forecast measure. A more formal definition is given below.
 
-  Let $(\mathbb{R}^n, \mathscr{F}^{\mathbb{R}^n}, \hat{\nu})$ be an incoherent probability triple that characterises forecast uncertainty in for all variables in the hierarchy at time $t+h$ conditional on all information up to time $t$.  Let $g:\mathbb{R}^n \rightarrow \mathbb{R}^m $ be a linear mapping.  Let $(\mathbb{R}^m, \mathscr{F}^{\mathbb{R}^m}, \nu)$ be a probability triple defined on $\mathbb{R}^m$ where $\nu$ has the following property:
+  Let $(\mathbb{R}^n, \mathscr{F}^{\mathbb{R}^n}, \hat{\nu})$ be an probability triple, that is not necessarily coherent and that characterises forecast uncertainty for all variables in the hierarchy at time $t+h$ conditional on all information up to time $t$.  Let $g:\mathbb{R}^n \rightarrow \mathbb{R}^m $ be a linear mapping.  Let $(\mathbb{R}^m, \mathscr{F}^{\mathbb{R}^m}, \nu)$ be a probability triple defined on $\mathbb{R}^m$ where $\nu$ has the following property:
   \begin{equation}
   \nu(A) = \hat{\nu}(g^{-1}(A)), \quad \forall \quad A \in \mathscr{F}^{\mathbb{R}^m}\,.
   \end{equation}
-  Here $g^{-1}(A)$ denotes the pre-image of the measurable set $A$, that is $g^{-1}(A):=\left\{\bm{y}\in \mathbb{R}^n:\bm{Gy}\in A \right\}$. In words, the preimage $g^{-1}(A)$ is the set of all points in $\mathbb{R}^n$ that $g(.)$ maps to a point in $A$.
+  Here $g^{-1}(A):=\left\{\bm{y}\in \mathbb{R}^n:g(\bm{y})\in A \right\}$ is the pre-image of $A$, that is the set of all points in $\mathbb{R}^n$ that $g(.)$ maps to a point in $A$.
   \begin{definition} \label{def:reconprob}
-  We define $\tilde{\nu}$ as the reconciled probability measure of $\hat{\nu}$ with respect to the mapping $g(.)$ if the following holds
+  We define the reconciled probability measure of $\hat{\nu}$ with respect to the mapping $g(.)$ as a probability measure $\tilde{\nu}$ on $\mathfrak{s}$ with $\sigma$-algebra $\mathscr{F}_\mathfrak{s}$ where the following holds
   \begin{equation}
-  \tilde{\nu}(s(A)) = \nu(A)= \hat{\nu}(g^{-1}(A)) \qquad \forall A \in \mathscr{F}^{\mathbb{R}^m},
+  \tilde{\nu}(s(A)) = \nu(A)= \hat{\nu}(g^{-1}(A)) \qquad \forall A \in \mathscr{F}^{\mathbb{R}^m}\,.
   \end{equation}
-  where $\tilde{\nu}(\cdot)$ is a probability measure on the $\mathfrak{s}$ with $\sigma$-algebra $\mathscr{F}_\mathfrak{s}$.
 \end{definition}
 
-We now discuss how this definition can be used in practice to obtain reconciled probabilistic forecasts for hierarchical time series.
+We now discuss how this definition can be used in practice to obtain reconciled probabilistic forecasts for hierarchical time series.   Recall that the case of forecast reconciliation could be broken down into three steps.  In the first via a change of basis $\hat{\bm{y}_{t+h|t}}$ is transformed into coordinates $\tilde{\bm{b}_{t+h|t}}$ and $\tilde{\bm{a}_{t+h|t}}$.  In the second, $\tilde{\bm{a}_{t+h|t}}$ is discarded and $\tilde{\bm{b}_{t+h|t}}$ are kept as the bottom level reconciled forecasts.  In the third reconciled forecasts for the entire hierarchy are recovered via $\tilde{\bm{y}_{t+h|t}}=\bm{S}\tilde{\bm{b}_{t+h|t}}$.  We now outline these three steps for probabilistic forecasts and demonstrate how they correspond to Definition~\ref{def:reconprob}.
 
 Recall that $\hat{\bm{y}}_{t+h}$ is a set of incoherent point forecasts and the coordinates of $\hat{\bm{y}}_{t+h}$ with respect to the basis $\bm{B}$ are given by \eqref{4.3}. Suppose $\hat{\bm{f}}(\cdot)$ is the probability density of $\hat{\bm{y}}_{t+h}$. Our goal is to reconcile $\hat{\bm{f}}(\cdot)$ such that the density lives on $\mathbb{C}^m$. In order to obtain this reconciled density, we need to project $\hat{\bm{f}}(\hat{\bm{y}}_{t+h})$ onto $\mathbb{C}^m$ along the direction of $\mathbb{N}^{n-m}$.
 
