@@ -316,36 +316,51 @@ We now extend the methodology of point forecast reconciliation to probabilistic 
 
   Let $(\mathbb{R}^n, \mathscr{F}^{\mathbb{R}^n}, \hat{\nu})$ be an probability triple, that is not necessarily coherent and that characterises forecast uncertainty for all variables in the hierarchy at time $t+h$ conditional on all information up to time $t$.  Let $g:\mathbb{R}^n \rightarrow \mathbb{R}^m $ be a linear mapping.  Let $(\mathbb{R}^m, \mathscr{F}^{\mathbb{R}^m}, \nu)$ be a probability triple defined on $\mathbb{R}^m$ where $\nu$ has the following property:
   \begin{equation}
-  \nu(A) = \hat{\nu}(g^{-1}(A)), \quad \forall \quad A \in \mathscr{F}^{\mathbb{R}^m}\,.
+  \nu(B) = \hat{\nu}(g^{-1}(B)), \quad \forall \quad B \in \mathscr{F}^{\mathbb{R}^m}\,.
   \end{equation}
-  Here $g^{-1}(A):=\left\{\bm{y}\in \mathbb{R}^n:g(\bm{y})\in A \right\}$ is the pre-image of $A$, that is the set of all points in $\mathbb{R}^n$ that $g(.)$ maps to a point in $A$.
+  Here $g^{-1}(B):=\left\{\bm{y}\in \mathbb{R}^n:g(\bm{y})\in B \right\}$ is the pre-image of $B$, that is the set of all points in $\mathbb{R}^n$ that $g(.)$ maps to a point in $B$.
   \begin{definition} \label{def:reconprob}
   We define the reconciled probability measure of $\hat{\nu}$ with respect to the mapping $g(.)$ as a probability measure $\tilde{\nu}$ on $\mathfrak{s}$ with $\sigma$-algebra $\mathscr{F}_\mathfrak{s}$ where the following holds
   \begin{equation}
-  \tilde{\nu}(s(A)) = \nu(A)= \hat{\nu}(g^{-1}(A)) \qquad \forall A \in \mathscr{F}^{\mathbb{R}^m}\,.
+  \tilde{\nu}(s(B)) = \nu(B)= \hat{\nu}(g^{-1}(B)) \qquad \forall B \in \mathscr{F}^{\mathbb{R}^m}\,.
   \end{equation}
 \end{definition}
 
-We now discuss how this definition can be used in practice to obtain reconciled probabilistic forecasts for hierarchical time series.   Recall that the case of forecast reconciliation could be broken down into three steps.  In the first via a change of basis $\hat{\bm{y}_{t+h|t}}$ is transformed into coordinates $\tilde{\bm{b}_{t+h|t}}$ and $\tilde{\bm{a}_{t+h|t}}$.  In the second, $\tilde{\bm{a}_{t+h|t}}$ is discarded and $\tilde{\bm{b}_{t+h|t}}$ are kept as the bottom level reconciled forecasts.  In the third reconciled forecasts for the entire hierarchy are recovered via $\tilde{\bm{y}_{t+h|t}}=\bm{S}\tilde{\bm{b}_{t+h|t}}$.  We now outline these three steps for probabilistic forecasts and demonstrate how they correspond to Definition~\ref{def:reconprob}.
+We now discuss how this definition can be used in practice to obtain reconciled probabilistic forecasts for hierarchical time series.   Recall that the case of forecast reconciliation could be broken down into three steps.  In the first via a change of basis $\hat{\bm{y}}_{t+h|t}$ is transformed into coordinates $\tilde{\bm{b}}_{t+h|t}$ and $\tilde{\bm{a}}_{t+h|t}$.  In the second, $\tilde{\bm{a}}_{t+h|t}$ is discarded and $\tilde{\bm{b}}_{t+h|t}$ are kept as the bottom level reconciled forecasts.  In the third, reconciled forecasts for the entire hierarchy are recovered via $\tilde{\bm{y}}_{t+h|t}=\bm{S}\tilde{\bm{b}}_{t+h|t}$.  We now outline these three steps for probabilistic forecasts and demonstrate how they correspond to Definition~\ref{def:reconprob}.
 
-Recall that $\hat{\bm{y}}_{t+h}$ is a set of incoherent point forecasts and the coordinates of $\hat{\bm{y}}_{t+h}$ with respect to the basis $\bm{B}$ are given by \eqref{4.3}. Suppose $\hat{\bm{f}}(\cdot)$ is the probability density of $\hat{\bm{y}}_{t+h}$. Our goal is to reconcile $\hat{\bm{f}}(\cdot)$ such that the density lives on $\mathbb{C}^m$. In order to obtain this reconciled density, we need to project $\hat{\bm{f}}(\hat{\bm{y}}_{t+h})$ onto $\mathbb{C}^m$ along the direction of $\mathbb{N}^{n-m}$.
+To clarify, we note that while $\hat{\nu}$ is a probability measure for an $n$-vector $\hat{\bm{y}}$,  probability statements in terms of a different coordinate system can be made via an appropriate change of basis. Letting $f(.)$ be generic notation for a probability density functions and following the notation from our definition of point forecast reconciliation where $\hat{\bm{y}}=\bm{S}\tilde{\bm{b}}+\bm{R}\tilde{\bm{a}}$ we obtain
 
-Let the density of $\hat{\bm{y}}_{t+h}$ with respect to basis $\bm{B}$ be denoted by $\bm{f_B}(\cdot)$. Then it follows from  \eqref{4.3}, and standard results for densities of transformed variables, that
-\begin{equation}\label{4.5}
-\bm{f_B}(\tilde{\bm{b}}_{t+h},\tilde{\bm{t}}_{t+h})=\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) \,\Big|\bm{S} ~ \vdots~ \bm{R}\Big|,
-\end{equation}
-where $|\cdot|$ denotes the determinant of a matrix. Now that we have the density of $(\tilde{\bm{b}}'_{t+h} , \tilde{\bm{t}}'_{t+h})'$, the marginal density of $\tilde{\bm{b}}_{t+h}$ can be obtained by integrating \eqref{4.5} over the range of $\tilde{\bm{t}}_{t+h}$. This will result in the reconciled density of the bottom-level series $\tilde{\bm{b}}_{t+h}$,
-\begin{equation}\label{4.6}
-\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})=\int_{\lim(\tilde{\bm{t}}_{t+h})}\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h})\,  \Big|\bm{S} ~ \vdots~ \bm{R}\Big| \, d\tilde{\bm{t}}_{t+h}.
+\begin{equation}
+f(\hat{\bm{y}})=f(\bm{S}\tilde{\bm{b}}+\bm{R}\tilde{\bm{a}})|\left(\bm{S}~\bm{R}\right)|
 \end{equation}
 
-Finally to get the reconciled density of the whole hierarchy, we simply follow Definition~\ref{def:cohprob} to obtain
-\begin{equation}\label{4.7}
-\tilde{\bm{f}}(\tilde{\bm{y}}_{t+h})=\bm{S}\circ \tilde{\bm{f}}(\tilde{\bm{b}}_{t+h}).
-\end{equation}
-This final step will transform every point in the density $\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})$ to the space $\mathbb{C}^m<\mathbb{R}^n$. The following example illustrates how this method can be used to reconcile an incoherent Gaussian forecast distribution.
+The expression $\hat{\nu}(g^{-1}(B))$ is in Definition~\ref{def:reconprob} is equivalent to the probability statement $\mbox{Pr}(\hat{\bm{y}}\in g^{-1}(B))$.  After the change of basis this is equivalent to $\mbox{Pr}(\tilde{\bm{b}}\in (B))$ which implies
 
-\subsubsection*{Example 2}
+\begin{align}
+\mbox{Pr}(\hat{\bm{y}}\in g^{-1}(B))&=\int_{g^{-1}(B)}f(\hat{\bm{y}})d\hat{\bm{y}}\\
+&=\int_{B}\int f(\bm{S}\tilde{\bm{b}}+\bm{R}\tilde{\bm{a}})|\left(\bm{S}~\bm{R}\right)|d\tilde{\bm{a}}d\tilde{\bm{b}}
+\end{align}
+
+After integration out over $\tilde{\bm{a}}$, a step analogous to setting $\bm{a}=0$ for point forecasting we obtain a expressions that gives the probability the bottom level (reconciled) series lie in the region $B$, which corresponds to $\nu(B)$ in Definition~\ref{def:reconprob}.  To make a valid probability statement about the entire hierarchy we simply use the bottom level probabilistic forecasts together with Definition~\ref{def:cohprob}. 
+
+%Recall that $\hat{\bm{y}}_{t+h}$ is a set of incoherent point forecasts and the coordinates of $\hat{\bm{y}}_{t+h}$ with respect to the basis $\bm{B}$ are given by \eqref{4.3}. Suppose $\hat{\bm{f}}(\cdot)$ is the probability density of $\hat{\bm{y}}_{t+h}$. Our goal is to reconcile $\hat{\bm{f}}(\cdot)$ such that the density lives on $\mathbb{C}^m$. In order to obtain this reconciled density, we need to project $\hat{\bm{f}}(\hat{\bm{y}}_{t+h})$ onto $\mathbb{C}^m$ along the direction of $\mathbb{N}^{n-m}$.
+
+%Let the density of $\hat{\bm{y}}_{t+h}$ with respect to basis $\bm{B}$ be denoted by $\bm{f_B}(\cdot)$. Then it follows from  \eqref{4.3}, and standard results for densities of transformed variables, that
+%\begin{equation}\label{4.5}
+%\bm{f_B}(\tilde{\bm{b}}_{t+h},\tilde{\bm{t}}_{t+h})=\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) \,\Big|\bm{S} ~ \vdots~ \bm{R}\Big|,
+%\end{equation}
+%where $|\cdot|$ denotes the determinant of a matrix. Now that we have the density of $(\tilde{\bm{b}}'_{t+h} , \tilde{\bm{t}}'_{t+h})'$, the marginal density of $\tilde{\bm{b}}_{t+h}$ can be obtained by integrating \eqref{4.5} over the range of $\tilde{\bm{t}}_{t+h}$. This will result in the reconciled density of the bottom-level series $\tilde{\bm{b}}_{t+h}$,
+%\begin{equation}\label{4.6}
+%\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})=\int_{\lim(\tilde{\bm{t}}_{t+h})}\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h})\,  \Big|\bm{S} ~ \vdots~ \bm{R}\Big| \, d\tilde{\bm{t}}_{t+h}.
+%\end{equation}
+%
+%Finally to get the reconciled density of the whole hierarchy, we simply follow Definition~\ref{def:cohprob} to obtain
+%\begin{equation}\label{4.7}
+%\tilde{\bm{f}}(\tilde{\bm{y}}_{t+h})=\bm{S}\circ \tilde{\bm{f}}(\tilde{\bm{b}}_{t+h}).
+%\end{equation}
+%This final step will transform every point in the density $\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})$ to the space $\mathbb{C}^m<\mathbb{R}^n$. The following example illustrates how this method can be used to reconcile an incoherent Gaussian forecast distribution.
+
+\subsubsection*{Example: Gaussian Distributions}
 
 Suppose $\mathcal{N}(\hat{\bm{\mu}}_{t+h}, \hat{\bm{\Sigma}}_{t+h}) \overset{d}{\leftrightarrow} \hat{\bm{f}}(\hat{\bm{y}}_{t+h})$ is an incoherent forecast distribution at time $t+h$. Then from \eqref{4.5} it follows that
 \begin{equation}
