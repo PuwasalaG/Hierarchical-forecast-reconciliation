@@ -409,34 +409,40 @@ q& =%\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}
 %& \hspace*{7cm}
  \Big[\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big]^{-1}\begin{pmatrix}\tilde{\bm{b}} - \bm{G}\bm{\hat{\mu}}\\ \tilde{\bm{a}}- \bm{H}\bm{\hat{\mu}}\end{pmatrix} %\Big\}.
 \end{align*}
-Since $\Big[\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big] = \begin{pmatrix}
-\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}' \\
-\bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{Q}'
-\end{pmatrix}$ we have
+%Since $\Big[\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big] = \begin{pmatrix}
+%\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}' 
+%\bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{Q}'
+%\end{pmatrix}$ we have
+
+Similar manipulations on determinant of the covariance matrix lead to the following expression for the density
+
 \begin{align*}
-\bm{f_B}(\cdot)&=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\begin{pmatrix}
-  \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}' \\
-  \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{Q}'
-  \end{pmatrix}\Big|^{\frac{1}{2}}}
-\exp \Big\{-\frac{1}{2} \begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix}'\\
-&\hspace*{7cm}\begin{pmatrix}
-\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}' \\
-\bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{Q}\bm{\hat{\Sigma}_{t+h}}\bm{Q}'
+f(\tilde{\bm{b}},\tilde{\bm{a}})&
+=(2\pi)^{-\frac{n}{2}}\Big|
+\begin{pmatrix}
+  \bm{G}\bm{\hat{\Sigma}}\bm{G}' & \bm{G}\bm{\hat{\Sigma}}\bm{H}' \\
+  \bm{H}\bm{\hat{\Sigma}}\bm{G}' & \bm{H}\bm{\hat{\Sigma}}\bm{H}'
+\end{pmatrix}
+\Big|^{-\frac{1}{2}}
+\exp \Big\{-\frac{1}{2} \begin{pmatrix}\tilde{\bm{b}} - \bm{G}\bm{\hat{\mu}}\\ \tilde{\bm{a}}- \bm{H}\bm{\hat{\mu}}\end{pmatrix}'\\
+&\hspace*{7cm}
+\begin{pmatrix}
+\bm{G}\bm{\hat{\Sigma}}\bm{G}' & \bm{G}\bm{\hat{\Sigma}}\bm{H}' \\
+\bm{H}\bm{\hat{\Sigma}}\bm{G}' & \bm{H}\bm{\hat{\Sigma}}\bm{H}'
 \end{pmatrix}^{-1}
-\begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix} \Big\}.
+\begin{pmatrix}\tilde{\bm{b}} - \bm{G}\bm{\hat{\mu}}\\ \tilde{\bm{a}}- \bm{H}\bm{\hat{\mu}}\end{pmatrix} \Big\}.
 \end{align*}
-This is the joint multivariate Gaussian distribution of $(\tilde{\bm{b}}'_{t+h} ~ \vdots~ \tilde{\bm{t}}'_{t+h})'$. Then from \eqref{4.6} and the properties of the multivariate Gaussian distribution, it follows that
+Marginalising out $\tilde{\bm{a}}$, it follows leads to the following bottom level reconciled forecasts. 
 \begin{equation}\label{ex:2.1}
-\tilde{\bm{f}}(\tilde{\bm{b}}_{t+h})=\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}'\Big|^{\frac{1}{2}}}
-\exp \Big\{-\frac{1}{2} (\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h})' (\bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}')^{-1}(\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}) \Big\}.
+f(\tilde{\bm{b}})=(2\pi)^{-\frac{m}{2}}\Big|\bm{G}\bm{\hat{\Sigma}}\bm{G}'\Big|^{\frac{1}{2}}
+\exp \Big\{-\frac{1}{2} (\tilde{\bm{b}} - \bm{G}\bm{\hat{\mu}})' (\bm{G}\bm{\hat{\Sigma}}\bm{G}')^{-1}(\tilde{\bm{b}} - \bm{G}\bm{\hat{\mu}}) \Big\}.
 \end{equation}
 
-Equation \eqref{ex:2.1} implies $\tilde{\bm{b}}_{t+h} \sim \mathcal{N}(\bm{P}\bm{\hat{\mu}}_{t+h}, \bm{P}\hat{\bm{\Sigma}}_{t+h}\bm{P}')$, where $\bm{P} = (\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$. Then from \eqref{4.7} it follows that
-\begin{equation}\label{eq:gaussianreconciled}
-\tilde{\bm{f}}(\tilde{\bm{y}}_{t+h})=\tilde{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}).
-\end{equation}
-Therefore, the reconciled Gaussian forecast distribution of the whole hierarchy is\\
-$\mathcal{N}(\bm{SP}\bm{\hat{\mu}}_{t+h},~ \bm{SP}\hat{\bm{\Sigma}}_{t+h}\bm{P}'\bm{S}')$.
+%Equation \eqref{ex:2.1} implies $\tilde{\bm{b}}_{t+h} \sim \mathcal{N}(\bm{P}\bm{\hat{\mu}}_{t+h}, \bm{P}\hat{\bm{\Sigma}}_{t+h}\bm{P}')$, where $\bm{P} = (\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$. Then from \eqref{4.7} it follows that
+%\begin{equation}\label{eq:gaussianreconciled}
+%\tilde{\bm{f}}(\tilde{\bm{y}}_{t+h})=\tilde{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}).
+%\end{equation}
+Which implies that the reconciled probabilistic forecast for the bottom level series is $\tilde{\bm{b}}_{t+h} \sim \mathcal{N}(\bm{P}\bm{\hat{\mu}}_{t+h}, \bm{P}\hat{\bm{\Sigma}}_{t+h}\bm{P}')$.  The reconciled probabilistic forecasts for the whole hierarchy follow a degenerate Gaussian distribution with mean  $\bm{SG}\bm{\hat{\mu}}$ and rank deficient covariance matrix $\bm{SP}\hat{\bm{\Sigma}}_{t+h}\bm{P}'\bm{S}'$.
 
 \section{Evaluation of hierarchical probabilistic forecasts}\label{sec:evaluation}
 
