@@ -15,8 +15,8 @@
 \def\E{\text{E}}
 \mathtoolsset{showonlyrefs=true}
 
-\def\PQ{\begin{pmatrix}\bm{P}\\[-0.2cm]\bm{Q}\end{pmatrix}}
-\def\bt{\begin{pmatrix}\tilde{\bm{b}}_{t+h}\\[-0.2cm]\tilde{\bm{t}}_{t+h}\end{pmatrix}}
+\def\PQ{\begin{pmatrix}\bm{G}\\[-0.2cm]\bm{H}\end{pmatrix}}
+\def\bt{\begin{pmatrix}\tilde{\bm{b}}\\[-0.2cm]\tilde{\bm{a}}\end{pmatrix}}
 
 \newtheorem{definition}{Definition}[section]
 
@@ -362,41 +362,52 @@ After integration out over $\tilde{\bm{a}}$, a step analogous to setting $\bm{a}
 
 \subsubsection*{Example: Gaussian Distributions}
 
-Suppose $\mathcal{N}(\hat{\bm{\mu}}_{t+h}, \hat{\bm{\Sigma}}_{t+h}) \overset{d}{\leftrightarrow} \hat{\bm{f}}(\hat{\bm{y}}_{t+h})$ is an incoherent forecast distribution at time $t+h$. Then from \eqref{4.5} it follows that
+Suppose an unreconciled probabilistic forecast is Gaussian with mean $\hat{\bm \mu}$ and variance-covariance matrix $\hat{\bm \Sigma}$.  The subscripts $t+h|t$ are surpresed for brevity.  The unreconciled density
+
 \begin{equation}
-\bm{f_B}(\tilde{\bm{b}}_{t+h},\tilde{\bm{t}}_{t+h})=\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) \, \Big|\bm{S} ~ \vdots~ \bm{R}\Big| = \frac{\hat{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}) }{\Big|(\bm{S} ~ \vdots~ \bm{R})^{-1}\Big|}.
+  f(\hat{\bm{y}})=(2\pi)^{-n/2}|\hat{\bm{\Sigma}}|^{-1/2}\exp\left\{-\frac{1}{2}\left[(\hat{\bm y}-\hat{\bm \mu})'\hat{\bm{\Sigma}}^{-1}(\hat{\bm y}-\hat{\bm \mu})\right]\right\}
 \end{equation}
-By substituting the Gaussian distribution function for $\bm{f_B}(\cdot)$ we get
+
+After a change in basis
+
+\begin{equation}
+f(\tilde{\bm b},\tilde{\bm a})=(2\pi)^{-\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{-\frac{1}{2}}\Big|(\bm{S} ~ \vdots~ \bm{R})\Big|\exp\left\{-\frac{1}{2}q\right\}\,,
+\end{equation}
+where
+\begin{equation}
+q=(\bm{S}\tilde{\bm{b}}+\bm{R}\tilde{\bm{a}}-\bm{\hat{\mu}})' \bm{\hat{\Sigma}}^{-1}(\bm{S}\tilde{\bm{b}}+\bm{R}\tilde{\bm{a}}-\bm{\hat{\mu}})
+\end{equation}
+
+
+The quadratic form $q$ can be rearranged as
 \begin{align*}
-\bm{f_B}(\cdot)
+q& = 
+\Big((\bm{S} ~ \vdots~ \bm{R})\bt-\bm{\hat{\mu}}\Big)' \bm{\hat{\Sigma}}^{-1}\Big((\bm{S} ~ \vdots~ \bm{R})\bt-\bm{\hat{\mu}}\Big),\\
 & =
-\frac{\exp\left\{-\frac{1}{2}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}-\bm{\hat{\mu}}_{t+h})' \bm{\hat{\Sigma}_{t+h}}^{-1}(\bm{S}\tilde{\bm{b}}_{t+h}+\bm{R}\tilde{\bm{t}}_{t+h}-\bm{\hat{\mu}}_{t+h})\right\}}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|(\bm{S} ~ \vdots~ \bm{R})^{-1}\Big|},\\
-& =
-\frac{\exp\left\{-\frac{1}{2}\Big((\bm{S} ~ \vdots~ \bm{R})\bt-\bm{\hat{\mu}}_{t+h}\Big)' \bm{\hat{\Sigma}_{t+h}}^{-1}\Big((\bm{S} ~ \vdots~ \bm{R})\bt-\bm{\hat{\mu}}_{t+h}\Big)\right\}}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|(\bm{S} ~ \vdots~ \bm{R})^{-1}\Big|},\\
-& =
-\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|(\bm{S} ~ \vdots~ \bm{R})^{-1} \Big|}
-\exp \Big\{-\frac{1}{2}\Big(\bt-(\bm{S} ~ \vdots~ \bm{R})^{-1}\bm{\hat{\mu}}_{t+h}\Big)'\\
-& \hspace*{6cm} \Big[(\bm{S} ~ \vdots~ \bm{R})\bm{\hat{\Sigma}_{t+h}}(\bm{S} ~ \vdots~ \bm{R})'\Big]^{-1}
-\Big(\bt-(\bm{S} ~ \vdots~ \bm{R})^{-1}\bm{\hat{\mu}}_{t+h}\Big) \Big\}.
+\Big(\bt-(\bm{S} ~ \vdots~ \bm{R})^{-1}\bm{\hat{\mu}}_{t+h}\Big)' \Big[(\bm{S} ~ \vdots~ \bm{R})\bm{\hat{\Sigma}_{t+h}}(\bm{S} ~ \vdots~ \bm{R})'\Big]^{-1}
+\Big(\bt-(\bm{S} ~ \vdots~ \bm{R})^{-1}\bm{\hat{\mu}}_{t+h}\Big)\,.
 \end{align*}
+
 Recall that
 $$
 (\bm{S} ~ \vdots~ \bm{R})^{-1} =
 \begin{pmatrix}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \\ \cdots \\ (\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot \end{pmatrix} =
 \begin{pmatrix}
-\bm{P} \\\bm{Q}
+\bm{G} \\\bm{H}
 \end{pmatrix},
 $$
-where $\bm{P}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$ and $\bm{Q}=(\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot$. Then
+where $\bm{G}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$ and $\bm{H}=(\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot$. Then $q$ can be simplified further as
 \begin{align*}
-\bm{f_B}(\cdot)& =\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|\PQ \Big|}
-\exp \Big\{-\frac{1}{2}\Big[\bt-\PQ\bm{\hat{\mu}}_{t+h}\Big]'\\[-0.5cm]
-& \hspace*{7cm}
-\Big[\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big]^{-1}\Big[\bt-\PQ\bm{\hat{\mu}}_{t+h}\Big] \Big\},\\[0.5cm]
- & =\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big|^{\frac{1}{2}}}
-\exp \Big\{-\frac{1}{2} \begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h} \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix}' &\\[-0.5cm]
-& \hspace*{7cm}
- \Big[\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big]^{-1}\begin{pmatrix}\tilde{\bm{b}}_{t+h} - \bm{P}\bm{\hat{\mu}}_{t+h}\\ \tilde{\bm{t}}_{t+h}- \bm{Q}\bm{\hat{\mu}}_{t+h}\end{pmatrix} \Big\}.
+q& =%\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{\frac{1}{2}}\Big|\PQ \Big|}
+%\exp \Big\{-\frac{1}{2}
+\Big[\bt-\PQ\bm{\hat{\mu}}_{t+h}\Big]'%\\[-0.5cm]
+\Big[\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big]^{-1}\Big[\bt-\PQ\bm{\hat{\mu}}_{t+h}\Big] %\Big\},
+\\[0.5cm]
+ & =%\frac{1}{(2\pi)^{\frac{n}{2}}\Big|\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big|^{\frac{1}{2}}}
+%\exp \Big\{-\frac{1}{2} 
+\begin{pmatrix}\tilde{\bm{b}} - \bm{G}\bm{\hat{\mu}}\\ \tilde{\bm{a}}- \bm{H}\bm{\hat{\mu}}\end{pmatrix}' %&\\[-0.5cm]
+%& \hspace*{7cm}
+ \Big[\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big]^{-1}\begin{pmatrix}\tilde{\bm{b}} - \bm{G}\bm{\hat{\mu}}\\ \tilde{\bm{a}}- \bm{H}\bm{\hat{\mu}}\end{pmatrix} %\Big\}.
 \end{align*}
 Since $\Big[\PQ\bm{\hat{\Sigma}_{t+h}}\PQ'\Big] = \begin{pmatrix}
 \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{P}' & \bm{P}\bm{\hat{\Sigma}_{t+h}}\bm{Q}' \\
