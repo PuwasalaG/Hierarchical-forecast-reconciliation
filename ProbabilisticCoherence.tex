@@ -1,7 +1,7 @@
 \documentclass[a4paper, 11pt]{article}
 \usepackage{monashwp}
 \usepackage{amssymb, qtree, bm, multirow, textcmds, siunitx}
-\usepackage{mathrsfs, float, booktabs,todonotes}
+\usepackage{mathrsfs, float, booktabs,todonotes,amsthm}
 \usepackage[bb=boondox]{mathalfa}
 \usepackage{tikz}
 \usetikzlibrary{arrows,positioning,shapes,fit,calc}
@@ -18,6 +18,10 @@
 \def\PQ{\begin{pmatrix}\bm{G}\\[-0.2cm]\bm{H}\end{pmatrix}}
 \def\bt{\begin{pmatrix}\tilde{\bm{b}}\\[-0.2cm]\tilde{\bm{a}}\end{pmatrix}}
 
+\theoremstyle{theo}
+\newtheorem{theo}{Theorem}[section]
+
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 
 \bibliography{References_paper1}
@@ -443,6 +447,14 @@ f(\tilde{\bm{b}})=(2\pi)^{-\frac{m}{2}}\Big|\bm{G}\bm{\hat{\Sigma}}\bm{G}'\Big|^
 %\tilde{\bm{f}}(\tilde{\bm{y}}_{t+h})=\tilde{\bm{f}}(\bm{S}\tilde{\bm{b}}_{t+h}).
 %\end{equation}
 Which implies that the reconciled probabilistic forecast for the bottom level series is $\tilde{\bm{b}}_{t+h} \sim \mathcal{N}(\bm{P}\bm{\hat{\mu}}_{t+h}, \bm{P}\hat{\bm{\Sigma}}_{t+h}\bm{P}')$.  The reconciled probabilistic forecasts for the whole hierarchy follow a degenerate Gaussian distribution with mean  $\bm{SG}\bm{\hat{\mu}}$ and rank deficient covariance matrix $\bm{SP}\hat{\bm{\Sigma}}_{t+h}\bm{P}'\bm{S}'$.
+\subsection{Elliptical Distributions}
+We now show that if the mapping $g(.)$ in definition $\ref{def:reconpoint}$ is extended to allow for a translation by ${\bm d}$, i.e. $g({\bm y})={\bm G}{\bm y}+{\bm d}$, then the true predictive distribution can be recovered for elliptical distributions.
+\begin{theo}[Reconciliation for Elliptical Distributions]
+	Let an unreconciled probabilistic forecast come from the elliptical class with location parameter $\hat{\bm \mu}$ and scale matrix $\hat{\bm \Sigma}$.  Let the true predictive distribution of ${\bm y}_{t+h|t}$ also belong to the elliptical class with location parameter ${\bm \mu}$ and scale matrix ${\bm \Sigma}$.  Then the affine reconciliation mapping $g({\bm y})={\bm G}{\bm y}+{\bm d}$ with $\bm{G}={\bm\Omega}^{1/2}{\bm\Sigma}^{-1/2}$ where $\bm\Omega$ is the bottom level true variance covariance matrix and ${\bm d}={\bm SG}\left({\bm \mu}-\hat{\bm \mu}\right)$ recovers the true predictive density. 
+\end{theo}
+\begin{proof}
+  It follows from the closure of elliptical densities under affine transformations and marginalisation.  NEED TO WRITE UP!
+\end{proof}	
 
 \section{Evaluation of hierarchical probabilistic forecasts}\label{sec:evaluation}
 
