@@ -450,12 +450,25 @@ Which implies that the reconciled probabilistic forecast for the bottom level se
 \subsection{Elliptical Distributions}
 We now show that if the mapping $g(.)$ in definition $\ref{def:reconpoint}$ is extended to allow for a translation by ${\bm d}$, i.e. $g({\bm y})={\bm G}{\bm y}+{\bm d}$, then the true predictive distribution can be recovered for elliptical distributions.
 \begin{theo}[Reconciliation for Elliptical Distributions]
-	Let an unreconciled probabilistic forecast come from the elliptical class with location parameter $\hat{\bm \mu}$ and scale matrix $\hat{\bm \Sigma}$.  Let the true predictive distribution of ${\bm y}_{t+h|t}$ also belong to the elliptical class with location parameter ${\bm \mu}$ and scale matrix ${\bm \Sigma}$.  Then the affine reconciliation mapping $g({\bm y})={\bm G}{\bm y}+{\bm d}$ with $\bm{G}={\bm\Omega}^{1/2}{\bm\Sigma}^{-1/2}$ where $\bm\Omega$ is the bottom level true variance covariance matrix and ${\bm d}={\bm SG}\left({\bm \mu}-\hat{\bm \mu}\right)$ recovers the true predictive density. 
+	Let an unreconciled probabilistic forecast come from the elliptical class with location parameter $\hat{\bm \mu}$ and scale matrix $\hat{\bm \Sigma}$.  Let the true predictive distribution of ${\bm y}_{t+h|t}$ also belong to the elliptical class with location parameter ${\bm \mu}$ and scale matrix ${\bm \Sigma}$.  Then the affine reconciliation mapping $g({\bm y})={\bm G}{\bm y}+{\bm d}$ with $\bm{G}={\bm\Omega}^{1/2}{\bm\Sigma}^{-1/2}$ where $\bm\Omega$ is the bottom level true variance covariance matrix and ${\bm d}={\bm S}{\bm G}\left({\bm \mu}-\hat{\bm \mu}\right)$ recovers the true predictive density. 
 \end{theo}
 \begin{proof}
-  It follows from the closure of elliptical densities under affine transformations and marginalisation.  NEED TO WRITE UP!
+   Since elliptical distributions are closed under affine transformations, and are closed under marginalisation, reconciliation of an elliptical distribution yields an elliptical distribution (although the unreconciled and unreconciled distributions may be different members of the class of elliptical distributions).  The scale matrix of the reconciled forecast is given by $\bm{S}\bm{G}{\bm \Sigma}{\bm G}'{\bm S}'$ while the location matrix is given by $\bm{S}\bm{G}\hat{\bm \mu}+{\bm d}$.  For the choice of ${\bf G}$ given above, the reconciled scale matrix is 
+   \begin{align*}
+   \tilde{\bm \Sigma}=&{\bm S}{\bm\Omega}^{1/2}{\bm\Sigma}^{-1/2}{\bm \Sigma}{\bm\Sigma}^{-1/2}{\bm\Omega}^{1/2}{\bm S}'\\
+   =&{\bm S}{\bm \Omega}{\bm S}'\\
+   =&{\bm \Sigma}
+   \end{align*}
+   For the choices of ${\bf G}$ and ${\bf d}$ given above, the reconciled location matrix is 
+   \begin{align*}
+   \tilde{\bm \mu}=&{\bm S}{\bm G}\hat{\bm \mu}+{\bm S}{\bm G}\left({\bm \mu}-\hat{\bm \mu}\right)\\
+   =&{\bm S}{\bm G}\hat{\bm \mu}-{\bm S}{\bm G}\hat{\bm \mu}+{\bm S}{\bm G}{\bm \mu}\\
+   =&{\bm S}{\bm G}{\bm \mu}\\
+   =&{\bm \mu}\\
+   \end{align*}
+   The final equality above holds since ${\bm S}{\bm G}$ projects any vector onto the coherent subspace, however since ${\bm \mu}$ is the mean of the true data generating process, it must already lie on the coherent subspace.
 \end{proof}	
-
+It should be noted that these choices of ${\bm G}$ and ${\bm d}$ depend on the true location and scale of the predictive distribution and are thus infeasible in practice.  However, these expressions do provide some insight on why some choices for ${\bm G}$ in the point forecast reconciliation literature may also work well for probablistic forecasts.  For example, for the MinT solution ...
 \section{Evaluation of hierarchical probabilistic forecasts}\label{sec:evaluation}
 
 The necessary final step in hierarchical forecasting is to make sure that our forecast distributions are accurately predicting the uncertain future. In general, forecasters prefer to maximize the sharpness of the forecast distribution subject to the calibration \citep{Gneiting2014}. Therefore the probabilistic forecasts should be evaluated with respect to these two properties.
