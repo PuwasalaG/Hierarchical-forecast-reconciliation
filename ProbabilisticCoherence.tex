@@ -289,7 +289,7 @@ respectively. Thus it follows that $\tilde{\bm{b}}_{t+h}=(\bm{R}'_\bot \bm{S})^{
 %\end{equation}
 
 Finding a suitable $\bm{R}_\bot$ with respect to a certain loss function will lead to optimally reconciled point forecasts of the hierarchy. %If $\bm{P}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$, then the definition for linear reconciliation of point forecasts in previous studies coincides with our explanation.
-In our context, we need to find $\bm{R}_\bot$ such that $\bm{R}'_\bot \bm{S}$ is invertible; i.e, $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \bm{S}=\bm{I}$. This condition coincides with the unbiased condition $\bm{SPS}=\bm{S}$ proposed by \citet{Hyndman2011}{\color{red}[AP:NONE OF THIS MAKES SENSE TO ME.  $R_{\perp}'S$ WILL BE INVERTIBLE AS LONG AS NONE OF THE COLUMNS OF R SIT ON THE COLUMN SPACE OF S. AS LONG AS R IS STICKING INTO THE NULL SPACE OF S, THEN SPS=S ALWAYS SINCE SP IS JUST A PROJECTION THAT PUTS VECTORS ON THE COLUMN SPACE OF S.  SINCE THE COLUMNS OF S ARE ALREADY ON THE COLUMN SPACE OF S, THEN MULTIPLYING SP SIMPLY DOES NOTHING TO THEM. THE CONNECTION TO UNBIASEDNESS IS STILL NOT CLEAR TO ME.]}.
+In our context, we need to find $\bm{R}_\bot$ such that $\bm{R}'_\bot \bm{S}$ is invertible; i.e, $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \bm{S}=\bm{I}$. This condition coincides with the unbiased condition $\bm{SPS}=\bm{S}$ proposed by \citet{Hyndman2011}
 
 \citet{Hyndman2011} proposed to choose
 \begin{equation}
@@ -448,9 +448,9 @@ f(\tilde{\bm{b}})=(2\pi)^{-\frac{m}{2}}\Big|\bm{G}\bm{\hat{\Sigma}}\bm{G}'\Big|^
 %\end{equation}
 Which implies that the reconciled probabilistic forecast for the bottom level series is $\tilde{\bm{b}}_{t+h} \sim \mathcal{N}(\bm{P}\bm{\hat{\mu}}_{t+h}, \bm{P}\hat{\bm{\Sigma}}_{t+h}\bm{P}')$.  The reconciled probabilistic forecasts for the whole hierarchy follow a degenerate Gaussian distribution with mean  $\bm{SG}\bm{\hat{\mu}}$ and rank deficient covariance matrix $\bm{SP}\hat{\bm{\Sigma}}_{t+h}\bm{P}'\bm{S}'$.
 \subsection{Elliptical Distributions}
-We now show that if the mapping $g(.)$ in definition $\ref{def:reconpoint}$ is extended to allow for a translation by ${\bm d}$, i.e. $g({\bm y})={\bm G}{\bm y}+{\bm d}$, then the true predictive distribution can be recovered for elliptical distributions.
+We now show that if the mapping $g(.)$ in definition $\ref{def:reconpoint}$ is extended to allow for a translation by ${\bm d}$, i.e. $g({\bm y})={\bm G}{\bm y}+{\bm d}$, then the true predictive distribution can be recovered for elliptical distributions.  Here, for any square matrix ${\bm C}$, ${\bm C}^{1/2}$ and ${\bm C}^{-1/2}$ are defined to satisfy ${\bm C}^{1/2}\left({\bm C}^{1/2}\right)'={\bm C}$ and ${\bm C}^{-1/2}\left({\bm C}^{-1/2}\right)'={\bm C}^{-1}$, for example ${\bm C}^{1/2}$ may be obtained via the Cholesky or eigenvalue decompositions. 
 \begin{theo}[Reconciliation for Elliptical Distributions]
-	Let an unreconciled probabilistic forecast come from the elliptical class with location parameter $\hat{\bm \mu}$ and scale matrix $\hat{\bm \Sigma}$.  Let the true predictive distribution of ${\bm y}_{t+h|t}$ also belong to the elliptical class with location parameter ${\bm \mu}$ and scale matrix ${\bm \Sigma}$.  Then the affine reconciliation mapping $g({\bm y})={\bm G}{\bm y}+{\bm d}$ with $\bm{G}={\bm\Omega}^{1/2}{\bm\Sigma}^{-1/2}$ where $\bm\Omega$ is the bottom level true variance covariance matrix and ${\bm d}={\bm S}{\bm G}\left({\bm \mu}-\hat{\bm \mu}\right)$ recovers the true predictive density. 
+	Let an unreconciled probabilistic forecast come from the elliptical class with location parameter $\hat{\bm \mu}$ and scale matrix $\hat{\bm \Sigma}$.  Let the true predictive distribution of ${\bm y}_{t+h|t}$ also belong to the elliptical class with location parameter ${\bm \mu}$ and scale matrix ${\bm \Sigma}$.  Then the affine reconciliation mapping $g({\bm y})={\bm G}{\bm y}+{\bm d}$ with $\bm{G}={\bm\Omega}^{1/2}{\bm\Sigma}^{-1/2}$ and ${\bm d}={\bm S}{\bm G}\left({\bm \mu}-\hat{\bm \mu}\right)$ recovers the true predictive density, where $\bm\Omega$ is the true variance covariance matrix of the predictive distribution for the bottom level. 
 \end{theo}
 \begin{proof}
    Since elliptical distributions are closed under affine transformations, and are closed under marginalisation, reconciliation of an elliptical distribution yields an elliptical distribution (although the unreconciled and unreconciled distributions may be different members of the class of elliptical distributions).  The scale matrix of the reconciled forecast is given by $\bm{S}\bm{G}{\bm \Sigma}{\bm G}'{\bm S}'$ while the location matrix is given by $\bm{S}\bm{G}\hat{\bm \mu}+{\bm d}$.  For the choice of ${\bf G}$ given above, the reconciled scale matrix is 
@@ -459,21 +459,16 @@ We now show that if the mapping $g(.)$ in definition $\ref{def:reconpoint}$ is e
    =&{\bm S}{\bm \Omega}{\bm S}'\\
    =&{\bm \Sigma}
    \end{align*}
-   For the choices of ${\bf G}$ and ${\bf d}$ given above, the reconciled location matrix is 
+   For the choices of ${\bf G}_{opt}$ and ${\bf d}_{opt}$ given above, the reconciled location matrix is 
    \begin{align*}
-   \tilde{\bm \mu}_{opt}=&{\bm S}{\bm G}\hat{\bm \mu}+{\bm S}{\bm G}\left({\bm \mu}-\hat{\bm \mu}\right)\\
-   =&{\bm S}{\bm G}\hat{\bm \mu}-{\bm S}{\bm G}\hat{\bm \mu}+{\bm S}{\bm G}{\bm \mu}\\
-   =&{\bm S}{\bm G}{\bm \mu}\\
+   \tilde{\bm \mu}_{opt}=&{\bm S}{\bm G}_{opt}\hat{\bm \mu}+{\bm S}{\bm G}_{opt}\left({\bm \mu}-\hat{\bm \mu}\right)\\
+   =&{\bm S}{\bm G}_{opt}\hat{\bm \mu}-{\bm S}{\bm G}_{opt}\hat{\bm \mu}+{\bm S}{\bm G}_{opt}{\bm \mu}\\
+   =&{\bm S}{\bm G}_{opt}{\bm \mu}\\
    =&{\bm \mu}\\
    \end{align*}
    The final equality above holds since ${\bm S}{\bm G}$ projects any vector onto the coherent subspace, however since ${\bm \mu}$ is the mean of the true data generating process, it must already lie on the coherent subspace.
 \end{proof}	
-It should be noted that these choices of ${\bm G}$ and ${\bm d}$ depend on the true location and scale of the predictive distribution and are thus infeasible in practice.  However, these expressions do provide some insight on why some choices for ${\bm G}$ in the point forecast reconciliation literature may also work well for probablistic forecasts.  For example, applying the MinT solution leads to a variance covariance matrix 
-\begin{equation}
-\tilde{\bm \Sigma}_{MinT}={\bm S}\left({\bm S}'\hat{\bm\Sigma}^{-1}{\bm S}\right)^{-1}{\bm S}'\hat{\bm\Sigma}^{-1}\hat{\bm\Sigma}\hat{\bm\Sigma}^{-1}{\bm S}\left({\bm S}'\hat{\bm \Sigma}^{-1}{\bm S}\right){\bm S}'
-\end{equation} 
-
-This matrix
+It should be noted that these choices of ${\bm G}$ and ${\bm d}$ depend on the true location and scale of the predictive distribution and are thus infeasible in practice.  However, these expressions do provide some insight on why some choices for ${\bm G}$ in the point forecast reconciliation literature may also work well for probablistic forecasts.  To illustrate, first rearrange the equation for the optimal value of  $\bm{G}_{opt}={\bm\Omega}^{1/2}\hat{\bm\Sigma}^{-1/2}$ as ${\bm\Omega}^{1/2}=\bm{G}_{opt}\hat{\bm\Sigma}^{1/2}$. Using an arbitrary ${\bm G}$ provides an approximation for ${\bm\Omega}^{1/2}$.  This approximation is equivalent to the way bottom level estimates are produced in point forecast reconciliation, however it is carried out columnwise on  $\hat{\bm\Sigma}^{1/2}$.  Meanwhile the value for $\tilde{\bm \mu}_{opt}$ includes a projection of $\hat{\bm \mu}$ onto $\mathfrak{s}$, and while it is infeasible to obtain the translation ${\bm d}$, it is worthwhile noting that this measures the distance between the reconciled mean and true mean. 
 
 \section{Evaluation of hierarchical probabilistic forecasts}\label{sec:evaluation}
 
