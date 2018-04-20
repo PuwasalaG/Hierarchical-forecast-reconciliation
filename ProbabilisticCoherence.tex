@@ -269,6 +269,9 @@ In order to find $\tilde{\bm{b}}_{t+h|t}$ we require the inverse $(\bm{S} ~ \bm{
 where $\bm{S}_{\bot}$ and $\bm{R}_{\bot}$ be the orthogonal complements of $\bm{S}$ and $\bm{R}$
 respectively. Thus it follows that $\tilde{\bm{b}}_{t+h}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h}$ and $\tilde{\bm{y}}_{t+h|t}=\bm{S}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h|t}$.  Here $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$ is equivalent to $\bm{G}$ in Definition~\ref{def:reconpoint}.
 
+Point reconciliation methods will always minimise the distance between unreconciled and reconciled forecasts, however the specific distance will depend on the choice of ${\bm R}$.  For example \cite{Hyndman2011} consider $\tilde{\bm{y}}^{OLS}_{t+h}=\bm{S}(\bm{S}' \bm{S})^{-1}\bm{S}' \hat{\bm{y}}_{t+h}$ which minimises the Euclidean distance between $\hat{\bm y}$ and $\tilde{\bm y}$. \cite{Wickramasuriya2017} consider $\tilde{\bm{y}}^{MinT}_{t+h}=\bm{S}(\bm{S}' \bm{W}^{-1}_{h}\bm{S})^{-1}\bm{S}'\bm{W}^{-1}_{h} \hat{\bm{y}}_{t+h}$, where ${\bm W}$ is an estimate of the variance covariance matrix of the unreconciled errors.  This 
+minimises the Mahalonobis distance between $\hat{\bm y}$ and $\tilde{\bm y}$.  Bottom up methods minimise distance between reconciled and unreconciled forecasts only along dimensions corresponding to the bottom level series.  As such bottom up methods are at should be thought of as a boundary case of reconciliation methods, since they ultimately do not use information at all levels of the hierarchy. 
+
 %\begin{equation} \label{4.4}
 %\begin{pmatrix}
 %\tilde{\bm{b}}_{t+h} \\ \cdots \\ \tilde{\bm{t}}_{t+h}
@@ -288,29 +291,31 @@ respectively. Thus it follows that $\tilde{\bm{b}}_{t+h}=(\bm{R}'_\bot \bm{S})^{
 %\tilde{\bm{y}}_{t+h}=\bm{S}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h}, \qquad \tilde{\bm{y}}_{t+h} \in \mathbb{C}^m<\mathbb{R}^n.
 %\end{equation}
 
-Finding a suitable $\bm{R}$ with respect to a certain loss function will lead to optimally reconciled point forecasts of the hierarchy. %If $\bm{P}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$, then the definition for linear reconciliation of point forecasts in previous studies coincides with our explanation.
-In our context, we need to find $\bm{R}$ such that $\bm{R}'_\bot \bm{S}$ is invertible; i.e, $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \bm{S}=\bm{I}$. This condition coincides with the unbiased condition $\bm{SPS}=\bm{S}$ proposed by \citet{Hyndman2011}
+%Finding a suitable $\bm{R}$ with respect to a certain loss function will lead to optimally reconciled point forecasts of the hierarchy. %If $\bm{P}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$, then the definition for linear reconciliation of point forecasts in previous studies coincides with our explanation.
 
-\citet{Hyndman2011} proposed to choose
-\begin{equation}
-\tilde{\bm{b}}^{OLS}_{t+h}=(\bm{S}' \bm{S})^{-1}\bm{S}' \hat{\bm{y}}_{t+h},
-\end{equation}
-where, in this context, $\bm{R}'_\bot = \bm{S}'$. Thus the reconciled point forecasts for the entire hierarchy are given by
-\begin{equation}
-\tilde{\bm{y}}^{OLS}_{t+h}=\bm{S}(\bm{S}' \bm{S})^{-1}\bm{S}' \hat{\bm{y}}_{t+h}.
-\end{equation}
-They referred this to as the OLS solution and the loss function they considered is equivalent to the Euclidean norm between $\hat{\bm{y}}_{t+h}$ and $\tilde{\bm{y}}_{t+h}$; i.e. $<\hat{\bm{y}}_{T+h}, \tilde{\bm{y}}_{T+h}>$.
 
-According to a recent study by \citet{Wickramasuriya2017}, selecting $\bm{R}'_\bot = \bm{S}'\bm{W}^{-1}_{h}$ will minimize the trace of mean squared reconciled forecast errors under the property of unbiasedness, where $\bm{W}^{-1}_{h}$ is the variance of the incoherent forecast errors. This will result in
-\begin{equation}
-\tilde{\bm{b}}^{MinT}_{t+h}=(\bm{S}'\bm{W}^{-1}_{h} \bm{S})^{-1}\bm{S}'\bm{W}^{-1}_{h} \hat{\bm{y}}_{t+h},
-\end{equation}
-and thus,
-\begin{equation}
-\tilde{\bm{y}}^{MinT}_{t+h}=\bm{S}(\bm{S}' \bm{W}^{-1}_{h}\bm{S})^{-1}\bm{S}'\bm{W}^{-1}_{h} \hat{\bm{y}}_{t+h}.
-\end{equation}
+%In our context, we need to find $\bm{R}$ such that $\bm{R}'_\bot \bm{S}$ is invertible; i.e, $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \bm{S}=\bm{I}$. This condition coincides with the unbiased condition $\bm{SPS}=\bm{S}$ proposed by \citet{Hyndman2011}
 
-They referred this to as the MinT solution. The loss function they considered is equivalent to the Mahalanobis distance between $\hat{\bm{y}}_{T+h}$ and $\tilde{\bm{y}}_{T+h}$. i.e. $<\hat{\bm{y}}_{T+h}, \tilde{\bm{y}}_{T+h}>_{\bm{W}_h}$.
+%\citet{Hyndman2011} proposed to choose
+%\begin{equation}
+%\tilde{\bm{b}}^{OLS}_{t+h}=(\bm{S}' \bm{S})^{-1}\bm{S}' \hat{\bm{y}}_{t+h},
+%\end{equation}
+%where, in this context, $\bm{R}'_\bot = \bm{S}'$. Thus the reconciled point forecasts for the entire hierarchy are given by
+%\begin{equation}
+%\tilde{\bm{y}}^{OLS}_{t+h}=\bm{S}(\bm{S}' \bm{S})^{-1}\bm{S}' \hat{\bm{y}}_{t+h}.
+%\end{equation}
+%They referred this to as the OLS solution and the loss function they considered is equivalent to the Euclidean norm between $\hat{\bm{y}}_{t+h}$ and $\tilde{\bm{y}}_{t+h}$; i.e. $<\hat{\bm{y}}_{T+h}, \tilde{\bm{y}}_{T+h}>$.
+%
+%According to a recent study by \citet{Wickramasuriya2017}, selecting $\bm{R}'_\bot = \bm{S}'\bm{W}^{-1}_{h}$ will minimize the trace of mean squared reconciled forecast errors under the property of unbiasedness, where $\bm{W}^{-1}_{h}$ is the variance of the incoherent forecast errors. This will result in
+%\begin{equation}
+%\tilde{\bm{b}}^{MinT}_{t+h}=(\bm{S}'\bm{W}^{-1}_{h} \bm{S})^{-1}\bm{S}'\bm{W}^{-1}_{h} \hat{\bm{y}}_{t+h},
+%\end{equation}
+%and thus,
+%\begin{equation}
+%\tilde{\bm{y}}^{MinT}_{t+h}=\bm{S}(\bm{S}' \bm{W}^{-1}_{h}\bm{S})^{-1}\bm{S}'\bm{W}^{-1}_{h} \hat{\bm{y}}_{t+h}.
+%\end{equation}
+%
+%They referred this to as the MinT solution. The loss function they considered is equivalent to the Mahalanobis distance between $\hat{\bm{y}}_{T+h}$ and $\tilde{\bm{y}}_{T+h}$. i.e. $<\hat{\bm{y}}_{T+h}, \tilde{\bm{y}}_{T+h}>_{\bm{W}_h}$.
 
 \subsection{Probabilistic forecast reconciliation}
 
