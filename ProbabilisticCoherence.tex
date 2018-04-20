@@ -335,6 +335,13 @@ We now extend the methodology of point forecast reconciliation to probabilistic 
   \end{equation}
 \end{definition}
 
+This definition extends the notion of forecast reconciliation to the probabilistic setting.   Under point reconciliation methods, the reconciled point forecast is equal to the unreconciled point forecast after the latter is passed through two linear mappings. Similarly, probabilistic forecast reconciliation assigns the same probability to two sets where the points in one set are obtained by passing all points in the other set through two linear mappings.  This is depicted schematically in Figure~\ref{fig:pfr_sch}.
+
+\begin{figure}
+	\input{Figs/probforerec_schematic.tex}
+	\caption{Summary of probabilistic forecast reconciliation.  The probability that ${\bm y}_{t+h}$ lies in the red line segment under the reconciled probabilistic forecast is defined to be equal to the probability that ${\bm y}_{t+h}$ lies in the shaded blue area under the unreconciled probabilistic forecast.  Note that since the smallest hierarchy involves three dimensions, this figure is only a schematic}\label{fig:pfr_sch} 
+\end{figure}
+
 We now discuss how this definition can be used in practice to obtain reconciled probabilistic forecasts for hierarchical time series.   Recall that the case of forecast reconciliation could be broken down into three steps.  In the first, $\hat{\bm{y}}_{t+h|t}$ is transformed into coordinates $\tilde{\bm{b}}_{t+h|t}$ and $\tilde{\bm{a}}_{t+h|t}$ via a change of basis.  In the second, $\tilde{\bm{a}}_{t+h|t}$ is discarded and $\tilde{\bm{b}}_{t+h|t}$ are kept as the bottom level reconciled forecasts.  In the third, reconciled forecasts for the entire hierarchy are recovered via $\tilde{\bm{y}}_{t+h|t}=\bm{S}\tilde{\bm{b}}_{t+h|t}$.  We now outline these three steps for probabilistic forecasts and demonstrate how they correspond to Definition~\ref{def:reconprob}.
 
 While $\hat{\nu}$ is a probability measure for an $n$-vector $\hat{\bm{y}}_{t+h|t}$,  probability statements in terms of a different coordinate system can be made via an appropriate change of basis. Letting $f(.)$ be generic notation for a probability density functions and following the notation from our definition of point forecast reconciliation where $\hat{\bm{y}}=\bm{S}\tilde{\bm{b}}_{t+h|t}+\bm{R}\tilde{\bm{a}}_{t+h|t}$ we obtain
