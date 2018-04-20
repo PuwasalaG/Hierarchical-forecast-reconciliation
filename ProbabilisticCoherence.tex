@@ -220,7 +220,7 @@ Initially we define point forecast reconciliation, before extending the idea to 
 
 In definition~\ref{def:reconpoint}  $\bm{S}\bm{G}$ is a projection matrix that maps $\mathbb{R}^n$ onto $\mathfrak{s}$. We note that a similar characterisation of reconciliation has been used in previous studies but where the notation $\bm{P}$ is used in place of $\bm{G}$. In principle the definition can be generalised where $g(.)$ is a non-linear mapping, a possibility we consider in Section~\ref{nonlinear} {\color{red}[AP: I WILL ADD THIS LATER]}.
 
-Definition~\ref{def:reconpoint}, defines an entire family of forecast reconciliation methods including many methods currently extant in the literature. To provide a geometric interpretation, we introduce an $n \times (n-m)$ matrix $\bm{R}$ whose columns span the null space $\mathfrak{s}_{\perp}$.  For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$, is the vector $(1,-1,-1)$ which is orthogonal (in the Euclidean sense) to the columns of $\bm{S}$.  In this case, the matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. In general, the columns of any given $\bm{R}$ matrix can also be thought of as `directions' along which incoherent point forecasts are projected onto the coherent space, and these directions need not be orthogonal to $\mathfrak{s}$. 
+Definition~\ref{def:reconpoint}, defines an entire family of forecast reconciliation methods including many methods currently extant in the literature. To provide a geometric interpretation, we introduce an $n \times (n-m)$ matrix $\bm{R}$ whose columns span the null space $\mathfrak{s}_{\perp}$.  For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$, is the vector $(1,-1,-1)$ which is orthogonal (in the Euclidean sense) to the columns of $\bm{S}$.  In this case, the matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. In general, the columns of any given $\bm{R}$ matrix can also be thought of as `directions' along which incoherent point forecasts are projected onto the coherent space, and these directions need not be orthogonal to $\mathfrak{s}$.  A schematic of this geometric interpretation is provided in Figure~\ref{fig:pointfr_sch}. 
 %$$ 
 %\bm{S} = 
 %\begin{pmatrix} 
@@ -236,6 +236,11 @@ Definition~\ref{def:reconpoint}, defines an entire family of forecast reconcilia
 %Further let $\{\bm{s}_1,\dots,\bm{s}_m\}$ and $\{\bm{r}_1,\dots,\bm{r}_{n-m}\}$ denote the columns of $\bm{S}$ and $\bm{R}$ respectively. Then $\bm{B}=\{\bm{s}_1,\dots,\bm{s}_m, \bm{r}_1,\dots,\bm{r}_{n-m}\}$ is a basis for $\mathbb{R}^n$. Now, using the insights of Definition~\ref{def:reconpoint}, we can use the following steps to reconcile the point forecasts.
 
 %\subsubsection*{Step 1: Change of basis}
+
+\begin{figure}
+	\input{Figs/pointforerec_schematic.tex}
+	\caption{Summary of probabilistic point reconciliation.  The mapping $G(.)$ projects the unreconciled forecast $\hat{\bm y}$ onto   Note that since the smallest hierarchy involves three dimensions, this figure is only a schematic}\label{fig:pointfr_sch} 
+\end{figure}
 
 To illustrate further note that the columns of $\bm{S}$ and $\bm{R}$ provide a basis for $\mathbb{R}^n$.  As such any incoherent set of point forecasts $\hat{\bm{y}}_{t+h|t} \in \mathbb{R}^n$, can be expressed in terms of coordinates in the basis defined by $\bm{S}$ and $\bm{R}$. Let $\tilde{\bm{b}}_{t+h|t}$ and $\tilde{\bm{a}}_{t+h|t}$ be the coordinates corresponding to $\bm{S}$ and $\bm{R}$, respectively. The process of reconciliation involves setting $\tilde{\bm{b}}_{t+h|t}$ to be the values of the reconciled bottom-level series and setting $\tilde{\bm{a}}_{t+h}=\bm{0}$ to ensure coherence. From properties of linear algebra it follows that 
 %\[
@@ -335,11 +340,11 @@ We now extend the methodology of point forecast reconciliation to probabilistic 
   \end{equation}
 \end{definition}
 
-This definition extends the notion of forecast reconciliation to the probabilistic setting.   Under point reconciliation methods, the reconciled point forecast is equal to the unreconciled point forecast after the latter is passed through two linear mappings. Similarly, probabilistic forecast reconciliation assigns the same probability to two sets where the points in one set are obtained by passing all points in the other set through two linear mappings.  This is depicted schematically in Figure~\ref{fig:pfr_sch}.
+This definition extends the notion of forecast reconciliation to the probabilistic setting.   Under point reconciliation methods, the reconciled point forecast is equal to the unreconciled point forecast after the latter is passed through two linear mappings. Similarly, probabilistic forecast reconciliation assigns the same probability to two sets where the points in one set are obtained by passing all points in the other set through two linear mappings.  This is depicted schematically in Figure~\ref{fig:probfr_sch}.
 
 \begin{figure}
 	\input{Figs/probforerec_schematic.tex}
-	\caption{Summary of probabilistic forecast reconciliation.  The probability that ${\bm y}_{t+h}$ lies in the red line segment under the reconciled probabilistic forecast is defined to be equal to the probability that ${\bm y}_{t+h}$ lies in the shaded blue area under the unreconciled probabilistic forecast.  Note that since the smallest hierarchy involves three dimensions, this figure is only a schematic}\label{fig:pfr_sch} 
+	\caption{Summary of probabilistic forecast reconciliation.  The probability that ${\bm y}_{t+h}$ lies in the red line segment under the reconciled probabilistic forecast is defined to be equal to the probability that ${\bm y}_{t+h}$ lies in the shaded blue area under the unreconciled probabilistic forecast.  Note that since the smallest hierarchy involves three dimensions, this figure is only a schematic}\label{fig:probfr_sch} 
 \end{figure}
 
 We now discuss how this definition can be used in practice to obtain reconciled probabilistic forecasts for hierarchical time series.   Recall that the case of forecast reconciliation could be broken down into three steps.  In the first, $\hat{\bm{y}}_{t+h|t}$ is transformed into coordinates $\tilde{\bm{b}}_{t+h|t}$ and $\tilde{\bm{a}}_{t+h|t}$ via a change of basis.  In the second, $\tilde{\bm{a}}_{t+h|t}$ is discarded and $\tilde{\bm{b}}_{t+h|t}$ are kept as the bottom level reconciled forecasts.  In the third, reconciled forecasts for the entire hierarchy are recovered via $\tilde{\bm{y}}_{t+h|t}=\bm{S}\tilde{\bm{b}}_{t+h|t}$.  We now outline these three steps for probabilistic forecasts and demonstrate how they correspond to Definition~\ref{def:reconprob}.
