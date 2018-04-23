@@ -489,17 +489,25 @@ It should be noted that ${\bm G}_{opt}$ and ${\bm d}_{opt}$ depend on the true l
 
 \section{Evaluation of hierarchical probabilistic forecasts}\label{sec:evaluation}
 
-The necessary final step in hierarchical forecasting is to make sure that our forecast distributions are accurately predicting the uncertain future. In general, forecasters prefer to maximize the sharpness of the forecast distribution subject to the calibration \citep{Gneiting2014}. Therefore the probabilistic forecasts should be evaluated with respect to these two properties.
+The necessary final step in hierarchical forecasting is to make sure that our forecast distributions are accurate. In general, forecasters prefer to maximize the sharpness of the forecast distribution subject to calibration \citep{Gneiting2014}. Therefore the probabilistic forecasts should be evaluated with respect to these two properties.
 
-Calibration refers to the statistical compatibility between probabilistic forecasts and realizations. In other words, random draws from a perfectly calibrated forecast distribution should be equivalent in distribution to the realizations. On the other hand, sharpness refers to the spread or the concentration of the prediction distributions and it is a property of the forecasts only. The more concentrated the forecast distributions, the sharper the forecasts \citep{Gneiting2008}. However, independently assessing the calibration and sharpness will not help to properly evaluate the probabilistic forecasts. Therefore we need to assess these properties simultaneously using scoring rules.
+Calibration refers to the statistical compatibility between probabilistic forecasts and realizations. In other words, random draws from a perfectly calibrated forecast distribution should be equivalent in distribution to the realizations. On the other hand, sharpness refers to the spread or the concentration of the predictive distributions and it is a property of the forecasts only. The more concentrated the forecast distributions, the sharper the forecasts \citep{Gneiting2008}. However, independently assessing the calibration and sharpness will not help to properly evaluate the probabilistic forecasts. Therefore we need to assess these properties simultaneously using scoring rules.
 
-Scoring rules are summary measures obtained based on the relationship between the forecast distributions and the realizations. In some studies, researchers take the scoring rules to be positively oriented, in which case the scores should be maximized \citep{Gneiting2007}. However, scoring rules have also been defined to be negatively oriented, and then the scores should be minimized \citep{Gneiting2014}. We consider negatively oriented scoring rules to evaluate probabilistic forecasts in hierarchical time series.
+Scoring rules are summary measures obtained based on the relationship between the forecast distributions and the realizations. In some studies, researchers take the scoring rules to be positively oriented, in which case the scores should be maximized \citep{Gneiting2007}. However, scoring rules have also been defined to be negatively oriented, and then the scores should be minimized \citep{Gneiting2014}. We follow the latter convention here.
 
-Let $\breve{\bm{Y}}$ and $\bm{Y}$ be $n$-dimensional random vectors from the forecast distribution $\bm{F}$ and the true distribution $\bm{G}$, respectively. Further let $\bm{y}$ be an $n$-dimensional realization from $\bm{G}$. Then a scoring rule is a numerical value $S(\breve{\bm{Y}},\bm{y})$ assigned to each pair $(\breve{\bm{Y}},\bm{y})$. It is a ``proper'' scoring rule if 
+Let $\bm{P}$ be a forecast distribution and let $\bm{Q}$ be the true data generating process respectively. Further let $\omega$ be a realization from $\bm{Q}$. Then a scoring rule is a function that maps $P,\omega$ to $\mathbb{R}$. It is a ``proper'' scoring rule if 
 \begin{equation}\label{eq:(3.1.)}
-\E_{\bm{G}}[S(\bm{Y},\bm{y})] \le \E_{\bm{G}}[S(\breve{\bm{Y}},\bm{y})],
+\E_{\bm{Q}}[S(P,\omega)] \le \E_{\bm{Q}}[S(Q,\omega)],
 \end{equation}
-where $\E_{\bm{G}}[S(\bm{Y,y})]$ is the expected score under the true distribution $\bm{G}$ \citep{Gneiting2008, Gneiting2014}.
+where $\E_{\bm{Q}}[S(\bm{P,\omega})]$ is the expected score under the true distribution $\bm{Q}$ \citep{Gneiting2008, Gneiting2014}.  When this inequality is strict, the scoring rule is said to be strictly proper.
+
+\subsection{Univariate Scoring rules}
+
+\todo{In here discuss how scoring rules can be applied to each margin and simply added up.  This allows us to compare unreconciled and reconciled forecasts.  It has been done in Ben Taieb Taylor Hyndman and Jeon Panagiotelis Petropoulos}
+
+\subsection{Multivariate Scoring rules}
+
+\todo{Discuss log score, energy (inc. non-Euclidean?) score and variogram score in general}
 
 Table~\ref{table:scoringrules} summarizes a few existing proper scoring rules.
 
@@ -530,6 +538,10 @@ Table~\ref{table:scoringrules} summarizes a few existing proper scoring rules.
   \end{tabular}
 \end{table}
 
+\subsubsection{Comparing Unreconciled Forecasts to Reconciled Forecasts}
+
+\todo{Summary: Log score should not be used.  Energy score - still trying to prove that reconciled dominates unreconciled, will show "half" proof if necessart. Variogram score - it might be possible to show reconciled dominate unreconciled, I will have a look.}
+
 Even though the log score can be used to evaluate simulated forecast densities with large samples \citep{Jordan2017}, it is more convenient to use if we can assume a parametric forecast density for the hierarchy. However, the degeneracy of coherent forecast densities is problematic when using log scores. We will discuss this further in the next subsection.
 
 For the energy score with $\alpha=2$, it can be easily shown that
@@ -553,7 +565,7 @@ In contrast, \citet{SCHEUERER2015} have shown that the variogram score has a hig
 %
 %where $\bm{\tilde{\mu}}_{T+h}$ and $\bm{\tilde{\Sigma}}_{T+h}$ are the coherent mean and variance-covariance matrix of the predictive Gaussian density and both lies in the linear %subspace spanned by $\mathbb{C}^m$. Then $\bm{\tilde{\Sigma}}_{T+h}$ is always a singular matrix and hence the determinant will be zero. Therefore the density function of %degenerate Gaussian distribution is undefined. However, we could use the pseudo determinant, i.e. product of positive eigenvalues and the pseudo inverse to calculate the log score %to compare the predictive ability of coherent forecast densities.
 
-\subsection{Evaluating coherent forecast densities}
+\subsubsection{Comparing Reconciled Forecasts to one another}
 
 Any coherent hierarchical forecast density is a degenerate density. To the best of our knowledge, there is no proper multivariate scoring rule available to evaluate degenerate densities. Further, it can easily be seen that some of the existing scoring rules breakdown under degeneracy. 
 
