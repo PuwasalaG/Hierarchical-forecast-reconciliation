@@ -603,15 +603,15 @@ However, even though the coherent distribution of the entire hierarchy is degene
 
 For example, since the bottom-level series forms a set of basis series for a given hierarchy, we can evaluate the coherent forecast distribution using only the bottom-level series instead of evaluating the whole distribution. In particular, if our purpose is to compare two coherent forecast densities, we can compare them using only the bottom-level forecast densities.
 
-\subsection{Comparison of coherent and incoherent forecast densities}
-
-It is also important to assess how the coherent or reconciled forecast densities improve the predictive ability compared to the incoherent forecasts. Clearly, we cannot use multivariate scoring rules, even for the basis set of series, since the coherent and incoherent forecast densities lie in two different metric spaces.
-
-However we could compare the individual margins of the forecast density of the hierarchy using univariate proper scoring rules. The widely used Continuous Ranked Probability Score (CRPS) could then be used. This is defined as
-%\begin{equation} \label{eq:(3.6)}
-%\text{CRPS}(\breve{F}_i,y_{T+h,i}) = \E_{\breve{F}_i}|\breve{Y}_{T+h,i}-y_{T+h,i}| - \frac{1}{2}\E_{\breve{F}_i}|\breve{Y}_{T+h,i}-\breve{Y}^*_{T+h,i}|,
-%\end{equation}
-where $\breve{Y}_{T+h,i}$ and $\breve{Y}^*_{T+h,i}$ are two independent copies from the $i$th reconciled marginal forecast distribution $\tilde{F}_i$ of the hierarchy, and $y_{T+h,i}$ is the $i$th realization from the true marginal distribution $G_i$. We could also use univariate log scores, for which we could assume a parametric forecast distribution.
+%\subsection{Comparison of coherent and incoherent forecast densities}
+%
+%It is also important to assess how the coherent or reconciled forecast densities improve the predictive ability compared to the incoherent forecasts. Clearly, we cannot use multivariate scoring rules, even for the basis set of series, since the coherent and incoherent forecast densities lie in two different metric spaces.
+%
+%However we could compare the individual margins of the forecast density of the hierarchy using univariate proper scoring rules. The widely used Continuous Ranked Probability Score (CRPS) could then be used. This is defined as
+%%\begin{equation} \label{eq:(3.6)}
+%%\text{CRPS}(\breve{F}_i,y_{T+h,i}) = \E_{\breve{F}_i}|\breve{Y}_{T+h,i}-y_{T+h,i}| - \frac{1}{2}\E_{\breve{F}_i}|\breve{Y}_{T+h,i}-\breve{Y}^*_{T+h,i}|,
+%%\end{equation}
+%where $\breve{Y}_{T+h,i}$ and $\breve{Y}^*_{T+h,i}$ are two independent copies from the $i$th reconciled marginal forecast distribution $\tilde{F}_i$ of the hierarchy, and $y_{T+h,i}$ is the $i$th realization from the true marginal distribution $G_i$. We could also use univariate log scores, for which we could assume a parametric forecast distribution.
 
 \section{Probabilistic forecast reconciliation in the Gaussian framework}\label{sec:gaussian}
 
