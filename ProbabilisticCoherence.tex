@@ -515,9 +515,7 @@ Although univariate scoring ruled have been used in the limited literature on pr
 
 \subsection{Multivariate Scoring rules}
 
-\todo{Discuss log score, energy (inc. non-Euclidean?) score and variogram score in general}
-
-Table~\ref{table:scoringrules} summarizes a few existing proper scoring rules.
+While the a number of alternative proper scoring rules are available for univariate forecasts, the multivariate case is somewhat more limited.  Here we focus on three cases, the log score, the energy score and the variogram score.  These are summarised in table~\ref{table:scoringrules} summarizes a few existing proper scoring rules.
 
 \begin{table}[!bh]
   \caption{Scoring rules to evaluate multivariate forecast densities. Here, $\breve{\bm{y}}_{T+h}$ and $\breve{\bm{y}}^*_{T+h}$ are two independent random vectors from the coherent forecast distribution $\breve{\bm{F}}$ with density function $\breve{\bm{f}}(\cdot)$ at time $T+h$, and $\bm{y}_{T+h}$ is the vector of realizations. Further, $\breve{Y}_{T+h,i}$ and $\breve{Y}_{T+h,j}$ are the $i$th and $j$th components of the vector $\breve{\bm{Y}}_{T+h}$. The variogram score is given for order $p$, where $w_{ij}$ denote non-negative weights.}\label{table:scoringrules}
@@ -546,17 +544,15 @@ Table~\ref{table:scoringrules} summarizes a few existing proper scoring rules.
   \end{tabular}
 \end{table}
 
-\subsubsection{Comparing Unreconciled Forecasts to Reconciled Forecasts}
 
-\todo{Summary: Log score should not be used.  Energy score - still trying to prove that reconciled dominates unreconciled, will show "half" proof if necessart. Variogram score - it might be possible to show reconciled dominate unreconciled, I will have a look.}
+The log score can be approximated using a sample of values from the probabilistic forecast density \citep{Jordan2017} however it is more commonly used when a parametric form for the density is available for the probabilistic forecast.  So far, we have only defined probabilistic forecasts in terms of probability measures.  Although densities can be obtained for both reconciled and unreconciled forecasts, the degeneracy of reconciled forecasts is problematic when using log scores. We will discuss this further in the next subsection.
 
-Even though the log score can be used to evaluate simulated forecast densities with large samples \citep{Jordan2017}, it is more convenient to use if we can assume a parametric forecast density for the hierarchy. However, the degeneracy of coherent forecast densities is problematic when using log scores. We will discuss this further in the next subsection.
-
-For the energy score with $\alpha=2$, it can be easily shown that
+The energy score on the other hand can be defined in terms of the characteristic function of the probabilistic forecast, but the representation in Table~\ref{table:scoringrules} in terms of expectations leads itself to easy computation when samples from the probabilistic forecast are available. 
+An interesting case is where $\alpha=2$, where it can be easily shown that
 \begin{equation} \label{eq:(5.1)}
 \text{ES}(\breve{\bm{Y}_{T+h},y_{T+h}}) = \|\bm{y}_{T+h}-\breve{\bm{\mu}}_{T+h}\|^2,
 \end{equation}
-where $\breve{\bm{\mu}}_{T+h} =\E_{\bm{F}}(\breve{\bm{Y}}_{T+h}) $. Therefore, in the limiting case, the energy score only measures the accuracy of the forecast mean, and not the entire distribution. Similarly, \citet{Pinson2013a} argued that the energy score given in Table~\ref{table:scoringrules} has a very low discrimination ability for incorrectly specified covariances, even though it discriminates the misspecified means well.
+where $\breve{\bm{\mu}}_{T+h} =\E_{\bm{F}}(\breve{\bm{Y}}_{T+h}) $. In this limiting case, the energy score only measures the accuracy of the forecast mean, and not the entire distribution and the energy score is proper, but not strictly proper. \citet{Pinson2013a} also argues that the energy score has very low discriminative ability for incorrectly specified covariances, even though it discriminates the misspecified means well.
 
 In contrast, \citet{SCHEUERER2015} have shown that the variogram score has a higher discrimination ability of misspecified means, variances and correlation structures than the energy score. For a finite sample of size $B$ from the multivariate forecast density $\breve{\bm{F}}$, the empirical variogram score is defined as
 \begin{equation}
@@ -573,9 +569,8 @@ In contrast, \citet{SCHEUERER2015} have shown that the variogram score has a hig
 %
 %where $\bm{\tilde{\mu}}_{T+h}$ and $\bm{\tilde{\Sigma}}_{T+h}$ are the coherent mean and variance-covariance matrix of the predictive Gaussian density and both lies in the linear %subspace spanned by $\mathbb{C}^m$. Then $\bm{\tilde{\Sigma}}_{T+h}$ is always a singular matrix and hence the determinant will be zero. Therefore the density function of %degenerate Gaussian distribution is undefined. However, we could use the pseudo determinant, i.e. product of positive eigenvalues and the pseudo inverse to calculate the log score %to compare the predictive ability of coherent forecast densities.
 
-\subsubsection{Comparing Reconciled Forecasts to one another}
+\subsubsection{Comparing Unreconciled Forecasts to Reconciled Forecasts}
 
-Any coherent hierarchical forecast density is a degenerate density. To the best of our knowledge, there is no proper multivariate scoring rule available to evaluate degenerate densities. Further, it can easily be seen that some of the existing scoring rules breakdown under degeneracy. 
 
 For example, consider the log score in the univariate case. Suppose the true density is degenerate at $x=0$, i.e. $f(x)=\mathbb{1}\{x=0\}$. \todo{I think you need Dirac delta functions here.}  Now consider two predictive densities $p_1(x)$ and $p_2(x)$. Let $p_1(x)$ be equivalent to the true density, i.e. $p_1(x)=\mathbb{1}\{x=0\}$, and let $p_2(x) \sim \mathcal{N}(0,\sigma^2)$ with $\sigma^2 < (2\pi)^{-1}$. The expected log score of $p_1$ is
 $$
@@ -586,6 +581,15 @@ $$
 \E_f[S(p_2,f)] = -\log[p_2(x=0)]<0.
 $$
 Therefore $S(f,f) > S(p_2,f)$, and there exists at least one forecast density which breaks the condition \eqref{eq:(3.1.)} for a proper scoring rule. This implies that the log score cannot be used to evaluate the degenerate densities.
+
+To be discussed: Energy score - still trying to prove that reconciled dominates unreconciled, will show "half" proof if necessary. Variogram score - it might be possible to show reconciled dominate unreconciled, I will have a look.
+
+
+\subsubsection{Comparing Reconciled Forecasts to one another}
+
+Any coherent hierarchical forecast density is a degenerate density. To the best of our knowledge, there is no proper multivariate scoring rule available to evaluate degenerate densities. Further, it can easily be seen that some of the existing scoring rules breakdown under degeneracy. 
+
+
 
 However, even though the coherent distribution of the entire hierarchy is degenerate, the density of the basis set of series is non-degenerate since these series are linearly independent. Further, if we can correctly specify the forecast distribution of the basis set of series, then we have almost obtained the correct forecast distribution of the whole hierarchy. Therefore, we propose to evaluate the forecast distributions using only the basis set of series. Then we can use any of the multivariate scoring rules discussed above without incurring problems due to degeneracy.
 
