@@ -590,18 +590,20 @@ S\left(\hat{f},\bm{z}^{(1)}_t\right) &= -\log f_1(\bm{z}^{(1)}_t)-f_2(\bm{z}^{(1
 
 After taking expectations $ES(f,f) > ES(\hat{f},f)$, violating the condition \eqref{eq:(3.1.)} for a proper scoring rule.  A similar issue also arises when discrete random variables are modelled as if they were continuous, an issue discussed in Section 4.1, page 366 of \cite{Gneiting2007}. This implies that the log score should not be used to evaluate multivariate densities with degeneracies and should be avoided when comparing reconciled and unreconciled probabilistic forecasts.
 
+\todo{Stuff below still open}
+
 To be discussed: Energy score - still trying to prove that reconciled dominates unreconciled, will show "half" proof if necessary. Variogram score - it might be possible to show reconciled dominate unreconciled, I will have a look.
 
 
 \subsubsection{Comparing Reconciled Forecasts to one another}
 
-Any coherent hierarchical forecast density is a degenerate density. To the best of our knowledge, there is no proper multivariate scoring rule available to evaluate degenerate densities. Further, it can easily be seen that some of the existing scoring rules breakdown under degeneracy. 
+A characteristic of coherent probabilistic forecasts is that they can be completely characterised in terms of basis series. If probabilistic forecasts of the basis series are accurate, then forecasts for the whole hierarchy are also accurate. Therefore, we propose that two different sets of reconciled forecasts can be compared to one another using only the basis set of series. Then we can use any of the multivariate scoring rules discussed above without incurring problems due to degeneracy.  For example, since the bottom-level series forms a set of basis series for a given hierarchy, we can evaluate the coherent forecast distribution using only the bottom-level series instead of evaluating the whole distribution. 
+\todo{Two questions below}
 
-
-
-However, even though the coherent distribution of the entire hierarchy is degenerate, the density of the basis set of series is non-degenerate since these series are linearly independent. Further, if we can correctly specify the forecast distribution of the basis set of series, then we have almost obtained the correct forecast distribution of the whole hierarchy. Therefore, we propose to evaluate the forecast distributions using only the basis set of series. Then we can use any of the multivariate scoring rules discussed above without incurring problems due to degeneracy.
-
-For example, since the bottom-level series forms a set of basis series for a given hierarchy, we can evaluate the coherent forecast distribution using only the bottom-level series instead of evaluating the whole distribution. In particular, if our purpose is to compare two coherent forecast densities, we can compare them using only the bottom-level forecast densities.
+\begin{itemize}
+	\item Can we prove that if reconciled forecast A is better than forecast B in terms of the bottom level then it will also be better for the whole series.  This is kind of obvious for log score, but may not be for energy score and variogram score
+	\item Does the basis we use matter.  We know that energy score is invariant to orthogonal rotations but ${\bm S}$ is not (semi) orthogonal.  On the other hand, I don't think variogram is invariant to rotations as all unless $p=2$.
+\end{itemize} 
 
 %\subsection{Comparison of coherent and incoherent forecast densities}
 %
