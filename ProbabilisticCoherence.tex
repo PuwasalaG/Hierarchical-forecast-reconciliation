@@ -501,9 +501,17 @@ Let $\bm{P}$ be a forecast distribution and let $\bm{Q}$ be the true data genera
 \end{equation}
 where $\E_{\bm{Q}}[S(\bm{P,\omega})]$ is the expected score under the true distribution $\bm{Q}$ \citep{Gneiting2008, Gneiting2014}.  When this inequality is strict, the scoring rule is said to be strictly proper.
 
+In the context of probabilistic forecast reconciliation there could be two motivations for using scoring rules.  The first is to compare unreconciled densities to reconciled densities.  Although reconciliation is a valuable goal in and of itself since it can be important in aligning decision making across, for example, different units of an enterprise, in the point forecasting literature, forecast reconciliation has also been shown to improve forecast performance \todo{Some References}.  It will be worthwhile to see whether the same holds in the probabilistic forecasting case \todo{mention energy score proof - if we get it}.  The second motivation for using scoring rules is to compare two or more sets of reconciled probabilistic forecasts.  The objective here is to evaluate which reconciliation mapping $g(.)$ works best in practice.
+
 \subsection{Univariate Scoring rules}
 
-\todo{In here discuss how scoring rules can be applied to each margin and simply added up.  This allows us to compare unreconciled and reconciled forecasts.  It has been done in Ben Taieb Taylor Hyndman and Jeon Panagiotelis Petropoulos}
+One way to evaluate probabilistic forecasts is via the application of univariate scoring rules to each variable in a hierarchy.  A summary can be taken of the expected scores across each margin for example a mean or median.  In the simulations of section~\ref{sec:gaussian} we consider two scoring rules.  The log score is given by the log of the marginal density of each variable.  The cumulative rank probability score generalises mean square error and is given by
+\begin{align} \label{eq:CRPS}
+\text{CRPS}(\breve{F}_i,y_{T+h,i}) &=\int \left(F_i(\breve{y}_i)-\mathbb{1}(y_i<y_{T+h,i})\right)dy_i\\ &=\E_{\breve{F}_i}|\breve{Y}_{T+h,i}-y_{T+h,i}| - \frac{1}{2}\E_{\breve{F}_i}|\breve{Y}_{T+h,i}-\breve{Y}^*_{T+h,i}|\,,
+\end{align}
+where the expectations in the second line can be approximated by Monte Carlo.
+
+Although univariate scoring ruled have been used in the limited literature on probabilistic forecasting for hierarchies \cite{BenTaieb2017} and Jeon et al \todo{Jeon Panagiotelis and Petropoulos reference} to date, there are a number of shortcomings to this approach.  Crucially, evaluating univariate scores on the margins do not account for the dependence in the hierarchy. 
 
 \subsection{Multivariate Scoring rules}
 
@@ -588,9 +596,9 @@ For example, since the bottom-level series forms a set of basis series for a giv
 It is also important to assess how the coherent or reconciled forecast densities improve the predictive ability compared to the incoherent forecasts. Clearly, we cannot use multivariate scoring rules, even for the basis set of series, since the coherent and incoherent forecast densities lie in two different metric spaces.
 
 However we could compare the individual margins of the forecast density of the hierarchy using univariate proper scoring rules. The widely used Continuous Ranked Probability Score (CRPS) could then be used. This is defined as
-\begin{equation} \label{eq:(3.6)}
-\text{CRPS}(\breve{F}_i,y_{T+h,i}) = \E_{\breve{F}_i}|\breve{Y}_{T+h,i}-y_{T+h,i}| - \frac{1}{2}\E_{\breve{F}_i}|\breve{Y}_{T+h,i}-\breve{Y}^*_{T+h,i}|,
-\end{equation}
+%\begin{equation} \label{eq:(3.6)}
+%\text{CRPS}(\breve{F}_i,y_{T+h,i}) = \E_{\breve{F}_i}|\breve{Y}_{T+h,i}-y_{T+h,i}| - \frac{1}{2}\E_{\breve{F}_i}|\breve{Y}_{T+h,i}-\breve{Y}^*_{T+h,i}|,
+%\end{equation}
 where $\breve{Y}_{T+h,i}$ and $\breve{Y}^*_{T+h,i}$ are two independent copies from the $i$th reconciled marginal forecast distribution $\tilde{F}_i$ of the hierarchy, and $y_{T+h,i}$ is the $i$th realization from the true marginal distribution $G_i$. We could also use univariate log scores, for which we could assume a parametric forecast distribution.
 
 \section{Probabilistic forecast reconciliation in the Gaussian framework}\label{sec:gaussian}
