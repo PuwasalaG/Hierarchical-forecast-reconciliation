@@ -572,15 +572,23 @@ In contrast, \citet{SCHEUERER2015} have shown that the variogram score has a hig
 \subsubsection{Comparing Unreconciled Forecasts to Reconciled Forecasts}
 
 
-For example, consider the log score in the univariate case. Suppose the true density is degenerate at $x=0$, i.e. $f(x)=\mathbb{1}\{x=0\}$. \todo{I think you need Dirac delta functions here.}  Now consider two predictive densities $p_1(x)$ and $p_2(x)$. Let $p_1(x)$ be equivalent to the true density, i.e. $p_1(x)=\mathbb{1}\{x=0\}$, and let $p_2(x) \sim \mathcal{N}(0,\sigma^2)$ with $\sigma^2 < (2\pi)^{-1}$. The expected log score of $p_1$ is
+For both reconciled and unreconciled densities it is possible to obtain a density from the probability measures defined in \ref{sec:definitions}.  As such it may seem sensible to compare unreconciled densities to reconciled densities on the basis of log score.  However more careful consideration shows that using the log score may fail in the case of multivariate distributions with a degeneracy.
+
+Consider a rotated version of hierarchical time series $\bm{z}_t={\bm U}{\bm y}_t$ so that the first $m$ elements of $\bm{z}_t$ denoted $\bm{z}^(1)_t$ are unconstrained, while the remaining $n-m$ elements denoted $\bm{z}^(2)_t$ equal $0$ when the aggregation constraints hold. An example of the $n\times n$ ${\bm U}$ could be the left singular values of the matrix ${\bm S}$.  For a non-degenerate probability measure on $\mathbb{R}^n$, the density is the Radon-Nikodym derivative with respect to the usual Lesbegue measure on $\mathbb{R}^n$.  For a coherent probability measure the density after rotation is the Radon-Nikodym derivative with respect to the usual Lesbegue measure on $\mathbb{R}^m$.
+
+Consider the case where the true density is $f_1(\bm{z}^{(1)}_t)\mathbb{1}\left({\bm{z}^{(2)}_t}\right)$ , the reconciled density is identical to the true density and the unreconciled density is given by $f_1(\bm{z}^{(1)}_t)f_2(\bm{z}^{(2)}_t)$, where $f_2$ is highly concentrated around $0$ but still a proper density, for example a Gaussian with variance $\sigma^2{\bm I}$ with $\sigma^2 < (2\pi)^{-1}$. The log score of the reconciled density is
 $$
-\E_f[S(f,f)] = \E_f[S(p_1,f)] = -\log[p_1(x=0)]=0,
+S\left(\tilde{f},\bm{z}^{(1)}_t\right) = -\log f_1\left(\bm{z}^{(1)}_t\right),
 $$
-while that of $p_2$ is
-$$
-\E_f[S(p_2,f)] = -\log[p_2(x=0)]<0.
-$$
-Therefore $S(f,f) > S(p_2,f)$, and there exists at least one forecast density which breaks the condition \eqref{eq:(3.1.)} for a proper scoring rule. This implies that the log score cannot be used to evaluate the degenerate densities.
+while that of the unreconciled density is
+\begin{align}
+S\left(\hat{f},\bm{z}^{(1)}_t\right) &= -\log f_1(\bm{z}^{(1)}_t)-f_2(\bm{z}^{(1)}_t)\\
+&= -\log f_1(\bm{z}^{(1)}_t)+\frac{n-m}{2}\log(2\pi\sigma^2)\\
+&\leq-\log f_1(\bm{z}^{(1)}_t).
+\end{align}
+
+
+After taking expectations $ES(f,f) > ES(\hat{f},f)$, violating the condition \eqref{eq:(3.1.)} for a proper scoring rule.  A similar issue also arises when discrete random variables are modelled as if they were continuous, an issue discussed in Section 4.1, page 366 of \cite{Gneiting2007}. This implies that the log score should not be used to evaluate multivariate densities with degeneracies and should be avoided when comparing reconciled and unreconciled probabilistic forecasts.
 
 To be discussed: Energy score - still trying to prove that reconciled dominates unreconciled, will show "half" proof if necessary. Variogram score - it might be possible to show reconciled dominate unreconciled, I will have a look.
 
