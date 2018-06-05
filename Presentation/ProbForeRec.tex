@@ -1,6 +1,6 @@
 \documentclass{beamer}
 \usetheme{Warsaw}
-\usepackage{amsmath,amsthm, bm, tikz}
+\usepackage{amsmath,amsthm, bm, tikz,qtree}
 \usetikzlibrary{arrows,positioning,shapes,fit,calc}
 \title{Probabilistic Forecast Reconciliation}
 \date{June 20, 2018}
@@ -20,7 +20,16 @@
       \item {\bf Coherent} forecasts respect such constraints. 
       \item Independently produced forecasts are generally incoherent.
   \end{itemize}
-  picture of hierarchy  
+\begin{figure}
+	\begin{center}
+		\leaf{AA} \leaf{AB} 
+		\branch{2}{A}
+		\leaf{BA} \leaf{BB}
+		\branch{2}{B}
+		\branch{2}{Tot}
+		\qobitree
+	\end{center}
+\end{figure}
 \end{frame}  
   \begin{frame}{Forecast Reconciliation}
   	\begin{itemize}
@@ -45,7 +54,7 @@
   		\end{enumerate}
   	    \item The matrix ${\bm S}$ defines the aggregation constraints, e.g.
   	    \begin{equation*}
-  	    {\bm S}=\begin{pmatrix} 1 &1 \\1 &0 \\0 &1 \\
+  	    {\bm S}=\begin{pmatrix} 1 &1 &1 &1 \\1 &1 &0 &0 \\0 &0 &1 &1 \\ &{\bm I_{4\times 4}}
   	    \end{pmatrix}
   	    \end{equation*}
   	    \item Choices of ${\bm G}$ defines reconciliation method, e.g. OLS: ${\bm G}=\left(\bm{S}'\bm{S}\right)^{-1}{\bm S'}$ and Bottom Up: ${\bm G}=\left(\bm{0}_{m\times n-m}~\bm{I}_{m\times m}\right)$ 
@@ -56,22 +65,24 @@
   	\centering
   	\input{Figs/orth_pointforerec_schematic}
   \end{frame}
+  \begin{frame}{Geometry: Oblique Projection}
+  	\vspace{-0.9cm}
+  	\centering
+  	\input{Figs/pointforerec_schematic}
+  \end{frame}
   \section{Probabilistic Reconciliation}
   \begin{frame}{Coherent Subspace}
   	\begin{definition} 
   		The {\bf coherent subspace} is the linear subspace spanned by the columns of ${\bm S}$, i.e. $\mathfrak{s}=\mbox{sp}({\bm S})$
   	\end{definition}
-    This definition is not unique, it could be defined as the span of: 
-    \begin{equation*}
-    {\bm S}^*=\begin{pmatrix}1&0\\0&1\\1&-1\end{pmatrix}
-    \end{equation*}
+    Instead of using bottom-level series a different combination of $m$ {\bf basis series} could be used (e.g. top and $m-1$ bottom).  Although ${\bm S}$ would be different $\mathfrak{s}$ would be the same.
   \end{frame}
   \begin{frame}{Coherent Probabilistic Forecast}
-    Let $(\mathbb{R}^m,\mathcal{F}_{\mathbb{R}^m},\nu)$ and $(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\nu_\mathfrak{s})$ be probability triples on $m$-dimensional space and the coherent subspace respectively.
+    Let $(\mathbb{R}^m,\mathcal{F}_{\mathbb{R}^m},\nu)$ and $(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\mu)$ be probability triples on $m$-dimensional space and the coherent subspace respectively.
     \begin{definition}
       The probability measure $\nu_{\mathfrak{s}}$ is coherent if
       \begin{equation*}
-      \nu(\mathcal{B})=\nu_{\mathfrak{s}}(s(\mathcal{B}))\quad\forall\mathcal{B}\in \mathcal{F}_{\mathcal{R}_m}
+      \nu(\mathcal{B})=\mu(s(\mathcal{B}))\quad\forall\mathcal{B}\in \mathcal{F}_{\mathcal{R}_m}
       \end{equation*} 
     \end{definition}
     where $s(\mathcal{B})$ is the image of $\mathcal{B}$ under premultiplication by ${\bm S}$
@@ -81,7 +92,7 @@
   	\begin{definition}
   	The probability triple $\left(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\tilde{\nu}\right)$ is the reconciles the probability triple $\left(\mathbb{R}^n,\mathcal{F}_{\mathbb{R}^n},\hat{\nu}\right)$ with with respect to $g$ iff
   	\begin{equation*}
-  	\tilde{\nu}(s(\mathcal{B}))=\nu(\mathcal{B})=\hat{\nu}(g^{-1}(\mathcal{B}))\quad\forall \mathcal{B}\in\mathbb{R}^n
+  	\tilde{\nu}(s(\mathcal{B}))=\nu(\mathcal{B})=\hat{\nu}(g^{-1}(\mathcal{B}))\quad\forall \mathcal{B}\in\mathcal{F}_{\mathcal{R}_m}
   	\end{equation*}
   	\end{definition}
     where $g^{-1}$ is the pre-image of $g$.
@@ -167,7 +178,7 @@
    		\item If you want to see tables with numbers look at the paper.
    		\item The main takeaway messages are:
    		    \begin{itemize}
-   		    	\item Reconiliation is better than no reconciliation.
+   		    	\item Reconciliation is better than no reconciliation.
    		    	\item Bottom up does not do well.
    		    	\item MinT (an oblique projection) does well.
    		    \end{itemize} 
