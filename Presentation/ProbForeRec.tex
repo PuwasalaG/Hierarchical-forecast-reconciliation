@@ -1,0 +1,187 @@
+\documentclass{beamer}
+\usetheme{Warsaw}
+\usepackage{amsmath,amsthm, bm, tikz}
+\usetikzlibrary{arrows,positioning,shapes,fit,calc}
+\title{Probabilistic Forecast Reconciliation}
+\date{June 20, 2018}
+\author[GPAH]{Puwasala Gamakumara, Anastasios Panagiotelis, George Athanasopoulos and Rob Hyndman}
+\begin{document}
+  \begin{frame}
+    \maketitle
+  \end{frame}
+  \section{Concepts}
+  \begin{frame}{Hierarchical and Grouped Time Series}
+  	\begin{itemize}
+  	  \item Collections of Time Series often characterised by aggregation constraints
+  	  \begin{itemize}
+  	    \item Cross-Sectionally
+  		\item Temporally
+  	  \end{itemize}
+      \item {\bf Coherent} forecasts respect such constraints. 
+      \item Independently produced forecasts are generally incoherent.
+  \end{itemize}
+  picture of hierarchy  
+\end{frame}  
+  \begin{frame}{Forecast Reconciliation}
+  	\begin{itemize}
+  	  \item Forecast reconciliation involves
+  	  \begin{enumerate}
+  	  	\item Producing incoherent {\bf base} forecasts for all series in an $n\times 1$ vector $\hat{\bm y}$
+        \item Adjusting base forecasts to obtain {\bf reconciled} forecasts in an $n\times 1$ vector $\tilde{\bm y}$
+  	  \end{enumerate} 
+      \item Why do we care?
+        \begin{enumerate}
+        	\item Aligned decision making.
+        	\item Improved forecast accuracy
+        \end{enumerate}
+  	\end{itemize}
+  \end{frame}
+  \begin{frame}{Reconciliation in two steps}
+  	\begin{itemize}
+  		\item Many reconciliation methods involve two steps
+  		\begin{enumerate}
+  			\item Pre-multiply $\hat{\bm y}$ by a $m\times n$ matrix $\bm G$ to obtain {\bf bottom} level series ${\bm b}={\bm G}{\hat{\bm y}}$ 
+  			\item Pre-multiply ${\bm b}$ by a $n\times m$ matrix $\bm S$ to obtain ${\tilde{\bm y}}$, i.e. $\tilde{\bm y}={\bm S}{{\bm b}}$
+  		\end{enumerate}
+  	    \item The matrix ${\bm S}$ defines the aggregation constraints, e.g.
+  	    \begin{equation*}
+  	    {\bm S}=\begin{pmatrix} 1 &1 \\1 &0 \\0 &1 \\
+  	    \end{pmatrix}
+  	    \end{equation*}
+  	    \item Choices of ${\bm G}$ defines reconciliation method, e.g. OLS: ${\bm G}=\left(\bm{S}'\bm{S}\right)^{-1}{\bm S'}$ and Bottom Up: ${\bm G}=\left(\bm{0}_{m\times n-m}~\bm{I}_{m\times m}\right)$ 
+    \end{itemize}
+  \end{frame}
+  \begin{frame}{Geometry}
+  	\vspace{-2.3cm}
+  	\centering
+  	\input{Figs/orth_pointforerec_schematic}
+  \end{frame}
+  \section{Probabilistic Reconciliation}
+  \begin{frame}{Coherent Subspace}
+  	\begin{definition} 
+  		The {\bf coherent subspace} is the linear subspace spanned by the columns of ${\bm S}$, i.e. $\mathfrak{s}=\mbox{sp}({\bm S})$
+  	\end{definition}
+    This definition is not unique, it could be defined as the span of: 
+    \begin{equation*}
+    {\bm S}^*=\begin{pmatrix}1&0\\0&1\\1&-1\end{pmatrix}
+    \end{equation*}
+  \end{frame}
+  \begin{frame}{Coherent Probabilistic Forecast}
+    Let $(\mathbb{R}^m,\mathcal{F}_{\mathbb{R}^m},\nu)$ and $(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\nu_\mathfrak{s})$ be probability triples on $m$-dimensional space and the coherent subspace respectively.
+    \begin{definition}
+      The probability measure $\nu_{\mathfrak{s}}$ is coherent if
+      \begin{equation*}
+      \nu(\mathcal{B})=\nu_{\mathfrak{s}}(s(\mathcal{B}))\quad\forall\mathcal{B}\in \mathcal{F}_{\mathcal{R}_m}
+      \end{equation*} 
+    \end{definition}
+    where $s(\mathcal{B})$ is the image of $\mathcal{B}$ under premultiplication by ${\bm S}$
+  \end{frame}
+  \begin{frame}{Reconciled Probabilistic Forecast}
+  	Let $g:\mathbb{R}^n\rightarrow\mathbb{R}^m$ be a linear map.  Then 
+  	\begin{definition}
+  	The probability triple $\left(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\tilde{\nu}\right)$ is the reconciles the probability triple $\left(\mathbb{R}^n,\mathcal{F}_{\mathbb{R}^n},\hat{\nu}\right)$ with with respect to $g$ iff
+  	\begin{equation*}
+  	\tilde{\nu}(s(\mathcal{B}))=\nu(\mathcal{B})=\hat{\nu}(g^{-1}(\mathcal{B}))\quad\forall \mathcal{B}\in\mathbb{R}^n
+  	\end{equation*}
+  	\end{definition}
+    where $g^{-1}$ is the pre-image of $g$.
+  \end{frame}
+  \begin{frame}{Geometry}
+  	\centering
+  	\input{Figs/probforerec_schematic}
+  \end{frame}
+  \begin{frame}{Analytically}
+  	If we have an unreconciled density the reconciled density can be obtained by linear transformations and marginalisation.
+  	\begin{align*}
+  	\mbox{Pr}(\tilde{\bm{b}}\in s(\mathcal{B}))&=\mbox{Pr}(\hat{\bm{y}}\in g^{-1}(\mathcal{B}))\\
+  	&=\int\limits_{g^{-1}(\mathcal{B})}f(\hat{\bm{y}})d\hat{\bm{y}}\\
+  	&=\int\limits_{\mathcal{B}}\int f(\bm{S}\tilde{\bm{b}}+\bm{R}\tilde{\bm{a}})|\left(\bm{S}~\bm{R}\right)|d\tilde{\bm{a}}d\tilde{\bm{b}}
+  	\end{align*}
+  \end{frame}
+  \begin{frame}{Elliptical distributions}
+  	Let the unreconciled density be elliptical with location  $\hat{\bm{\mu}}$ and scale $\hat{\bm{\Sigma}}$ and let the true predictive density be elliptical with location  ${\bm{\mu}}$ and scale ${\bm{S}}{\bm{\Omega}}{\bm{S}}'$.
+  	\begin{theorem}
+  		The true predictive distribution can be recovered via linear reconciliation.  The optimal (but infeasible) mapping is $g(\breve{\bm y})={\bm G}_{opt}\breve{\bm y}+{\bm d}_{opt}$ where $\bm{G}_{opt}={\bm\Omega}^{1/2}{\bm\hat{\Sigma}}^{-1/2}$ and ${\bm d}_{opt}={\bm S}{\bm G}_{opt}\left({\bm \mu}-\hat{\bm \mu}\right)$.
+  	\end{theorem}
+    This follows from the closure property of elliptical distributions under affine transformations and marginalisation.
+  \end{frame}
+  \begin{frame}{With a sample}
+  	\begin{itemize}
+  		\item Often densities are unavailable but we can simulate a sample from the predictive distribution.
+  		\item Suppose $\bm{\hat{y}}^{[1]},\ldots,\bm{\hat{y}}^{[J]}$ is a sample from the unreconciled probabilistic forecast.
+  		\item Then setting $\tilde{\bm y}^{[j]}=s\circ g(\hat{\bm y}^{[j]})=\bm{S}\bm{G}\hat{\bm y}^{[j]}$ produces a sample from the reconciled distribution with respect to $g$.
+  	\end{itemize}
+  \end{frame}
+  \section{Scoring}
+  \begin{frame}{Univariate v Multivariate Scores}
+    Scoring rules can be used to evaluate probabilistic forecasts
+    \begin{itemize}
+    	\item Univariate
+    	\begin{itemize}
+    		\item Log Score
+    		\item Continuous Rank Probability Score
+    	\end{itemize}
+    	\item Multivariate
+        \begin{itemize}
+	      \item Log Score
+	      \item Energy Score
+        \end{itemize}
+    \end{itemize}
+    These may be computed using densities or a sample.
+  \end{frame}
+  \begin{frame}{Approaches}
+  	\begin{enumerate}
+  		\item Use a summary of all univariate scores.
+  		\item Make comparisons on the joint distribution of bottom level series only.
+        \item Make comparisons using the full joint distribution
+  \end{enumerate}
+  There are pitfalls to the third approach.
+  \end{frame}
+  \begin{frame}{Reconciled v Unreconciled}
+	When comparing reconciled and unreconciled probabilistic forecasts on the basis of log score
+	\begin{theorem}
+		Let $f(\bm{y})$ be the true predictive density (on $\mathfrak{s}$) and $LS$ be the (negatively-oriented) log score.  Then there exists an unreconciled density  $\hat{f}(\bm{y})$ on $\mathbb{R}^n$ such that
+		\begin{equation*}
+		E_{\bm y}\left[S(\hat{f},\bm{y})\right]<E_{\bm y}\left[S(f,\bm{y})\right]
+		\end{equation*}
+	\end{theorem}
+    The log score is not proper {\bf in this context}.
+  \end{frame}
+  \begin{frame}{Reconciled v Reconciled}
+	\begin{itemize}
+		\item For two reconciled probabilistic forecasts log score can be used.
+		\item Comparisons can be made on the basis of bottom level series (or any basis series).
+		\item By the definition of coherence $\log (f({\bm b}))=\log (f({\bm S}{\bm b}){\bm J})$
+		\item The Jacobian does not affect the ordering of log score.
+	\end{itemize}
+  \end{frame}
+  \begin{frame}{Energy  score}
+  	\begin{itemize}
+  		\item More care must be taken using the energy score.
+  		\item Energy score is invariant to orthogonal transformation but not affine transformations.
+  		\item Since ${\bm S}$ is not a rotation the ranking of different methods based on the full hierarchy may differ from the ranking based on bottom level series only.
+  	\end{itemize}
+  \end{frame}
+   \begin{frame}{Simulations}
+   	\begin{itemize}
+   		\item If you want to see tables with numbers look at the paper.
+   		\item The main takeaway messages are:
+   		    \begin{itemize}
+   		    	\item Reconiliation is better than no reconciliation.
+   		    	\item Bottom up does not do well.
+   		    	\item MinT (an oblique projection) does well.
+   		    \end{itemize} 
+   	\end{itemize}
+   \end{frame}
+   \begin{frame}{Looking ahead}
+     \begin{itemize}
+     	\item The optimal feasible reconciliation method remains an open question even for elliptical distributions.
+     	\begin{itemize}
+     		\item It is likely to depend on the specific score used.
+     	\end{itemize}
+        \item Are non-linear reconciliation methods worthwhile?
+        \item How should probabilistic reconciliation work for non-elliptical distributions.
+        \item Further development of multivariate scoring rules.
+     \end{itemize}	
+   \end{frame}
+\end{document}
