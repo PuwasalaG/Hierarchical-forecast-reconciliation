@@ -12,7 +12,7 @@
   \section{Concepts}
   \begin{frame}{Hierarchical and Grouped Time Series}
   	\begin{itemize}
-  	  \item Collections of Time Series often characterised by aggregation constraints
+  	  \item Collections of time series often characterised by aggregation constraints
   	  \begin{itemize}
   	    \item Cross-Sectionally
   		\item Temporally
@@ -36,7 +36,7 @@
   	  \item Forecast reconciliation involves
   	  \begin{enumerate}
   	  	\item Producing incoherent {\bf base} forecasts for all series in an $n\times 1$ vector $\hat{\bm y}$
-        \item Adjusting base forecasts to obtain {\bf reconciled} forecasts in an $n\times 1$ vector $\tilde{\bm y}$
+        \item Adjusting base forecasts to obtain coherent {\bf reconciled} forecasts in an $n\times 1$ vector $\tilde{\bm y}$
   	  \end{enumerate} 
       \item Why do we care?
         \begin{enumerate}
@@ -90,7 +90,7 @@
   \begin{frame}{Reconciled Probabilistic Forecast}
   	Let $g:\mathbb{R}^n\rightarrow\mathbb{R}^m$ be a linear map.  Then 
   	\begin{definition}
-  	The probability triple $\left(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\tilde{\nu}\right)$ is the reconciles the probability triple $\left(\mathbb{R}^n,\mathcal{F}_{\mathbb{R}^n},\hat{\nu}\right)$ with with respect to $g$ iff
+  	The probability triple $\left(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\tilde{\nu}\right)$ reconciles the probability triple $\left(\mathbb{R}^n,\mathcal{F}_{\mathbb{R}^n},\hat{\nu}\right)$ with with respect to $g$ iff
   	\begin{equation*}
   	\tilde{\nu}(s(\mathcal{B}))=\nu(\mathcal{B})=\hat{\nu}(g^{-1}(\mathcal{B}))\quad\forall \mathcal{B}\in\mathcal{F}_{\mathbb{R}_m}
   	\end{equation*}
@@ -153,7 +153,7 @@
 	\begin{theorem}
 		Let $f(\bm{y})$ be the true predictive density (on $\mathfrak{s}$) and $LS$ be the (negatively-oriented) log score.  Then there exists an unreconciled density  $\hat{f}(\bm{y})$ on $\mathbb{R}^n$ such that
 		\begin{equation*}
-		E_{\bm y}\left[S(\hat{f},\bm{y})\right]<E_{\bm y}\left[S(f,\bm{y})\right]
+		E_{\bm y}\left[LS(\hat{f},\bm{y})\right]<E_{\bm y}\left[LS(f,\bm{y})\right]
 		\end{equation*}
 	\end{theorem}
     The log score is not proper {\bf in this context}.
