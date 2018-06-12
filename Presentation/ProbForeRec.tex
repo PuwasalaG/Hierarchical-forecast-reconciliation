@@ -57,7 +57,7 @@
   	    {\bm S}=\begin{pmatrix} 1 &1 &1 &1 \\1 &1 &0 &0 \\0 &0 &1 &1 \\ &{\bm I_{4\times 4}}
   	    \end{pmatrix}
   	    \end{equation*}
-  	    \item Choices of ${\bm G}$ defines reconciliation method, e.g. OLS: ${\bm G}=\left(\bm{S}'\bm{S}\right)^{-1}{\bm S'}$ and Bottom Up: ${\bm G}=\left(\bm{0}_{m\times n-m}~\bm{I}_{m\times m}\right)$ 
+  	    \item Choice of ${\bm G}$ defines reconciliation method, e.g. OLS: ${\bm G}=\left(\bm{S}'\bm{S}\right)^{-1}{\bm S'}$ and Bottom Up: ${\bm G}=\left(\bm{0}_{m\times n-m}~\bm{I}_{m\times m}\right)$ 
     \end{itemize}
   \end{frame}
   \begin{frame}{Geometry}
@@ -80,9 +80,9 @@
   \begin{frame}{Coherent Probabilistic Forecast}
     Let $(\mathbb{R}^m,\mathcal{F}_{\mathbb{R}^m},\nu)$ and $(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\mu)$ be probability triples on $m$-dimensional space and the coherent subspace respectively.
     \begin{definition}
-      The probability measure $\nu_{\mathfrak{s}}$ is coherent if
+      The probability measure $\nu$ is coherent if
       \begin{equation*}
-      \nu(\mathcal{B})=\mu(s(\mathcal{B}))\quad\forall\mathcal{B}\in \mathcal{F}_{\mathcal{R}_m}
+      \nu(\mathcal{B})=\mu(s(\mathcal{B}))\quad\forall\mathcal{B}\in \mathcal{F}_{\mathbb{R}_m}
       \end{equation*} 
     \end{definition}
     where $s(\mathcal{B})$ is the image of $\mathcal{B}$ under premultiplication by ${\bm S}$
@@ -92,7 +92,7 @@
   	\begin{definition}
   	The probability triple $\left(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\tilde{\nu}\right)$ is the reconciles the probability triple $\left(\mathbb{R}^n,\mathcal{F}_{\mathbb{R}^n},\hat{\nu}\right)$ with with respect to $g$ iff
   	\begin{equation*}
-  	\tilde{\nu}(s(\mathcal{B}))=\nu(\mathcal{B})=\hat{\nu}(g^{-1}(\mathcal{B}))\quad\forall \mathcal{B}\in\mathcal{F}_{\mathcal{R}_m}
+  	\tilde{\nu}(s(\mathcal{B}))=\nu(\mathcal{B})=\hat{\nu}(g^{-1}(\mathcal{B}))\quad\forall \mathcal{B}\in\mathcal{F}_{\mathbb{R}_m}
   	\end{equation*}
   	\end{definition}
     where $g^{-1}$ is the pre-image of $g$.
@@ -104,7 +104,7 @@
   \begin{frame}{Analytically}
   	If we have an unreconciled density the reconciled density can be obtained by linear transformations and marginalisation.
   	\begin{align*}
-  	\mbox{Pr}(\tilde{\bm{b}}\in s(\mathcal{B}))&=\mbox{Pr}(\hat{\bm{y}}\in g^{-1}(\mathcal{B}))\\
+  	\mbox{Pr}(\tilde{\bm{b}}\in \mathcal{B})&=\mbox{Pr}(\hat{\bm{y}}\in g^{-1}(\mathcal{B}))\\
   	&=\int\limits_{g^{-1}(\mathcal{B})}f(\hat{\bm{y}})d\hat{\bm{y}}\\
   	&=\int\limits_{\mathcal{B}}\int f(\bm{S}\tilde{\bm{b}}+\bm{R}\tilde{\bm{a}})|\left(\bm{S}~\bm{R}\right)|d\tilde{\bm{a}}d\tilde{\bm{b}}
   	\end{align*}
@@ -112,7 +112,7 @@
   \begin{frame}{Elliptical distributions}
   	Let the unreconciled density be elliptical with location  $\hat{\bm{\mu}}$ and scale $\hat{\bm{\Sigma}}$ and let the true predictive density be elliptical with location  ${\bm{\mu}}$ and scale ${\bm{S}}{\bm{\Omega}}{\bm{S}}'$.
   	\begin{theorem}
-  		The true predictive distribution can be recovered via linear reconciliation.  The optimal (but infeasible) mapping is $g(\breve{\bm y})={\bm G}_{opt}\breve{\bm y}+{\bm d}_{opt}$ where $\bm{G}_{opt}={\bm\Omega}^{1/2}{\bm\hat{\Sigma}}^{-1/2}$ and ${\bm d}_{opt}={\bm S}{\bm G}_{opt}\left({\bm \mu}-\hat{\bm \mu}\right)$.
+  		The true predictive distribution can be recovered via linear reconciliation.  The optimal (but infeasible) mapping is $g(\breve{\bm y})={\bm G}_{opt}\breve{\bm y}+{\bm d}_{opt}$ where $\bm{G}_{opt}={\bm\Omega}^{1/2}{\hat{\bm{\Sigma}}}^{-1/2}$ and ${\bm d}_{opt}={\bm S}{\bm G}_{opt}\left({\bm \mu}-\hat{\bm \mu}\right)$.
   	\end{theorem}
     This follows from the closure property of elliptical distributions under affine transformations and marginalisation.
   \end{frame}
@@ -175,12 +175,13 @@
   \end{frame}
    \begin{frame}{Simulations}
    	\begin{itemize}
-   		\item If you want to see tables with numbers look at the paper.
+   		\item If you want to see tables with numbers see the paper.
    		\item The main takeaway messages are:
    		    \begin{itemize}
    		    	\item Reconciliation is better than no reconciliation.
    		    	\item Bottom up does not do well.
-   		    	\item MinT (an oblique projection) does well.
+   		    	\item OLS (an orthogonal projection) does poorly.
+   		    	\item MinT (an oblique projection) does best.
    		    \end{itemize} 
    	\end{itemize}
    \end{frame}
@@ -195,4 +196,11 @@
         \item Further development of multivariate scoring rules.
      \end{itemize}	
    \end{frame}
+    \begin{frame}{The paper}
+    	\begin{itemize}
+    		\item A paper will be available soon (end of July).
+    		\item Google {\em EBS Monash Working Paper}.
+    		\item Or email me :)
+    	\end{itemize}
+    \end{frame}
 \end{document}
