@@ -12,7 +12,7 @@
   \section{Concepts}
   \begin{frame}{Hierarchical and Grouped Time Series}
   	\begin{itemize}
-  	  \item Collections of time series often characterised by aggregation constraints
+  	  \item Collections of time series are often characterised by aggregation constraints
   	  \begin{itemize}
   	    \item Cross-Sectionally
   		\item Temporally
@@ -112,7 +112,7 @@
   \begin{frame}{Elliptical distributions}
   	Let the unreconciled density be elliptical with location  $\hat{\bm{\mu}}$ and scale $\hat{\bm{\Sigma}}$ and let the true predictive density be elliptical with location  ${\bm{\mu}}$ and scale ${\bm{S}}{\bm{\Omega}}{\bm{S}}'$.
   	\begin{theorem}
-  		The true predictive distribution can be recovered via linear reconciliation.  The optimal (but infeasible) mapping is $g(\breve{\bm y})={\bm G}_{opt}\breve{\bm y}+{\bm d}_{opt}$ where $\bm{G}_{opt}={\bm\Omega}^{1/2}{\hat{\bm{\Sigma}}}^{-1/2}$ and ${\bm d}_{opt}={\bm S}{\bm G}_{opt}\left({\bm \mu}-\hat{\bm \mu}\right)$.
+  		The true predictive distribution can be recovered via linear reconciliation.  The optimal (but infeasible) mapping is $g(\breve{\bm y})={\bm G}_{opt}\breve{\bm y}+{\bm d}_{opt}$ where $\bm{G}_{opt}={\bm\Omega}^{1/2}{\hat{\bm{\Sigma}}}^{-1/2}$ and ${\bm d}_{opt}={\bm G}_{opt}\left({\bm \mu}-\hat{\bm \mu}\right)$.
   	\end{theorem}
     This follows from the closure property of elliptical distributions under affine transformations and marginalisation.
   \end{frame}
@@ -168,7 +168,7 @@
   \end{frame}
   \begin{frame}{Energy  score}
   	\begin{itemize}
-  		\item More care must be taken using the energy score.
+  		\item Using bottom level series only is a bad idea for energy score.
   		\item Energy score is invariant to orthogonal transformation but not affine transformations.
   		\item Since ${\bm S}$ is not a rotation the ranking of different methods based on the full hierarchy may differ from the ranking based on bottom level series only.
   	\end{itemize}
