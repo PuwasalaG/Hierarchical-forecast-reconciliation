@@ -590,20 +590,31 @@ S\left(\hat{f},\bm{z}^{(1)}_t\right) &= -\log f_1(\bm{z}^{(1)}_t)-f_2(\bm{z}^{(1
 
 After taking expectations $ES(f,f) > ES(\hat{f},f)$, violating the condition \eqref{eq:(3.1.)} for a proper scoring rule.  A similar issue also arises when discrete random variables are modelled as if they were continuous, an issue discussed in Section 4.1, page 366 of \cite{Gneiting2007}. This implies that the log score should not be used to evaluate multivariate densities with degeneracies and should be avoided when comparing reconciled and unreconciled probabilistic forecasts.
 
-\todo{Stuff below still open}
-
-To be discussed: Energy score - still trying to prove that reconciled dominates unreconciled, will show "half" proof if necessary. Variogram score - it might be possible to show reconciled dominate unreconciled, I will have a look.
-
 
 \subsubsection{Comparing Reconciled Forecasts to one another}
 
-A characteristic of coherent probabilistic forecasts is that they can be completely characterised in terms of basis series. If probabilistic forecasts of the basis series are accurate, then forecasts for the whole hierarchy are also accurate. Therefore, we propose that two different sets of reconciled forecasts can be compared to one another using only the basis set of series. Then we can use any of the multivariate scoring rules discussed above without incurring problems due to degeneracy.  For example, since the bottom-level series forms a set of basis series for a given hierarchy, we can evaluate the coherent forecast distribution using only the bottom-level series instead of evaluating the whole distribution. 
-\todo{Two questions below}
+Coherent probabilistic forecasts can be completely characterised in terms of basis series; if a probabilistic forecast is  available for the basis series then a probabilistic forecast can be recovered for  the  entire hierarchy via Definition~\ref{def:cohprob}. This may suggest that it is adequate to merely compare two coherent forecasts to  one  another using  the basis series only.  We now show how this is  dependent on the specific scoring rule used.
 
-\begin{itemize}
-	\item Can we prove that if reconciled forecast A is better than forecast B in terms of the bottom level then it will also be better for the whole series.  This is kind of obvious for log score, but may not be for energy score and variogram score
-	\item Does the basis we use matter.  We know that energy score is invariant to orthogonal rotations but ${\bm S}$ is not (semi) orthogonal.  On the other hand, I don't think variogram is invariant to rotations as all unless $p=2$.
-\end{itemize} 
+For the log score, suppose the coherent probabilistic forecast has density $f(\bm{b})$.  The density for the full hierarchy is given by $f(\bm{y})=f(\bm{Sb})=f(\bm{b})J$ where $J=\prod_{j=1}^{m}\lambda_j^{-1}$ is the inverse of a pseudo-determinant of the non-square  matrix $X$ and $\lambda_j$ are the non-zero singular values of ${\bm S}$.  Therefore for any coherent density the log score of the full hierarchy differs from the log score for the bottom level series by the term $log(J)$.  This term depends  only on the structure of the  hierarchy and is fixed across different forecasting methods.  Therefore if one method achieves a lower expected log score than an alternative method  when assessed using the bottom level series, the same ordering is preserved when an assessment is made on the basis of the full hierarchy.
+
+The same property does not hold for all scores in general.  For example, energy score can be expressed in terms of an expectations of norms.  In general, since norms are invariant under orthogonal rotations the energy score is also invariant under orthogonal transformations \citep{Szekely2013,Gneiting2007}.  In the context of two coherent forecasts the same is true of a semi-orthogonal transformation from a lower dimensional basis series to the full hierarchy.  However,  when ${\bm S}$ is  the usual summing matrix, it is not semi-orthogonal.  As such the energy score computed on the bottom level series will differ from the energy score computed using the full hierarchy and the ordering of different reconciliation methods may change depending on the basis series used.  In this case we recommend computing energy score using the full hierarchy.  Although the discussion here is related to energy score, the same logic holds for other scores that are not invariant to orthogonal rotations, for example the variogram score.
+
+The properties of mutlivariate scoring rules in the context of evaluating reconciled probabilistic forecasts in Table~\ref{tab:prop}.
+
+\begin{table}
+	\centering
+	\begin{tabular}{rll}
+	& Coherent v Incoherent &Coherent v Coherent\\
+	\hline
+	Log Score & Not proper & Ordering preserved if compared using\\ &&bottom level only\\
+	Energy/ & Proper & Full hierarchy should be used\\
+	Variogram Score & &\\
+	\hline
+    \end{tabular}
+	\caption{Summary of properties of scoring rules in the context of reconciled probabilistic forecasts.}
+	\label{tab:prop}
+
+\end{table}
 
 %\subsection{Comparison of coherent and incoherent forecast densities}
 %
