@@ -626,82 +626,82 @@ The properties of mutlivariate scoring rules in the context of evaluating reconc
 %%\end{equation}
 %where $\breve{Y}_{T+h,i}$ and $\breve{Y}^*_{T+h,i}$ are two independent copies from the $i$th reconciled marginal forecast distribution $\tilde{F}_i$ of the hierarchy, and $y_{T+h,i}$ is the $i$th realization from the true marginal distribution $G_i$. We could also use univariate log scores, for which we could assume a parametric forecast distribution.
 
-\section{Probabilistic forecast reconciliation in the Gaussian framework}\label{sec:gaussian}
+\section{Simulation Study}\label{sec:gaussian}
 
-An important special case for probabilistic forecasting arises when we can assume a multivariate Gaussian distribution. That is, suppose all the historical data in the hierarchy follows a multivariate Gaussian distribution, $\bm{y}_T \sim \mathcal{N}(\bm{\mu}_T, \bm{\Sigma}_T)$, where both $\bm{\mu}_T$ and $\bm{\Sigma}_T$ live in $\mathbb{C}^m$ by nature of the hierarchical structure of the data. We are interested in estimating the predictive Gaussian distribution of $\bm{Y}_{T+h}| \bm{\mathcal{I}}_T$, where $\bm{\mathcal{I}}_T= \{\bm{y}_1,\bm{y}_2,\dots.,\bm{y}_T\}$, which should also live in $\mathbb{C}^m$.
-
-It is well known that the optimal point forecasts with respect to the minimal mean square error are given by the conditional expectations, $\E[Y_{T+h,i}\mid y_{1,i},\dots,y_{T,i}],$ $i=1,\dots,n$. Suppose we independently fit time series models for each series in the hierarchy. Then the point forecasts, $\hat{Y}_{T+h,i}$, from the estimated models are unbiased and consistent estimators of $\E[Y_{T+h,i}\mid y_{1,i},\dots,y_{T,i}]$, assuming the parameter estimates of the fitted models are unbiased and asymptotically consistent. \todo{Only for linear models?}
-
-For example, suppose the data from $i$th series follows a ARMA$(p,q)$ model. i.e.,
-$$
-Y_{t,i}=\alpha_1Y_{t-1,i}+\dots+\alpha_pY_{t-p,i}+\varepsilon_t + \beta_1\varepsilon_{t-1,i}+\dots+\beta_q\varepsilon_{t-q,i},
-$$
-where $\varepsilon_t \sim \mathcal{NID}(0, \sigma_i^2)$. Then,
-$$
-\E[Y_{T+h,i}\mid y_{1,i},\dots,y_{T,i}] = \alpha_1Y_{T+h-1,i}+\dots+\alpha_pY_{T+h-p,i}+ \beta_1\varepsilon_{T+h-1,i}+\dots+\beta_q\varepsilon_{T+h-q,i}.
-$$
-
-Since $\bm{\alpha} = (\alpha_1,\dots,\alpha_p)'$ and $\bm{\beta} = (\beta_1,\dots,\beta_q)'$ are unknown in practice and thus estimated using the maximum likelihood method. Let $\bm{\hat{\alpha}}$ and $\bm{\hat{\beta}}$ denote the maximum likelihood estimates of $\bm{\alpha}$ and $\bm{\beta}$ respectively. \citet{Yao2006} showed that $\bm{\hat{\alpha}}$ and $\bm{\hat{\beta}}$ are asymptotically consistent estimators. Thus the point forecasts from this estimated model, $\hat{Y}_{T+h,i}$, will also be a consistent estimator for $\E[Y_{T+h,i}\mid y_{1,i},\dots,y_{T,i}]$. i.e.,
-\begin{equation} \label{eq:(6.01)}
-\hat{Y}_{T+h,i} \overset{p}{\to} \E[Y_{T+h,i}\mid y_{1,i},\dots,y_{T,i}] \quad \text{as} \quad T \to \infty.
-\end{equation}
-
-Let $\hat{\bm{Y}}_{T+h}=(\hat{Y}_{T+h,1},\dots,\hat{Y}_{T+h,n})'$ and suppose \eqref{eq:(6.01)} holds for $i=1,\dots,n$. Then from Slutsky's theorem it follows that
-\begin{equation}\label{eq:(6.02)}
-\hat{\bm{Y}}_{T+h} \overset{p}{\to} \E[\bm{Y}_{T+h}|\bm{\mathcal{I}}_T] \quad \text{as} \quad T \to \infty.
-\end{equation}
-Further, let the forecast error due to $\hat{\bm{Y}}_{T+h}$ be given by
-\begin{equation}
-\hat{\bm{e}}_{T+h} = \bm{Y}_{T+h}-\hat{\bm{Y}}_{T+h},
-\end{equation}
-and consider the variance of $\hat{\bm{e}}_{T+h}$,
-\begin{align*}
-\E[(\bm{Y}_{T+h} - \hat{\bm{Y}}_{T+h})(\bm{Y}_{T+h} - \hat{\bm{Y}}_{T+h})'|\bm{\mathcal{I}}_T] = &
-\E[(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) + \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T)- \hat{\bm{Y}}_{T+h})\\
-& \quad
-(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) + \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) - \hat{\bm{Y}}_{T+h})'|\bm{\mathcal{I}}_T],\\
-= &
-\E[(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T))(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T))'|\bm{\mathcal{I}}_T]\\
-& \quad
-+ \E[\E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) - \hat{\bm{Y}}_{T+h})(\E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) - \hat{\bm{Y}}_{T+h})'|\bm{\mathcal{I}}_T]\\
-& \quad
-+  \E[(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T))(\E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) - \hat{\bm{Y}}_{T+h})'|\bm{\mathcal{I}}_T]\\
-&  \quad
-+ \E[\E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) - \hat{\bm{Y}}_{T+h})(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T))'|\bm{\mathcal{I}}_T].
-\end{align*}
-
-From \eqref{eq:(6.02)} it immediately follows that
-\begin{align*}
-&\E[(\bm{Y}_{T+h} - \hat{\bm{Y}}_{T+h})(\bm{Y}_{T+h} - \hat{\bm{Y}}_{T+h})'|\bm{\mathcal{I}}_T] \overset{p}{\to} \E[(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T))(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T))'|\bm{\mathcal{I}}_T].
-\end{align*}
-That is,
-\begin{equation}
-\bm{W}_{T+h} \overset{p}{\to} \text{Var}(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) \quad \text{as} \quad T \to \infty,
-\end{equation}
-where $\E[(\bm{Y}_{T+h} - \hat{\bm{Y}}_{T+h})(\bm{Y}_{T+h} - \hat{\bm{Y}}_{T+h})'|\bm{\mathcal{I}}_T] = \bm{W}_{T+h}$.
-
-Even though $\hat{\bm{Y}}_{T+h}$ and $\bm{W}_{T+h}$ are asymptotically consistent estimators for $\E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T)$ and $\text{Var}(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T)$ respectively, they are not coherent since they do not lie in the coherent subspace. Thus the Gaussian forecast distribution with mean $\hat{\bm{Y}}_{T+h}$ and variance $\bm{W}_{T+h}$ will be incoherent, and we denote it by
-\begin{equation}\label{eq:(6.03)}
-\widehat{\bm{Y}_{T+h,i}|\bm{\mathcal{I}}_T} \sim \mathcal{N}(\hat{\bm{Y}}_{T+h}, \bm{W}_{T+h})
-\end{equation}
-
-Since our primary objective is to find the coherent forecast density of the hierarchy, we need to reconcile \eqref{eq:(6.03)}. Using \eqref{eq:gaussianreconciled}, the reconciled Gaussian forecast distribution is then given by
-\begin{equation}\label{eq:(6.04)}
-\widetilde{\bm{Y}_{T+h,i}|\bm{\mathcal{I}}_T} \sim \mathcal{N}(\bm{SP}\hat{\bm{Y}}_{T+h}, \bm{SP}\bm{W}_{T+h}\bm{P}'\bm{S}'),
-\end{equation}
-where $\bm{P} = (\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$.
-
-\textbf{Result 1}: Choosing $\bm{R}'_\bot = \bm{S}'\bm{W}_{T+h}^{-1}$ will ensure that at least the mean of the predictive Gaussian distribution is optimally reconciled with respect to the energy score.
-
-Result 1 can be easily shown as follows. From \eqref{eq:(5.1)}, the energy score at the upper limit of $\alpha=2$ is given by $\|\bm{y}_{T+h}-\bm{SP}\hat{\bm{y}}_{T+h}\|^2$. Then the expectation of the energy score with respect to the true distribution is equivalent to the trace of mean squared forecast error; i.e.,
-$$
-\E_{\bm{G}}[eS(\bm{\tilde{Y}_{T+h},y_{T+h}})]= \text{Tr}\{\E_{\bm{y}_{T+h}}[(\bm{Y}_{T+h}-\bm{SP}\hat{\bm{Y}}_{T+h})(\bm{Y}_{T+h}-\bm{SP}\hat{\bm{Y}}_{T+h})'|\mathcal{I}_{T}]\}.
-$$
-
-From Theorem 1 of \citet{Wickramasuriya2017} it immediately follows that $\bm{P} = (\bm{S}'\bm{W}_{T+h}^{-1}\bm{S})^{-1}\bm{S}'\bm{W}_{T+h}^{-1}$ minimizes the expected energy score, if we constrain the reconciled forecasts to be unbiased. Thus we have $\bm{R}'_\bot = \bm{S}'\bm{W}_{T+h}^{-1}$.
-
-It should be noted that $\bm{W}_{T+h}$ can be estimated in different ways, which yields different estimates of $\bm{R}'_\bot$. Table~\ref{table:2} summarizes some of these methods.
-
+%An important special case for probabilistic forecasting arises when we can assume a multivariate Gaussian distribution. That is, suppose all the historical data in the hierarchy follows a multivariate Gaussian distribution, $\bm{y}_T \sim \mathcal{N}(\bm{\mu}_T, \bm{\Sigma}_T)$, where both $\bm{\mu}_T$ and $\bm{\Sigma}_T$ live in $\mathbb{C}^m$ by nature of the hierarchical structure of the data. We are interested in estimating the predictive Gaussian distribution of $\bm{Y}_{T+h}| \bm{\mathcal{I}}_T$, where $\bm{\mathcal{I}}_T= \{\bm{y}_1,\bm{y}_2,\dots.,\bm{y}_T\}$, which should also live in $\mathbb{C}^m$.
+%
+%It is well known that the optimal point forecasts with respect to the minimal mean square error are given by the conditional expectations, $\E[Y_{T+h,i}\mid y_{1,i},\dots,y_{T,i}],$ $i=1,\dots,n$. Suppose we independently fit time series models for each series in the hierarchy. Then the point forecasts, $\hat{Y}_{T+h,i}$, from the estimated models are unbiased and consistent estimators of $\E[Y_{T+h,i}\mid y_{1,i},\dots,y_{T,i}]$, assuming the parameter estimates of the fitted models are unbiased and asymptotically consistent. \todo{Only for linear models?}
+%
+%For example, suppose the data from $i$th series follows a ARMA$(p,q)$ model. i.e.,
+%$$
+%Y_{t,i}=\alpha_1Y_{t-1,i}+\dots+\alpha_pY_{t-p,i}+\varepsilon_t + \beta_1\varepsilon_{t-1,i}+\dots+\beta_q\varepsilon_{t-q,i},
+%$$
+%where $\varepsilon_t \sim \mathcal{NID}(0, \sigma_i^2)$. Then,
+%$$
+%\E[Y_{T+h,i}\mid y_{1,i},\dots,y_{T,i}] = \alpha_1Y_{T+h-1,i}+\dots+\alpha_pY_{T+h-p,i}+ \beta_1\varepsilon_{T+h-1,i}+\dots+\beta_q\varepsilon_{T+h-q,i}.
+%$$
+%
+%Since $\bm{\alpha} = (\alpha_1,\dots,\alpha_p)'$ and $\bm{\beta} = (\beta_1,\dots,\beta_q)'$ are unknown in practice and thus estimated using the maximum likelihood method. Let $\bm{\hat{\alpha}}$ and $\bm{\hat{\beta}}$ denote the maximum likelihood estimates of $\bm{\alpha}$ and $\bm{\beta}$ respectively. \citet{Yao2006} showed that $\bm{\hat{\alpha}}$ and $\bm{\hat{\beta}}$ are asymptotically consistent estimators. Thus the point forecasts from this estimated model, $\hat{Y}_{T+h,i}$, will also be a consistent estimator for $\E[Y_{T+h,i}\mid y_{1,i},\dots,y_{T,i}]$. i.e.,
+%\begin{equation} \label{eq:(6.01)}
+%\hat{Y}_{T+h,i} \overset{p}{\to} \E[Y_{T+h,i}\mid y_{1,i},\dots,y_{T,i}] \quad \text{as} \quad T \to \infty.
+%\end{equation}
+%
+%Let $\hat{\bm{Y}}_{T+h}=(\hat{Y}_{T+h,1},\dots,\hat{Y}_{T+h,n})'$ and suppose \eqref{eq:(6.01)} holds for $i=1,\dots,n$. Then from Slutsky's theorem it follows that
+%\begin{equation}\label{eq:(6.02)}
+%\hat{\bm{Y}}_{T+h} \overset{p}{\to} \E[\bm{Y}_{T+h}|\bm{\mathcal{I}}_T] \quad \text{as} \quad T \to \infty.
+%\end{equation}
+%Further, let the forecast error due to $\hat{\bm{Y}}_{T+h}$ be given by
+%\begin{equation}
+%\hat{\bm{e}}_{T+h} = \bm{Y}_{T+h}-\hat{\bm{Y}}_{T+h},
+%\end{equation}
+%and consider the variance of $\hat{\bm{e}}_{T+h}$,
+%\begin{align*}
+%\E[(\bm{Y}_{T+h} - \hat{\bm{Y}}_{T+h})(\bm{Y}_{T+h} - \hat{\bm{Y}}_{T+h})'|\bm{\mathcal{I}}_T] = &
+%\E[(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) + \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T)- \hat{\bm{Y}}_{T+h})\\
+%& \quad
+%(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) + \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) - \hat{\bm{Y}}_{T+h})'|\bm{\mathcal{I}}_T],\\
+%= &
+%\E[(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T))(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T))'|\bm{\mathcal{I}}_T]\\
+%& \quad
+%+ \E[\E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) - \hat{\bm{Y}}_{T+h})(\E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) - \hat{\bm{Y}}_{T+h})'|\bm{\mathcal{I}}_T]\\
+%& \quad
+%+  \E[(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T))(\E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) - \hat{\bm{Y}}_{T+h})'|\bm{\mathcal{I}}_T]\\
+%&  \quad
+%+ \E[\E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) - \hat{\bm{Y}}_{T+h})(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T))'|\bm{\mathcal{I}}_T].
+%\end{align*}
+%
+%From \eqref{eq:(6.02)} it immediately follows that
+%\begin{align*}
+%&\E[(\bm{Y}_{T+h} - \hat{\bm{Y}}_{T+h})(\bm{Y}_{T+h} - \hat{\bm{Y}}_{T+h})'|\bm{\mathcal{I}}_T] \overset{p}{\to} \E[(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T))(\bm{Y}_{T+h} - \E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T))'|\bm{\mathcal{I}}_T].
+%\end{align*}
+%That is,
+%\begin{equation}
+%\bm{W}_{T+h} \overset{p}{\to} \text{Var}(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T) \quad \text{as} \quad T \to \infty,
+%\end{equation}
+%where $\E[(\bm{Y}_{T+h} - \hat{\bm{Y}}_{T+h})(\bm{Y}_{T+h} - \hat{\bm{Y}}_{T+h})'|\bm{\mathcal{I}}_T] = \bm{W}_{T+h}$.
+%
+%Even though $\hat{\bm{Y}}_{T+h}$ and $\bm{W}_{T+h}$ are asymptotically consistent estimators for $\E(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T)$ and $\text{Var}(\bm{Y}_{T+h}|\bm{\mathcal{I}}_T)$ respectively, they are not coherent since they do not lie in the coherent subspace. Thus the Gaussian forecast distribution with mean $\hat{\bm{Y}}_{T+h}$ and variance $\bm{W}_{T+h}$ will be incoherent, and we denote it by
+%\begin{equation}\label{eq:(6.03)}
+%\widehat{\bm{Y}_{T+h,i}|\bm{\mathcal{I}}_T} \sim \mathcal{N}(\hat{\bm{Y}}_{T+h}, \bm{W}_{T+h})
+%\end{equation}
+%
+%Since our primary objective is to find the coherent forecast density of the hierarchy, we need to reconcile \eqref{eq:(6.03)}. Using \eqref{eq:gaussianreconciled}, the reconciled Gaussian forecast distribution is then given by
+%\begin{equation}\label{eq:(6.04)}
+%\widetilde{\bm{Y}_{T+h,i}|\bm{\mathcal{I}}_T} \sim \mathcal{N}(\bm{SP}\hat{\bm{Y}}_{T+h}, \bm{SP}\bm{W}_{T+h}\bm{P}'\bm{S}'),
+%\end{equation}
+%where $\bm{P} = (\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$.
+%
+%\textbf{Result 1}: Choosing $\bm{R}'_\bot = \bm{S}'\bm{W}_{T+h}^{-1}$ will ensure that at least the mean of the predictive Gaussian distribution is optimally reconciled with respect to the energy score.
+%
+%Result 1 can be easily shown as follows. From \eqref{eq:(5.1)}, the energy score at the upper limit of $\alpha=2$ is given by $\|\bm{y}_{T+h}-\bm{SP}\hat{\bm{y}}_{T+h}\|^2$. Then the expectation of the energy score with respect to the true distribution is equivalent to the trace of mean squared forecast error; i.e.,
+%$$
+%\E_{\bm{G}}[eS(\bm{\tilde{Y}_{T+h},y_{T+h}})]= \text{Tr}\{\E_{\bm{y}_{T+h}}[(\bm{Y}_{T+h}-\bm{SP}\hat{\bm{Y}}_{T+h})(\bm{Y}_{T+h}-\bm{SP}\hat{\bm{Y}}_{T+h})'|\mathcal{I}_{T}]\}.
+%$$
+%
+%From Theorem 1 of \citet{Wickramasuriya2017} it immediately follows that $\bm{P} = (\bm{S}'\bm{W}_{T+h}^{-1}\bm{S})^{-1}\bm{S}'\bm{W}_{T+h}^{-1}$ minimizes the expected energy score, if we constrain the reconciled forecasts to be unbiased. Thus we have $\bm{R}'_\bot = \bm{S}'\bm{W}_{T+h}^{-1}$.
+%
+%It should be noted that $\bm{W}_{T+h}$ can be estimated in different ways, which yields different estimates of $\bm{R}'_\bot$. Table~\ref{table:2} summarizes some of these methods.
+%
 \begin{table}
   \caption{Several possible estimates of $\bm{R}'_\bot$. For $n<T$, $\bm{\hat{W}}_{T+1}^{sam}$ is an unbiased and consistent estimator for $\bm{W}_{T+1}$. $\bm{\hat{W}}_{T+1}^{shr}$ is a shrinkage estimator which is more suitable for large dimensions. $\bm{\hat{W}}_{T+1}^{shr}$ was proposed by \citet{Schafer2005} and also used by \citet{Wickramasuriya2017}, where Diag($\bm{A}$) denotes the diagonal matrix of $\bm{A}$, $\tau = \frac{\sum_{i \ne j}\hat{\text{Var}}(\hat{r}_{ij})}{\sum_{i \ne j}\hat{r}_{ij}^2}$, and $\hat{r}_{ij}$ is the $ij$th element of the sample correlation matrix.}\label{table:2}
   \centering\setstretch{1.5}
@@ -727,9 +727,9 @@ It should be noted that $\bm{W}_{T+h}$ can be estimated in different ways, which
 
 All of these forecasting methods are well-established in the context of point forecast reconciliation \citep{Hyndman2011, Hyndman2016,Wickramasuriya2017}. Here, we are showing how these reconciliation methods can be used in the context of probabilistic forecast reconciliation, at least in the Gaussian framework.
 
-\subsubsection*{Simulations}
+We now turn our attention to comparing different reconciliation methods in a simulation study where the data is conditionally Gaussian.  We choose the Gaussian due to its analytical tractability which allows for evaluation on the basis of all scoring rules (including the log score).  The non-Gaussian case lies beyond the scope of this simulation study, but can be handled by a bootstrapping approach proposed in separate work.
 
-We consider the hierarchy given in Figure~\ref{fig1}, comprising two aggregation levels with four bottom-level series. Each bottom-level series will be generated first, and then summed to obtain the data for the upper-level series. In practice, hierarchical time series tend to contain much noisier series at lower levels of aggregation. In order to replicate this feature in our simulations, we follow the data generating process proposed by \citet{Wickramasuriya2017}.
+For  the data generating process, we consider the hierarchy given in Figure~\ref{fig1}, comprising two aggregation levels with four bottom-level series. Each bottom-level series will be generated first, and then summed to obtain the data for the upper-level series. In practice, hierarchical time series tend to contain much noisier series at lower levels of aggregation. In order to replicate this feature in our simulations, we follow the data generating process proposed by \citet{Wickramasuriya2017}.
 
 Suppose $\{w_{AA,t},w_{AB,t},w_{BA,t},w_{BB,t}\}$ are generated from ARIMA$(p,d,q)$ processes, where $(p,q)$ and $d$ take integers from $\{1,2\}$ and $\{0,1\}$ respectively with equal probability. Further, the contemporaneous errors $\{\varepsilon_{AA,t},\varepsilon_{AB,t},\varepsilon_{BA,t},\varepsilon_{BB,t}\} \sim \mathcal{N}(\bm{0}, \bm{\Sigma})$. The parameters for the AR and MA components will be randomly and uniformly generated from $[0.3,0.5]$ and $[0.3,0.7]$ respectively. Then the bottom-level series $\{y_{AA,t},y_{AB,t},y_{BA,t},y_{BB,t}\}$ will be obtained as:
 \begin{align*}
@@ -769,13 +769,13 @@ $\sigma^2_u = 19$ and $\sigma^2_u = 18$ in our simulation setting.
 
 We generate data for the hierarchy with sample size $T=501$. Univariate ARIMA models were fitted for each series independently using the first 500 observations, and 1-step ahead base (incoherent) forecasts were calculated. We use the \textit{forecast} package \citep{hyndman2017forecasting} in R \citep{Rcore} for model fitting and forecasting. The different estimates of $\bm{W}_{T+1}$ and the corresponding $\bm{R}'_\bot$ from Table~\ref{table:2} were obtained. This process was replicated using $1000$ different data sets from the same data generating processes.
 
-To assess the predictive performance of different forecasting methods, we use scoring rules as discussed in Section~\ref{sec:evaluation}. To faciliate comparisons, we report skill scores \citep{Gneiting2007}. For a given forecasting method, evaluated by a particular scoring rule $S(\cdot)$, the skill score is calculated as
+To assess the predictive performance of different forecasting methods, we use scoring rules as discussed in Section~\ref{sec:evaluation}. To facilitate comparisons, we report skill scores \citep{Gneiting2007}. For a given forecasting method, evaluated by a particular scoring rule $S(\cdot)$, the skill score is calculated as
 \begin{equation}
 Ss[S_B(\cdot)] = \frac{S_B(\bm{Y},\bm{y})^{\text{ref}} - S_B(\breve{\bm{Y}},\bm{y})}{S_B(\bm{Y},\bm{y})^{\text{ref}}}\times 100\%,
 \end{equation}
 where $S_B(\cdot)$ is the average score over $B$ samples and $S_B(\bm{Y},\bm{y})^{\text{ref}}$ is the average score for the reference forecasting method. Thus $Ss[S_B(\cdot)]$ gives the percentage improvement of the preferred forecasting method relative to the reference method. Any negative value of $Ss[S_B(\cdot)]$ indicates that the method we compared is worse than the reference method, whereas any positive value indicates that method is superior to the reference method.
 
-In Table~\ref{table:3}, we compare different reconciliation methods over the conventional bottom-up method. We use bottom-level probabilistic forecasts and calculate the percentage skill score based on energy score, log score and variogram score for each reconciliation method with reference to the bottom-up method.
+Table~\ref{table:3}, summarised the different reconciliation methods over the conventional bottom-up method.  The so-called OLS method uses an orthogonal projection, while  the remaining methods consider oblique projections where ${\bm G}=\left({\bm S}'{\bm W}^{-1}{\bm S}\right)^{-1}{\bm S}'{\bm W}^{-1}$.  In each case we calculate the percentage skill score based on energy score, log score and variogram score for each reconciliation method with reference to the bottom-up method.
 
 We also evaluate the predictive ability of coherent forecasts over incoherent forecasts in Tables~\ref{table:4} and~\ref{table:5}. Here we use percentage skill score based on CRPS and univariate log score for coherent probabilistic forecasts of each individual series with reference to incoherent forecasts.
 
