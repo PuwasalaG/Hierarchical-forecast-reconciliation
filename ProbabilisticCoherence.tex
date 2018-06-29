@@ -785,73 +785,80 @@ Table~\ref{table:3} summarizes the forecasting performance of unreconciled, bott
 Tables~\ref{table:4} and~\ref{table:5} break down the forecasting performance of different reconciliation methods by considering univariate scores on each individual margin. The log score and CRPS are considered while skill scores are computed with the unreconciled forecast as a reference.  When broken down in this fashion, the methods based on MinT perform best for all series and always outperform bottom up and unreconciled forecasts.  The same cannot be said for OLS which performs worse than bottom up and incoherent forecasts on every individual series\todo{Puzzling it does so bad, but outperforms unreconciled on joint evaluation}.
 
 \begin{table}
-  \caption{Comparison of incoherent forecasts using bottom-level series. The ``Skill score'' columns give the percentage skill score with reference to the bottom-up forecasting method. Entries in these columns show the percentage increase of score for different reconciliation methods relative to the bottom-up method.}\label{table:3}
-  \centering\small
-  \begin{tabular}{@{}lSSSSSS@{}}
-    \toprule
-    Forecasting &
-    \multicolumn{2}{c}{\text{Energy score}} &
-    \multicolumn{2}{c}{\text{Log score}} &
-    \multicolumn{2}{c}{\text{Variogram score}} \\
-    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(l){6-7}
-    method &
-    \text{Mean score} & \text{Skill score} &
-    \text{Mean score} & \text{Skill score} &
-    \text{Mean score} & \text{Skill score}\\
-    \midrule
-    MinT(Shrink) &  7.47 &  10.11 &  11.34 &     6.44 & 3.05 &   4.69 \\
-    MinT(Sample) &  7.47 &  10.11 &  11.33 &     6.52 & 3.05 &   4.69 \\
-    MinT(WLS)    &  7.91 &   4.81 &  12.64 &    -4.29 & 3.23 &  -0.94 \\
-    OLS          & 10.14 & -22.02 & 135.13 & -1014.93 & 4.60 & -43.75 \\
-    Bottom-up    &  8.31 &        &  12.12 &          & 3.20 &        \\
-    \bottomrule
-  \end{tabular}
+	\caption{Comparison of coherent forecasts. ``Energy score'' and ``Variogram score'' columns give scores based on the joint forecast distribution of whole hierarchy. ``Log score'' column gives the log scores of the joint forecast distribution of bottom level. ``Skill score'' columns give the percentage skill score with reference to the bottom-up method. Entries in these columns show the percentage increase of score for different reconciliation methods relative to the bottom-up method. }\label{table:3}
+	
+	\centering\small
+	\begin{tabular}{@{}lSSSSSS@{}}
+		\toprule
+		Forecasting &
+		\multicolumn{2}{c}{\text{Energy score}} &
+		\multicolumn{2}{c}{\text{Variogram score}} &
+		\multicolumn{2}{c}{\text{Log score}} \\
+		\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(l){6-7}
+		method &
+		\text{Mean score} & \text{Skill score \%} &
+		\text{Mean score} & \text{Skill score \%} &
+		\text{Mean score} & \text{Skill score \%}\\
+		\midrule
+		MinT(Shrink) &  10.03 & 18.79  & 8.44  & 8.46 & 11.30 &  6.22 \\
+		MinT(Sample) &  10.01 & 18.95  & 8.41  & 8.79 & 11.29 &  6.31 \\
+		MinT(WLS)    &  10.53 & 14.74  & 9.02  & 2.17 & 12.61 & -4.65 \\
+		OLS          &  10.53 & 14.74  & 8.86  & 3.09 & 11.54 &  4.23\\
+		Bottom-up    &  12.35 &    	   & 9.22  &      & 12.05 &  \\
+		Incoherent	 &  11.12 &   	   & 9.53  &      &       &  \\
+		\bottomrule
+	\end{tabular}
 \end{table}
 
-\begin{table}
-  \caption{Comparison of incoherent vs coherent forecasts for the aggregate series using Skill scores. The ``Incoherent'' row shows the average scores for incoherent forecasts. Each entry above this row represents the percentage skill score with reference to the incoherent forecasts. Entries show the percentage increase in score for different forecasting methods relative to the incoherent forecasts.}\label{table:4}
-  \centering\small
-  \begin{tabular}{@{}lSSSSSS@{}}
-    \toprule
-    Forecasting &
-    \multicolumn{2}{c}{\text{Total}} &
-    \multicolumn{2}{c}{\text{Series - A}} &
-    \multicolumn{2}{c}{\text{Series - B}} \\
-    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(l){6-7}
-    method      &  CRPS   & LogS    & CRPS   & LogS     & CRPS   & LogS     \\
-    \midrule
-    MinT(Shrink) & 1.12   & 0.34    & 10.07  & 2.93     & 5.41   & 1.52     \\
-    MinT(Sample) & 1.12   & 0.34    & 10.07  & 2.93     & 5.41   & 1.52     \\
-    MinT(WLS)    & -2.61  & -2.02   & 5.28   & -4.40    & 2.70   & -4.24    \\
-    OLS          & -38.06 & -698.99 & -24.70 & -1368.33 & -24.86 & -1159.09 \\
-    Bottom-up    & -89.55 & -21.83  & -8.87  & -2.35    & -9.46  & -2.73    \\
-    \midrule
-    \textit{Incoherent} & $\mathbi{2.68}$ & $\mathbi{2.97}$ & $\mathbi{4.17}$ & $\mathbi{3.41}$ & $\mathbi{3.70}$ & $\mathbi{3.30}$ \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+
 
 \begin{table}
-  \caption{Comparison of incoherent vs coherent forecasts for the individual bottom-level series using Skill scores.}\label{table:5}
-  \centering\tabcolsep=0.08cm\small
-  \begin{tabular}{@{}lSSSSSSSS@{}}
-    \toprule
-    Forecasting &
-    \multicolumn{2}{c}{\text{Series - AA}} &
-    \multicolumn{2}{c}{\text{Series - AB}} &
-    \multicolumn{2}{c}{\text{Series - BA}} &
-    \multicolumn{2}{c}{\text{Series - BB}} \\
-    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7} \cmidrule(l){8-9}
-    method       & CRPS   & LogS    & CRPS   & LogS    & CRPS   & LogS    & CRPS   & LogS \\
-    \midrule
-    MinT(Shrink) & 8.71   & 2.71    & 10.57  & 3.04    & 5.95   & 1.86    & 7.91   & 2.46 \\
-    MinT(Sample) & 8.71   & 2.71    & 10.57  & 3.04    & 5.95   & 1.86    & 8.19   & 2.46 \\
-    MinT(WLS)    & 5.54   & 0.30    & 5.96   & 0.30    & 2.43   & -0.62   & 5.08   & 0.62 \\
-    OLS          & -22.43 & -931.63 & -22.49 & -886.32 & -26.01 & -834.67 & -23.45 & -812.92 \\
-    \midrule
-    \textit{Incoherent} & $\mathbi{3.79}$ & $\mathbi{3.32}$ & $\mathbi{3.69}$ & $\mathbi{3.29}$ & $\mathbi{3.46}$ & $\mathbi{3.23}$ & $\mathbi{3.54}$ & $\mathbi{3.25}$ \\
-    \bottomrule
-  \end{tabular}
+	\caption{Comparison of incoherent vs coherent forecasts based on the univariate forecast distribution of aggregate series. The ``Incoherent'' row shows the average scores for incoherent forecasts. Each entry above this row represents the percentage skill score with reference to the incoherent forecasts. These entries show the percentage increase in score for different forecasting methods relative to the incoherent forecasts.}\label{table:4}
+	\centering\small
+	\begin{tabular}{@{}lSSSSSS@{}}
+		\toprule
+		Forecasting &
+		\multicolumn{2}{c}{\text{Total}} &
+		\multicolumn{2}{c}{\text{Series - A}} &
+		\multicolumn{2}{c}{\text{Series - B}} \\
+		\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(l){6-7}
+		method      &  CRPS   & LogS    & CRPS   & LogS     & CRPS   & LogS     \\
+		\midrule
+		MinT(Shrink) &   0.74  &   0.00   & 10.49   &  3.24  &  9.16  &  2.73    \\
+		MinT(Sample) &   0.74  &   0.00   & 10.49   &  3.24  &  9.16  &  2.73    \\
+		MinT(WLS)    &  -2.96  &  -2.36   &  6.10   & -4.12  &  5.66  & -3.03    \\
+		OLS          &  -9.26  &  -3.36   &  7.07   &  2.06  &  7.01  &  1.82    \\
+		Bottom-up    & -91.48  & -22.22   & -8.05   & -2.06  & -6.20  & -1.82    \\
+		\midrule
+		\textit{Incoherent} & $\mathbi{2.70}$ & $\mathbi{2.97}$ & $\mathbi{4.10}$ & $\mathbi{3.40}$ & $\mathbi{3.71}$ & $\mathbi{3.30}$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}
+	\caption{Comparison of incoherent vs coherent forecasts based univariate forecast distribution of bottom-level series. The ``Incoherent'' row shows the average scores for incoherent forecasts.}\label{table:5}
+	\centering\tabcolsep=0.08cm\small
+	\begin{tabular}{@{}lSSSSSSSS@{}}
+		\toprule
+		Forecasting &
+		\multicolumn{2}{c}{\text{Series - AA}} &
+		\multicolumn{2}{c}{\text{Series - AB}} &
+		\multicolumn{2}{c}{\text{Series - BA}} &
+		\multicolumn{2}{c}{\text{Series - BB}} \\
+		\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7} \cmidrule(l){8-9}
+		method       & CRPS   & LogS    & CRPS   & LogS    & CRPS   & LogS    & CRPS   & LogS \\
+		\midrule
+		MinT(Shrink) &  7.61  &  2.43  &  10.82  &  3.02  &  5.93  &  1.86  &  7.76  & 2.47  \\
+		MinT(Sample) &  7.88  &  2.43  &  11.08  &  3.02  &  6.20  &  1.86  &  8.05  & 2.47  \\
+		MinT(WLS)    &  3.53  &  0.00  &   6.33  &  0.60  &  2.43  & -0.62  &  4.89  & 0.62  \\
+		OLS          &  2.99  &  0.91  &   5.28  &  1.51  &  2.90  &  0.62  &  4.31  & 1.23  \\
+		\midrule
+		\textit{Incoherent} & $\mathbi{3.68}$ & $\mathbi{3.29}$ & $\mathbi{3.79}$ & $\mathbi{3.31}$ & $\mathbi{3.45}$ & $\mathbi{3.22}$ & $\mathbi{3.48}$ & $\mathbi{3.24}$ \\
+		\bottomrule
+	\end{tabular}
 \end{table}
 
 \section{Conclusions}\label{sec:conclusions}
