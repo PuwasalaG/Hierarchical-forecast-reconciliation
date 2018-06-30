@@ -222,8 +222,30 @@ Initially we define point forecast reconciliation, before extending the idea to 
     
 \end{definition}
 
-Many choices of $g(.)$ currently extant in the literature including the OLS, WLS and MinT methods are such that $s\circ g$ is a projection.  To define these more generally and provide geometric intuition, we introduce an $n \times (n-m)$ matrix $\bm{R}$ whose columns span the null space of $\mathfrak{s}_{\perp}$.  For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$, is the vector $(1,-1,-1)$ which is orthogonal (in the Euclidean sense) to the columns of $\bm{S}$.  In this case, the matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. In general, the columns of any given $\bm{R}$ matrix can also be thought of as `directions' along which incoherent point forecasts are projected onto the coherent space, and these directions need not be orthogonal to $\mathfrak{s}$.  Projections are special cases of Definition~\ref{def:reconpoint} where ${\bm d=0}$ and ${\bm G}$ has the form $\left({\bm R}_\perp'{S}\right)^{-1}{\bm R}_\perp'$ where ${\bm R}_\perp$ is the $n\times m$ orthogonal complement of ${\bm R}$.  In the example provided, ${\bm R}_\perp'={\bm S}$ and reconciliation corresponds to the so called `OLS' method \cite{Hyndman2011}.  A schematic providing a geometric interpretation is given in Figure~\ref{fig:pointfr_sch}. 
+Many choices of $g(.)$ currently extant in the literature including the so called OLS \cite{Hyndman2011}, WLS \todo{First WLS  reference?} and MinT\cite{Wickramasuriya2017} methods are special cases where $s\circ g$ is a projection and are summarised in Table~\ref{table:2}.  These can be defined so that ${\bm G}=\left({\bm R'_{\perp}}{\bm S}\right)^{-1}{\bm S}'$ and ${\bm d}={\bm 0}$.  Here, ${\bm R_{\perp}}$ is a $n\times m$ orthogonal complement to the an $n \times (n-m)$ matrix $\bm{R}$ where the columns of the latter span the null space of $\mathfrak{s}_{\perp}$.  For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$, is the vector $(1,-1,-1)$ which is orthogonal (in the Euclidean sense) to the columns of $\bm{S}$.  In this case, the matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$.  For the example provided, ${\bm R}_\perp'={\bm S}$ and reconciliation corresponds to the so called `OLS' method \cite{Hyndman2011}.  For the case where ${\bm R}_\perp'\neq{\bm S}$, for example WLS and MinT, there are two possible interpretations.  One is that these are oblique projections in Euclidean space where the columns of $\bm{R}$ are `directions' along which incoherent point forecasts are projected onto the coherent space $\mathfrak{s}$.  Alternatively, since ${\bm R}_\perp'$ is usually written in the form ${\bm S}'{\bm W}^{-1}$, these projections can be thought of as orthogonal projections after applying the transformation ${\bm W^{-1/2}}$.  A schematic providing a geometric interpretation of point reconciliation is given in Figure~\ref{fig:pointfr_sch}. 
 
+\begin{table}
+	\caption{Several possible estimates of $\bm{R}'_\bot$. For $n<T$, $\bm{\hat{W}}_{T+1}^{sam}$ is an unbiased and consistent estimator for $\bm{W}_{T+1}$. $\bm{\hat{W}}_{T+1}^{shr}$ is a shrinkage estimator which is more suitable for large dimensions. $\bm{\hat{W}}_{T+1}^{shr}$ was proposed by \citet{Schafer2005} and also used by \citet{Wickramasuriya2017}, where Diag($\bm{A}$) denotes the diagonal matrix of $\bm{A}$, $\tau = \frac{\sum_{i \ne j}\hat{\text{Var}}(\hat{r}_{ij})}{\sum_{i \ne j}\hat{r}_{ij}^2}$, and $\hat{r}_{ij}$ is the $ij$th element of the sample correlation matrix.}\label{table:2}
+	\centering\setstretch{1.5}
+	\begin{tabular}{lll}
+		\toprule
+		\textbf{Method} & \textbf{Estimate of $\bm{W}_{h}$} & \textbf{Estimate of $\bm{R}'_\bot$}      \\
+		\midrule
+		OLS             &
+		$\bm{I}$  &
+		$\bm{S}'$  \\
+		MinT(Sample)    &
+		$\bm{\hat{W}}_{T+1}^{sam}$ &
+		$\bm{S}'(\bm{\hat{W}}_{T+1}^{sam})^{-1}$ \\
+		MinT(Shrink)    &
+		$\bm{\hat{W}}_{T+1}^{shr} = \tau\text{Diag}(\bm{\hat{W}}_{T+1}^{sam}) + (1-\tau)\bm{\hat{W}}_{T+1}^{sam}$ &
+		$\bm{S}'(\bm{\hat{W}}_{T+1}^{shr})^{-1}$ \\
+		WLS       &
+		$\bm{\hat{W}}_{T+1}^{wls} = \text{Diag}(\bm{\hat{W}}_{T+1}^{shr})$ &
+		$\bm{S}'(\bm{\hat{W}}_{T+1}^{wls})^{-1}$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
  
 %$$ 
 %\bm{S} = 
@@ -325,17 +347,54 @@ minimises the Mahalonobis distance between $\hat{\bm y}$ and $\tilde{\bm y}$.  B
 %
 %They referred this to as the MinT solution. The loss function they considered is equivalent to the Mahalanobis distance between $\hat{\bm{y}}_{T+h}$ and $\tilde{\bm{y}}_{T+h}$. i.e. $<\hat{\bm{y}}_{T+h}, \tilde{\bm{y}}_{T+h}>_{\bm{W}_h}$.
 
+Before generalising the concept of point reconciliation to probabilistic forecasts we state two theorems that motivate the use of projections for point forecast reconciliation.  First, let ${\bm \mu}_{t+h|t}:=E({\bm y}_{t+h}|{\bm y}_{1},\dots,{\bm y}_{t})$ and assume $\hat{\bm y}_{t+h|t}$ is an unbiased prediction, that is $E_{1:t}\left(\hat{\bm y}_{t+h|t}\right)=\mu_{t+h|t}$ where the subscript $1:t$ denotes an expectation taken over the training sample.
+
+\begin{theo}[Unbiasedness preserving property]
+  The reconciled point forecast will also be an unbiased prediction as long as $s\circ g$ is a projection 
+\end{theo}
+\begin{proof}
+	The expected value of the reconciled forecast is given by
+	\begin{align*}
+	E_{1:t}\left(\tilde{\bm y}_{t+h|t}\right)&=E_{1:t}\left({\bm S}{\bm G}\hat{\bm y}_{t+h|t}\right)\\
+	&={\bm S}{\bm G}E_{1:t}\left(\hat{\bm y}_{t+h|t}\right)\\
+    &={\bm S}{\bm G}{\bm \mu}_{t+h|t}\\
+	\end{align*}
+	Since the aggregation constraints hold for the true data generating process ${\bm \mu}_{t+h|t}$ must lie in $\mathfrak{s}$.  If ${\bm S}{\bm G}$ is a projection then it is equivalent to the identity map for all vectors that lie in its range.  Therefore ${\bm S}{\bm G}{\bm \mu}_{t+h|t}={\bm \mu}_{t+h|t}$ when ${\bm S}{\bm G}$ is a projection matrix.
+\end{proof}
+We note the same result does not hold for general ${\bm G}$ even though the range of $s\circ g$ is $\mathfrak{s}$.  Now let ${\bm y}_{t+h}$ be the realisation of the data generating process at time $t+h$ and let $||{\bm v}||_2$ be the L2 norm of vector ${\bm v}$.  The following theorem shows that reconciliation never increases, and in most cases reduces the sum of squared errors of point forecasts.
+
+\begin{theo}[Distance reducing property]
+	If $\tilde{\bm y}_{t+h|t}={\bm S}{\bm G}\hat{\bm y}_{t+h|t}$ where ${\bm G}$ is such that ${\bm S}{\bm G}$ is an orthogonal projection then the following inequality holds
+	  \begin{equation}
+	    ||(\tilde{\bm y}_{t+h|t}-{\bm y}_{t+h})||^2_2\le||(\hat{\bm y}_{t+h|t}-{\bm y}_{t+h})||^2_2
+	  \end{equation}
+\end{theo}
+\begin{proof}
+	Since the aggregation constraints must hold for all realisations, ${\bm y}_{t+h}\in\frak{s}$ and ${\bm y}_{t+h}={\bm S}{\bm G}{\bm y}_{t+h}$ whenever ${\bm S}{\bm G}$ is a projection.  Therefore 
+	\begin{align}
+	||(\tilde{\bm y}_{t+h|t}-{\bm y}_{t+h})||_2&=||({\bm S}{\bm G}\hat{\bm y}_{t+h|t}-{\bm S}{\bm G}{\bm y}_{t+h})||_2\\
+	&=||{\bm S}{\bm G}(\hat{\bm y}_{t+h|t}-{\bm y}_{t+h})||_2\\
+	\end{align}
+	The Cauchy-Schwarz inequality can be used to show that orthogonal projections are bounded operators\todo{Find reference or prove}, therefore
+	 \begin{equation*}
+	 ||{\bm S}{\bm G}(\hat{\bm y}_{t+h|t}-{\bm y}_{t+h})||_2\le
+	 ||(\hat{\bm y}_{t+h|t}-{\bm y}_{t+h})||_2
+	 \end{equation*}
+\end{proof}
+The inequality is strict whenever $\hat{\bm y}_{t+h|t}\notin\mathfrak{s}$.
+
+
 \subsection{Probabilistic forecast reconciliation}
 
 We now extend the methodology of point forecast reconciliation to probabilistic forecasts
 
 %For probabilistic forecasts, reconciliation implies finding the probability measure of the coherent forecasts using the information from an incoherent probabilistic forecast measure. A more formal definition is given below.
 
-  Let $(\mathbb{R}^n, \mathscr{F}^{\mathbb{R}^n}, \hat{\nu})$ be an probability triple, that is incoherent and that characterises forecast uncertainty for all variables in the hierarchy at time $t+h$ conditional on all information up to time $t$.  This may be obtained from the first stage of the forecasting process e.g. by modelling and forecasting each series individually.  Let $g:\mathbb{R}^n \rightarrow \mathbb{R}^m $ be a linear mapping.  Let $(\mathbb{R}^m, \mathscr{F}^{\mathbb{R}^m}, \nu)$ be a probability triple defined on $\mathbb{R}^m$.
+  Let $(\mathbb{R}^n, \mathscr{F}_{\mathbb{R}^n}, \hat{\nu})$ be an probability triple, that is incoherent and that characterises forecast uncertainty for all variables in the hierarchy at time $t+h$ conditional on all information up to time $t$.  This may be obtained from the first stage of the forecasting process e.g. by modelling and forecasting each series individually.  Let $g:\mathbb{R}^n \rightarrow \mathbb{R}^m $ be a linear mapping.  Let $(\mathbb{R}^m, \mathscr{F}_{\mathbb{R}^m}, \nu)$ be a probability triple defined on $\mathbb{R}^m$.
   \begin{definition} \label{def:reconprob}
   We define the reconciled probability measure of $\hat{\nu}$ with respect to the mapping $g(.)$ as a probability measure $\tilde{\nu}$ on $\mathfrak{s}$ with $\sigma$-algebra $\mathscr{F}_\mathfrak{s}$ where the following holds
   \begin{equation}
-  \tilde{\nu}(s(\mathcal{B})) = \nu(\mathcal{B})= \hat{\nu}(g^{-1}(\mathcal{B})) \qquad \forall \mathcal{B} \in \mathscr{F}^{\mathbb{R}^m}\,,
+  \tilde{\nu}(s(\mathcal{B})) = \nu(\mathcal{B})= \hat{\nu}(g^{-1}(\mathcal{B})) \qquad \forall \mathcal{B} \in \mathscr{F}_{\mathbb{R}^m}\,,
   \end{equation}
   where $g^{-1}(\mathcal{B}):=\left\{\breve{\bm{y}}\in \mathbb{R}^n:g(\breve{\bm{y}})\in \mathcal{B} \right\}$ is the pre-image of $\mathcal{B}$, that is the set of all points in $\mathbb{R}^n$ that $g(.)$ maps to a point in $\mathcal{B}$.
 \end{definition}
@@ -407,7 +466,7 @@ The quadratic form $q$ can be rearranged as
 q& = 
 \left((\bm{S} ~  \bm{R})\bt-\bm{\hat{\mu}}\right)' \bm{\hat{\Sigma}}^{-1}\left((\bm{S} ~ \bm{R})\bt-\bm{\hat{\mu}}\right),\\
 & =
-\left(\bt-(\bm{S} ~ \bm{R})^{-1}\bm{\hat{\mu}}_{t+h}\right)' \Big[(\bm{S}  \bm{R})\bm{\hat{\Sigma}_{t+h}}(\bm{S} ~ \bm{R})'\Big]^{-1}
+\left(\bt-(\bm{S} ~ \bm{R})^{-1}\bm{\hat{\mu}}_{t+h}\right)' \Big[(\bm{S}  \bm{R})^{-1}\bm{\hat{\Sigma}_{t+h}}\left((\bm{S} ~ \bm{R})^{-1}\right)'\Big]^{-1}
 \left(\bt-(\bm{S} ~ \bm{R})^{-1}\bm{\hat{\mu}}_{t+h}\right)\,.
 \end{align*}
 
@@ -575,8 +634,12 @@ In contrast, \citet{SCHEUERER2015} have shown that the variogram score has a hig
 \subsubsection{Comparing Unreconciled Forecasts to Reconciled Forecasts}
 
 
-For both reconciled and unreconciled densities it is possible to obtain a density from the probability measures defined in \ref{sec:definitions}.  As such it may seem sensible to compare unreconciled densities to reconciled densities on the basis of log score.  However more careful consideration shows that using the log score may fail in the case of multivariate distributions with a degeneracy.
+For both reconciled and unreconciled densities it is possible to obtain a density from the probability measures defined in \ref{sec:definitions}.  As such it may seem sensible to compare unreconciled densities to reconciled densities on the basis of log score.  The following theorem shows that using the log score may fail in the case of multivariate distributions with a degeneracy.
 
+\begin{theo}[Impropriety of log score]
+	When the true data generating process is a coherent measure, then the log score is improper with respect to the class of incoherent measures.
+\end{theo}
+\begin{proof}
 Consider a rotated version of hierarchical time series $\bm{z}_t={\bm U}{\bm y}_t$ so that the first $m$ elements of $\bm{z}_t$ denoted $\bm{z}^{(1)}_t$ are unconstrained, while the remaining $n-m$ elements denoted $\bm{z}^{(2)}_t$ equal $0$ when the aggregation constraints hold. An example of the $n\times n$ ${\bm U}$ could be the matrix of left singular vectors of ${\bm S}$.  For a non-degenerate probability measure on $\mathbb{R}^n$, the density is the Radon-Nikodym derivative with respect to the usual Lesbegue measure on $\mathbb{R}^n$.  %For a coherent probability measure the density after rotation is the Radon-Nikodym derivative with respect to the usual Lesbegue measure on $\mathbb{R}^m$.
 
 Consider the case where the true density is $f_1(\bm{z}^{(1)}_t)\mathbb{1}\left({\bm{z}^{(2)}_t}\right)$, and is compared to an incoherent density is given by $f_1(\bm{z}^{(1)}_t)f_2(\bm{z}^{(2)}_t)$, where $f_2$ is highly concentrated around $0$ but still a proper density. For example $f_2$ may be Gaussian with variance $\sigma^2{\bm I}$ with $\sigma^2 < (2\pi)^{-1}$. The log score under the true DGP is
@@ -591,7 +654,10 @@ S\left(\hat{f},\bm{z}^{(1)}_t\right) &= -\log f_1(\bm{z}^{(1)}_t)-f_2(\bm{z}^{(1
 \end{align}
 
 
-After taking expectations $ES(f,f) > ES(\hat{f},f)$, violating the condition \eqref{eq:(3.1.)} for a proper scoring rule.  A similar issue also arises when discrete random variables are modelled as if they were continuous, an issue discussed in Section 4.1, page 366 of \cite{Gneiting2007}. This implies that the log score should not be used to evaluate multivariate densities with degeneracies and should be avoided when comparing reconciled and unreconciled probabilistic forecasts.
+After taking expectations $ES(f,f) > ES(\hat{f},f)$, violating the condition \eqref{eq:(3.1.)} for a proper scoring rule.  
+\end{proof}
+
+A similar issue also arises when discrete random variables are modelled as if they were continuous, an issue discussed in Section 4.1, page 366 of \cite{Gneiting2007}. This implies that the log score should not be used to evaluate multivariate densities with degeneracies and should be avoided when comparing reconciled and unreconciled probabilistic forecasts.
 
 
 \subsubsection{Comparing Reconciled Forecasts to one another}
@@ -705,28 +771,7 @@ The properties of multivariate scoring rules in the context of evaluating reconc
 %
 %It should be noted that $\bm{W}_{T+h}$ can be estimated in different ways, which yields different estimates of $\bm{R}'_\bot$. Table~\ref{table:2} summarizes some of these methods.
 %
-\begin{table}
-  \caption{Several possible estimates of $\bm{R}'_\bot$. For $n<T$, $\bm{\hat{W}}_{T+1}^{sam}$ is an unbiased and consistent estimator for $\bm{W}_{T+1}$. $\bm{\hat{W}}_{T+1}^{shr}$ is a shrinkage estimator which is more suitable for large dimensions. $\bm{\hat{W}}_{T+1}^{shr}$ was proposed by \citet{Schafer2005} and also used by \citet{Wickramasuriya2017}, where Diag($\bm{A}$) denotes the diagonal matrix of $\bm{A}$, $\tau = \frac{\sum_{i \ne j}\hat{\text{Var}}(\hat{r}_{ij})}{\sum_{i \ne j}\hat{r}_{ij}^2}$, and $\hat{r}_{ij}$ is the $ij$th element of the sample correlation matrix.}\label{table:2}
-  \centering\setstretch{1.5}
-  \begin{tabular}{lll}
-    \toprule
-    \textbf{Method} & \textbf{Estimate of $\bm{W}_{h}$} & \textbf{Estimate of $\bm{R}'_\bot$}      \\
-    \midrule
-    OLS             &
-    $\bm{I}$  &
-    $\bm{S}'$  \\
-    MinT(Sample)    &
-    $\bm{\hat{W}}_{T+1}^{sam}$ &
-    $\bm{S}'(\bm{\hat{W}}_{T+1}^{sam})^{-1}$ \\
-    MinT(Shrink)    &
-    $\bm{\hat{W}}_{T+1}^{shr} = \tau\text{Diag}(\bm{\hat{W}}_{T+1}^{sam}) + (1-\tau)\bm{\hat{W}}_{T+1}^{sam}$ &
-    $\bm{S}'(\bm{\hat{W}}_{T+1}^{shr})^{-1}$ \\
-    MinT(WLS)       &
-    $\bm{\hat{W}}_{T+1}^{wls} = \text{Diag}(\bm{\hat{W}}_{T+1}^{shr})$ &
-    $\bm{S}'(\bm{\hat{W}}_{T+1}^{wls})^{-1}$ \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+
 
 %All of these forecasting methods are well-established in the context of point forecast reconciliation \citep{Hyndman2011, Hyndman2016,Wickramasuriya2017}. Here, we are showing how these reconciliation methods can be used in the context of probabilistic forecast reconciliation, at least in the Gaussian framework.
 
