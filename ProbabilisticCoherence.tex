@@ -543,9 +543,27 @@ We now show that the true predictive distribution can be recovered for elliptica
    =&{\bm \mu}\\
    \end{align*}
 \end{proof}	
-A number of insights can be drawn from this theorem.  First, although a linear mapping $g(.)$ can be used to recover the true density in the elliptical case, the same does not hold in general.  Second, $g(.)$ is not, in general, a projection matrix.  Third, ${\bm G}_{opt}$ and ${\bm d}_{opt}$ depend on the true location and scale of the predictive distribution and are thus infeasible in practice.  
+A number of insights can be drawn from this theorem.  First, although a linear mapping $g(.)$ can be used to recover the true density in the elliptical case, the same does not hold in general.  Second, $g(.)$ is not, in general, a projection matrix.  The conditions for which a the true predictive density can be recovered by reconciliation are given below.
 
-\todo{Some discussion about why projections are good}.
+\begin{theo}[True predictive via projection]
+	Assume that the true predictive distribution is elliptical with location ${\bm mu}$ and scale ${\bm Sigma}$.  Consider reconciliation via a projection $g({\bm y})=({\bm R}'_{\perp}{\bm S})^{-1}{\bm R}'_{\perp}{\bm y}$
+	The true predictive distribution can be recovered via reconciliation of an elliptical distribution with location $\hat{\bm \mu}$ $\hat{\bm \Sigma}$ and scale when the following conditions hold.
+	\begin{align}
+	sp(\hat{\bm\mu}-{\bm \mu})&\subset sp(\bm{R})\\
+    sp(\bm{\Sigma}^{1/2}-{\bm \Sigma}^{1/2})&\subset sp({\bm R})\\
+	\end{align}
+\end{theo}
+\begin{proof}
+	The reconciled location vector will be given by
+	\begin{align*}
+		\tilde{\bm \mu}&={\bm S}({\bm R}'_{\perp}{\bm S})^{-1}{\bm R}'_{\perp}\hat{\bm \mu}\\
+		&={\bm S}({\bm R}'_{\perp}{\bm S})^{-1}{\bm R}'_{\perp}\left(\hat{\bm \mu}+{\bm \mu}-{\bm \mu}\right)\\
+		&={\bm S}({\bm R}'_{\perp}{\bm S})^{-1}{\bm R}'_{\perp}{\bm \mu}+{\bm S}({\bm R}'_{\perp}{\bm S})^{-1}{\bm R}'_{\perp}\left(\hat{\bm \mu}-{\bm \mu}\right)\\
+	\end{align*}
+  Since ${\bm S}({\bm R}'_{\perp}{\bm S})^{-1}{\bm R}'_{\perp}$ is a projection onto $\mathfrak{s}$ and ${\bm \mu}\in\mathfrak{s}$ the first term simplified to ${\bm \mu}$.  If ${\bm \mu}-\hat{\bm \mu}$ lies in the span of ${\bm R}$ then multiplication by ${\bm R}'_{\perp}$ reduced the second term to ${\bm 0}$.  By a similar argument it can be shown that $\tilde{\bm \Sigma}^{1/2}={\bm \Sigma}^{1/2}$.  The closure property of elliptical distributions under affine transformations ensures that the full true predictive distribution can be recovered.
+\end{proof}  
+Although these conditions will rarely hold in practice and only apply to a limited class of distributions they do provide some insight into selecting a projection for reconciliation.  If the value of $\hat{\bm \mu}$ were equi-probable in all directions then a projection orthogonal to $\mathfrak{s}$ would be a sensible choice for ${\bm R}$ since it would in some sense represent a `median' direction for ${\bm \mu}-\hat{\bm \mu}$.  However, the one step ahead in-sample errors are usually correlated suggesting that $\hat{\bm \mu}$ is more likely to fall in some directions than others.  As such an orthogonal projection after transformation by the inverse of the one step ahead in-sample errors may be more intuitively appealing.  This is exactly what the MinT projection estimates, and as simulations will show in Section~\ref{sec:gaussian}, this projection leads to the best empirical results.
+
 
 %However, these expressions do provide some insight on why some choices for ${\bm G}$ in the point forecast reconciliation literature may also work well for probabilistic forecasts.  To illustrate, first rearrange the equation for the optimal value of  $\bm{G}_{opt}={\bm\Omega}^{1/2}\hat{\bm\Sigma}^{-1/2}$ as ${\bm\Omega}^{1/2}=\bm{G}_{opt}\hat{\bm\Sigma}^{1/2}$. For arbitrary ${\bm G}\hat{\bm\Sigma}^{1/2}$ is an approximation for ${\bm\Omega}^{1/2}$.  This approximation has similarities with the way bottom level estimates are produced for point forecast reconciliation.  Rather than mapping a vector of point forecasts to reconcilied bottom level forecasts, the columns of  $\hat{\bm\Sigma}^{1/2}$ are mapped to an approximation of the columns of ${\bm\Omega}^{1/2}$.  The value for $\tilde{\bm \mu}_{opt}$ includes a projection of $\hat{\bm \mu}$ onto $\mathfrak{s}$. While it is infeasible to obtain the translation ${\bm d}$, it is worthwhile noting that this measures the difference between the reconciled mean and true mean. 
 
