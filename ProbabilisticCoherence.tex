@@ -58,6 +58,29 @@
 
 
 \section{Introduction}\label{sec:intro}
+Sketch narrative to tell
+\begin{itemize}
+	\item Coherence is important in point forecasting to
+	\begin{itemize}
+		\item Align decisions
+		\item Improve forecasts
+	\end{itemize}
+	\item We propose a geometric interpretation via linear transformations including special case of projections.
+	\item These nest existing methods but the interpretation has advantages 
+	\begin{itemize}
+		\item Prove that projections preserve unbiasedness.  Previously assumed in special cases.
+		\item Prove reconciliation (using projection) always improves sum of squared errors (or a scaled/transformed version thereof).
+		\item Most importantly generalises to probabilistic forecasting.
+	\end{itemize}
+    \item For elliptical distributions, true predictive can be recovered via linear reconciliation and in special cases, via projection.
+    \item Discuss evaluation of forecasts
+    \begin{itemize}
+    	\item Log score improper when coherent v incoherent
+    	\item Energy score cn be used instead
+    	\item Discuss scores for coherent v coherent.
+    \end{itemize}
+    \item Finally evidence MinT is best from simulation
+\end{itemize}
 
 Many research applications involve a large collection of time series, some of which are aggregates of others. These are called hierarchical time series. For example, electricity demand of a country can be disaggregated along a geographical hierarchy: the electricity demand of the whole country can be divided into the demand of states, cities, and households. 
 
@@ -925,6 +948,17 @@ Tables~\ref{table:4} and~\ref{table:5} break down the forecasting performance of
 \end{table}
 
 \section{Conclusions}\label{sec:conclusions}
+
+Points to discuss
+\begin{itemize}
+	\item Optimal reconciliation likely to depend on
+	\begin{itemize}
+		\item Properties of base probabilstic forecast
+		\item Scoring rule
+	\end{itemize}
+    \item Case where no parametric form available
+    \item Cases where $g$ and maybe even $s$ are non linear
+\end{itemize}
 
 Although the problem of hierarchical point forecasts is well studied in the literature, there is a lack of attention in the context of probabilistic forecasts. Thus we attempted to fill this gap in the literature by providing substantial theoretical background to the problem. We initially provided rigorous definitions for the coherent point and probabilistic forecasts using the principles of measure theory. Due to the aggregation nature of hierarchy, the probability density is a degenerate density. Thus the forecast distribution that we opt to find should also lie in a lower dimensional subspace of $\mathbb{R}^{n}$.
 
