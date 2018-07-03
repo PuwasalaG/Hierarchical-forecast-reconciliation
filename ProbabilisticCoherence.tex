@@ -56,57 +56,69 @@
   TBC
 \end{abstract}
 
+%
+%\section{Introduction}\label{sec:intro}
+%Sketch narrative to tell
+%\begin{itemize}
+%	\item Coherence is important in point forecasting to
+%	\begin{itemize}
+%		\item Align decisions
+%		\item Improve forecasts
+%	\end{itemize}
+%	\item We propose a geometric interpretation via linear transformations including special case of projections.
+%	\item These nest existing methods but the interpretation has advantages 
+%	\begin{itemize}
+%		\item Prove that projections preserve unbiasedness.  Previously assumed in special cases.
+%		\item Prove reconciliation (using projection) always improves sum of squared errors (or a scaled/transformed version thereof).
+%		\item Most importantly generalises to probabilistic forecasting.
+%	\end{itemize}
+%    \item For elliptical distributions, true predictive can be recovered via linear reconciliation and in special cases, via projection.
+%    \item Discuss evaluation of forecasts
+%    \begin{itemize}
+%    	\item Log score improper when coherent v incoherent
+%    	\item Energy score cn be used instead
+%    	\item Discuss scores for coherent v coherent.
+%    \end{itemize}
+%    \item Finally evidence MinT is best from simulation
+%\end{itemize}
 
-\section{Introduction}\label{sec:intro}
-Sketch narrative to tell
-\begin{itemize}
-	\item Coherence is important in point forecasting to
-	\begin{itemize}
-		\item Align decisions
-		\item Improve forecasts
-	\end{itemize}
-	\item We propose a geometric interpretation via linear transformations including special case of projections.
-	\item These nest existing methods but the interpretation has advantages 
-	\begin{itemize}
-		\item Prove that projections preserve unbiasedness.  Previously assumed in special cases.
-		\item Prove reconciliation (using projection) always improves sum of squared errors (or a scaled/transformed version thereof).
-		\item Most importantly generalises to probabilistic forecasting.
-	\end{itemize}
-    \item For elliptical distributions, true predictive can be recovered via linear reconciliation and in special cases, via projection.
-    \item Discuss evaluation of forecasts
-    \begin{itemize}
-    	\item Log score improper when coherent v incoherent
-    	\item Energy score cn be used instead
-    	\item Discuss scores for coherent v coherent.
-    \end{itemize}
-    \item Finally evidence MinT is best from simulation
-\end{itemize}
+Large collections of time series often follow some aggregation structure.  For example, the electricity demand of a country can be disaggregated according to a geographical hierarchy of states, cities, and individual households or according to temporal hierarchy of yearly, quarterly and monthly demand. In these so-called hierarchical time series, forecasts are often required for all individual series.  To ensure aligned decision making it is important for forecasts at the most disaggregated - or bottom-level - to add up to forecasts at more aggregated - or higher - levels. This property is referred to as ``coherence''.
 
-Many research applications involve a large collection of time series, some of which are aggregates of others. These are called hierarchical time series. For example, electricity demand of a country can be disaggregated along a geographical hierarchy: the electricity demand of the whole country can be divided into the demand of states, cities, and households. 
+Traditional approaches to ensure coherent point forecasts produce forecasts at a single level. For instance in the bottom-up \citep{Dunn1976} approach, forecasts are produced at the most disaggregated level and then summed to recover top level-series.  Alternatively, in the top-down approach \citep{Gross1990} a top-level forecast is produced and bottom level forecasts are recovered as  historical or forecasted proportions of the top-level forecast,while the middle-out approach is a hybrid between these two.
 
-When forecasting such time series, it is important to have ``coherent'' forecasts across the hierarchy: aggregates of the forecasts at lower levels should be equal to the forecasts at the upper levels of aggregation. In other words, sums of forecasts should be equal to the forecasts of the sums.
+In recent years, reconciliation methods introduced by \citet{Hyndman2011} have become increasingly popular.  These methods produce first stage, or  so called `base' forecasts independently for each series.  Since base are rarely coherent in practice,  they are subsequently adjusted  or `reconciled' to ensure coherence.  To  date reconciliation has typically been formulated as a regression problem with alternative reconciliation methods resembling least squares estimators. These include Ordinary Least Squares {OLS} \cite{Hyndman2011}, Weighted Least Squares {WLS} \todo{citation?} and a Generalised Least Squares (GLS) estimator \citep{Wickramasuriya2017}, more commonly referred to as MinT since it minimises the trace of  the squared error matrix. These methods have been shown to outperform traditional alternatives across a range of simulated and real-world datasets \citep{Hyndman2011,VanErven2015a,Wickramasuriya2017} since they use information at all levels of the hierarchy and in some sense hedge against the risk of model misspecification error in a single level.
 
-The traditional approaches to produce coherent point forecasts are the bottom-up, top-down and middle-out methods. In the bottom-up approach, forecasts of the lowest level are first generated and they are simply aggregated to forecast upper levels of the hierarchy \citep{Dunn1976}. In contrast, the top-down approach involves forecasting the most aggregated series first and then disaggregating these forecasts down the hierarchy based on the corresponding proportions of observed data \citep{Gross1990}. Many studies have discussed the relative advantages and disadvantages of bottom-up and top-down methods, and situations in which each would provide reliable forecasts \citep{Schwarzkopf1988,Kahn1998, Lapide1998,Fliedner2001}. A compromise between these two approaches is the middle-out method which entails forecasting each series of a selected middle level in the hierarchy and then forecasting upper levels by the bottom-up method and lower levels by the top-down method. 
+A shortcoming of the existing literature is a focus on point forecasting despite an increased understanding over the past decade of the importance of providing a full predictive distribution for forecast uncertainty \cite[see][and references therein]{Gneiting2014}.  Indeed to the best of our knowledge, the as yet unpublished work of \cite{BenTaieb2017} is the only paper to deal with the issue of coherent probabilistic forecasts, and although the means of the predictive distributions are reconciled, the overall distributions are constructed in a bottom up fashion.  In contrast, the main objective of our paper is to generalise point forecast reconciliation to probabilistic forecast reconciliation.  
 
-It is apparent that these three approaches use only part of the information available when producing coherent forecasts. This might result in inaccurate forecasts. For example, if the bottom-level series are highly volatile or noisy, and hence challenging to forecast, then the resulting forecasts from the bottom-up approach are likely to be inaccurate.
+To facilitate the extension of point forecast reconciliation to probabilistic forecasting, we  first provide a geometric interpretation of existing point reconciliation methods, framing them in terms of projections.  In addition to being highly intuitive, this allows us to establish a number of theoretical results.  We prove two new theorems about point forecast reconciliation, the first showing that reconciliation via projections preserves the unbiasedness of base forecasts while the second shows that reconciled forecasts dominate unreconciled forecasts since projections are bounded operators.  We provide definitions of coherence and forecast reconciliation in the probabilistic setting and describe how these definitions lead to a reconciliation procedure that merely involves a change of basis and marginalisation.  We show that probabilistic reconciliation via linear transformations can recover the true predictive distribution as long as the latter is in the elliptical class.  We provide conditions for which this linear transformation is a projection, and although this projection cannot be feasibly esitimated in practice, our  theoretical results lead to a heuristic argument in favour of MinT reconciliation. 
 
-As an alternative to these traditional methods, \citet{Hyndman2011} proposed to utilize the information from all levels of the hierarchy to obtain coherent point forecasts in  a two stage process. In the first stage, the forecasts of all series are independently obtained by fitting univariate models for individual series in the hierarchy. It is very unlikely that these forecasts are coherent. Thus in the second stage, these forecasts are optimally combined through a regression model to obtain coherent forecasts. This second step is referred to as ``reconciliation'' since it takes a set of incoherent forecasts and revises them to be coherent. The approach was further improved by \citet{Wickramasuriya2017} who proposed the ``MinT'' algorithm to obtain optimally reconciled point forecasts by minimizing the mean squared coherent forecast errors. 
+We also cover the issue of forecast evaluation of probabilistic forecasts via scoring rules.  In particular we prove that for a coherent data generating process, the log score is not proper with respect to incoherent forecasts.  As such we recommend the use of the energy score and variogram score for comparing reconciled to unreconciled forecasts.  Two or more reconciled forecasts can be compared using log score,energy score and  variogram score, although we show that comparisons should be  made on the full hierarchy for the latter two scores.  
 
-Traditional bottom-up, top-down and middle-out forecasting methods are not strictly reconciliation methods since they use only a part of the information from the hierarchy to produce coherent forecasts. 
+The remainder of the papers is  structured as follows.   In Section~\ref{sec:notation}, hierarchical time series are discussed in general and notation is  defined.  In section \ref{sec:definitions} coherence is defined geometrically for both point and probabilistic forecasts.  Section~\ref{sec:reconciliation} contains definitions of point and probabilistic forecast reconciliation as well as our main theoretical results.  In Section~\ref{sec:evaluation} we consider the evaluation of probabilistic hierarchical forecasts via scoring rules while a simulation study comparing unreconciled probabilistic forecasts and different kinds of reconciled probabilistic forecasts is provided in Section~\ref{sec:gaussian},  Section~\ref{sec:conclusions} concludes.
 
-Previous studies on coherent point forecasting have shown that reconciliation provides better coherent forecasts than the traditional bottom-up and top-down methods \citep{Hyndman2011,VanErven2015a,Wickramasuriya2017}. However, this idea has not been explored in the context of probabilistic forecasting. 
 
-Point forecasts are limited because they provide no indication of forecast uncertainty. Providing prediction intervals helps, but a richer description of forecast uncertainty is obtained by estimating the entire forecast distribution. These are often called ``probabilistic forecasts'' \citep{Gneiting2014}. For example, \citet{McSharry2005} produced probabilistic forecasts for electricity demand, \citet{BenTaieb2017} for smart meter data, \citet{Pinson2009} for wind power generation, and \citet{Gel2004}, \citet{Gneiting2005a} and \citet{Gneiting2005} for various weather variables.
 
-Although there is a rich and growing literature on producing coherent point forecasts of hierarchical time series, little  attention has been given to coherent probabilistic forecasts. The only relevant paper we are aware of is \citet{BenTaieb2017}, who recently proposed an algorithm to produce coherent probabilistic forecasts and applied it to UK electricity smart meter data. In their approach, a sample from the bottom-level forecast distribution is first generated, and then aggregated to obtain coherent probabilistic forecasts of the upper levels of the hierarchy. Hence this method is a bottom-up approach. They propose to first use the MinT algorithm to reconcile the means of the bottom-level forecast distributions, and then a copula-based approach is employed to model the dependency structure of the hierarchy. The resulting multi-dimensional distribution is used to generating empirical forecast distributions for all bottom-level series. Thus, while \citet{BenTaieb2017} provide coherent probabilistic forecasts, they do no forecast reconciliation of the distributions. In that sense, their approach is analogous to bottom-up point forecasting rather than forecast reconciliation.
+%In the bottom-up approach, forecasts of the lowest level are first generated and they are simply aggregated to forecast upper levels of the hierarchy \citep{Dunn1976}. In contrast, the top-down approach involves forecasting the most aggregated series first and then disaggregating these forecasts down the hierarchy based on the corresponding proportions of observed data \citep{Gross1990}. Many studies have discussed the relative advantages and disadvantages of bottom-up and top-down methods, and situations in which each would provide reliable forecasts \citep{Schwarzkopf1988,Kahn1998, Lapide1998,Fliedner2001}. A compromise between these two approaches is the middle-out method which entails forecasting each series of a selected middle level in the hierarchy and then forecasting upper levels by the bottom-up method and lower levels by the top-down method. 
 
-After introducing our notation in Section~\ref{sec:notation}, we define what is meant by probabilistic forecast reconciliation for hierarchical time series in Section~\ref{sec:definitions}. First, we provide a new definition for coherency of point forecasts, and the reconciliation of a set of incoherent point forecasts, using  concepts related to vector spaces and measure theory. Based on these, we provide a rigorous definition for probabilistic forecast reconciliation, and how we can reconcile the incoherent forecast densities in practice. 
+%It is apparent that these three approaches use only part of the information available when producing coherent forecasts. This might result in inaccurate forecasts. For example, if the bottom-level series are highly volatile or noisy, and hence challenging to forecast, then the resulting forecasts from the bottom-up approach are likely to be inaccurate.
 
-Further, due to the aggregation structure of the hierarchy, the probability distribution is degenerate and hence the forecast distribution should also be degenerate. In Section~\ref{sec:reconciliation}, we discuss in detail how this degeneracy will be taken care of in probabilistic forecast reconciliation, and in Section~\ref{sec:evaluation} we consider the evaluation of probabilistic hierarchical forecasts. 
+%As an alternative to these traditional methods, \citet{Hyndman2011} proposed to utilize the information from all levels of the hierarchy to obtain coherent point forecasts in  a two stage process. In the first stage, the forecasts of all series are independently obtained by fitting univariate models for individual series in the hierarchy. It is very unlikely that these forecasts are coherent. Thus in the second stage, these forecasts are optimally combined through a regression model to obtain coherent forecasts. This second step is referred to as ``reconciliation'' since it takes a set of incoherent forecasts and revises them to be coherent. The approach was further improved by \citet{Wickramasuriya2017} who proposed the ``MinT'' algorithm to obtain optimally reconciled point forecasts by minimizing the mean squared coherent forecast errors. 
 
-Some theoretical results on probabilistic forecast reconciliation in the Gaussian framework are given in Section~\ref{sec:gaussian}, including a simulation study to show the importance of reconciliation in the probabilistic framework. 
+%Traditional bottom-up, top-down and middle-out forecasting methods are not strictly reconciliation methods since they use only a part of the information from the hierarchy to produce coherent forecasts. 
 
-We conclude with some thoughts on extensions and limitations in Section~\ref{sec:conclusions}.
+%Previous studies on coherent point forecasting have shown that reconciliation provides better coherent forecasts than the traditional bottom-up and top-down methods \citep{Hyndman2011,VanErven2015a,Wickramasuriya2017}. However, this idea has not been explored in the context of probabilistic forecasting. 
+
+%Point forecasts are limited because they provide no indication of forecast uncertainty. Providing prediction intervals helps, but a richer description of forecast uncertainty is obtained by estimating the entire forecast distribution. These are often called ``probabilistic forecasts'' \citep{Gneiting2014}. For example, \citet{McSharry2005} produced probabilistic forecasts for electricity demand, \citet{BenTaieb2017} for smart meter data, \citet{Pinson2009} for wind power generation, and \citet{Gel2004}, \citet{Gneiting2005a} and \citet{Gneiting2005} for various weather variables.
+
+%Although there is a rich and growing literature on producing coherent point forecasts of hierarchical time series, little  attention has been given to coherent probabilistic forecasts. The only relevant paper we are aware of is \citet{BenTaieb2017}, who recently proposed an algorithm to produce coherent probabilistic forecasts and applied it to UK electricity smart meter data. In their approach, a sample from the bottom-level forecast distribution is first generated, and then aggregated to obtain coherent probabilistic forecasts of the upper levels of the hierarchy. Hence this method is a bottom-up approach. They propose to first use the MinT algorithm to reconcile the means of the bottom-level forecast distributions, and then a copula-based approach is employed to model the dependency structure of the hierarchy. The resulting multi-dimensional distribution is used to generating empirical forecast distributions for all bottom-level series. Thus, while \citet{BenTaieb2017} provide coherent probabilistic forecasts, they do no forecast reconciliation of the distributions. In that sense, their approach is analogous to bottom-up point forecasting rather than forecast reconciliation.
+%
+%After introducing our notation in Section~\ref{sec:notation}, we define what is meant by probabilistic forecast reconciliation for hierarchical time series in Section~\ref{sec:definitions}. First, we provide a new definition for coherency of point forecasts, and the reconciliation of a set of incoherent point forecasts, using  concepts related to vector spaces and measure theory. Based on these, we provide a rigorous definition for probabilistic forecast reconciliation, and how we can reconcile the incoherent forecast densities in practice. 
+%
+%Further, due to the aggregation structure of the hierarchy, the probability distribution is degenerate and hence the forecast distribution should also be degenerate. In Section~\ref{sec:reconciliation}, we discuss in detail how this degeneracy will be taken care of in probabilistic forecast reconciliation, and in Section~\ref{sec:evaluation} we consider the evaluation of probabilistic hierarchical forecasts. 
+%
+%Some theoretical results on probabilistic forecast reconciliation in the Gaussian framework are given in Section~\ref{sec:gaussian}, including a simulation study to show the importance of reconciliation in the probabilistic framework. 
+%
+%We conclude with some thoughts on extensions and limitations in Section~\ref{sec:conclusions}.
 
 
 \section{Hierarchical Time Series}\label{sec:notation}

@@ -1,2 +1,3 @@
 # Probabilistic-Forecast-in-Hierarchical-Time-Series
-Section 4.3 needs work.  Then intro and conclusion can be written
+Conclusion and abstract need to be written.  Then lots of tidying up
+
