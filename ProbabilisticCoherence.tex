@@ -961,22 +961,17 @@ Tables~\ref{table:4} and~\ref{table:5} break down the forecasting performance of
 
 \section{Conclusions}\label{sec:conclusions}
 
-Points to discuss
-\begin{itemize}
-	\item Optimal reconciliation likely to depend on
-	\begin{itemize}
-		\item Properties of base probabilstic forecast
-		\item Scoring rule
-	\end{itemize}
-    \item Case where no parametric form available
-    \item Cases where $g$ and maybe even $s$ are non linear
-\end{itemize}
+%Although the problem of hierarchical point forecasts is well studied in the literature, there is a lack of attention in the context of probabilistic forecasts. Thus we attempted to fill this gap in the literature by providing substantial theoretical background to the problem. 
 
-Although the problem of hierarchical point forecasts is well studied in the literature, there is a lack of attention in the context of probabilistic forecasts. Thus we attempted to fill this gap in the literature by providing substantial theoretical background to the problem. We initially provided rigorous definitions for the coherent point and probabilistic forecasts using the principles of measure theory. Due to the aggregation nature of hierarchy, the probability density is a degenerate density. Thus the forecast distribution that we opt to find should also lie in a lower dimensional subspace of $\mathbb{R}^{n}$.
+By redefining coherent forecasts and forecast reconciliation in geometric terms we have established two new theoretical results that support the use of projections for point forecast reconciliation, and crucially have extended these concepts to probabilistic forecasting.  We show that for elliptical distributions, the true predictive density can be recovered by linear reconciliation and establish conditions for which this linear mapping is a projection.  Although this optimal projection cannot feasibly be obtained in practice, a projection similar to the MinT procedure provides a good approximation in practice.  This is supported by the results of a simulation study.  Finally, we also discuss strategies for evaluating probabilistic forecasts for hierarchical time series establishing a key results regarding the impropriety of the log score with respect to incoherent forecasts.
 
-As it was well established that the reconciliation outperforms other conventional point forecasting methods in the hierarchical literature, we proposed to use reconciliation in probabilistic framework to obtain coherent degenerate densities. We provided a distinct definition for density forecast reconciliation and how it can be used to reconcile incoherent densities in practice.
+In many ways this paper sets up a substantial future research agenda.  For example, having defined what amounts to an entire class of reconciliation methods for probabilistic forecasts it will be worthwhile investigating which specific projections are optimal.  This is likely to depend on the specific scoring rule employed as well as the properties of base forecasts.  Another avenue worth investigation is to consider whether it is possible to recover the true predictive distribution for non-elliptical distributions possible via a non-linear mapping $g(.)$.
 
-Assuming a multivariate Gaussian distribution for the hierarchy, we showed how to obtain reconciled Gaussian forecast densities, utilizing available information in the hierarchy. An extensive Monte Carlo simulation study further showed that the MinT reconciliation method \citep{Wickramasuriya2017} is useful in producing improved coherent probabilistic forecasts at least in the Gaussian framework.
+%Due to the aggregation nature of hierarchy, the probability density is a degenerate density. Thus the forecast distribution that we opt to find should also lie in a lower dimensional subspace of $\mathbb{R}^{n}$.
+
+%As it was well established that the reconciliation outperforms other conventional point forecasting methods in the hierarchical literature, we proposed to use reconciliation in probabilistic framework to obtain coherent degenerate densities. We provided a distinct definition for density forecast reconciliation and how it can be used to reconcile incoherent densities in practice.
+
+%Assuming a multivariate Gaussian distribution for the hierarchy, we showed how to obtain reconciled Gaussian forecast densities, utilizing available information in the hierarchy. An extensive Monte Carlo simulation study further showed that the MinT reconciliation method \citep{Wickramasuriya2017} is useful in producing improved coherent probabilistic forecasts at least in the Gaussian framework.
 
 
 \newpage
