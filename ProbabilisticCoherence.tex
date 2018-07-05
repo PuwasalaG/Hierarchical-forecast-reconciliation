@@ -156,12 +156,9 @@ where $\bm{I}_4$ is a $4\times 4$ identity matrix.
 
 \subsection{Coherent Point Forecasts}\label{sec:cohpointf}
 
-It is desirable that forecasts, whether point forecasts or probabilistic forecasts, should in some sense respect aggregation constraints.  We follow other authors \cite{Wickramasuriya2017}\todo{FPP?} in using the nomenclature {\em coherence} to describe this property.   
+It is desirable that forecasts, whether point forecasts or probabilistic forecasts, should in some sense respect aggregation constraints.  We follow other authors \citep{Wickramasuriya2017, FPP2018} in using the nomenclature {\em coherence} to describe this property.   
 %While coherent point forecasts have been discussed many times previously, the definitions of coherence previously given are vague and are not easily extended to the situation of probabilistic forecasting.
-
 We now provide new definitions for coherent forecasts in terms of vector spaces that give a geometric understanding of the problem thus facilitating the development of the probabilistic forecast reconciliation in section~\ref{sec:reconciliation}. 
-
-Recall that $\bm{y}_t \in \mathbb{R}^n$ is a $n$-dimensional time series subject to the linear aggregation constraint $\bm{y}_t = \bm{S}\bm{b}_t$, where $\bm{b}_t \in \mathbb{R}^m$ and $\bm{S}$ is an $n \times m$ constant matrix.
 
 \begin{definition}[Coherent subspace]\label{def:cohspace}
  The $m$-dimensional linear subspace $\mathfrak{s}\subset \mathbb{R}^n$ that is spanned by the columns of $\bm{S}$, i.e. $\mathfrak{s}=\mbox{span}(\bm{S})$, is defined as the {\em coherent space}. 
@@ -228,7 +225,7 @@ Let $(\mathbb{R}^m, \mathscr{F}_{\mathbb{R}^m}, \nu)$ be a probability triple, w
       \breve{\nu}(s(\mathcal{B})) = \nu(\mathcal{B}) \quad \forall  \mathcal{B} \in \mathscr{F}_{\mathbb{R}^m},
     $$    
 \end{definition}
-A probabilistic forecast for time $t+h$ is coherent if uncertainty in $\bm{y_{t+h|h}}$ conditional on all information up to time $t$ is characterised by the probability triple $(\mathfrak{s},\mathscr{F}_{\mathfrak{s}},\breve{\nu})$.
+A probabilistic forecast for time $t+h$ is coherent if uncertainty in ${\bm y}_{t+h}$ conditional on all information up to time $t$ is characterised by the probability triple $(\mathfrak{s},\mathscr{F}_{\mathfrak{s}},\breve{\nu})$.
 
 %Definition~\ref{def:cohprob} implies the probability measure on $\mathbb{C}^m$ is equivalent to the probability measure on $(\mathbb{R}^m, \bm{\mathscr{F}}^m)$. Hence, there is no density anywhere outside the linear subspace $\mathbb{C}^m$. That is, a \textit{coherent probability density forecast} is any density $\bm{f}(\breve{\bm{y}}_{t+h})$ such that $\bm{f}(\breve{\bm{y}}_{t+h})=0$ for all $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}^{n-m}$. 
 
