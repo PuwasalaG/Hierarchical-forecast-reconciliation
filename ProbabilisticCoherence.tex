@@ -84,7 +84,8 @@
 
 Large collections of time series often follow some aggregation structure.  For example, the electricity demand of a country can be disaggregated according to a geographical hierarchy of states, cities, and individual households or by a temporal hierarchy of yearly, quarterly and monthly demand. In these so-called hierarchical time series, forecasts are often required for all individual series.  To ensure aligned decision making it is important for forecasts at the most disaggregated - or bottom-level - to add up to forecasts at more aggregated - or higher - levels. This property is referred to as ``coherence''.  This issue has been extensively covered for point forecasting in a literature we review below, while the case of probabilistic forecasting is a gap that we seek to address in this work.
 
-Traditional approaches to ensure coherent point forecasts produce first-stage forecasts at a single level.  To describe these we use the small hierarchy in Figure~\ref{fig1}. In the bottom-up \citep{Dunn1976} approach, forecasts are produced at the most disaggregated level (Series {\em AA}, {\em AB}, {\em BA} and {\em BB}) and then summed to recover all top level-series.  Alternatively, in the top-down approach \citep{Gross1990} a top-level forecast is first produced (Series {\em Tot}) and bottom level forecasts are recovered as  historical or forecasted proportions of the top-level forecast. A middle-out approach is a hybrid between these two that for the hierarchy below would produce first stage forecasts for Series {\em A} and {\em B}.
+Traditional approaches to ensure coherent point forecasts produce first-stage forecasts at a single level.  To describe these we use the small hierarchy in Figure~\ref{fig1} where the variable labelled $Tot$ is the sum of the series $A$
+and series $B$, the series $A$ is the sum of series $AA$ and series $AB$ and the series $B$ is the sum of the series $BA$ and $BB$.  In the bottom-up approach \citep{Dunn1976}, forecasts are produced at the most disaggregated level (Series $AA$, $AB$, $BA$ and $BB$) and then summed to recover all top level-series.  Alternatively, in the top-down approach \citep{Gross1990} a top-level forecast is first produced (Series $Tot$) and bottom level forecasts are recovered as  historical or forecasted proportions of the top-level forecast. A middle-out approach is a hybrid between these two that for the hierarchy below would produce first stage forecasts for Series $A$ and $B$.
 
 \begin{figure}[H]
 	\begin{center}
@@ -106,7 +107,7 @@ To facilitate the extension of point forecast reconciliation to probabilistic fo
 
 We also cover the issue of forecast evaluation of probabilistic forecasts via scoring rules.  In particular we prove that for a coherent data generating process, the log score is not proper with respect to incoherent forecasts.  As such we recommend the use of the energy score and variogram score for comparing reconciled to unreconciled forecasts.  Two or more reconciled forecasts can be compared using log score, energy score or variogram score, although we show that comparisons should be  made on the full hierarchy for the latter two scores.  
 
-The remainder of the papers is  structured as follows.   In Section~\ref{sec:notation}, hierarchical time series are discussed in general and notation is  defined.  In section \ref{sec:definitions} coherence is defined geometrically for both point and probabilistic forecasts.  Section~\ref{sec:reconciliation} contains definitions of point and probabilistic forecast reconciliation as well as our main theoretical results.  In Section~\ref{sec:evaluation} we consider the evaluation of probabilistic hierarchical forecasts via scoring rules while a simulation study comparing unreconciled probabilistic forecasts and different kinds of reconciled probabilistic forecasts is provided in Section~\ref{sec:gaussian} and Section~\ref{sec:conclusions} concludes.
+The remainder of the papers is  structured as follows.  In section \ref{sec:definitions} coherence is defined geometrically for both point and probabilistic forecasts.  Section~\ref{sec:reconciliation} contains definitions of point and probabilistic forecast reconciliation as well as our main theoretical results.  In Section~\ref{sec:evaluation} we consider the evaluation of probabilistic hierarchical forecasts via scoring rules while a simulation study comparing unreconciled probabilistic forecasts and different kinds of reconciled probabilistic forecasts is provided in Section~\ref{sec:gaussian} and Section~\ref{sec:conclusions} concludes.
 
 
 
@@ -133,16 +134,15 @@ The remainder of the papers is  structured as follows.   In Section~\ref{sec:not
 %We conclude with some thoughts on extensions and limitations in Section~\ref{sec:conclusions}.
 
 
-\section{Hierarchical Time Series}\label{sec:notation}
+%\section{Hierarchical Time Series}\label{sec:notation}
+\section{Coherent forecasts}\label{sec:definitions}
+\subsection{Notation and Preliminaries}\label{sec:notation}
 
-In the section, and throughout the paper, we will try to follow notational conventions used in \citet{Wickramasuriya2017} as much as possible.  A {\em hierarchical time series} is a collection of $n$ variables where some variables are aggregates of other variables.  For example in the hierarchy depicted in Figure~\ref{fig1} below, the variable labelled $Tot$ is the sum of the series $A$
-and series $B$, the series $A$ is the sum of series $AA$ and series $AB$ and the series $B$ is the sum of the series $BA$ and $BB$.  The {\em bottom level series} are defined as those $m$ variables that cannot be formed as aggregates of other variables, in the example in Figure~\ref{fig1} these are the series $AA$, $AB$, $BA$ and $BB$. 
-
-We let $\bm{y}_t \in \mathbb{R}^n$ be a vector comprised of observations of all variables in the hierarchy at time $t$,  and $\bm{b}_t \in \mathbb{R}^m$ is a vector comprised of observations of all bottom-level series at time $t$. The hierarchical structure of the data imply the following holds for all $t$
+Throughout the paper, we will follow notational conventions used in \citet{Wickramasuriya2017} as much as possible.  A {\em hierarchical time series} is a collection of $n$ variables where some variables are aggregates of other variables and we let $\bm{y}_t \in \mathbb{R}^n$ be a vector comprised of observations of all variables in the hierarchy at time $t$. For example for the hierarchy in Figure~\ref{fig1}, $n=7$ and $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$.  The {\em bottom level series} are defined as those $m$ variables that cannot be formed as aggregates of other variables, we let $\bm{b}_t \in \mathbb{R}^m$ be a vector comprised of observations of all bottom-level series at time $t$.  For example for the hierarchy in Figure~\ref{fig1}, $m=4$ and $\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$.  The hierarchical structure of the data imply the following holds for all $t$
 \begin{equation}
   \bm{y}_t = \bm{Sb}_t,
 \end{equation}
-where $\bm{S}$ is an $n \times m$ constant matrix that encodes the aggregation constraints.  For the hierarchy in Figure~\ref{fig1}, $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $m=4$, $n=7$, and 
+where $\bm{S}$ is an $n \times m$ constant matrix that encodes the aggregation constraints.  For the hierarchy in Figure~\ref{fig1}
 $$ 
   \bm{S} = \begin{pmatrix} 
                1& 1 &1 &1  \\ 
@@ -154,7 +154,7 @@ $$
 
 where $\bm{I}_4$ is a $4\times 4$ identity matrix.  
 
-\section{Coherent forecasts}\label{sec:definitions}
+\subsection{Coherent Point Forecasts}\label{sec:cohpointf}
 
 It is desirable that forecasts, whether point forecasts or probabilistic forecasts, should in some sense respect aggregation constraints.  We follow other authors \cite{Wickramasuriya2017}\todo{FPP?} in using the nomenclature {\em coherence} to describe this property.   
 %While coherent point forecasts have been discussed many times previously, the definitions of coherence previously given are vague and are not easily extended to the situation of probabilistic forecasting.
@@ -217,6 +217,8 @@ Also at times is  will be useful to think of pre-multiplication by $\bm{S}$ as a
 \begin{definition}[Coherent Point Forecasts]\label{def:cohpoint}
   Let $\breve{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ be a point forecast of the values of all series in the hierarchy at time $t+h$,  made using information up to and including time $t$.  Then $\breve{\bm{y}}_{t+h|t}$ is \emph{coherent} if $\breve{\bm{y}}_{t+h|t} \in \mathfrak{s}$. 
 \end{definition}
+
+\subsection{Coherent Probabilistic Forecasts}\label{sec:cohprobf}
 
 Let $(\mathbb{R}^m, \mathscr{F}_{\mathbb{R}^m}, \nu)$ be a probability triple, where $\mathscr{F}_{\mathbb{R}^m}$ is the usual $\sigma$-algebra on $\mathbb{R}^m$. Let $\breve{\nu}$ be a probability measure on $\mathfrak{s}$ with $\sigma$-algebra $\mathscr{F}_{\mathfrak{s}}$.  Here $\mathscr{F}_{\mathfrak{s}}$ is formed as collection of sets $s(\mathcal{B})$, where $s(\mathcal{B})$ denotes the image of the set $\mathcal{B}\in \mathscr{F}_{\mathbb{R}^m}$ under the mapping $s(.)$.
 
