@@ -821,7 +821,7 @@ The properties of multivariate scoring rules in the context of evaluating reconc
 
 %All of these forecasting methods are well-established in the context of point forecast reconciliation \citep{Hyndman2011, Hyndman2016,Wickramasuriya2017}. Here, we are showing how these reconciliation methods can be used in the context of probabilistic forecast reconciliation, at least in the Gaussian framework.
 
-We now turn our attention to comparing different reconciliation methods in a simulation study where the data is conditionally Gaussian.  We choose the Gaussian case due to its analytical tractability which allows for evaluation on the basis of all scoring rules (including the log score).  The non-Gaussian case lies beyond the scope of this simulation study, but can be handled by a bootstrapping approach proposed in separate work.
+We now turn our attention to comparing different reconciliation methods in a simulation study where the data is conditionally Gaussian.  We choose the Gaussian case due to its analytical tractability which allows for evaluation using all scoring rules (including the log score).  The non-Gaussian case lies beyond the scope of this simulation study, but can be handled by a bootstrapping approach proposed in separate work.
 
 For  the data generating process, we consider the hierarchy given in Figure~\ref{fig1}, comprising two aggregation levels with four bottom-level series. Each bottom-level series will be generated first, and then summed to obtain the data for the upper-level series. In practice, hierarchical time series tend to contain much noisier series at lower levels of aggregation. In order to replicate this feature in our simulations, we follow the data generating process proposed by \citet{Wickramasuriya2017}.
 
@@ -845,35 +845,36 @@ To ensure noisier disaggregate series than aggregate series, we choose $\bm{\Sig
 $$
 \text{Var}(\varepsilon_{AA,t}+\varepsilon_{AB,t}+\varepsilon_{BA,t}+\varepsilon_{BB,t}) \le \text{Var}(\varepsilon_{AA,t}+\varepsilon_{AB,t}-v_t) \le \text{Var}(\varepsilon_{AA,t}+u_t-0.5v_t)\,,
 $$
-and similar inequalities hold when $\varepsilon_{AA,t}$ is replaced by $\varepsilon_{AB,t}$, $\varepsilon_{BA,t}$ and $\varepsilon_{BB,t}$ in the second and third terms.
+and similar inequalities hold when $\varepsilon_{AA,t}$ is replaced by $\varepsilon_{AB,t}$, $\varepsilon_{BA,t}$ and $\varepsilon_{BB,t}$ in the third term.
 %Therefore
 %$$
 %\bm{l}_1\bm{\Sigma} \bm{l}_1' \le \bm{l}_2\bm{\Sigma} \bm{l}_2' + \sigma^2_v \le  \bm{l}_3\bm{\Sigma} \bm{l}_3' + \sigma^2_u + \frac{1}{4}\sigma^2_v,
 %$$
 %where $\bm{l}_1 = (1,1,1,1)'$, $\bm{l}_2 = (1,1,0,0)'$ and $\bm{l}_3 = (1,0,0,0)'$, and hence
 %$$\bm{l}_1\bm{\Sigma} \bm{l}_1' - \bm{l}_2\bm{\Sigma} \bm{l}_2' \le \sigma^2_v \le \frac{4}{3}(\sigma^2_u + \bm{l}_3\bm{\Sigma} \bm{l}_3' - \bm{l}_2\bm{\Sigma} \bm{l}_2').$$
-The values of $\bm{\Sigma}$, $\sigma^2_u$ and $\sigma^2_v$, that we use and which satisfy these constraints are:
-$\bm{\Sigma} =
+The values of $\bm{\Sigma}$, $\sigma^2_u$ and $\sigma^2_v$, that we use and which satisfy these constraints are $\sigma^2_u = 19$, $\sigma^2_u = 18$ and
+$$
+\bm{\Sigma} =
 \begin{pmatrix}
 5.0 & 3.1 & 0.6 & 0.4 \\
 3.1 & 4.0 & 0.9 & 1.4 \\
 0.6 & 0.9 & 2.0 & 1.8 \\
 0.4 & 1.4 & 1.8 & 3.0 \\
-\end{pmatrix}$,
-$\sigma^2_u = 19$ and $\sigma^2_u = 18$ in our simulation setting.
+\end{pmatrix}\,.
+$$
 
-We generate data a sample size of $T=501$. Univariate ARIMA models are selected for each series using the \textit{auto.arima} function in the \textit{forecast} package \citep{hyndman2017forecasting} in R \citep{Rcore}.  The same package was used to fit each series independently using the first 500 observations, and evaluate 1-step ahead base (incoherent) probabilstic forecasts. These were then reconciled using different projections summarzied in Table~\ref{table:2}. This process was replicated using $1000$ different data sets from the same data generating processes.\todo{Are the DGPs the same in all cases?}
+We generate data with a sample size of $T=501$. Univariate ARIMA models are selected for each series using the \textit{auto.arima} function in the \textit{forecast} package \citep{hyndman2017forecasting} in R \citep{Rcore}.  The same package was used to fit each series independently using the first 500 observations, and evaluate 1-step ahead base (incoherent) probabilistic forecasts. These were then reconciled using different projections summarised in Table~\ref{table:2}. This process was replicated using $1000$ different data sets from the same data generating processes.
 
-To assess the predictive performance of different forecasting methods, we use scoring rules as discussed in Section~\ref{sec:evaluation}. To facilitate comparisons, we report skill scores \citep{Gneiting2007}. For a given forecasting method, evaluated by a particular scoring rule $S(\cdot)$, the skill score %is calculated as
+To assess the predictive performance of different forecasting methods, we use scoring rules as discussed in Section~\ref{sec:evaluation}. To facilitate comparisons, we report skill scores \citep{Gneiting2007}. For a given forecasting method, evaluated by a particular scoring rule, the skill score %is calculated as
 %\begin{equation}
 %Ss[S_B(\cdot)] = \frac{S_B(\bm{Y},\bm{y})^{\text{ref}} - S_B(\breve{\bm{Y}},\bm{y})}{S_B(\bm{Y},\bm{y})^{\text{ref}}}\times 100\%,
 %\end{equation}
 %where $S_B(\cdot)$ is the average score over $B$ samples and $S_B(\bm{Y},\bm{y})^{\text{ref}}$ is the average score for the reference forecasting method. Thus $Ss[S_B(\cdot)]$ 
 gives the percentage improvement of the preferred forecasting method relative to a reference method. A negative valued skill score indicates that a method is worse than the reference method, whereas any positive value indicates that method is superior to the reference method.
 
-Table~\ref{table:3} summarizes the forecasting performance of unreconciled, bottom-up, OLS, WLS and two MinT reconciliation methods using log score, energy score and variogram score.  In all cases skill scores are calculated with the bottom-up method as reference.  All log scores are evaluated on the basis of bottom level series only, however these only differ from the log scores for the full hierarchy by a fixed constant.  The cell for log score of unreconciled forecasts is left blank since the log score is not proper in this context.  Overall, the MinT methods provide the best performance irrespective of the scoring rule, and all methods that reconcile using information at all levels of the forecast improve upon unreconciled forecasts.  Bottom up forecasts perform even worse than unreconciled forecasts.
+Table~\ref{table:3} summarizes the forecasting performance of unreconciled, bottom-up, OLS, WLS and two MinT reconciliation methods using log score, energy score and variogram score.  In all cases skill scores are calculated with the bottom-up method as reference.  All log scores are evaluated on the basis of bottom level series only, however these only differ from the log scores for the full hierarchy by a fixed constant.  The cell for log score of unreconciled forecasts is left blank since the log score is not proper in this context.  Overall, the MinT methods provide the best performance irrespective of the scoring rule, and all methods that reconcile using information at all levels of the forecast improve upon unreconciled forecasts.  Bottom up forecasts perform even worse than unreconciled forecasts in some cases.
 
-Tables~\ref{table:4} and~\ref{table:5} break down the forecasting performance of different reconciliation methods by considering univariate scores on each individual margin. The log score and CRPS are considered while skill scores are computed with the unreconciled forecast as a reference.  When broken down in this fashion, the methods based on MinT perform best for all series and always outperform bottom up and unreconciled forecasts.  The same cannot be said for OLS which performs worse than bottom up and incoherent forecasts on every individual series\todo{Puzzling it does so bad, but outperforms unreconciled on joint evaluation}.
+Tables~\ref{table:4} and~\ref{table:5} break down the forecasting performance of different reconciliation methods by considering univariate scores on each individual margin. The log score and CRPS are considered while skill scores are computed with the unreconciled forecast as a reference.  When broken down in this fashion, the methods based on MinT perform best for all series and always outperform bottom up and unreconciled forecasts.
 
 \begin{table}
 	\caption{Comparison of coherent forecasts. ``Energy score'' and ``Variogram score'' columns give scores based on the joint forecast distribution of whole hierarchy. ``Log score'' column gives the log scores of the joint forecast distribution of bottom level. ``Skill score'' columns give the percentage skill score with reference to the bottom-up method. Entries in these columns show the percentage increase of score for different reconciliation methods relative to the bottom-up method. }\label{table:3}
@@ -956,7 +957,7 @@ Tables~\ref{table:4} and~\ref{table:5} break down the forecasting performance of
 
 %Although the problem of hierarchical point forecasts is well studied in the literature, there is a lack of attention in the context of probabilistic forecasts. Thus we attempted to fill this gap in the literature by providing substantial theoretical background to the problem. 
 
-By redefining coherent forecasts and forecast reconciliation in geometric terms we have established two new theoretical results that support the use of projections for point forecast reconciliation, and crucially have extended these concepts to probabilistic forecasting.  We show that for elliptical distributions, the true predictive density can be recovered by linear reconciliation and establish conditions for which this linear mapping is a projection.  Although this optimal projection cannot feasibly be obtained in practice, a projection similar to the MinT procedure provides a good approximation in practice.  This is supported by the results of a simulation study.  Finally, we also discuss strategies for evaluating probabilistic forecasts for hierarchical time series establishing a key results regarding the impropriety of the log score with respect to incoherent forecasts.
+By redefining coherent forecasts and forecast reconciliation in geometric terms we have established two new theoretical results that support the use of projections for point forecast reconciliation, and crucially have extended these concepts to probabilistic forecasting.  We show that for elliptical distributions, the true predictive density can be recovered by linear reconciliation and establish conditions for when this linear mapping is a projection.  Although this optimal projection cannot feasibly be obtained in practice, a projection similar to the MinT procedure provides a good approximation in practice.  This is supported by the results of a simulation study.  Finally, we also discuss strategies for evaluating probabilistic forecasts for hierarchical time series establishing a key results regarding the impropriety of the log score with respect to incoherent forecasts.
 
 In many ways this paper sets up a substantial future research agenda.  For example, having defined what amounts to an entire class of reconciliation methods for probabilistic forecasts it will be worthwhile investigating which specific projections are optimal.  This is likely to depend on the specific scoring rule employed as well as the properties of base forecasts.  Another avenue worth investigation is to consider whether it is possible to recover the true predictive distribution for non-elliptical distributions possible via a non-linear mapping $g(.)$.
 
