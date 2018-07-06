@@ -242,7 +242,7 @@ To  the best of our knowledge, the only other definition of coherent probabilist
 
 \section{Forecast reconciliation}\label{sec:reconciliation}
 
-Initially we define point forecast reconciliation, before extending the idea to the probabilistic setting.
+As discussed, reconciliation is distinct from coherence, since the former refers to a process whereby incoherent forecasts are made coherent.  Initially we define point forecast reconciliation, before extending the idea to the probabilistic setting.
 
 \subsection{Point forecast reconciliation}
 
@@ -256,27 +256,27 @@ Initially we define point forecast reconciliation, before extending the idea to 
     
 \end{definition}
 
-Many choices of $g(.)$ currently extant in the literature including the so called OLS \cite{Hyndman2011}, WLS \todo{First WLS  reference?} and MinT\cite{Wickramasuriya2017} methods are special cases where $s\circ g$ is a projection and are summarised in Table~\ref{table:2}.  These can be defined so that ${\bm G}=\left({\bm R'_{\perp}}{\bm S}\right)^{-1}{\bm S}'$ and ${\bm d}={\bm 0}$.  Here, ${\bm R_{\perp}}$ is a $n\times m$ orthogonal complement to the an $n \times (n-m)$ matrix $\bm{R}$ where the columns of the latter span the null space of $\mathfrak{s}_{\perp}$.  For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$, is the vector $(1,-1,-1)$ which is orthogonal (in the Euclidean sense) to the columns of $\bm{S}$.  In this case, the matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$.  For the example provided, ${\bm R}_\perp'={\bm S}$ and reconciliation corresponds to the so called `OLS' method \cite{Hyndman2011}.  For the case where ${\bm R}_\perp'\neq{\bm S}$, for example WLS and MinT, there are two possible interpretations.  One is that these are oblique projections in Euclidean space where the columns of $\bm{R}$ are `directions' along which incoherent point forecasts are projected onto the coherent space $\mathfrak{s}$.  Alternatively, since ${\bm R}_\perp'$ is usually written in the form ${\bm S}'{\bm W}^{-1}$, these projections can be thought of as orthogonal projections after applying the transformation ${\bm W^{-1/2}}$.  A schematic providing a geometric interpretation of point reconciliation is given in Figure~\ref{fig:pointfr_sch}. 
+Many choices of $g(.)$ currently extant in the literature including the OLS, WLS and MinT methods are special cases where $s\circ g$ is a projection.  These can be defined so that ${\bm G}=\left({\bm R'_{\perp}}{\bm S}\right)^{-1}{\bm R}_{\perp}'$ and ${\bm d}={\bm 0}$.  Here, ${\bm R_{\perp}}$ is a $n\times m$ orthogonal complement to the an $n \times (n-m)$ matrix $\bm{R}$ where the columns of the latter span the null space of $\mathfrak{s}$.  For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$, is the vector $(1,-1,-1)$ which is orthogonal (in the Euclidean sense) to the columns of $\bm{S}$.  In this case, the matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$.  For this example, ${\bm R}_\perp'={\bm S}$ and reconciliation corresponds to the OLS method.  For the case where ${\bm R}_\perp'\neq{\bm S}$, for example WLS and MinT, there are two possible interpretations.  One is that these are oblique projections in Euclidean space where the columns of $\bm{R}$ are `directions' along which incoherent point forecasts are projected onto the coherent space $\mathfrak{s}$.  Alternatively, since ${\bm R}_\perp'$ is usually written in the form ${\bm S}'{\bm W}^{-1}$, these projections can be thought of as orthogonal projections after pre-multiplying by ${\bm W^{-1/2}}$.  A schematic providing a geometric interpretation of point reconciliation is given in Figure~\ref{fig:pointfr_sch}, while  and are Table~\ref{table:2} summarises existing reconciliation methods. 
 
-\begin{table}
-	\caption{Several possible estimates of $\bm{R}'_\bot$. For $n<T$, $\bm{\hat{W}}_{T+1}^{sam}$ is an unbiased and consistent estimator for $\bm{W}_{T+1}$. $\bm{\hat{W}}_{T+1}^{shr}$ is a shrinkage estimator which is more suitable for large dimensions. $\bm{\hat{W}}_{T+1}^{shr}$ was proposed by \citet{Schafer2005} and also used by \citet{Wickramasuriya2017}, where Diag($\bm{A}$) denotes the diagonal matrix of $\bm{A}$, $\tau = \frac{\sum_{i \ne j}\hat{\text{Var}}(\hat{r}_{ij})}{\sum_{i \ne j}\hat{r}_{ij}^2}$, and $\hat{r}_{ij}$ is the $ij$th element of the sample correlation matrix.}\label{table:2}
+\begin{table}[!h]
+	\caption{Summary of reconciliation methods that are projections. Here, $\bm{\hat{W}}^{sam}$ is the variance covariance matrix of one-step ahead forecast errors, while $\bm{\hat{W}}^{shr}$ is a shrinkage estimator more suited to large dimensions proposed by \citet{Schafer2005}.  Also $\tau = \frac{\sum_{i \ne j}\hat{\text{Var}}(\hat{w}_{ij})}{\sum_{i \ne j}{\hat{w}}^2_{ij}}$ where $w_{ij}$ are elements of $\hat{\bm W}^{sam}$.}\label{table:2}
 	\centering\setstretch{1.5}
 	\begin{tabular}{lll}
 		\toprule
-		\textbf{Method} & \textbf{Estimate of $\bm{W}_{h}$} & \textbf{Estimate of $\bm{R}'_\bot$}      \\
+		\textbf{Method} & \textbf{$\bm{W}$} & \textbf{ $\bm{R}'_\bot$}      \\
 		\midrule
 		OLS             &
 		$\bm{I}$  &
 		$\bm{S}'$  \\
 		MinT(Sample)    &
-		$\bm{\hat{W}}_{T+1}^{sam}$ &
-		$\bm{S}'(\bm{\hat{W}}_{T+1}^{sam})^{-1}$ \\
+		$\bm{\hat{W}}^{sam}$ &
+		$\bm{S}'(\bm{\hat{W}}^{sam})^{-1}$ \\
 		MinT(Shrink)    &
-		$\bm{\hat{W}}_{T+1}^{shr} = \tau\text{Diag}(\bm{\hat{W}}_{T+1}^{sam}) + (1-\tau)\bm{\hat{W}}_{T+1}^{sam}$ &
-		$\bm{S}'(\bm{\hat{W}}_{T+1}^{shr})^{-1}$ \\
+		$\tau\text{Diag}(\bm{\hat{W}}^{sam}) + (1-\tau)\bm{\hat{W}}^{sam}$ &
+		$\bm{S}'(\bm{\hat{W}}^{shr})^{-1}$ \\
 		WLS       &
-		$\bm{\hat{W}}_{T+1}^{wls} = \text{Diag}(\bm{\hat{W}}_{T+1}^{shr})$ &
-		$\bm{S}'(\bm{\hat{W}}_{T+1}^{wls})^{-1}$ \\
+		$\text{Diag}(\bm{\hat{W}}^{shr})$ &
+		$\bm{S}'(\bm{\hat{W}}^{wls})^{-1}$ \\
 		\bottomrule
 	\end{tabular}
 \end{table}
@@ -299,10 +299,10 @@ Many choices of $g(.)$ currently extant in the literature including the so calle
 
 \begin{figure}
 	\input{Figs/pointforerec_schematic.tex}
-	\caption{Summary of probabilistic point reconciliation.  The mapping $G(.)$ projects the unreconciled forecast $\hat{\bm y}$ onto   Note that since the smallest hierarchy involves three dimensions, this figure is only a schematic}\label{fig:pointfr_sch} 
+	\caption{Summary of probabilistic point reconciliation.  The mapping $s\circ g$ projects the unreconciled forecast $\hat{\bm y}$ onto $\mathfrak{s}$.  Note that since the smallest hierarchy involves three dimensions, this figure is only a schematic}\label{fig:pointfr_sch} 
 \end{figure}
 
-To illustrate further note that the columns of $\bm{S}$ and $\bm{R}$ provide a basis for $\mathbb{R}^n$.  As such any incoherent set of point forecasts $\hat{\bm{y}}_{t+h|t} \in \mathbb{R}^n$, can be expressed in terms of coordinates in the basis defined by $\bm{S}$ and $\bm{R}$. Let $\tilde{\bm{b}}_{t+h|t}$ and $\tilde{\bm{a}}_{t+h|t}$ be the coordinates corresponding to $\bm{S}$ and $\bm{R}$ respectively after a change of basis. The process of reconciliation involves setting $\tilde{\bm{b}}_{t+h|t}$ to be the values of the reconciled bottom-level series and setting $\tilde{\bm{a}}_{t+h}=\bm{0}$ to ensure coherence. From properties of linear algebra it follows that 
+To illustrate further note that the columns of $\bm{S}$ and $\bm{R}$ provide a basis for $\mathbb{R}^n$.  As such any incoherent set of point forecasts $\hat{\bm{y}}_{t+h|t} \in \mathbb{R}^n$, can be expressed in terms of coordinates in the basis defined by $\bm{S}$ and $\bm{R}$. Let $\tilde{\bm{b}}_{t+h|t}$ and $\tilde{\bm{a}}_{t+h|t}$ be the coordinates corresponding to $\bm{S}$ and $\bm{R}$ respectively after a change of basis. The process of reconciliation involves setting the values of the reconciled bottom-level series to be $\tilde{\bm{b}}_{t+h|t}$ and setting $\tilde{\bm{a}}_{t+h}=\bm{0}$ to ensure coherence. From properties of linear algebra it follows that 
 %\[
 %(\bm{S} ~ \vdots~ \bm{R})
 %(\tilde{\bm{b}}'_{t+h},~ \tilde{\bm{t}}'_{t+h})'
@@ -333,8 +333,8 @@ In order to find $\tilde{\bm{b}}_{t+h|t}$ we require the inverse $(\bm{S} ~ \bm{
 \end{equation}
 where $\bm{S}_{\bot}$ is the orthogonal complements of $\bm{S}$. Thus it follows that $\tilde{\bm{b}}_{t+h}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h}$ and $\tilde{\bm{y}}_{t+h|t}=\bm{S}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h|t}$.  Here $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$ corresponds to $\bm{G}$ as defined previously.
 
-Point reconciliation methods based on projections will always minimise the distance between unreconciled and reconciled forecasts, however the specific distance will depend on the choice of ${\bm R}$.  For example \cite{Hyndman2011} consider $\tilde{\bm{y}}^{OLS}_{t+h}=\bm{S}(\bm{S}' \bm{S})^{-1}\bm{S}' \hat{\bm{y}}_{t+h}$ which minimises the Euclidean distance between $\hat{\bm y}$ and $\tilde{\bm y}$. \cite{Wickramasuriya2017} consider $\tilde{\bm{y}}^{MinT}_{t+h}=\bm{S}(\bm{S}' \bm{W}^{-1}_{h}\bm{S})^{-1}\bm{S}'\bm{W}^{-1}_{h} \hat{\bm{y}}_{t+h}$, where ${\bm W}$ is an estimate of the variance covariance matrix of the unreconciled errors.  This 
-minimises the Mahalonobis distance between $\hat{\bm y}$ and $\tilde{\bm y}$.  Bottom up methods minimise distance between reconciled and unreconciled forecasts only along dimensions corresponding to the bottom level series.  As such, bottom up methods should be thought of as a boundary case of reconciliation methods, since they ultimately do not use information at all levels of the hierarchy.\todo{mention reducing distance to truth?}.
+Point reconciliation methods based on projections will always minimise the distance between unreconciled and reconciled forecasts, however the specific distance will depend on the choice of ${\bm R}$.  For example OLS minimises the Euclidean distance between $\hat{\bm y}$ and $\tilde{\bm y}$. \cite{Wickramasuriya2017} while MinT
+minimises the Mahalonobis distance between $\hat{\bm y}$ and $\tilde{\bm y}$.  Bottom up methods minimise distance between reconciled and unreconciled forecasts only along dimensions corresponding to the bottom level series.  As such, bottom up methods should be thought of as a boundary case of reconciliation methods, since they ultimately do not use information at all levels of the hierarchy.
 
 %\begin{equation} \label{4.4}
 %\begin{pmatrix}
@@ -384,7 +384,7 @@ minimises the Mahalonobis distance between $\hat{\bm y}$ and $\tilde{\bm y}$.  B
 Before generalising the concept of point reconciliation to probabilistic forecasts we state two theorems that motivate the use of projections for point forecast reconciliation.  First, let ${\bm \mu}_{t+h|t}:=E({\bm y}_{t+h}|{\bm y}_{1},\dots,{\bm y}_{t})$ and assume $\hat{\bm y}_{t+h|t}$ is an unbiased prediction, that is $E_{1:t}\left(\hat{\bm y}_{t+h|t}\right)=\mu_{t+h|t}$ where the subscript $1:t$ denotes an expectation taken over the training sample.
 
 \begin{theo}[Unbiasedness preserving property]
-  The reconciled point forecast will also be an unbiased prediction as long as $s\circ g$ is a projection 
+  For unbiased $\hat{\bm y}_{t+h|t}$, the reconciled point forecast will also be an unbiased prediction as long as $s\circ g$ is a projection 
 \end{theo}
 \begin{proof}
 	The expected value of the reconciled forecast is given by
@@ -395,7 +395,7 @@ Before generalising the concept of point reconciliation to probabilistic forecas
 	\end{align*}
 	Since the aggregation constraints hold for the true data generating process ${\bm \mu}_{t+h|t}$ must lie in $\mathfrak{s}$.  If ${\bm S}{\bm G}$ is a projection then it is equivalent to the identity map for all vectors that lie in its range.  Therefore ${\bm S}{\bm G}{\bm \mu}_{t+h|t}={\bm \mu}_{t+h|t}$ when ${\bm S}{\bm G}$ is a projection matrix.
 \end{proof}
-We note the same result does not hold for general ${\bm G}$ even though the range of $s\circ g$ is $\mathfrak{s}$.  Now let ${\bm y}_{t+h}$ be the realisation of the data generating process at time $t+h$ and let $||{\bm v}||_2$ be the L2 norm of vector ${\bm v}$.  The following theorem shows that reconciliation never increases, and in most cases reduces the sum of squared errors of point forecasts.
+We note the same result does not hold for general $g$ even when the range of $s\circ g$ is $\mathfrak{s}$.  Now let ${\bm y}_{t+h}$ be the realisation of the data generating process at time $t+h$ and let $||{\bm v}||_2$ be the L2 norm of vector ${\bm v}$.  The following theorem shows that reconciliation never increases, and in most cases reduces the sum of squared errors of point forecasts.
 
 \begin{theo}[Distance reducing property]
 	If $\tilde{\bm y}_{t+h|t}={\bm S}{\bm G}\hat{\bm y}_{t+h|t}$ where ${\bm G}$ is such that ${\bm S}{\bm G}$ is an orthogonal projection then the following inequality holds
