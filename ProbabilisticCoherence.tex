@@ -421,12 +421,10 @@ The inequality is strict whenever $\hat{\bm y}_{t+h|t}\notin\mathfrak{s}$.
 \subsection{Probabilistic forecast reconciliation}
 
 We now extend the methodology of point forecast reconciliation to probabilistic forecasts
-
 %For probabilistic forecasts, reconciliation implies finding the probability measure of the coherent forecasts using the information from an incoherent probabilistic forecast measure. A more formal definition is given below.
-
-  Let $(\mathbb{R}^n, \mathscr{F}_{\mathbb{R}^n}, \hat{\nu})$ be an probability triple, that is incoherent and that characterises forecast uncertainty for all variables in the hierarchy at time $t+h$ conditional on all information up to time $t$.  This may be obtained from the first stage of the forecasting process e.g. by modelling and forecasting each series individually.  Let $g:\mathbb{R}^n \rightarrow \mathbb{R}^m $ be a linear mapping.  Let $(\mathbb{R}^m, \mathscr{F}_{\mathbb{R}^m}, \nu)$ be a probability triple defined on $\mathbb{R}^m$.
+Let $(\mathbb{R}^n, \mathscr{F}_{\mathbb{R}^n}, \hat{\nu})$ be an probability triple, that is incoherent and that characterises forecast uncertainty for all variables in the hierarchy at time $t+h$ conditional on all information up to time $t$.  This is obtained from the first stage of the forecasting process e.g. by modelling and forecasting each series individually.  Let $g:\mathbb{R}^n \rightarrow \mathbb{R}^m $ be a linear mapping.  Let $(\mathbb{R}^m, \mathscr{F}_{\mathbb{R}^m}, \nu)$ be a probability triple defined on $\mathbb{R}^m$.
   \begin{definition} \label{def:reconprob}
-  We define the reconciled probability measure of $\hat{\nu}$ with respect to the mapping $g(.)$ as a probability measure $\tilde{\nu}$ on $\mathfrak{s}$ with $\sigma$-algebra $\mathscr{F}_\mathfrak{s}$ where the following holds
+  The reconciled probability measure of $\hat{\nu}$ with respect to the mapping $g(.)$ is a probability measure $\tilde{\nu}$ on $\mathfrak{s}$ with $\sigma$-algebra $\mathscr{F}_\mathfrak{s}$ where the following holds
   \begin{equation}
   \tilde{\nu}(s(\mathcal{B})) = \nu(\mathcal{B})= \hat{\nu}(g^{-1}(\mathcal{B})) \qquad \forall \mathcal{B} \in \mathscr{F}_{\mathbb{R}^m}\,,
   \end{equation}
@@ -439,12 +437,12 @@ This definition extends the notion of forecast reconciliation to the probabilist
 
 \begin{figure}
 	\input{Figs/probforerec_schematic.tex}
-	\caption{Summary of probabilistic forecast reconciliation.  The probability that ${\bm y}_{t+h|t}$ lies in the red line segment under the reconciled probabilistic forecast is defined to be equal to the probability that ${\bm y}_{t+h|t}$ lies in the shaded blue area under the unreconciled probabilistic forecast.  Note that since the smallest hierarchy involves three dimensions, this figure is only a schematic}\label{fig:probfr_sch} 
+	\caption{Summary of probabilistic forecast reconciliation.  The probability that ${\bm y}_{t+h}$ lies in the red line segment under the reconciled probabilistic forecast is defined to be equal to the probability that ${\bm y}_{t+h}$ lies in the shaded blue area under the unreconciled probabilistic forecast.  Note that since the smallest hierarchy involves three dimensions, this figure is only a schematic}\label{fig:probfr_sch} 
 \end{figure}
 
 Recall that when $s\circ g$ is a projection, the case of point forecast reconciliation could be broken down into three steps.  In the first, $\hat{\bm{y}}_{t+h|t}$ is transformed into coordinates $\tilde{\bm{b}}_{t+h|t}$ and $\tilde{\bm{a}}_{t+h|t}$ via a change of basis.  In the second, $\tilde{\bm{a}}_{t+h|t}$ is discarded and $\tilde{\bm{b}}_{t+h|t}$ are kept as the bottom level reconciled forecasts.  In the third, reconciled forecasts for the entire hierarchy are recovered via $\tilde{\bm{y}}_{t+h|t}=\bm{S}\tilde{\bm{b}}_{t+h|t}$.  We now outline the analogues to these three steps for probabilistic forecasts when predictive densities are available.
 
-While $\hat{\nu}$ is a probability measure for an $n$-vector $\hat{\bm{y}}_{t+h|t}$,  probability statements in terms of a different coordinate system can be made via an appropriate change of basis. Letting $f(.)$ be generic notation for a probability density functions and following the notation from our definition of point forecast reconciliation where $\hat{\bm{y}}_{t+h|t}=\bm{S}\tilde{\bm{b}}_{t+h|t}+\bm{R}\tilde{\bm{a}}_{t+h|t}$ we obtain
+While $\hat{\nu}$ is a probability measure for an $n$-vector $\hat{\bm{y}}_{t+h|t}$,  probability statements in terms of a different coordinate system can be made via an appropriate change of basis. Letting $f(.)$ be generic notation for a probability density function and following the notation from our definition of point forecast reconciliation where $\hat{\bm{y}}_{t+h|t}=\bm{S}\tilde{\bm{b}}_{t+h|t}+\bm{R}\tilde{\bm{a}}_{t+h|t}$ we obtain
 
 \begin{equation}
 f(\hat{\bm{y}}_{t+h|t})=f(\bm{S}\tilde{\bm{b}}_{t+h|t}+\bm{R}\tilde{\bm{a}}_{t+h|t})|\left(\bm{S}~\bm{R}\right)|
@@ -484,10 +482,10 @@ Suppose an unreconciled probabilistic forecast is Gaussian with mean $\hat{\bm \
   f(\hat{\bm{y}})=(2\pi)^{-n/2}|\hat{\bm{\Sigma}}|^{-1/2}\exp\left\{-\frac{1}{2}\left[(\hat{\bm y}-\hat{\bm \mu})'\hat{\bm{\Sigma}}^{-1}(\hat{\bm y}-\hat{\bm \mu})\right]\right\}
 \end{equation}
 
-After a change in basis
+In an alternative basis
 
 \begin{equation}
-f(\tilde{\bm b},\tilde{\bm a})=(2\pi)^{-\frac{n}{2}}\Big|\bm{\hat{\Sigma}}_{t+h}\Big|^{-\frac{1}{2}}\Big|(\bm{S} ~  \bm{R})\Big|\exp\left\{-\frac{1}{2}q\right\}\,,
+f(\tilde{\bm b},\tilde{\bm a})=(2\pi)^{-\frac{n}{2}}\Big|\bm{\hat{\Sigma}}\Big|^{-\frac{1}{2}}\Big|(\bm{S} ~  \bm{R})\Big|\exp\left\{-\frac{1}{2}q\right\}\,,
 \end{equation}
 where
 \begin{equation}
@@ -562,10 +560,10 @@ Which implies that the reconciled probabilistic forecast for the bottom level se
 \subsection{Elliptical Distributions}
 We now show that the true predictive distribution can be recovered for elliptical distributions via linear reconciliation.  Here, for any square matrix ${\bm C}$, ${\bm C}^{1/2}$ and ${\bm C}^{-1/2}$ are defined to satisfy ${\bm C}^{1/2}\left({\bm C}^{1/2}\right)'={\bm C}$ and ${\bm C}^{-1/2}\left({\bm C}^{-1/2}\right)'={\bm C}^{-1}$, for example ${\bm C}^{1/2}$ may be obtained via the Cholesky or eigenvalue decompositions. 
 \begin{theo}[Reconciliation for Elliptical Distributions]
-	Let an unreconciled probabilistic forecast come from the elliptical class with location parameter $\hat{\bm \mu}$ and scale matrix $\hat{\bm \Sigma}$.  Let the true predictive distribution of ${\bm y}_{t+h|t}$ also belong to the elliptical class with location parameter ${\bm \mu}$ and scale matrix ${\bm \Sigma}$.  Then the affine reconciliation mapping $g(\breve{\bm y})={\bm G}_{opt}\breve{\bm y}+{\bm d}_{opt}$ with $\bm{G}_{opt}={\bm A}{\bm\Sigma}^{-1/2}$ and ${\bm d}_{opt}={\bm \mu}-{\bm S}{\bm G}_{opt}\hat{\bm \mu}$ recovers the true predictive density where ${\bm A}$ is any $m\times n$ matrix such that ${\bm A}{\bm A}'={\bm \Omega}$ and ${\bm \Omega}$ is the true variance covariance matrix of the predictive distribution for the bottom level. 
+	Let an unreconciled probabilistic forecast come from the elliptical class with location parameter $\hat{\bm \mu}$ and scale matrix $\hat{\bm \Sigma}$.  Let the true predictive distribution of ${\bm y}_{t+h|t}$ also belong to the elliptical class with location parameter ${\bm \mu}$ and scale matrix ${\bm \Sigma}$.  Then the linear reconciliation mapping $g(\breve{\bm y})={\bm G}_{opt}\breve{\bm y}+{\bm d}_{opt}$ with $\bm{G}_{opt}={\bm A}{\bm\Sigma}^{-1/2}$ and ${\bm d}_{opt}={\bm \mu}-{\bm S}{\bm G}_{opt}\hat{\bm \mu}$ recovers the true predictive density where ${\bm A}$ is any $m\times n$ matrix such that ${\bm A}{\bm A}'={\bm \Omega}$ and ${\bm \Omega}$ is a sub-matrix of ${\bm \Sigma}$ corresponding to the bottom level series. 
 \end{theo}
 \begin{proof}
-   Since elliptical distributions are closed under affine transformations, and are closed under marginalisation, reconciliation of an elliptical distribution yields an elliptical distribution (although the unreconciled and unreconciled distributions may be different members of the class of elliptical distributions).  The scale matrix of the reconciled forecast is given by $\bm{S}\bm{G}_{opt}{\bm \Sigma}{\bm G}_{opt}'{\bm S}'$ while the location matrix is given by $\bm{S}\bm{G}_{opt}\hat{\bm \mu}+{\bm d}_{opt}$.  The reconciled scale matrix is 
+   Since elliptical distributions are closed under affine transformations, and are closed under marginalisation, reconciliation of an elliptical distribution yields an elliptical distribution (although the unreconciled and reconciled distributions may be different members of the class of elliptical distributions).  The scale matrix of the reconciled forecast is given by $\bm{S}\bm{G}_{opt}{\bm \Sigma}{\bm G}_{opt}'{\bm S}'$ while the location matrix is given by $\bm{S}\bm{G}_{opt}\hat{\bm \mu}+{\bm d}_{opt}$.  The reconciled scale matrix is 
    \begin{align*}
    \tilde{\bm \Sigma}_{opt}=&{\bm S}{\bm A}{\bm\Sigma}^{-1/2}{\bm \Sigma}\left({\bm\Sigma}^{-1/2}\right)'{\bm A}'{\bm S}'\\
    =&{\bm S}{\bm \Omega}{\bm S}'\\
@@ -577,14 +575,13 @@ We now show that the true predictive distribution can be recovered for elliptica
    =&{\bm \mu}\\
    \end{align*}
 \end{proof}	
-A number of insights can be drawn from this theorem.  First, although a linear mapping $g(.)$ can be used to recover the true density in the elliptical case, the same does not hold in general.  Second, $g(.)$ is not, in general, a projection matrix.  The conditions for which a the true predictive density can be recovered by reconciliation are given below.
+A number of insights can be drawn from this theorem.  First, although a linear mapping $g(.)$ can be used to recover the true predictive in the elliptical case, the same does not hold in general.  Second, $g(.)$ is not, in general, a projection matrix.  The conditions for which a the true predictive density can be recovered by a projection are given below.
 
 \begin{theo}[True predictive via projection]
-	Assume that the true predictive distribution is elliptical with location ${\bm mu}$ and scale ${\bm Sigma}$.  Consider reconciliation via a projection $g({\bm y})=({\bm R}'_{\perp}{\bm S})^{-1}{\bm R}'_{\perp}{\bm y}$
-	The true predictive distribution can be recovered via reconciliation of an elliptical distribution with location $\hat{\bm \mu}$ $\hat{\bm \Sigma}$ and scale when the following conditions hold.
+	Assume that the true predictive distribution is elliptical with location ${\bm \mu}$ and scale ${\bm \Sigma}$.  Consider reconciliation via a projection $g({\bm y})=({\bm R}'_{\perp}{\bm S})^{-1}{\bm R}'_{\perp}{\bm y}$. The true predictive distribution can be recovered via reconciliation of an elliptical distribution with location $\hat{\bm \mu}$ and scale $\hat{\bm \Sigma}$  when the following conditions hold.
 	\begin{align}
 	sp(\hat{\bm\mu}-{\bm \mu})&\subset sp(\bm{R})\\
-    sp(\bm{\Sigma}^{1/2}-{\bm \Sigma}^{1/2})&\subset sp({\bm R})\\
+    sp(\hat{\bm \Sigma}^{1/2}-{\bm \Sigma}^{1/2})&\subset sp({\bm R})\\
 	\end{align}
 \end{theo}
 \begin{proof}
@@ -594,9 +591,9 @@ A number of insights can be drawn from this theorem.  First, although a linear m
 		&={\bm S}({\bm R}'_{\perp}{\bm S})^{-1}{\bm R}'_{\perp}\left(\hat{\bm \mu}+{\bm \mu}-{\bm \mu}\right)\\
 		&={\bm S}({\bm R}'_{\perp}{\bm S})^{-1}{\bm R}'_{\perp}{\bm \mu}+{\bm S}({\bm R}'_{\perp}{\bm S})^{-1}{\bm R}'_{\perp}\left(\hat{\bm \mu}-{\bm \mu}\right)\\
 	\end{align*}
-  Since ${\bm S}({\bm R}'_{\perp}{\bm S})^{-1}{\bm R}'_{\perp}$ is a projection onto $\mathfrak{s}$ and ${\bm \mu}\in\mathfrak{s}$ the first term simplified to ${\bm \mu}$.  If ${\bm \mu}-\hat{\bm \mu}$ lies in the span of ${\bm R}$ then multiplication by ${\bm R}'_{\perp}$ reduced the second term to ${\bm 0}$.  By a similar argument it can be shown that $\tilde{\bm \Sigma}^{1/2}={\bm \Sigma}^{1/2}$.  The closure property of elliptical distributions under affine transformations ensures that the full true predictive distribution can be recovered.
+  Since ${\bm S}({\bm R}'_{\perp}{\bm S})^{-1}{\bm R}'_{\perp}$ is a projection onto $\mathfrak{s}$ and ${\bm \mu}\in\mathfrak{s}$ the first term simplifies to ${\bm \mu}$.  If ${\bm \mu}-\hat{\bm \mu}$ lies in the span of ${\bm R}$ then multiplication by ${\bm R}'_{\perp}$ reduces the second term to ${\bm 0}$.  By a similar argument it can be shown that $\tilde{\bm \Sigma}^{1/2}={\bm \Sigma}^{1/2}$.  The closure property of elliptical distributions under affine transformations ensures that the full true predictive distribution can be recovered.
 \end{proof}  
-Although these conditions will rarely hold in practice and only apply to a limited class of distributions they do provide some insight into selecting a projection for reconciliation.  If the value of $\hat{\bm \mu}$ were equi-probable in all directions then a projection orthogonal to $\mathfrak{s}$ would be a sensible choice for ${\bm R}$ since it would in some sense represent a `median' direction for ${\bm \mu}-\hat{\bm \mu}$.  However, the one step ahead in-sample errors are usually correlated suggesting that $\hat{\bm \mu}$ is more likely to fall in some directions than others.  As such an orthogonal projection after transformation by the inverse of the one step ahead in-sample errors may be more intuitively appealing.  This is exactly what the MinT projection estimates, and as simulations will show in Section~\ref{sec:gaussian}, this projection leads to the best empirical results.
+Although these conditions will rarely hold in practice and only apply to a limited class of distributions they do provide some insight into selecting a projection for reconciliation.  If the value of $\hat{\bm \mu}$ were equi-probable in all directions then a projection orthogonal to $\mathfrak{s}$ would be a sensible choice for ${\bm R}$ since it would in some sense represent a `median' direction for ${\bm \mu}-\hat{\bm \mu}$.  However, the one step ahead in-sample errors are usually correlated suggesting that $\hat{\bm \mu}$ is more likely to fall in some directions than others.  As such an orthogonal projection after transformation by the inverse of the one step ahead in-sample errors may be more intuitively appealing.  This is exactly what the MinT projection provides, and as simulations will show in Section~\ref{sec:gaussian}, this projection leads to the best empirical results.
 
 
 %However, these expressions do provide some insight on why some choices for ${\bm G}$ in the point forecast reconciliation literature may also work well for probabilistic forecasts.  To illustrate, first rearrange the equation for the optimal value of  $\bm{G}_{opt}={\bm\Omega}^{1/2}\hat{\bm\Sigma}^{-1/2}$ as ${\bm\Omega}^{1/2}=\bm{G}_{opt}\hat{\bm\Sigma}^{1/2}$. For arbitrary ${\bm G}\hat{\bm\Sigma}^{1/2}$ is an approximation for ${\bm\Omega}^{1/2}$.  This approximation has similarities with the way bottom level estimates are produced for point forecast reconciliation.  Rather than mapping a vector of point forecasts to reconcilied bottom level forecasts, the columns of  $\hat{\bm\Sigma}^{1/2}$ are mapped to an approximation of the columns of ${\bm\Omega}^{1/2}$.  The value for $\tilde{\bm \mu}_{opt}$ includes a projection of $\hat{\bm \mu}$ onto $\mathfrak{s}$. While it is infeasible to obtain the translation ${\bm d}$, it is worthwhile noting that this measures the difference between the reconciled mean and true mean. 
