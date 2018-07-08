@@ -173,11 +173,13 @@
 
 %% BIBLIOGRAPHY
 
+\makeatletter
 \@ifpackageloaded{biblatex}{}{\usepackage[style=authoryear-comp, backend=biber, natbib=true]{biblatex}}
+\makeatother
 \ExecuteBibliographyOptions{bibencoding=utf8,minnames=1,maxnames=3, maxbibnames=99,dashed=false,terseinits=true,giveninits=true,uniquename=false,uniquelist=false,doi=false, isbn=false,url=true,sortcites=false}
 
 
-\DeclareFieldFormat{url}{\url{#1}}
+\DeclareFieldFormat{url}{\texttt{\url{#1}}}
 \DeclareFieldFormat[article]{pages}{#1}
 \DeclareFieldFormat[inproceedings]{pages}{\lowercase{pp.}#1}
 \DeclareFieldFormat[incollection]{pages}{\lowercase{pp.}#1}
@@ -204,5 +206,8 @@
 \AtEveryCitekey{\clearfield{month}}
 
 \makeatletter
-%\DeclareDelimFormat[cbx@textcite]{nameyeardelim}{\addspace}
+\DeclareDelimFormat[cbx@textcite]{nameyeardelim}{\addspace}
 \makeatother
+\renewcommand*{\finalnamedelim}{%
+  %\ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}% there really should be no funny Oxford comma business here
+  \addspace\&\space}
