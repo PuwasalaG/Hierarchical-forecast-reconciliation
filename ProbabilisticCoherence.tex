@@ -99,7 +99,7 @@ Traditional approaches to ensure coherent point forecasts produce first-stage fo
 	\caption{An example of a two level hierarchical structure.}\label{fig1}
 \end{figure}
 
-In recent years, reconciliation methods introduced by \citet{Hyndman2011} have become increasingly popular. For these methods, first stage forecasts are independently produced for all series rather than series at a single level. Since these so-called `base' forecasts are rarely coherent in practice, they are subsequently adjusted or `reconciled' to ensure coherence.  Note that we use coherence and reconciliation as distinct terms, in contrast to their at times ambiguous usage in the past. To date, reconciliation has typically been formulated as a regression problem with alternative reconciliation methods resembling different least squares estimators. These include Ordinary Least Squares {OLS} \cite{AthEtAl2009}, Weighted Least Squares {WLS} \citep{AthEtAl2017}, and a Generalised Least Squares (GLS) estimator \citep{Wickramasuriya2017} named MinT since it minimises the trace of the squared error matrix. These methods have been shown to outperform traditional alternatives across a range of simulated and real-world datasets \citep{Hyndman2011,VanErven2015a,Wickramasuriya2017} since they use information at all levels of the hierarchy and, in some sense, hedge against the risk of model misspecification at a single level.
+In recent years, reconciliation methods introduced by \citet{Hyndman2011} have become increasingly popular. For these methods, first stage forecasts are independently produced for all series rather than series at a single level. Since these so-called `base' forecasts are rarely coherent in practice, they are subsequently adjusted or `reconciled' to ensure coherence.  Note that we use coherence and reconciliation as distinct terms, in contrast to their at times ambiguous usage in the past. To date, reconciliation has typically been formulated as a regression problem with alternative reconciliation methods resembling different least squares estimators. These include Ordinary Least Squares {OLS} \citep{AthEtAl2009}, Weighted Least Squares {WLS} \citep{AthEtAl2017}, and a Generalised Least Squares (GLS) estimator \citep{Wickramasuriya2017} named MinT since it minimises the trace of the squared error matrix. These methods have been shown to outperform traditional alternatives across a range of simulated and real-world datasets \citep{Hyndman2011,VanErven2015a,Wickramasuriya2017} since they use information at all levels of the hierarchy and, in some sense, hedge against the risk of model misspecification at a single level.
 
 A shortcoming of the existing literature is a focus on point forecasting despite an increased understanding over the past decade of the importance of providing a full predictive distribution for forecast uncertainty \citep[see][and references therein]{Gneiting2014}. Indeed to the best of our knowledge, the (as yet unpublished) work of \citep{BenTaieb2017} is the only paper to deal with the issue of coherent probabilistic forecasts, and although they reconcile the means of the predictive distributions, the overall distributions are constructed in a bottom-up fashion rather than use a reconciliation process. In contrast, the main objective of our paper is to generalise both coherence and reconciliation from point to probabilistic forecasting.
 
@@ -109,7 +109,7 @@ We also cover the issue of forecast evaluation of probabilistic forecasts via sc
 
 The remainder of the papers is structured as follows. In Section~\ref{sec:definitions} coherence is defined geometrically for both point and probabilistic forecasts. Section~\ref{sec:reconciliation} contains definitions of point and probabilistic forecast reconciliation as well as our main theoretical results. In Section~\ref{sec:evaluation} we consider the evaluation of probabilistic hierarchical forecasts via scoring rules, while a simulation study comparing unreconciled probabilistic forecasts and different kinds of reconciled probabilistic forecasts is provided in Section~\ref{sec:gaussian}. Section~\ref{sec:conclusions} concludes with some discussion and thoughts on future research.
 
-%In the bottom-up approach, forecasts of the lowest level are first generated and they are simply aggregated to forecast upper levels of the hierarchy \citep{Dunn1976}. In contrast, the top-down approach involves forecasting the most aggregated series first and then disaggregating these forecasts down the hierarchy based on the corresponding proportions of observed data \citep{Gross1990}. Many studies have discussed the relative advantages and disadvantages of bottom-up and top-down methods, and situations in which each would provide reliable forecasts \citep{Schwarzkopf1988,Kahn1998, Lapide1998,Fliedner2001}. A compromise between these two approaches is the middle-out method which entails forecasting each series of a selected middle level in the hierarchy and then forecasting upper levels by the bottom-up method and lower levels by the top-down method.
+%In the bottom-up approach, forecasts of the lowest level are first generated and they are simply aggregated to forecast upper levels of the hierarchy \citep{Dunn1976}. In contrast, the top-down approach involves forecasting the most aggregated series first and then disaggregating these forecasts down the hierarchy based on the corresponding proportions of observed data \citep{Gross1990}. Many studies have discussed the relative advantages and disadvantages of bottom-up and top-down methods, and situations in which each would provide reliable forecasts \citep{Schwarzkopf1988,Kahn1998, Lapide1998,Fliedner2001}. A compromise between these two approaches is the middle-out method which entails forecasting each series of a selected middle-level in the hierarchy and then forecasting upper levels by the bottom-up method and lower levels by the top-down method.
 
 %It is apparent that these three approaches use only part of the information available when producing coherent forecasts. This might result in inaccurate forecasts. For example, if the bottom-level series are highly volatile or noisy, and hence challenging to forecast, then the resulting forecasts from the bottom-up approach are likely to be inaccurate.
 
@@ -222,7 +222,7 @@ A probabilistic forecast for time $t+h$ is coherent if uncertainty in $\bm{y}_{t
 
 %The following example will help to understand these definitions more clearly.
 
-%Consider a simple hierarchy with two bottom-level series $A$ and $B$ that add up to the top level series $Tot$. Suppose the forecasts of these series at time $t+h$ are given by $\breve{\bm{y}}_{t+h} = [\breve{y}_{Tot,t+h},\breve{y}_{A,t+h}, \breve{y}_{B,t+h}]$. Due to the aggregation constraint of the hierarchy we have $\breve{y}_{Tot,t+h}=\breve{y}_{A,t+h}+\breve{y}_{B,t+h}$. This implies that, even though $\breve{\bm{y}}_{t+h} \in \mathbb{R}^3$, the points actually lie in $\mathbb{C}^2$, which is a two dimensional subspace within that $\mathbb{R}^3$ space. Therefore, any $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}$ is impossible, so that $f(\breve{\bm{y}}_{t+h})=0$ for any $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}$.
+%Consider a simple hierarchy with two bottom-level series $A$ and $B$ that add up to the top-level series $Tot$. Suppose the forecasts of these series at time $t+h$ are given by $\breve{\bm{y}}_{t+h} = [\breve{y}_{Tot,t+h},\breve{y}_{A,t+h}, \breve{y}_{B,t+h}]$. Due to the aggregation constraint of the hierarchy we have $\breve{y}_{Tot,t+h}=\breve{y}_{A,t+h}+\breve{y}_{B,t+h}$. This implies that, even though $\breve{\bm{y}}_{t+h} \in \mathbb{R}^3$, the points actually lie in $\mathbb{C}^2$, which is a two dimensional subspace within that $\mathbb{R}^3$ space. Therefore, any $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}$ is impossible, so that $f(\breve{\bm{y}}_{t+h})=0$ for any $\breve{\bm{y}}_{t+h} \in \bm{\mathbb{N}}$.
 
 These definitions of the coherent space $\mathfrak{s}$, and coherent point and probabilistic forecasts in terms of the mapping $s(.)$, may give the impression that the bottom-level series play an important role in the definition. However, alternative definitions could be formed using any set of basis vectors that span $\mathfrak{s}$. For example, consider the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$. In this case the matrix $\bm{S}$ has columns $(1,1,0)'$ and $(1,0,1)'$ spanning $\mathfrak{s}$, and pre-multiplying by $\bm{S}$ transforms arbitrary values of $y_{2,t}$ and $y_{3,t}$ into a coherent vector for the full hierarchy. However the columns $(1,0,1)'$ and $(0,1,-1)'$ also span $\mathfrak{s}$ and define a mapping that transforms arbitrary values of $y_{1,t}$ and $y_{2,t}$ into a coherent vector for the full hierarchy. The definitions above could be made in terms of any series and not just the bottom-level series. In general, we call the series (or linear combinations thereof) used in the definitions of coherence \textit{basis series}. Unless stated otherwise, we will always assume that the basis series are the bottom-level series as in Definition~\ref{def:cohpoint} and Definition~\ref{def:cohprob}, since this facilitates comparison with existing approaches in the literature.
 
@@ -398,7 +398,7 @@ We note the same result does not hold for general $g$ even when the range of $s\
 	\|(\tilde{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2&=\|(\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}-\bm{S}\bm{G}\bm{y}_{t+h})\|_2\\
 	&=\|\bm{S}\bm{G}(\hat{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2\\
 	\end{align}
-	The Cauchy-Schwarz inequality can be used to show that orthogonal projections are bounded operators\todo{Hunter}, therefore
+	The Cauchy-Schwarz inequality can be used to show that orthogonal projections are bounded operators \citep{Hun2001}, therefore
 	 \begin{equation*}
 	 \|\bm{S}\bm{G}(\hat{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2\le
 	 \|(\hat{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2.
@@ -598,7 +598,7 @@ Scoring rules are summary measures obtained based on the relationship between th
 
 Let $P$ be a forecast distribution and let $Q$ be the true data generating process respectively. Furthermore let $\omega$ be a realization from $Q$. Then a scoring rule is a function $S(P,\omega)$ that maps $P,\omega$ to $\mathbb{R}$. It is a ``proper'' scoring rule if
 \begin{equation}\label{eq:(3.1.)}
-\E_{\bm{Q}}[S(Q,\omega)] \le \E_{\bm{Q}}[S(P,\omega)],
+\E_{\bm{Q}}[S(P,\omega)] \le \E_{\bm{Q}}[S(Q,\omega)],
 \end{equation}
 where $\E_{Q}[S(P,\omega)]$ is the expected score under the true distribution $Q$ \citep{Gneiting2008, Gneiting2014}. When this inequality is strict, the scoring rule is said to be strictly proper.
 
@@ -610,7 +610,7 @@ One way to evaluate hierarchical probabilistic forecasts is via the application 
 \begin{align} \label{eq:CRPS}
 \text{CRPS}(\breve{F}_i,y_{i}) &=\int \left(\breve{F}_i(\breve{Y}_i)-\mathbb{1}(y_i<y_{i})\right)d\breve{Y}_i\\ &=\E_{\breve{Y}_i}|\breve{Y}_{i}-y_{i}| - \frac{1}{2}\E_{\breve{Y}_i}|\breve{Y}_{i}-\breve{Y}^*_{i}|\,,
 \end{align}
-where $\breve{F}_i$ is the cumulative distribution function of the $i$th margin of the probabilistic forecast, $\breve{Y}_i$ and $\breve{Y}^*_{T+h,i}$ are independent copies of a random variable with distribution $\breve{F}_i$, and $y_i$ is the outcome of the $i$th margin. The expectations in the second line can be approximated by Monte Carlo when a sample from the predictive distribution is available.
+where $\breve{F}_i$ is the cumulative distribution function of the $i$th margin of the probabilistic forecast, $\breve{Y}_i$ and $\breve{Y}^*_{i}$ are independent copies of a random variable with distribution $\breve{F}_i$, and $y_i$ is the outcome of the $i$th margin. The expectations in the second line can be approximated by Monte Carlo when a sample from the predictive distribution is available.
 
 An advantage to this approach is that it allows the forecaster to evaluate the levels and individual series of the hierarchy where the gains from reconciliation are greatest. For this reason this approach has been used in the limited literature on probabilistic forecasting for hierarchies \citep{BenTaieb2017, JeoEtAl2018} to date. A major shortcoming of this approach however, is that evaluating univariate scores on the margins does not account for the dependence in the hierarchy.
 
@@ -647,15 +647,11 @@ While a number of alternative proper scoring rules are available for univariate 
 
 The log score can be approximated using a sample of values from the probabilistic forecast density \citep{Jordan2017}; however it is more commonly used when a parametric form for the density is available for the probabilistic forecast.
 
-The energy score on the other hand can be defined in terms of the characteristic function of the probabilistic forecast, but the representation in terms of expectations leads itself to easy computation when samples from the probabilistic forecast are available. An interesting limiting case is where $\alpha=2$, where it can be easily shown that
-\begin{equation} \label{eq:(5.1)}
-\text{ES}(\breve{\bm{Y}_{T+h},y_{T+h}}) = \|\bm{y}_{T+h}-\breve{\bm{\mu}}_{T+h}\|^2,
-\end{equation}
-where $\breve{\bm{\mu}}_{T+h} =\E_{\bm{F}}(\breve{\bm{Y}}_{T+h}) $. In this limiting case, the energy score only measures the accuracy of the forecast mean (not the entire distribution), and the energy score is proper but not strictly proper. \citet{Pinson2013a} also argue that the energy score has low discriminative ability for incorrectly specified covariances, even though it discriminates the misspecified means well.
+The energy score on the other hand can be defined in terms of the characteristic function of the probabilistic forecast, but the representation in terms of expectations leads itself to easy computation when samples from the probabilistic forecast are available. An interesting limiting case is where $\alpha=2$, where it can be easily shown that energy score simplifies to mean squared error around the mean of the predictive distribution. In this limiting case, the energy score is proper but not strictly proper. \citet{Pinson2013a} also argue that the energy score has low discriminative ability for incorrectly specified covariances, even though it discriminates the misspecified means well.
 
 In contrast, \citet{SCHEUERER2015} have shown that the variogram score has a higher discrimination ability for misspecified means, variances and correlation structures than the energy score. When $\breve{\bm{y}}$ is a random variable from probabilistic forecast $\breve{F}$, the empirical variogram score is defined as
 \begin{equation}
-\text{VS}(\breve{F}, \bm{y}) = \displaystyle\sum_{i=1}^{n}\displaystyle\sum_{j=1}^{n}w_{ij}\left(|y_{i} - y_{j}|^p - E_{\breve{Y}_i,\breve{Y}_j} |\breve{Y}^k_{i}-\breve{Y}^k_{j}|^p\right)^2.
+\text{VS}(\breve{F}, \bm{y}) = \displaystyle\sum_{i=1}^{n}\displaystyle\sum_{j=1}^{n}w_{ij}\left(|y_{i} - y_{j}|^p - E_{\breve{Y}_i,\breve{Y}_j} |\breve{Y}_{i}-\breve{Y}_{j}|^p\right)^2.
 \end{equation}
 \citet{SCHEUERER2015} recommend using $p=0.5$.
 
@@ -681,13 +677,13 @@ Consider a rotated version of hierarchical time series, $\bm{z}_t=\bm{U}\bm{y}_t
 
 Consider the case where the true predictive density is $f_1(\bm{z}^{(1)}_t)\mathbb{1}\left(\bm{z}^{(2)}_t=\bm{0}\right)$, and we evaluate an incoherent density given by $f_1(\bm{z}^{(1)}_t)f_2(\bm{z}^{(2)}_t)$, where $f_2$ is highly concentrated around $0$ but still non-degenerate. For example, $f_2$ may be Gaussian with variance $\sigma^2{\bm{I}}$ with $\sigma^2 < (2\pi)^{-1}$. The log score under the true data generating process is
 \[
-S\left(\tilde{f},\bm{z}^{(1)}_t\right) = -\log f_1\left(\bm{z}^{(1)}_t\right),
+S\left(f,\bm{z}^{(1)}_t\right) = -\log f_1\left(\bm{z}^{(1)}_t\right),
 \]
 while that of the unreconciled density is
 \begin{align}
 S\left(\hat{f},\bm{z}^{(1)}_t\right) &= -\log f_1(\bm{z}^{(1)}_t)-f_2(\bm{z}^{(1)}_t)\\
 &= -\log f_1(\bm{z}^{(1)}_t)+\frac{n-m}{2}\log(2\pi\sigma^2)\\
-&<-\log f_1(\bm{z}^{(1)}_t).
+&<-\log f_1(\bm{z}^{(1)}_t)=S\left(f,\bm{z}^{(1)}_t\right).
 \end{align}
 After taking expectations $ES(f,f) > ES(\hat{f},f)$, violating the condition in Equation~\eqref{eq:(3.1.)} for a proper scoring rule.
 \end{proof}
@@ -700,7 +696,7 @@ Coherent probabilistic forecasts can be completely characterised in terms of bas
 
 For the log score, suppose the coherent probabilistic forecast has density $f(\bm{b})$. The density for the full hierarchy is given by $f(\bm{y})=f(\bm{Sb})=f(\bm{b})J^{-1}$, where $J=\prod_{j=1}^{m}\lambda_j$ is a pseudo-determinant of the non-square matrix $\bm{S}$ and $\lambda_j$ are the non-zero singular values of $\bm{S}$. Therefore for any coherent density, the log score of the full hierarchy differs from the log score for the bottom-level series by the term $log(J)$. This term depends only on the structure of the hierarchy and is fixed across different reconciliation methods. Therefore if one method achieves a lower expected log score compared to an alternative method using the bottom-level series only, the same ordering is preserved when an assessment is made on the basis of the full hierarchy.
 
-The same property does not hold for all scores in general. For example, the energy score can be expressed in terms of expectations of norms. In general, since norms are invariant under orthogonal rotations, the energy score is also invariant under orthogonal transformations \citep{Szekely2013,Gneiting2007}. In the context of two coherent forecasts, the same is true of a semi-orthogonal transformation from a lower dimensional basis series to the full hierarchy. However, when $\bm{S}$ is the usual summing matrix, it is not semi-orthogonal. Therefore the energy score computed on the bottom-level series will differ from the energy score computed using the full hierarchy and the ordering of different reconciliation methods may change depending on the basis series used. In this case we recommend computing the energy score using the full hierarchy. Although the discussion here is related to energy score, the same logic holds for other multivariate scores that are not invariant to orthogonal rotations, for example the variogram score.
+The same property does not hold for all scores in general. For example, the energy score can be expressed in terms of expectations of norms. In general, since norms are invariant under orthogonal rotations, the energy score is also invariant under orthogonal transformations \citep{Szekely2013,Gneiting2007}. In the context of two coherent forecasts, the same is true of a semi-orthogonal transformation from a lower dimensional basis series to the full hierarchy. However, when $\bm{S}$ is the usual summing matrix, it is not semi-orthogonal. Therefore the energy score computed on the bottom-level series will differ from the energy score computed using the full hierarchy and the ordering of different reconciliation methods may change depending on the basis series used. In this case we recommend computing the energy score using the full hierarchy. Although the discussion here is related to energy score, the same logic holds for other multivariate scores, for example the variogram score.
 
 The properties of multivariate scoring rules in the context of evaluating reconciled probabilistic forecasts are summarised in Table~\ref{tab:prop}.
 
@@ -709,7 +705,7 @@ The properties of multivariate scoring rules in the context of evaluating reconc
 	\begin{tabular}{rll}
 	& Coherent v Incoherent &Coherent v Coherent\\
 	\hline
-	Log Score & Not proper & Ordering preserved if compared using\\ &&bottom level only\\
+	Log Score & Not proper & Ordering preserved if compared using\\ &&bottom-level only\\
 	Energy/ & Proper & Full hierarchy should be used\\
 	Variogram Score & &\\
 	\hline
@@ -818,7 +814,7 @@ y_{AB,t} &= w_{AB,t} - u_t - 0.5v_t,\\
 y_{BA,t} &= w_{BA,t} + u_t + 0.5v_t,\\
 y_{BB,t} &= w_{BB,t} - u_t + 0.5v_t,
 \end{align*}
-where $u_t \sim \mathcal{N}(0,\sigma^2_u)$ and $v_t \sim \mathcal{N}(0,\sigma^2_v)$. The aggregate series in the middle level are given by:
+where $u_t \sim \mathcal{N}(0,\sigma^2_u)$ and $v_t \sim \mathcal{N}(0,\sigma^2_v)$. The aggregate series in the middle-level are given by:
 \begin{align*}
 y_{A,t} &= w_{AA,t} + w_{AB,t} - v_t,\\
 y_{B,t} &= w_{BA,t} + w_{BB,t} + v_t,
@@ -862,10 +858,10 @@ gives the percentage improvement of the preferred forecasting method relative to
 
 Table~\ref{table:3} summarizes the forecasting performance of unreconciled, bottom-up, OLS, WLS and two MinT reconciliation methods using log score, energy score and variogram score. In all cases skill scores are calculated with the bottom-up method as reference. All log scores are evaluated on the basis of bottom-level series only, however these only differ from the log scores for the full hierarchy by a fixed constant. The cell for log score of unreconciled forecasts is left blank since the log score is not proper in this context. Overall, the MinT methods provide the best performance irrespective of the scoring rule, and all methods that reconcile using information at all levels of the forecast improve upon unreconciled forecasts. Bottom-up forecasts perform even worse than unreconciled forecasts in some cases.
 
-Tables~\ref{table:4} and~\ref{table:5} break down the forecasting performance of different reconciliation methods by considering univariate scores on each individual margin. The log score and CRPS are considered, while skill scores are computed with the unreconciled forecast as a reference. When broken down in this fashion, the methods based on MinT perform best for all series and always outperform bottom-up and unreconciled forecasts.
+Tables~\ref{table:4} and~\ref{table:5} break down the forecasting performance of different reconciliation methods by considering univariate scores on each individual margin.  Tables~\ref{table:4} summarises results for the top and middle-level, Table~\ref{table:5} does the same for bottom-level. The log score and CRPS are considered, while skill scores are computed with the unreconciled forecast as a reference. When broken down in this fashion, the methods based on MinT perform best for all series and always outperform bottom-up and unreconciled forecasts.
 
 \begin{table}
-	\caption{Comparison of coherent forecasts. ``Energy score'' and ``Variogram score'' columns give scores based on the joint forecast distribution of the whole hierarchy. ``Log score'' column gives the log scores of the joint forecast distribution of the bottom level. ``Skill score'' columns give the percentage skill score with reference to the bottom-up method. Entries in these columns show the percentage increase of scores for different reconciliation methods relative to the bottom-up method.}\label{table:3}
+	\caption{Comparison of coherent forecasts. ``Energy score'' and ``Variogram score'' columns give scores based on the joint forecast distribution of the whole hierarchy. ``Log score'' column gives the log scores of the joint forecast distribution of the bottom-level. ``Skill score'' columns give the percentage skill score with reference to the bottom-up method. Entries in these columns show the percentage increase of scores for different reconciliation methods relative to the bottom-up method.}\label{table:3}
 
 	\centering\small
 	\begin{tabular}{@{}lSSSSSS@{}}
@@ -940,7 +936,7 @@ Tables~\ref{table:4} and~\ref{table:5} break down the forecasting performance of
 
 %Although the problem of hierarchical point forecasts is well studied in the literature, there is a lack of attention in the context of probabilistic forecasts. Thus we attempted to fill this gap in the literature by providing substantial theoretical background to the problem.
 
-By redefining coherent forecasts and forecast reconciliation in geometric terms, we have established two new theoretical results that support the use of projections for point forecast reconciliation, and have allowed us to extend these concepts to probabilistic forecasting. We have shown that for elliptical distributions the true predictive density can be recovered by linear reconciliation and we have established conditions for when this linear mapping is a projection. Although this optimal projection cannot feasibly be obtained in practice, a projection similar to the MinT procedure provides a good approximation in applications. This is supported by the results of a simulation study. Finally, we have also discussed strategies for evaluating probabilistic forecasts for hierarchical time series, establishing a key result regarding the impropriety of the log score with respect to incoherent forecasts.
+By redefining coherent forecasts and forecast reconciliation in geometric terms, we have established two new theoretical results that support the use of projections for point forecast reconciliation, and have allowed us to extend these concepts to probabilistic forecasting. We have shown that for elliptical distributions the true predictive density can be recovered by linear reconciliation and we have established conditions for when this linear mapping is a projection. Although this projection cannot feasibly be obtained in practice, a projection similar to the MinT procedure provides a good approximation in applications. This is supported by the results of a simulation study. Finally, we have also discussed strategies for evaluating probabilistic forecasts for hierarchical time series, establishing a key result regarding the impropriety of the log score with respect to incoherent forecasts.
 
 In many ways this paper sets up a substantial future research agenda. For example, having defined what amounts to an entire class of reconciliation methods for probabilistic forecasts it will be worthwhile investigating which specific projections are optimal. This is likely to depend on the specific scoring rule employed as well as the properties of the base forecasts. Another avenue worth investigating is to consider whether it is possible to recover the true predictive distribution for non-elliptical distributions via a non-linear mapping $g(.)$.
 
