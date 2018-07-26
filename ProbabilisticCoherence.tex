@@ -598,7 +598,7 @@ Scoring rules are summary measures obtained based on the relationship between th
 
 Let $P$ be a forecast distribution and let $Q$ be the true data generating process respectively. Furthermore let $\omega$ be a realization from $Q$. Then a scoring rule is a function $S(P,\omega)$ that maps $P,\omega$ to $\mathbb{R}$. It is a ``proper'' scoring rule if
 \begin{equation}\label{eq:(3.1.)}
-\E_{\bm{Q}}[S(P,\omega)] \le \E_{\bm{Q}}[S(Q,\omega)],
+\E_{\bm{Q}}[S(Q,\omega)] \le \E_{\bm{Q}}[S(P,\omega)] ,
 \end{equation}
 where $\E_{Q}[S(P,\omega)]$ is the expected score under the true distribution $Q$ \citep{Gneiting2008, Gneiting2014}. When this inequality is strict, the scoring rule is said to be strictly proper.
 
