@@ -79,7 +79,7 @@
     \tilde{\bm y}={\bm S}g(\hat{\bm y})
 	\end{equation*}
   \end{definition}
-  when $g(.)$ is linear it is easier to write $\tilde{\bm y}={\bm S}{\bm G}{\bm y}$
+  when $g(.)$ is linear it is easier to write $\tilde{\bm y}={\bm S}{\bm G}\hat{\bm y}$
   \end{frame}
   \begin{frame}{Special Case: Projection}
   \begin{itemize}
@@ -121,13 +121,13 @@
   &= \bm{S}\bm{G}\bm{\mu}_{t+h|t}\\
   &= \bm{\mu}_{t+h|t}
   \end{align*}
-  The last equality does not hold for ${\bm G}$ in general.
+  The last equality does not hold for ${\bm G}$ in general but does hold when ${\bm S}{\bm G}$ is a projection.
   \end{frame}
   \begin{frame}{Why reconciliation works}
   \begin{itemize}
   	\item The realised observation always lies on $\mathfrak{s}$.
   	\item Orthogonal projections always get us `closer' to all points in $\mathfrak{s}$ including the actual realisation.
-  	\item Ergo reconciliation reduces the error, not only in expectation, but always. 
+  	\item Ergo reconciliation reduces the error and not just in expectation. 
   	\item Oblique projections have the same property for non-Euclidean distance. 
   \end{itemize}
   \end{frame}
@@ -170,11 +170,11 @@
   	\end{align*}
   \end{frame}
   \begin{frame}{Elliptical distributions}
-  	Let the unreconciled density be elliptical with location  $\hat{\bm{\mu}}$ and scale $\hat{\bm{\Sigma}}$ and let the true predictive density be elliptical with location  ${\bm{\mu}}$ and scale ${\bm{S}}{\bm{\Omega}}{\bm{S}}'$.
+  	Let the true predictive densities be elliptical.
   	\begin{theorem}
-  		The true predictive distribution can be recovered via linear reconciliation.  The optimal (but infeasible) mapping is $g(\breve{\bm y})={\bm G}_{opt}\breve{\bm y}+{\bm d}_{opt}$ where $\bm{G}_{opt}={\bm\Omega}^{1/2}{\hat{\bm{\Sigma}}}^{-1/2}$ and ${\bm d}_{opt}={\bm G}_{opt}\left({\bm \mu}-\hat{\bm \mu}\right)$.
+  		There exists a function $g(.)$ such that the true predictive distribution can be recovered by linear reconciliation as long as the unreconciled probabilistic forecast comes from the correct elliptical class.
   	\end{theorem}
-    This follows from the closure property of elliptical distributions under affine transformations and marginalisation.
+    This follows from the closure property of elliptical distributions under affine transformations and marginalisation.  Conditions are also derived for when this $g(.)$ is also a projection.
   \end{frame}
   \begin{frame}{With a sample}
   	\begin{itemize}
@@ -208,7 +208,7 @@
   \end{enumerate}
   There are pitfalls to the third approach.
   \end{frame}
-  \begin{frame}{Reconciled v Unreconciled}
+  \begin{frame}{Coherent v Incoherent}
 	When comparing reconciled and unreconciled probabilistic forecasts on the basis of log score
 	\begin{theorem}
 		Let $f(\bm{y})$ be the true predictive density (on $\mathfrak{s}$) and $LS$ be the (negatively-oriented) log score.  Then there exists an unreconciled density  $\hat{f}(\bm{y})$ on $\mathbb{R}^n$ such that
@@ -235,7 +235,6 @@
   \end{frame}
    \begin{frame}{Simulations}
    	\begin{itemize}
-   		\item If you want to see tables with numbers see the paper.
    		\item The main takeaway messages are:
    		    \begin{itemize}
    		    	\item Reconciliation is better than no reconciliation.
@@ -256,11 +255,4 @@
         \item Further development of multivariate scoring rules.
      \end{itemize}	
    \end{frame}
-    \begin{frame}{The paper}
-    	\begin{itemize}
-    		\item A paper will be available soon (end of July).
-    		\item Google {\em EBS Monash Working Paper}.
-    		\item Or email me :)
-    	\end{itemize}
-    \end{frame}
 \end{document}
