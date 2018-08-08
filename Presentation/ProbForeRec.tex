@@ -3,7 +3,7 @@
 \usepackage{amsmath,amsthm, bm, tikz,qtree}
 \usetikzlibrary{arrows,positioning,shapes,fit,calc}
 \title{Probabilistic Forecast Reconciliation}
-\date{June 20, 2018}
+\date{August 15, 2018}
 \author[GPAH]{Puwasala Gamakumara, Anastasios Panagiotelis, George Athanasopoulos and Rob Hyndman}
 \begin{document}
   \begin{frame}
@@ -60,6 +60,41 @@
   	    \item Choice of ${\bm G}$ defines reconciliation method, e.g. OLS: ${\bm G}=\left(\bm{S}'\bm{S}\right)^{-1}{\bm S'}$ and Bottom Up: ${\bm G}=\left(\bm{0}_{m\times n-m}~\bm{I}_{m\times m}\right)$ 
     \end{itemize}
   \end{frame}
+  \begin{frame}{Coherent Subspace}
+    \begin{definition} 
+	  The {\bf coherent subspace} is the linear subspace spanned by the columns of ${\bm S}$, i.e. $\mathfrak{s}=\mbox{sp}({\bm S})$
+    \end{definition}
+    Instead of using bottom-level series a different combination of $m$ {\bf basis series} could be used (e.g. top and $m-1$ bottom).  Although ${\bm S}$ would be different $\mathfrak{s}$ would be the same.
+  \end{frame}
+  \begin{frame}{Coherent Point Forecast}
+  \begin{definition} 
+  	A {\bf coherent point forecast} is any forecast lying in the linear subspace $\mathfrak{s}$
+  \end{definition}
+  \end{frame}
+  \begin{frame}{Reconciled Point Forecast}
+  Let $\hat{\bm y}\in\mathbb{R}^n$ be an incoherent forecast and $g(.)$ be a function $g:\mathbb{R}^n\rightarrow\mathbb{R}^m$.
+  \begin{definition} 
+	A {\bf point forecast} $\tilde{\bm y}$ is reconciled with respect to $g(.)$ iff 
+	\begin{equation*}
+    \tilde{\bm y}={\bm S}g(\hat{\bm y})
+	\end{equation*}
+  \end{definition}
+  when $g(.)$ is linear it is easier to write $\tilde{\bm y}={\bm S}{\bm G}{\bm y}$
+  \end{frame}
+  \begin{frame}{Special Case: Projection}
+  \begin{itemize}
+   \item An important special case is where ${\bm S}{\bm G}$ is a projection.
+  \begin{itemize}
+  	\item ${\bm S}{\bm G}$ is symmetric
+  	\item ${\bm S}{\bm G}$ is idempotent
+  \end{itemize}
+  \item Let ${\bm v}\in\mathfrak{s}$ 
+    \begin{itemize}
+    	\item ${\bm S}{\bm G}{\bm v}$ will also lie in $\mathfrak{s}$.
+    	\item ${\bm S}{\bm G}{\bm v}={\bm v}$ only when ${\bm S}{\bm G}$ is a projection.
+    \end{itemize}
+  \end{itemize}
+  \end{frame}
   \begin{frame}{Geometry}
   	\vspace{-2.3cm}
   	\centering
@@ -70,13 +105,38 @@
   	\centering
   	\input{Figs/pointforerec_schematic}
   \end{frame}
-  \section{Probabilistic Reconciliation}
-  \begin{frame}{Coherent Subspace}
-  	\begin{definition} 
-  		The {\bf coherent subspace} is the linear subspace spanned by the columns of ${\bm S}$, i.e. $\mathfrak{s}=\mbox{sp}({\bm S})$
-  	\end{definition}
-    Instead of using bottom-level series a different combination of $m$ {\bf basis series} could be used (e.g. top and $m-1$ bottom).  Although ${\bm S}$ would be different $\mathfrak{s}$ would be the same.
+  \begin{frame}{Projections preserve unbiasedness}
+	Let $\hat{\bm y}_{t+h|t}$ be an unbiased forecast that is $E_{1:t}(\hat{\bm y}_{t+h|t})={\bm \mu_{t+h|t}}$ where ${\bm \mu_{t+h|t}}=E(\bm{y}_{t+h}\mid\bm{y}_{1},\dots,\bm{y}_{t})$
+	\begin{theorem}
+	  The reconciled forecast $\tilde{\bm y}_{t+h|t}={\bm S}{\bm G}\hat{\bm y}_{t+h|t}$ will also be unbiased iff ${\bm S}{\bm G}$ is a projection.
+    \end{theorem}
+    Previously, this was often stated as an assumption that ${\bm S}{\bm G}{\bm S}={\bm S}$.    
   \end{frame}
+  \begin{frame}{Proof}
+  Very easy proof
+  \begin{align*}
+  E_{1:t}(\tilde{\bm{y}}_{t+h|t})
+  &= E_{1:t}(\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t})\\
+  &= \bm{S}\bm{G}E_{1:t}(\hat{\bm{y}}_{t+h|t})\\
+  &= \bm{S}\bm{G}\bm{\mu}_{t+h|t}\\
+  &= \bm{\mu}_{t+h|t}
+  \end{align*}
+  The last equality does not hold for ${\bm G}$ in general.
+  \end{frame}
+  \begin{frame}{Why reconciliation works}
+  \begin{itemize}
+  	\item The realised observation always lies on $\mathfrak{s}$.
+  	\item Orthogonal projections always get us `closer' to all points in $\mathfrak{s}$ including the actual realisation.
+  	\item Ergo reconciliation reduces the error, not only in expectation, but always. 
+  	\item Oblique projections have the same property for non-Euclidean distance. 
+  \end{itemize}
+  \end{frame}
+  \begin{frame}{Geometry}
+  \vspace{-2.3cm}
+  \centering 
+  \input{Figs/orth_pointforerec_schematic}
+  \end{frame}
+  \section{Probabilistic Reconciliation}
   \begin{frame}{Coherent Probabilistic Forecast}
     Let $(\mathbb{R}^m,\mathcal{F}_{\mathbb{R}^m},\nu)$ and $(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\mu)$ be probability triples on $m$-dimensional space and the coherent subspace respectively.
     \begin{definition}
@@ -88,7 +148,7 @@
     where $s(\mathcal{B})$ is the image of $\mathcal{B}$ under premultiplication by ${\bm S}$
   \end{frame}
   \begin{frame}{Reconciled Probabilistic Forecast}
-  	Let $g:\mathbb{R}^n\rightarrow\mathbb{R}^m$ be a linear map.  Then 
+  	Let $g:\mathbb{R}^n\rightarrow\mathbb{R}^m$ be a linear function.  Then 
   	\begin{definition}
   	The probability triple $\left(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\tilde{\nu}\right)$ reconciles the probability triple $\left(\mathbb{R}^n,\mathcal{F}_{\mathbb{R}^n},\hat{\nu}\right)$ with with respect to $g$ iff
   	\begin{equation*}
