@@ -1,20 +1,35 @@
-\documentclass[a4paper, 11pt]{article}
-\usepackage{monashwp}
+%&latex
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{graphicx,psfrag,epsf}
+\usepackage{enumerate}
+\usepackage{natbib}
+\usepackage{url} % not crucial - just used below for the URL 
+
 \usepackage{amssymb, qtree, bm, multirow, textcmds, siunitx,paralist}
 \usepackage{mathrsfs, float, booktabs,todonotes,amsthm}
 \usepackage[bb=boondox]{mathalfa}
 \usepackage{tikz}
 \usetikzlibrary{arrows,positioning,shapes,fit,calc}
 \usepackage{amsfonts}
-\hypersetup{citecolor=blue,linkcolor=blue,urlcolor=blue}
-\DeclareNameAlias{sortname}{last-first}
+
+\pdfminorversion=4
+% NOTE: To produce blinded version, replace "0" with "1" below.
+\newcommand{\blind}{0}
+
+% DON'T change margins - should be 1 inch all around.
+\addtolength{\oddsidemargin}{-.5in}%
+\addtolength{\evensidemargin}{-.5in}%
+\addtolength{\textwidth}{1in}%
+\addtolength{\textheight}{-.3in}%
+\addtolength{\topmargin}{-.8in}%
+
 \DeclareMathOperator*{\argmin}{arg\,min}
 \newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
 \def\mathbi#1{\textit{ #1}}
 \def\mathB#1{\textbf{ #1}}
 \def\E{\text{E}}
 \def\var{\text{Var}}
-\mathtoolsset{showonlyrefs=true}
 
 \def\PQ{\begin{pmatrix}\bm{G}\\[-0.2cm]\bm{H}\end{pmatrix}}
 \def\bt{\begin{pmatrix}\tilde{\bm{b}}\\[-0.2cm]\tilde{\bm{a}}\end{pmatrix}}
@@ -25,37 +40,69 @@
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 
-\bibliography{References_paper1}
 
-\title{Probabilistic Forecasts in Hierarchical~Time~Series}
-\author{Puwasala Gamakumara\\ Anastasios Panagiotelis\\ George Athanasopoulos\\ Rob J Hyndman}
-
-\addresses{\textbf{Puwasala Gamakumara}\\
-  Department of Econometrics and Business Statistics,\\
-  Monash University,\\ VIC 3800, Australia.\\
-  Email: Puwasala.Gamakumara@monash.edu \\[1cm]
-  \textbf{Anastasios Panagiotelis}\\
-  Department of Econometrics and Business Statistics,\\
-  Monash University,\\ VIC 3800, Australia.\\
-  Email: Anastasios.Panagiotelis@monash.edu\\[1cm]
-  \textbf{George Athanasopoulos}\\
-  Department of Econometrics and Business Statistics,\\
-  Monash University,\\ VIC 3800, Australia.\\
-  Email: George.Athanasopoulos@monash.edu\\[1cm]
-  \textbf{Rob J Hyndman}\\
-  Department of Econometrics and Business Statistics,\\
-  Monash University,\\ VIC 3800, Australia.\\
-  Email: Rob.Hyndman@monash.edu}
-
-\lfoot{\sf Gamakumara, Panagiotelis, Athanasopoulos \& Hyndman: \today}
 
 \begin{document}
 
-\maketitle
+
+	%\bibliographystyle{natbib}
+	
+	\def\spacingset#1{\renewcommand{\baselinestretch}%
+		{#1}\small\normalsize} \spacingset{1}
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\if1\blind
+	{
+		\title{\bf Probabilistic Forecasts in Hierarchical~Time~Series}
+		\author{Puwasala Gamakumara\thanks{
+				The authors gratefully acknowledge \textit{please remember to list all relevant funding sources in the unblinded version}}\hspace{.2cm}\\
+			    Department of Econometrics and Business Statistics,\\
+			    Monash University,\\ VIC 3800, Australia.\\
+			    Email: Puwasala.Gamakumara@monash.edu \\
+			    and \\
+			    Anastasios Panagiotelis\\
+			    Department of Econometrics and Business Statistics,\\
+		    	Monash University,\\ VIC 3800, Australia.\\
+			    Email: Anastasios.Panagiotelis@monash.edu \\
+			    and \\
+		        George Athanasopoulos\\
+		        Department of Econometrics and Business Statistics,\\
+		        Monash University,\\ VIC 3800, Australia.\\
+		        Email: george.athanasopoulos@monash.edu \\
+		        and \\
+	            Rob J Hyndman\\
+	            Department of Econometrics and Business Statistics,\\
+	            Monash University,\\ VIC 3800, Australia.\\
+	            Email: rob.hyndman@monash.edu \\}
+		\maketitle
+	} \fi
+	
+	\if0\blind
+	{
+		\bigskip
+		\bigskip
+		\bigskip
+		\begin{center}
+			{\LARGE\bf Probabilistic Forecasts in Hierarchical~Time~Series}
+		\end{center}
+		\medskip
+	} \fi
+	
+	\bigskip
+
 
 \begin{abstract}
   Forecast reconciliation involves adjusting forecasts to ensure coherence with aggregation constraints. We extend this concept from point forecasts to probabilistic forecasts by redefining forecast reconciliation in terms of linear functions in general, and projections more specifically. New theorems establish that the true predictive distribution can be recovered in the elliptical case by linear reconciliation, and general conditions are derived for when this is a projection. A geometric interpretation is also used to prove two new theoretical results for point forecasting; that reconciliation via projection both preserves unbiasedness and dominates unreconciled forecasts in a mean squared error sense. Strategies for forecast evaluation based on scoring rules are discussed, and it is shown that the popular log score is an improper scoring rule with respect to the class of unreconciled forecasts when the true predictive distribution coheres with aggregation constraints. Finally, evidence from a simulation study shows that reconciliation based on an oblique projection, derived from the MinT method of \citet{Wickramasuriya2017} for point forecasting, outperforms both reconciled and unreconciled alternatives.
 \end{abstract}
+
+\noindent%
+{\it Keywords:}  3 to 6 keywords, that do not appear in the title
+\vfill
+
+\newpage
+\spacingset{1.45} % DON'T change the spacing!
 
 \section{Introduction}\label{sec:intro}
 
@@ -255,7 +302,7 @@ Several choices of $g(.)$ currently extant in the literature, including the OLS,
 
 \begin{table}[!h]
 	\caption{Summary of reconciliation methods that are projections. Here, $\hat{\bm{W}}^{sam}$ is the variance covariance matrix of one-step ahead forecast errors, $\hat{\bm{W}}^{shr}$ is a shrinkage estimator more suited to large dimensions proposed by \citet{Schafer2005}, $\hat{\bm{W}}^{wls}$ is the diagonal matrix with diagonal elements $w_{ii}$, and $\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{w}_{ij})}{\sum_{i \neq j}{\hat{w}}^2_{ij}}$, where $w_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{W}}^{sam}$.}\label{table:2}
-	\centering\setstretch{1.5}
+	\centering
 	\begin{tabular}{lll}
 		\toprule
 		\textbf{Method} & \textbf{$\bm{W}$} & \textbf{ $\bm{R}'_\bot$}      \\
@@ -952,6 +999,10 @@ In many ways this paper sets up a substantial future research agenda. For exampl
 %Assuming a multivariate Gaussian distribution for the hierarchy, we showed how to obtain reconciled Gaussian forecast densities, utilizing available information in the hierarchy. An extensive Monte Carlo simulation study further showed that the MinT reconciliation method \citep{Wickramasuriya2017} is useful in producing improved coherent probabilistic forecasts at least in the Gaussian framework.
 
 \newpage
-\printbibliography
+
+\bibliographystyle{agsm}
+
+\bibliography{References_paper1}
+
 \end{document}
 
