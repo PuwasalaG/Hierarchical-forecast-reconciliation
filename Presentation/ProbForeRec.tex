@@ -10,6 +10,48 @@
     \maketitle
   \end{frame}
   \section{Concepts}
+  \begin{frame}{Motivating Examples}
+  \begin{itemize}
+  	\item Gross Domestic Product
+  	\begin{itemize}
+  		\item An aggregate of consumption, investment, government spending and trade balance
+  		\item Further breakdown, e.g. consumption of food, rent, etc.
+  	\end{itemize}
+    \item Retail sales
+    \begin{itemize}
+    	\item Aggregate of different product category sales
+    	\item Further breakdown into individual stock keeping units.  
+    \end{itemize}
+    \item Potentially need forecasts of all time series.
+  \end{itemize}
+  \end{frame}
+  \begin{frame}{Incoherent Forecasts}
+  \begin{itemize}
+    \item Potential approaches
+  	\begin{itemize}
+  		\item Univariate models
+  		\item Multivariate models
+  		\item Judgemental forecasts
+  	\end{itemize}
+  \item Forecasts may not respect aggregation structure. ({\bf Incoherent})
+  \item Outcome {\em will} respect aggregation  structure. ({\bf Coherent})
+  \item Motivation is aggregation but can be generalised to any linear constraints.
+  \end{itemize}
+  \end{frame}
+  \begin{frame}{Reconciliation}
+  \begin{itemize}
+  	\item Begin with a vector of forecasts that are incoherent.
+  	\item Adjust these {\bf ex post} to make them coherent.
+  	\item There are good solutions for point forecasting that:
+  	\begin{itemize}
+  		\item Guarantee coherent forecasts.
+  		\item Improve forecast accuracy overall.
+  	\end{itemize}
+  	\item Generalisation to probabilistic forecasts is our contribution.
+  	\item Getting there necessitates a rethink of the existing point forecasting literature. 
+  \end{itemize}
+  \end{frame}
+ 
   \begin{frame}{Hierarchical and Grouped Time Series}
   	\begin{itemize}
   	  \item Collections of time series are often characterised by aggregation constraints
