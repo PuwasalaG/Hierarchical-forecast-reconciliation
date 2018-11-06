@@ -2,6 +2,8 @@
 \usetheme{Warsaw}
 \usepackage{amsmath,amsthm, bm, tikz,qtree}
 \usetikzlibrary{arrows,positioning,shapes,fit,calc}
+\usepackage[greek,english]{babel}
+
 \title{Probabilistic Forecast Reconciliation}
 \date{August 15, 2018}
 \author[GPAH]{Puwasala Gamakumara, Anastasios Panagiotelis, George Athanasopoulos and Rob Hyndman}
@@ -9,7 +11,7 @@
   \begin{frame}
     \maketitle
   \end{frame}
-  \section{Concepts}
+  \section{Motivation}
   \begin{frame}{Motivating Examples}
   \begin{itemize}
   	\item Gross Domestic Product
@@ -33,8 +35,8 @@
   		\item Multivariate models
   		\item Judgemental forecasts
   	\end{itemize}
-  \item Forecasts may not respect aggregation structure. ({\bf Incoherent})
-  \item Outcome {\em will} respect aggregation  structure. ({\bf Coherent})
+  \item Forecasts do not respect aggregation structure ({\bf Incoherent})
+  \item Outcome {\em does} respect aggregation  structure ({\bf Coherent})
   \item Motivation is aggregation but can be generalised to any linear constraints.
   \end{itemize}
   \end{frame}
@@ -51,62 +53,93 @@
   	\item Getting there necessitates a rethink of the existing point forecasting literature. 
   \end{itemize}
   \end{frame}
- 
-  \begin{frame}{Hierarchical and Grouped Time Series}
+  \begin{frame}{What we do NOT do}
+  \begin{itemize}
+  	\item All information is contained in the most disaggregate series.
+  	\item In principle using the correct multivariate model for the most disaggregate series and aggregating them should work.
+  	\item Disaggregate series are: 
   	\begin{itemize}
-  	  \item Collections of time series are often characterised by aggregation constraints
-  	  \begin{itemize}
-  	    \item Cross-Sectionally
-  		\item Temporally
-  	  \end{itemize}
-      \item {\bf Coherent} forecasts respect such constraints. 
-      \item Independently produced forecasts are generally incoherent.
+  		\item Very noisy
+  		\item High-dimensional
+  		\item Prone to model misspecification
+  	\end{itemize} 
   \end{itemize}
-\begin{figure}
-	\begin{center}
-		\leaf{AA} \leaf{AB} 
+  \end{frame}
+  \section{Point Forecast Reconciliation}
+ \begin{frame}{A simple hierarchy}
+  	Consider a hierarchy given by
+  	\begin{figure}
+	    \begin{center}
+		\leaf{\alt<2>{\color{blue}AA}{AA}} \leaf{\alt<2>{\color{blue}AB}{AB}} 
 		\branch{2}{A}
-		\leaf{BA} \leaf{BB}
+		\leaf{\alt<2>{\color{blue}BA}{BA}} \leaf{\alt<2>{\color{blue}BB}{BB}}
 		\branch{2}{B}
 		\branch{2}{Tot}
 		\qobitree
-	\end{center}
-\end{figure}
+	    \end{center}
+    \end{figure}
+    \begin{itemize}
+    	\item Let $n$ be the number of series, $\bm{y}$ be an n-vector of all series.
+    	\only<2>{\item Let {\color{blue}$m$} be the bottom level series and {\color{blue}$\bm{b}$} be an {\color{blue}$m$}-vector of the bottom level series.}
+    \end{itemize}    
 \end{frame}  
-  \begin{frame}{Forecast Reconciliation}
-  	\begin{itemize}
-  	  \item Forecast reconciliation involves
-  	  \begin{enumerate}
-  	  	\item Producing incoherent {\bf base} forecasts for all series in an $n\times 1$ vector $\hat{\bm y}$
-        \item Adjusting base forecasts to obtain coherent {\bf reconciled} forecasts in an $n\times 1$ vector $\tilde{\bm y}$
-  	  \end{enumerate} 
-      \item Why do we care?
-        \begin{enumerate}
-        	\item Aligned decision making.
-        	\item Improved forecast accuracy
-        \end{enumerate}
-  	\end{itemize}
-  \end{frame}
-  \begin{frame}{Reconciliation in two steps}
-  	\begin{itemize}
-  		\item Many reconciliation methods involve two steps
-  		\begin{enumerate}
-  			\item Pre-multiply $\hat{\bm y}$ by a $m\times n$ matrix $\bm G$ to obtain {\bf bottom} level series ${\bm b}={\bm G}{\hat{\bm y}}$ 
-  			\item Pre-multiply ${\bm b}$ by a $n\times m$ matrix $\bm S$ to obtain ${\tilde{\bm y}}$, i.e. $\tilde{\bm y}={\bm S}{{\bm b}}$
-  		\end{enumerate}
-  	    \item The matrix ${\bm S}$ defines the aggregation constraints, e.g.
-  	    \begin{equation*}
-  	    {\bm S}=\begin{pmatrix} 1 &1 &1 &1 \\1 &1 &0 &0 \\0 &0 &1 &1 \\ &{\bm I_{4\times 4}}
-  	    \end{pmatrix}
-  	    \end{equation*}
-  	    \item Choice of ${\bm G}$ defines reconciliation method, e.g. OLS: ${\bm G}=\left(\bm{S}'\bm{S}\right)^{-1}{\bm S'}$ and Bottom Up: ${\bm G}=\left(\bm{0}_{m\times n-m}~\bm{I}_{m\times m}\right)$ 
-    \end{itemize}
-  \end{frame}
+\begin{frame}{The ${\bm S}$ matrix}
+    The matrix ${\bm S}$ defines the aggregation constraints, e.g.
+    \begin{equation*}
+    {\bm S}=\begin{pmatrix} 1 &1 &1 &1 \\1 &1 &0 &0 \\0 &0 &1 &1 \\ &{\bm I_{4\times 4}}
+    \end{pmatrix}  
+    \end{equation*}
+    Coherence holds when
+    \begin{equation*}
+    {\bm y}={\bm S}{\bm b}
+    \end{equation*} 
+\end{frame}
+\begin{frame}{As a regression model}
+  \begin{itemize}
+  	\item Cast the problem as a regression model with base forecasts $\hat{\bm{y}}$ as the ``dependent variable'' and ${\bm S}$ as the ``design matrix''. 
+  	\begin{equation*}
+  	\hat{\bm{y}}={\bm{S}}{\bm\beta}+{\bm e}
+  	\end{equation*}
+  	\item Initial approach (Athanasopoulos et al, 2009; Hyndman et al, 2011) was to fit by OLS  yielding reconciled forecasts:
+  	\begin{equation*}
+  	\tilde{\bm{y}}={\bm S}({\bm S}'{\bm S})^{-1}{\bm S}'{\hat{\bm{y}}}
+  	\end{equation*}
+  \end{itemize}
+\end{frame}
+\begin{frame}{Generalisation}
+  \begin{itemize}  
+  \item Wherever we can use OLS we can use GLS
+  \begin{equation*}
+  \tilde{\bm{y}}={\bm S}({\bm S}'{\bm W}^{-1}{\bm S})^{-1}{\bm S}'{\bm W}^{-1}{\hat{\bm{y}}}
+  \end{equation*}
+  \item Diagonal ${\bm W}$ considered by Athanasopoulos et al (2017)
+  \item MinT approach (Wickremasuriya et al, 2018) use a ${\bm W}$ that is an estimate of the {\em in-sample} forecast error covariance matrix.
+  \end{itemize}
+\end{frame}
+%  \begin{frame}{Reconciliation in two steps}
+%  	\begin{itemize}
+%  		\item Many reconciliation methods involve two steps
+%  		\begin{enumerate}
+%  			\item Pre-multiply $\hat{\bm y}$ by a $m\times n$ matrix $\bm G$ to obtain {\bf bottom} level series ${\bm b}={\bm G}{\hat{\bm y}}$ 
+%  			\item Pre-multiply ${\bm b}$ by a $n\times m$ matrix $\bm S$ to obtain ${\tilde{\bm y}}$, i.e. $\tilde{\bm y}={\bm S}{{\bm b}}$
+%  		\end{enumerate}
+%
+%  	    \item Choice of ${\bm G}$ defines reconciliation method, e.g. OLS: ${\bm G}=\left(\bm{S}'\bm{S}\right)^{-1}{\bm S'}$ and Bottom Up: ${\bm G}=\left(\bm{0}_{m\times n-m}~\bm{I}_{m\times m}\right)$ 
+%    \end{itemize}
+%  \end{frame}
+\begin{frame}
+\centering
+\includegraphics[height=5cm]{Figs/Plato.jpeg}\\
+\textgreek{AGEWMTETRHTOS MHDEIS EISITW}\\
+Those without knowledge of geometry may not enter.
+\end{frame}
+
   \begin{frame}{Coherent Subspace}
     \begin{definition} 
 	  The {\bf coherent subspace} is the linear subspace spanned by the columns of ${\bm S}$, i.e. $\mathfrak{s}=\mbox{sp}({\bm S})$
     \end{definition}
-    Instead of using bottom-level series a different combination of $m$ {\bf basis series} could be used (e.g. top and $m-1$ bottom).  Although ${\bm S}$ would be different $\mathfrak{s}$ would be the same.
+    Instead of using bottom-level series a different combination of $m$ {\bf basis series} could be used (e.g. top and $m-1$ bottom).\\
+    Although ${\bm S}$ would be different $\mathfrak{s}$ would be the same.
   \end{frame}
   \begin{frame}{Coherent Point Forecast}
   \begin{definition} 
@@ -123,60 +156,79 @@
   \end{definition}
   when $g(.)$ is linear it is easier to write $\tilde{\bm y}={\bm S}{\bm G}\hat{\bm y}$
   \end{frame}
-  \begin{frame}{Special Case: Projection}
-  \begin{itemize}
-   \item An important special case is where ${\bm S}{\bm G}$ is a projection.
-  \begin{itemize}
-  	\item ${\bm S}{\bm G}$ is symmetric
-  	\item ${\bm S}{\bm G}$ is idempotent
-  \end{itemize}
-  \item Let ${\bm v}\in\mathfrak{s}$ 
-    \begin{itemize}
-    	\item ${\bm S}{\bm G}{\bm v}$ will also lie in $\mathfrak{s}$.
-    	\item ${\bm S}{\bm G}{\bm v}={\bm v}$ only when ${\bm S}{\bm G}$ is a projection.
-    \end{itemize}
-  \end{itemize}
-  \end{frame}
   \begin{frame}{Geometry}
-  	\vspace{-2.3cm}
-  	\centering
-  	\input{Figs/orth_pointforerec_schematic}
+  \vspace{-2.3cm}
+  \centering 
+  \input{Figs/orth_pointforerec_schematic}
   \end{frame}
-  \begin{frame}{Geometry: Oblique Projection}
-  	\vspace{-0.9cm}
-  	\centering
-  	\input{Figs/pointforerec_schematic}
-  \end{frame}
-  \begin{frame}{Projections preserve unbiasedness}
-	Let $\hat{\bm y}_{t+h|t}$ be an unbiased forecast that is $E_{1:t}(\hat{\bm y}_{t+h|t})={\bm \mu_{t+h|t}}$ where ${\bm \mu_{t+h|t}}=E(\bm{y}_{t+h}\mid\bm{y}_{1},\dots,\bm{y}_{t})$
-	\begin{theorem}
-	  The reconciled forecast $\tilde{\bm y}_{t+h|t}={\bm S}{\bm G}\hat{\bm y}_{t+h|t}$ will also be unbiased iff ${\bm S}{\bm G}$ is a projection.
-    \end{theorem}
-    Previously, this was often stated as an assumption that ${\bm S}{\bm G}{\bm S}={\bm S}$.    
-  \end{frame}
-  \begin{frame}{Proof}
-  Very easy proof
-  \begin{align*}
-  E_{1:t}(\tilde{\bm{y}}_{t+h|t})
-  &= E_{1:t}(\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t})\\
-  &= \bm{S}\bm{G}E_{1:t}(\hat{\bm{y}}_{t+h|t})\\
-  &= \bm{S}\bm{G}\bm{\mu}_{t+h|t}\\
-  &= \bm{\mu}_{t+h|t}
-  \end{align*}
-  The last equality does not hold for ${\bm G}$ in general but does hold when ${\bm S}{\bm G}$ is a projection.
-  \end{frame}
+%  \begin{frame}{Special Case: Projection}
+%  \begin{itemize}
+%   \item An important special case is where ${\bm S}{\bm G}$ is a projection.
+%  \begin{itemize}
+%  	\item ${\bm S}{\bm G}$ is symmetric
+%  	\item ${\bm S}{\bm G}$ is idempotent
+%  \end{itemize}
+%  \item Let ${\bm v}\in\mathfrak{s}$ 
+%    \begin{itemize}
+%    	\item ${\bm S}{\bm G}{\bm v}$ will also lie in $\mathfrak{s}$.
+%    	\item ${\bm S}{\bm G}{\bm v}={\bm v}$ only when ${\bm S}{\bm G}$ is a projection.
+%    \end{itemize}
+%  \end{itemize}
+%  \end{frame}
+%
+%  \begin{frame}{Geometry: Oblique Projection}
+%  	\vspace{-0.9cm}
+%  	\centering
+%  	\input{Figs/pointforerec_schematic}
+%  \end{frame}
+%  \begin{frame}{Projections preserve unbiasedness}
+%	Let $\hat{\bm y}_{t+h|t}$ be an unbiased forecast that is $E_{1:t}(\hat{\bm y}_{t+h|t})={\bm \mu_{t+h|t}}$ where ${\bm \mu_{t+h|t}}=E(\bm{y}_{t+h}\mid\bm{y}_{1},\dots,\bm{y}_{t})$
+%	\begin{theorem}
+%	  The reconciled forecast $\tilde{\bm y}_{t+h|t}={\bm S}{\bm G}\hat{\bm y}_{t+h|t}$ will also be unbiased iff ${\bm S}{\bm G}$ is a projection.
+%    \end{theorem}
+%    Previously, this was often stated as an assumption that ${\bm S}{\bm G}{\bm S}={\bm S}$.    
+%  \end{frame}
+%  \begin{frame}{Proof}
+%  Very easy proof
+%  \begin{align*}
+%  E_{1:t}(\tilde{\bm{y}}_{t+h|t})
+%  &= E_{1:t}(\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t})\\
+%  &= \bm{S}\bm{G}E_{1:t}(\hat{\bm{y}}_{t+h|t})\\
+%  &= \bm{S}\bm{G}\bm{\mu}_{t+h|t}\\
+%  &= \bm{\mu}_{t+h|t}
+%  \end{align*}
+%  The last equality does not hold for ${\bm G}$ in general but does hold when ${\bm S}{\bm G}$ is a projection.
+%  \end{frame}
   \begin{frame}{Why reconciliation works}
   \begin{itemize}
   	\item The realised observation always lies on $\mathfrak{s}$.
   	\item Orthogonal projections always get us `closer' to all points in $\mathfrak{s}$ including the actual realisation.
   	\item Ergo reconciliation reduces the error and not just in expectation. 
-  	\item Oblique projections have the same property for non-Euclidean distance. 
+  	\item What about the MinT approach? 
   \end{itemize}
   \end{frame}
-  \begin{frame}{Geometry}
-  \vspace{-2.3cm}
-  \centering 
-  \input{Figs/orth_pointforerec_schematic}
+  \begin{frame}{Finding a direction}
+  \begin{itemize}
+  \item Consider the covariance matrix of ${\bm y}-\hat{\bm{y}}$.
+   \item This can be estimated using in-sample forecast errors.
+  \item This provides information about the likely direction of an error.
+  \item Projecting along this direction is more likely to result in a reconciled forecast closer to the target.
+  \end{itemize}  
+\end{frame}
+  \begin{frame}{Animation}
+  content...
+  \end{frame}
+  \begin{frame}{Geometry: Oblique Projection}
+   	\vspace{-0.9cm}
+   	\centering
+   	\input{Figs/pointforerec_schematic}
+  \end{frame}
+  \begin{frame}{Is this overkill?}
+  \begin{itemize}
+  	\item Is this geometric interpretation really necessary?
+  	\item When we generalise to probabilistic forecasts the regression interpretation does not really fit.
+  	\item Geometric ideas can easily be generalised. 
+  \end{itemize}
   \end{frame}
   \section{Probabilistic Reconciliation}
   \begin{frame}{Coherent Probabilistic Forecast}
