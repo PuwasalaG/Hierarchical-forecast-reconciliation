@@ -1,11 +1,11 @@
-\documentclass{beamer}
+\documentclass[handout]{beamer}
 \usetheme{Warsaw}
 \usepackage{amsmath,amsthm, bm, tikz,qtree}
 \usetikzlibrary{arrows,positioning,shapes,fit,calc}
 \usepackage[greek,english]{babel}
 
 \title{Probabilistic Forecast Reconciliation}
-\date{August 15, 2018}
+\date{November 14, 2018}
 \author[GPAH]{Puwasala Gamakumara, Anastasios Panagiotelis, George Athanasopoulos and Rob Hyndman}
 \begin{document}
   \begin{frame}
@@ -19,10 +19,10 @@
   		\item An aggregate of consumption, investment, government spending and trade balance
   		\item Further breakdown, e.g. consumption of food, rent, etc.
   	\end{itemize}
-    \item Retail sales
+    \item Wind power
     \begin{itemize}
-    	\item Aggregate of different product category sales
-    	\item Further breakdown into individual stock keeping units.  
+    	\item Forecasts required at a daily and hourly resolution.
+    	\item Daily series is aggregate of 24 hourly series.  
     \end{itemize}
     \item Potentially need forecasts of all time series.
   \end{itemize}
@@ -42,7 +42,7 @@
   \end{frame}
   \begin{frame}{Reconciliation}
   \begin{itemize}
-  	\item Begin with a vector of forecasts that are incoherent.
+  	\item Begin with a vector of {\em base} forecasts that are incoherent.
   	\item Adjust these {\bf ex post} to make them coherent.
   	\item There are good solutions for point forecasting that:
   	\begin{itemize}
@@ -80,11 +80,11 @@
     \end{figure}
     \begin{itemize}
     	\item Let $n$ be the number of series, $\bm{y}$ be an n-vector of all series.
-    	\only<2>{\item Let {\color{blue}$m$} be the bottom level series and {\color{blue}$\bm{b}$} be an {\color{blue}$m$}-vector of the bottom level series.}
+    	\only<2>{\item Let {\color{blue}$m$} be the number of bottom level series and {\color{blue}$\bm{b}$} be an {\color{blue}$m$}-vector of the bottom level series.}
     \end{itemize}    
 \end{frame}  
 \begin{frame}{The ${\bm S}$ matrix}
-    The matrix ${\bm S}$ defines the aggregation constraints, e.g.
+    The $n\times m$ matrix ${\bm S}$ defines the aggregation constraints, e.g.
     \begin{equation*}
     {\bm S}=\begin{pmatrix} 1 &1 &1 &1 \\1 &1 &0 &0 \\0 &0 &1 &1 \\ &{\bm I_{4\times 4}}
     \end{pmatrix}  
@@ -136,7 +136,7 @@ Those without knowledge of geometry may not enter.
 
   \begin{frame}{Coherent Subspace}
     \begin{definition} 
-	  The {\bf coherent subspace} is the linear subspace spanned by the columns of ${\bm S}$, i.e. $\mathfrak{s}=\mbox{sp}({\bm S})$
+	  The {\bf coherent subspace} is the $m$-dimensional linear subspace of $\mathbb{R}^n$ spanned by the columns of ${\bm S}$, i.e. $\mathfrak{s}=\mbox{sp}({\bm S})$
     \end{definition}
     Instead of using bottom-level series a different combination of $m$ {\bf basis series} could be used (e.g. top and $m-1$ bottom).\\
     Although ${\bm S}$ would be different $\mathfrak{s}$ would be the same.
@@ -212,7 +212,7 @@ Those without knowledge of geometry may not enter.
   \item Consider the covariance matrix of ${\bm y}-\hat{\bm{y}}$.
    \item This can be estimated using in-sample forecast errors.
   \item This provides information about the likely direction of an error.
-  \item Projecting along this direction is more likely to result in a reconciled forecast closer to the target.
+  \item Projecting along this direction is more likely to result in a reconciled forecast that is closer to the target.
   \end{itemize}  
 \end{frame}
   \begin{frame}{Animation}
@@ -234,7 +234,7 @@ Those without knowledge of geometry may not enter.
   \begin{frame}{Coherent Probabilistic Forecast}
     Let $(\mathbb{R}^m,\mathcal{F}_{\mathbb{R}^m},\nu)$ and $(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\mu)$ be probability triples on $m$-dimensional space and the coherent subspace respectively.
     \begin{definition}
-      The probability measure $\nu$ is coherent if
+      The probability measure $\mu$ is coherent if
       \begin{equation*}
       \nu(\mathcal{B})=\mu(s(\mathcal{B}))\quad\forall\mathcal{B}\in \mathcal{F}_{\mathbb{R}_m}
       \end{equation*} 
@@ -242,7 +242,7 @@ Those without knowledge of geometry may not enter.
     where $s(\mathcal{B})$ is the image of $\mathcal{B}$ under premultiplication by ${\bm S}$
   \end{frame}
   \begin{frame}{Reconciled Probabilistic Forecast}
-  	Let $g:\mathbb{R}^n\rightarrow\mathbb{R}^m$ be a linear function.  Then 
+  	Let $g:\mathbb{R}^n\rightarrow\mathbb{R}^m$ be a mapping.  Then 
   	\begin{definition}
   	The probability triple $\left(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\tilde{\nu}\right)$ reconciles the probability triple $\left(\mathbb{R}^n,\mathcal{F}_{\mathbb{R}^n},\hat{\nu}\right)$ with with respect to $g$ iff
   	\begin{equation*}
@@ -264,46 +264,37 @@ Those without knowledge of geometry may not enter.
   	\end{align*}
   \end{frame}
   \begin{frame}{Elliptical distributions}
-  	Let the true predictive densities be elliptical.
+  	Consider case where the base true predictive distributions are elliptical.
   	\begin{theorem}
-  		There exists a function $g(.)$ such that the true predictive distribution can be recovered by linear reconciliation as long as the unreconciled probabilistic forecast comes from the correct elliptical class.
+  		There exists a function $\bm{G}$ such that the true predictive distribution can be recovered by linear reconciliation.
   	\end{theorem}
-    This follows from the closure property of elliptical distributions under affine transformations and marginalisation.  Conditions are also derived for when this $g(.)$ is also a projection.
+    This follows from the closure property of elliptical distributions under affine transformations and marginalisation.  
   \end{frame}
   \begin{frame}{With a sample}
   	\begin{itemize}
   		\item Often densities are unavailable but we can simulate a sample from the predictive distribution.
   		\item Suppose $\bm{\hat{y}}^{[1]},\ldots,\bm{\hat{y}}^{[J]}$ is a sample from the unreconciled probabilistic forecast.
-  		\item Then setting $\tilde{\bm y}^{[j]}=s\circ g(\hat{\bm y}^{[j]})=\bm{S}\bm{G}\hat{\bm y}^{[j]}$ produces a sample from the reconciled distribution with respect to $g$.
+  		\item Then setting $\tilde{\bm y}^{[j]}=\bm{S}\bm{G}\hat{\bm y}^{[j]}$ produces a sample from the reconciled distribution with respect to $g$.
   	\end{itemize}
   \end{frame}
   \section{Scoring}
-  \begin{frame}{Univariate v Multivariate Scores}
-    Scoring rules can be used to evaluate probabilistic forecasts
+  \begin{frame}{Multivariate Scores}
     \begin{itemize}
-    	\item Univariate
-    	\begin{itemize}
-    		\item Log Score
-    		\item Continuous Rank Probability Score
-    	\end{itemize}
-    	\item Multivariate
+    \item Scoring rules can be used to evaluate probabilistic forecasts
         \begin{itemize}
 	      \item Log Score
 	      \item Energy Score
+	      \item Variogram score
         \end{itemize}
+    \item We may want to compare
+    \begin{itemize}
+    	\item Coherent v Incoherent
+    	\item Coherent v Coherent
     \end{itemize}
-    These may be computed using densities or a sample.
-  \end{frame}
-  \begin{frame}{Approaches}
-  	\begin{enumerate}
-  		\item Use a summary of all univariate scores.
-  		\item Make comparisons on the joint distribution of bottom level series only.
-        \item Make comparisons using the full joint distribution
-  \end{enumerate}
-  There are pitfalls to the third approach.
+    \end{itemize}
   \end{frame}
   \begin{frame}{Coherent v Incoherent}
-	When comparing reconciled and unreconciled probabilistic forecasts on the basis of log score
+	When using log score
 	\begin{theorem}
 		Let $f(\bm{y})$ be the true predictive density (on $\mathfrak{s}$) and $LS$ be the (negatively-oriented) log score.  Then there exists an unreconciled density  $\hat{f}(\bm{y})$ on $\mathbb{R}^n$ such that
 		\begin{equation*}
@@ -312,23 +303,9 @@ Those without knowledge of geometry may not enter.
 	\end{theorem}
     The log score is not proper {\bf in this context}.
   \end{frame}
-  \begin{frame}{Reconciled v Reconciled}
-	\begin{itemize}
-		\item For two reconciled probabilistic forecasts log score can be used.
-		\item Comparisons can be made on the basis of bottom level series (or any basis series).
-		\item By the definition of coherence $\log (f({\bm b}))=\log (f({\bm S}{\bm b}){\bm J})$
-		\item The Jacobian does not affect the ordering of log score.
-	\end{itemize}
-  \end{frame}
-  \begin{frame}{Energy  score}
-  	\begin{itemize}
-  		\item Using bottom level series only is a bad idea for energy score.
-  		\item Energy score is invariant to orthogonal transformation but not affine transformations.
-  		\item Since ${\bm S}$ is not a rotation the ranking of different methods based on the full hierarchy may differ from the ranking based on bottom level series only.
-  	\end{itemize}
-  \end{frame}
-   \begin{frame}{Simulations}
+  \begin{frame}{Simulations}
    	\begin{itemize}
+   		\item We have run lots of simulations
    		\item The main takeaway messages are:
    		    \begin{itemize}
    		    	\item Reconciliation is better than no reconciliation.
