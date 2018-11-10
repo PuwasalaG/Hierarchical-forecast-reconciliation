@@ -1,4 +1,4 @@
-\documentclass[handout]{beamer}
+\documentclass{beamer}
 \usetheme{Warsaw}
 \usepackage{amsmath,amsthm, bm, tikz,qtree}
 \usetikzlibrary{arrows,positioning,shapes,fit,calc}
@@ -14,57 +14,70 @@
   \section{Motivation}
   \begin{frame}{Motivating Examples}
   \begin{itemize}
+  	\item Multiple time series $\rightarrow$ some series are aggregates of others.
   	\item Gross Domestic Product
+  	\pause
   	\begin{itemize}
   		\item An aggregate of consumption, investment, government spending and trade balance
   		\item Further breakdown, e.g. consumption of food, rent, etc.
   	\end{itemize}
+    \pause
     \item Wind power
     \begin{itemize}
     	\item Forecasts required at a daily and hourly resolution.
     	\item Daily series is aggregate of 24 hourly series.  
     \end{itemize}
+    \pause
     \item Potentially need forecasts of all time series.
   \end{itemize}
   \end{frame}
   \begin{frame}{Incoherent Forecasts}
   \begin{itemize}
     \item Potential approaches
+    \pause
   	\begin{itemize}
-  		\item Univariate models
   		\item Multivariate models
+  		\pause
+  		\item Univariate models
+  		\pause
   		\item Judgemental forecasts
   	\end{itemize}
-  \item Forecasts do not respect aggregation structure ({\bf Incoherent})
-  \item Outcome {\em does} respect aggregation  structure ({\bf Coherent})
+  \pause
+  \item Forecasts do not respect aggregation structure \pause({\bf Incoherent})\pause
+  \item Outcome {\em does} respect aggregation  structure \pause ({\bf Coherent})\pause
   \item Motivation is aggregation but can be generalised to any linear constraints.
   \end{itemize}
   \end{frame}
   \begin{frame}{Reconciliation}
   \begin{itemize}
   	\item Begin with a vector of {\em base} forecasts that are incoherent.
+  	\pause
   	\item Adjust these {\bf ex post} to make them coherent.
+  	\pause
   	\item There are good solutions for point forecasting that:
+  	\pause
   	\begin{itemize}
   		\item Guarantee coherent forecasts.
   		\item Improve forecast accuracy overall.
   	\end{itemize}
+  	\pause
   	\item Generalisation to probabilistic forecasts is our contribution.
+  	\pause
   	\item Getting there necessitates a rethink of the existing point forecasting literature. 
   \end{itemize}
   \end{frame}
-  \begin{frame}{What we do NOT do}
-  \begin{itemize}
-  	\item All information is contained in the most disaggregate series.
-  	\item In principle using the correct multivariate model for the most disaggregate series and aggregating them should work.
-  	\item Disaggregate series are: 
-  	\begin{itemize}
-  		\item Very noisy
-  		\item High-dimensional
-  		\item Prone to model misspecification
-  	\end{itemize} 
-  \end{itemize}
-  \end{frame}
+%  \begin{frame}{What we do NOT do}
+%  \begin{itemize}
+%  	\item All information is contained in the most disaggregate series.
+%  	\item In principle using the correct multivariate model for the most disaggregate series and aggregating them should work.
+%  	\item Disaggregate series are: 
+%  	\begin{itemize}
+%  		\item Very noisy
+%  		\item High-dimensional
+%  		\item Prone to model misspecification
+%  	\end{itemize} 
+%  \end{itemize}
+%  \end{frame}
   \section{Point Forecast Reconciliation}
  \begin{frame}{A simple hierarchy}
   	Consider a hierarchy given by
@@ -79,30 +92,30 @@
 	    \end{center}
     \end{figure}
     \begin{itemize}
-    	\item Let $n$ be the number of series, $\bm{y}$ be an n-vector of all series.
-    	\only<2>{\item Let {\color{blue}$m$} be the number of bottom level series and {\color{blue}$\bm{b}$} be an {\color{blue}$m$}-vector of the bottom level series.}
+    	\item Let $n$ be the number of series, $\bm{y}_t$ be an n-vector of all series.
+    	\only<2>{\item Let {\color{blue}$m$} be the number of bottom level series and {\color{blue}$\bm{b}_t$} be an {\color{blue}$m$}-vector of the bottom level series.}
     \end{itemize}    
 \end{frame}  
 \begin{frame}{The ${\bm S}$ matrix}
+  Coherence holds when
+  \begin{equation*}
+  {\bm y}={\bm S}{\bm b}
+  \end{equation*} 
     The $n\times m$ matrix ${\bm S}$ defines the aggregation constraints, e.g.
     \begin{equation*}
     {\bm S}=\begin{pmatrix} 1 &1 &1 &1 \\1 &1 &0 &0 \\0 &0 &1 &1 \\ &{\bm I_{4\times 4}}
     \end{pmatrix}  
-    \end{equation*}
-    Coherence holds when
-    \begin{equation*}
-    {\bm y}={\bm S}{\bm b}
-    \end{equation*} 
+    \end{equation*}    
 \end{frame}
 \begin{frame}{As a regression model}
   \begin{itemize}
-  	\item Cast the problem as a regression model with base forecasts $\hat{\bm{y}}$ as the ``dependent variable'' and ${\bm S}$ as the ``design matrix''. 
+  	\item Cast the problem as a regression model with base forecasts $\hat{\bm{y}}_{T+h}$ as the ``dependent variable'' and ${\bm S}$ as the ``design matrix''. 
   	\begin{equation*}
-  	\hat{\bm{y}}={\bm{S}}{\bm\beta}+{\bm e}
+  	\hat{\bm{y}}_{T+h}={\bm{S}}{\bm\beta}_{T+h}+{\bm e}_{T+h}
   	\end{equation*}
   	\item Initial approach (Athanasopoulos et al, 2009; Hyndman et al, 2011) was to fit by OLS  yielding reconciled forecasts:
   	\begin{equation*}
-  	\tilde{\bm{y}}={\bm S}({\bm S}'{\bm S})^{-1}{\bm S}'{\hat{\bm{y}}}
+  	\tilde{\bm{y}}_{T+h}={\bm S}({\bm S}'{\bm S})^{-1}{\bm S}'{\hat{\bm{y}}}_{T+h}
   	\end{equation*}
   \end{itemize}
 \end{frame}
@@ -110,7 +123,7 @@
   \begin{itemize}  
   \item Wherever we can use OLS we can use GLS
   \begin{equation*}
-  \tilde{\bm{y}}={\bm S}({\bm S}'{\bm W}^{-1}{\bm S})^{-1}{\bm S}'{\bm W}^{-1}{\hat{\bm{y}}}
+  \tilde{\bm{y}}_{T+h}={\bm S}({\bm S}'{\bm W}^{-1}{\bm S})^{-1}{\bm S}'{\bm W}^{-1}{\hat{\bm{y}}}_{T+h}
   \end{equation*}
   \item Diagonal ${\bm W}$ considered by Athanasopoulos et al (2017)
   \item MinT approach (Wickremasuriya et al, 2018) use a ${\bm W}$ that is an estimate of the {\em in-sample} forecast error covariance matrix.
@@ -204,20 +217,44 @@ Those without knowledge of geometry may not enter.
   	\item The realised observation always lies on $\mathfrak{s}$.
   	\item Orthogonal projections always get us `closer' to all points in $\mathfrak{s}$ including the actual realisation.
   	\item Ergo reconciliation reduces the error and not just in expectation. 
+  	\pause
   	\item What about the MinT approach? 
   \end{itemize}
   \end{frame}
   \begin{frame}{Finding a direction}
   \begin{itemize}
-  \item Consider the covariance matrix of ${\bm y}-\hat{\bm{y}}$.
+  \item Consider the covariance matrix of ${\bm y}_{T+h}-\hat{\bm{y}}_{T+h}$.
+   \pause
    \item This can be estimated using in-sample forecast errors.
+   \begin{equation*}
+   \bm{W}=\sum\limits_{t=1}^T ({\bm y}_{t}-\hat{\bm{y}}_{t})({\bm y}_{t}-\hat{\bm{y}}_{t})'
+   \end{equation*}
+  \pause
   \item This provides information about the likely direction of an error.
+  \pause
   \item Projecting along this direction is more likely to result in a reconciled forecast that is closer to the target.
   \end{itemize}  
 \end{frame}
-  \begin{frame}{Animation}
-  content...
-  \end{frame}
+\begin{frame}{In-Sample errors}
+\vspace{-0.9cm}
+\centering
+\input{Figs/insample}
+\end{frame}
+\begin{frame}{Most likely direction}
+\vspace{-0.9cm}
+\centering
+\input{Figs/insampledir}
+\end{frame}
+  \begin{frame}{Geometry: Oblique Projection}
+\vspace{-0.9cm}
+\centering
+\input{Figs/oblique_justification1}
+\end{frame}
+  \begin{frame}{Geometry: Oblique Projection}
+\vspace{-0.9cm}
+\centering
+\input{Figs/oblique_justification2}
+\end{frame}
   \begin{frame}{Geometry: Oblique Projection}
    	\vspace{-0.9cm}
    	\centering
@@ -226,7 +263,9 @@ Those without knowledge of geometry may not enter.
   \begin{frame}{Is this overkill?}
   \begin{itemize}
   	\item Is this geometric interpretation really necessary?
+  	\pause
   	\item When we generalise to probabilistic forecasts the regression interpretation does not really fit.
+  	\pause
   	\item Geometric ideas can easily be generalised. 
   \end{itemize}
   \end{frame}
@@ -242,7 +281,7 @@ Those without knowledge of geometry may not enter.
     where $s(\mathcal{B})$ is the image of $\mathcal{B}$ under premultiplication by ${\bm S}$
   \end{frame}
   \begin{frame}{Reconciled Probabilistic Forecast}
-  	Let $g:\mathbb{R}^n\rightarrow\mathbb{R}^m$ be a mapping.  Then 
+  	Let $g:\mathbb{R}^n\rightarrow\mathbb{R}^m$ be a function.  Then 
   	\begin{definition}
   	The probability triple $\left(\mathfrak{s},\mathcal{F}_{\mathfrak{s}},\tilde{\nu}\right)$ reconciles the probability triple $\left(\mathbb{R}^n,\mathcal{F}_{\mathbb{R}^n},\hat{\nu}\right)$ with with respect to $g$ iff
   	\begin{equation*}
@@ -264,28 +303,32 @@ Those without knowledge of geometry may not enter.
   	\end{align*}
   \end{frame}
   \begin{frame}{Elliptical distributions}
-  	Consider case where the base true predictive distributions are elliptical.
+  	Consider case where the base and true predictive distributions are elliptical.
   	\begin{theorem}
-  		There exists a function $\bm{G}$ such that the true predictive distribution can be recovered by linear reconciliation.
+  		There exists a matrix $\bm{G}$ such that the true predictive distribution can be recovered by linear reconciliation.
   	\end{theorem}
     This follows from the closure property of elliptical distributions under affine transformations and marginalisation.  
   \end{frame}
   \begin{frame}{With a sample}
   	\begin{itemize}
   		\item Often densities are unavailable but we can simulate a sample from the predictive distribution.
-  		\item Suppose $\bm{\hat{y}}^{[1]},\ldots,\bm{\hat{y}}^{[J]}$ is a sample from the unreconciled probabilistic forecast.
-  		\item Then setting $\tilde{\bm y}^{[j]}=\bm{S}\bm{G}\hat{\bm y}^{[j]}$ produces a sample from the reconciled distribution with respect to $g$.
+  		\pause
+  		\item Suppose $\bm{\hat{y}}_{T+h}^{[1]},\ldots,\bm{\hat{y}}_{T+h}^{[J]}$ is a sample from the unreconciled probabilistic forecast.
+  		\pause
+  		\item Then setting $\tilde{\bm y}_{T+h}^{[j]}=\bm{S}\bm{G}\hat{\bm y}_{T+h}^{[j]}$ produces a sample from the reconciled distribution with respect to $g$.
   	\end{itemize}
   \end{frame}
   \section{Scoring}
   \begin{frame}{Multivariate Scores}
     \begin{itemize}
     \item Scoring rules can be used to evaluate probabilistic forecasts
+        \pause
         \begin{itemize}
 	      \item Log Score
 	      \item Energy Score
 	      \item Variogram score
         \end{itemize}
+    \pause
     \item We may want to compare
     \begin{itemize}
     	\item Coherent v Incoherent
@@ -305,12 +348,17 @@ Those without knowledge of geometry may not enter.
   \end{frame}
   \begin{frame}{Simulations}
    	\begin{itemize}
-   		\item We have run lots of simulations
+   		\item We have run lots of simulations.
+   		\pause
    		\item The main takeaway messages are:
+   		    \pause
    		    \begin{itemize}
    		    	\item Reconciliation is better than no reconciliation.
+   		    	\pause
    		    	\item Bottom up does not do well.
-   		    	\item OLS (an orthogonal projection) does poorly.
+   		    	\pause
+   		    	\item OLS (an orthogonal projection) does reasonably well.
+   		    	\pause
    		    	\item MinT (an oblique projection) does best.
    		    \end{itemize} 
    	\end{itemize}
@@ -318,11 +366,15 @@ Those without knowledge of geometry may not enter.
    \begin{frame}{Looking ahead}
      \begin{itemize}
      	\item The optimal feasible reconciliation method remains an open question even for elliptical distributions.
+     	\pause
      	\begin{itemize}
      		\item It is likely to depend on the specific score used.
      	\end{itemize}
-        \item Are non-linear reconciliation methods worthwhile?
+        \pause
         \item How should probabilistic reconciliation work for non-elliptical distributions.
+        \pause
+        \item Are non-linear reconciliation methods worthwhile?
+        \pause
         \item Further development of multivariate scoring rules.
      \end{itemize}	
    \end{frame}

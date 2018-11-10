@@ -9,18 +9,14 @@ options(tikzLatexPackages=c(getOption("tikzLatexPackages"),"\\usepackage{amsfont
 
 ##Point forecast reconciliation.
 
-tikz('../../Presentations/CUFE2018/figs/orth_pointforerec_schematic.tex',width=4)
+tikz('orth_pointforerec_schematic.tex',width=4)
 plot.new()
 plot.window(xlim = c(-0.25,4),ylim = c(-0.5,5),asp=1)
 lines(c(0,0),c(-1,5))
 lines(c(-1,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,3.5,1.75,lwd=3)
-text(3.5,1.75,"{\\large ${\\bm S}$}",pos=4)
-#text(2,1,"{\\huge $\\mathfrak{s}$}",pos=1,offset = 1.3)
-#lines(c(-0.25,1),c(-1,4),lwd=2)
-#arrows(0,0,1,4,lwd=3)
-#text(1,4,"{\\Large ${\\bm R}$}",pos=3)
+text(3.5,1.75,"{\\huge $\\mathfrak{s}$}",pos=4)
 
 
 
@@ -51,6 +47,93 @@ text(6/7,3/7,"{\\large $\\color{black}{{\\bm{y}}}$}",pos=1,offset = 1.5)
 dev.off()
 
 
+### In-sample scatter plot
+tikz('insample.tex',height=5)
+plot.new()
+plot.window(xlim = c(-0.25,4),ylim = c(-0.5,5))
+lines(c(0,0),c(-1,5))
+lines(c(-1,5),c(0,0))
+#lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
+arrows(0,0,3.5,1.75,lwd=3)
+text(3.5,1.75,"{\\huge $\\mathfrak{s}$}",pos=4)
+
+#lines(c(-0.25,1),c(-1,4),lwd=2)
+
+rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
+e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
+points(e[,1],e[,2],pch=19,col='orange')
+dev.off()
+
+### In-sample scatter plot with dir
+tikz('insampledir.tex',height=5)
+plot.new()
+plot.window(xlim = c(-0.25,4),ylim = c(-0.5,5))
+lines(c(0,0),c(-1,5))
+lines(c(-1,5),c(0,0))
+#lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
+arrows(0,0,3.5,1.75,lwd=3)
+text(3.5,1.75,"{\\huge $\\mathfrak{s}$}",pos=4)
+#lines(c(-0.25,1),c(-1,4),lwd=2)
+
+points(e[,1],e[,2],pch=19,col='orange')
+arrows(0,0,1,4,lwd=3)
+text(1,4,"{\\Large ${\\bm R}$}",pos=3)
+dev.off()
+
+##Point Forecast Reconciliation
+tikz('oblique_justification1.tex',height=5)
+plot.new()
+plot.window(xlim = c(-0.25,4),ylim = c(-0.5,5))
+lines(c(0,0),c(-1,5))
+lines(c(-1,5),c(0,0))
+#lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
+arrows(0,0,3.5,1.75,lwd=3)
+text(3.5,1.75,"{\\huge $\\mathfrak{s}$}",pos=4)
+#lines(c(-0.25,1),c(-1,4),lwd=2)
+arrows(0,0,1,4,lwd=3)
+text(1,4,"{\\Large ${\\bm R}$}",pos=3)
+
+points(0.6,0.3,pch=20,cex=2,col='black')
+text(0.6,0.3,"{\\huge $\\color{black}{\\bm{y}}$}",pos = 1,offset = 1)
+dev.off()
+
+
+tikz('oblique_justification2.tex',height=5)
+plot.new()
+plot.window(xlim = c(-0.25,4),ylim = c(-0.5,5))
+lines(c(0,0),c(-1,5))
+lines(c(-1,5),c(0,0))
+#lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
+points(e[,1]+0.6,e[,2]+0.3,pch=19,col='gray')
+arrows(0,0,3.5,1.75,lwd=3)
+text(3.5,1.75,"{\\huge $\\mathfrak{s}$}",pos=4)
+#lines(c(-0.25,1),c(-1,4),lwd=2)
+arrows(0,0,1,4,lwd=3)
+text(1,4,"{\\Large ${\\bm R}$}",pos=3)
+
+points(0.6,0.3,pch=20,cex=2,col='black')
+text(0.6,0.3,"{\\huge $\\color{black}{\\bm{y}}$}",pos = 1,offset = 1)
+points(1.5,3,pch=20,cex=2,col='blue')
+text(1.5,3,"{\\huge $\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3,offset = 1.5)
+dev.off()
+
+
+# lines(c(0,2),c(-3,5),lty=2)
+# points(1.5,3,pch=20,cex=2,col='blue')
+# text(1.5,3,"{\\huge $\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3,offset = 1.5)
+# 
+# text(1.25,2,"{\\huge ${\\color{blue} s\\circ g}$}",pos=4)
+# 
+# points(6/7,3/7,pch=20,cex=2,col='red')
+# text(6/7,3/7,"{\\huge $\\color{red}{\\tilde{\\bm{y}}}$}",pos=1,offset = 1.5)
+# 
+# arrows(1.5,3,6/7,3/7,col='blue')
+# 
+# dev.off()
+
+
+
+
 ##Point forecast reconciliation.
 
 tikz('pointforerec_schematic.tex',height=5)
@@ -60,9 +143,7 @@ lines(c(0,0),c(-1,5))
 lines(c(-1,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,3.5,1.75,lwd=3)
-text(3.5,1.75,"{\\Large ${\\bm S}$}",pos=4)
-text(2,1,"{\\huge $\\mathfrak{s}$}",pos=1,offset = 1.3)
-#lines(c(-0.25,1),c(-1,4),lwd=2)
+text(3.5,1.75,"{\\huge $\\mathfrak{s}$}",pos=4)
 arrows(0,0,1,4,lwd=3)
 text(1,4,"{\\Large ${\\bm R}$}",pos=3)
 
@@ -70,26 +151,27 @@ lines(c(0,2),c(-3,5),lty=2)
 points(1.5,3,pch=20,cex=2,col='blue')
 text(1.5,3,"{\\huge $\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3,offset = 1.5)
 
-text(1.25,2,"{\\huge ${\\color{blue} s\\circ g}$}",pos=4)
+#text(1.25,2,"{\\huge ${\\color{blue} s\\circ g}$}",pos=4)
 
 points(6/7,3/7,pch=20,cex=2,col='red')
 text(6/7,3/7,"{\\huge $\\color{red}{\\tilde{\\bm{y}}}$}",pos=1,offset = 1.5)
 
 arrows(1.5,3,6/7,3/7,col='blue')
-
+points(0.6,0.3,pch=20,cex=2,col='black')
+text(0.6,0.3,"{\\huge $\\color{black}{\\bm{y}}$}",pos = 1,offset = 1)
 dev.off()
 
 
 
-tikz('probforerec_schematic.tex',height=5)
+tikz('probforerec_schematic.tex',height=5,pointsize = 7)
 plot.new()
 plot.window(xlim = c(-0.25,4),ylim = c(-0.5,5))
 lines(c(0,0),c(-1,5))
 lines(c(-1,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,3.5,1.75,lwd=3)
-text(3.5,1.75,"{\\Large ${\\bm S}$}",pos=4)
-text(2,1,"{\\huge $\\mathfrak{s}$}",pos=1,offset = 1.3)
+text(3.5,1.75,"{\\huge $\\mathfrak{s}$}",pos=4)
+
 #lines(c(-0.25,1),c(-1,4),lwd=2)
 arrows(0,0,1,4,lwd=3)
 text(1,4,"{\\Large ${\\bm R}$}",pos=3)
@@ -98,6 +180,8 @@ lines(c(0,1.5),c(-1,5),lty=2)
 
 lines(c(1,2.5),c(-1,5),lty=2)
 
+lines(c(0.25,1.25),c(0,0),lwd=4)
+text(0.75,0,"{\\huge $\\mathcal{B}$}",pos = 1,offset = 1)
 lines(c(2/7,10/7),c(1/7,5/7),lwd=4,col='red')
 text(1.5,-0.5,"{\\huge $\\color{red}{s(\\mathcal{B})}$}",pos = 4,offset = 1.2)
 arrows(1.5,-0.5,6/7,3/7,col='red')
