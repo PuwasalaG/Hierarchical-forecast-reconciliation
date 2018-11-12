@@ -1,6 +1,6 @@
 \documentclass{beamer}
 \usetheme{Warsaw}
-\usepackage{amsmath,amsthm, bm, tikz,qtree}
+\usepackage{amsmath,amsthm, bm, tikz,qtree,multirow,booktabs}
 \usetikzlibrary{arrows,positioning,shapes,fit,calc}
 \usepackage[greek,english]{babel}
 
@@ -15,6 +15,7 @@
   \begin{frame}{Motivating Examples}
   \begin{itemize}
   	\item Multiple time series $\rightarrow$ some series are aggregates of others.
+  	\pause
   	\item Gross Domestic Product
   	\pause
   	\begin{itemize}
@@ -22,10 +23,10 @@
   		\item Further breakdown, e.g. consumption of food, rent, etc.
   	\end{itemize}
     \pause
-    \item Wind power
+    \item Wind power \hyperlink{aelos}{\beamerbutton{}}
     \begin{itemize}
     	\item Forecasts required at a daily and hourly resolution.
-    	\item Daily series is aggregate of 24 hourly series.  
+    	\item Daily series is aggregate of 24 hourly series.\label{afterdat}  
     \end{itemize}
     \pause
     \item Potentially need forecasts of all time series.
@@ -36,7 +37,7 @@
     \item Potential approaches
     \pause
   	\begin{itemize}
-  		\item Multivariate models
+  		\item Multivariate models  		
   		\pause
   		\item Univariate models
   		\pause
@@ -47,8 +48,9 @@
   \item Outcome {\em does} respect aggregation  structure \pause ({\bf Coherent})\pause
   \item Motivation is aggregation but can be generalised to any linear constraints.
   \end{itemize}
+  \hfill\hyperlink{bu}{\beamerbutton{}}
   \end{frame}
-  \begin{frame}{Reconciliation}
+  \begin{frame}{Reconciliation}\label{cont}
   \begin{itemize}
   	\item Begin with a vector of {\em base} forecasts that are incoherent.
   	\pause
@@ -93,13 +95,13 @@
     \end{figure}
     \begin{itemize}
     	\item Let $n$ be the number of series, $\bm{y}_t$ be an n-vector of all series.
-    	\only<2>{\item Let {\color{blue}$m$} be the number of bottom level series and {\color{blue}$\bm{b}_t$} be an {\color{blue}$m$}-vector of the bottom level series.}
+    	\pause\item Let {\color{blue}$m$} be the number of bottom level series and {\color{blue}$\bm{b}_t$} be an {\color{blue}$m$}-vector of the bottom level series.
     \end{itemize}    
 \end{frame}  
 \begin{frame}{The ${\bm S}$ matrix}
   Coherence holds when
   \begin{equation*}
-  {\bm y}={\bm S}{\bm b}
+  {\bm y}_t={\bm S}{\bm b}_t
   \end{equation*} 
     The $n\times m$ matrix ${\bm S}$ defines the aggregation constraints, e.g.
     \begin{equation*}
@@ -362,8 +364,9 @@ Those without knowledge of geometry may not enter.
    		    	\item MinT (an oblique projection) does best.
    		    \end{itemize} 
    	\end{itemize}
+   \hfill\hyperlink{sim}{\beamerbutton{}}
    \end{frame}
-   \begin{frame}{Looking ahead}
+   \begin{frame}{Looking ahead}\label{simdisc}
      \begin{itemize}
      	\item The optimal feasible reconciliation method remains an open question even for elliptical distributions.
      	\pause
@@ -374,8 +377,53 @@ Those without knowledge of geometry may not enter.
         \item How should probabilistic reconciliation work for non-elliptical distributions.
         \pause
         \item Are non-linear reconciliation methods worthwhile?
-        \pause
-        \item Further development of multivariate scoring rules.
      \end{itemize}	
    \end{frame}
+  \begin{frame}
+    \Huge{Thank You!}\\
+  \pause\Huge{Questions?}
+  \end{frame}
+  \begin{frame}{Aeolos Wind Farm}\label{aelos}
+  \centering
+  \includegraphics[height=7cm]{Figs/Aeolos_Unscaled}
+  \end{frame}
+  \begin{frame}{Aeolos Wind Farm}
+  \centering
+  \includegraphics[height=7cm]{Figs/Aeolos_Unscaled}
+  \end{frame}
+  \begin{frame}{Aeolos Wind Farm}
+\centering
+\includegraphics[height=7cm]{Figs/Aeolos_Scaled}
+  \hfill\hyperlink{afterdat}{\beamerbutton{}}
+\end{frame}
+  \begin{frame}{What we do NOT do}\label{bu}
+  \begin{itemize}
+  	\item All information is contained in the most disaggregate series.
+  	\item In principle using the correct multivariate model for the most disaggregate series and aggregating them should work.
+  	\item Disaggregate series are: 
+  	\begin{itemize}
+  		\item Very noisy
+  		\item High-dimensional
+  		\item Prone to model misspecification
+  	\end{itemize} 
+  \end{itemize}
+  \hfill\hyperlink{cont}{\beamerbutton{}}
+  \end{frame}
+  \begin{frame}{Simulation Results}\label{sim}
+  Hierarchy from earlier bottom series are ARIMA models.  Training sample of 500, one-step ahead forecasts, 1000 replications.
+  \begin{table}
+  	\centering\small
+  	\begin{tabular}{lccc}
+  		\toprule
+  		Forecasting &{\text{Energy score}} & {\text{Variogram score}} & {\text{Log score}} \\
+  		\midrule
+  		MinT(Sample) &  {\bf 10.01}   & {\bf 8.41}  & {\bf 11.29} \\
+  		OLS          &  10.53   & 8.86  & 11.54 \\
+  		Bottom-up    &  12.35   & 9.22  & 12.05 \\
+  		Incoherent	 &  11.12   & 9.53  \\
+  		\bottomrule
+  	\end{tabular}
+  \end{table}
+\hfill\hyperlink{simdisc}{\beamerbutton{}}
+\end{frame}
 \end{document}
