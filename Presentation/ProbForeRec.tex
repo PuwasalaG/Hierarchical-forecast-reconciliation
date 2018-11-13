@@ -16,7 +16,7 @@
   \begin{itemize}
   	\item Multiple time series $\rightarrow$ some series are aggregates of others.
   	\pause
-  	\item Gross Domestic Product
+  	\item Gross Domestic Product \hyperlink{GDP}{\beamerbutton{}}
   	\pause
   	\begin{itemize}
   		\item An aggregate of consumption, investment, government spending and trade balance
@@ -311,15 +311,15 @@ Those without knowledge of geometry may not enter.
   	\end{theorem}
     This follows from the closure property of elliptical distributions under affine transformations and marginalisation.  
   \end{frame}
-  \begin{frame}{With a sample}
-  	\begin{itemize}
-  		\item Often densities are unavailable but we can simulate a sample from the predictive distribution.
-  		\pause
-  		\item Suppose $\bm{\hat{y}}_{T+h}^{[1]},\ldots,\bm{\hat{y}}_{T+h}^{[J]}$ is a sample from the unreconciled probabilistic forecast.
-  		\pause
-  		\item Then setting $\tilde{\bm y}_{T+h}^{[j]}=\bm{S}\bm{G}\hat{\bm y}_{T+h}^{[j]}$ produces a sample from the reconciled distribution with respect to $g$.
-  	\end{itemize}
-  \end{frame}
+%  \begin{frame}{With a sample}
+%  	\begin{itemize}
+%  		\item Often densities are unavailable but we can simulate a sample from the predictive distribution.
+%  		\pause
+%  		\item Suppose $\bm{\hat{y}}_{T+h}^{[1]},\ldots,\bm{\hat{y}}_{T+h}^{[J]}$ is a sample from the unreconciled probabilistic forecast.
+%  		\pause
+%  		\item Then setting $\tilde{\bm y}_{T+h}^{[j]}=\bm{S}\bm{G}\hat{\bm y}_{T+h}^{[j]}$ produces a sample from the reconciled distribution with respect to $g$.
+%  	\end{itemize}
+%  \end{frame}
   \section{Scoring}
   \begin{frame}{Multivariate Scores}
     \begin{itemize}
@@ -383,6 +383,11 @@ Those without knowledge of geometry may not enter.
     \Huge{Thank You!}\\
   \pause\Huge{Questions?}
   \end{frame}
+  \begin{frame}{GDP}\label{GDP}
+\centering
+\includegraphics[height=7cm]{Figs/GDP}
+\hfill\hyperlink{afterdat}{\beamerbutton{}}
+\end{frame}
   \begin{frame}{Aeolos Wind Farm}\label{aelos}
   \centering
   \includegraphics[height=7cm]{Figs/Aeolos_Unscaled}
@@ -398,6 +403,7 @@ Those without knowledge of geometry may not enter.
 \end{frame}
   \begin{frame}{What we do NOT do}\label{bu}
   \begin{itemize}
+  	\item Use disaggregate series as predictors (although we can).
   	\item All information is contained in the most disaggregate series.
   	\item In principle using the correct multivariate model for the most disaggregate series and aggregating them should work.
   	\item Disaggregate series are: 
