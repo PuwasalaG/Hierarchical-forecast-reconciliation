@@ -5,7 +5,7 @@
 \usepackage[greek,english]{babel}
 
 \title{Probabilistic Forecast Reconciliation}
-\date{November 14, 2018}
+\date{November 26, 2018}
 \author[GPAH]{Puwasala Gamakumara, Anastasios Panagiotelis, George Athanasopoulos and Rob Hyndman}
 \begin{document}
   \begin{frame}
@@ -60,7 +60,7 @@
   	\pause
   	\begin{itemize}
   		\item Guarantee coherent forecasts.
-  		\item Improve forecast accuracy overall.
+  		\item Improve forecast accuracy overall.\hfill\hyperlink{macrores}{\beamerbutton{}}
   	\end{itemize}
   	\pause
   	\item Generalisation to probabilistic forecasts is our contribution.
@@ -384,9 +384,8 @@ Those without knowledge of geometry may not enter.
   \pause\Huge{Questions?}
   \end{frame}
   \begin{frame}{GDP}\label{GDP}
-\centering
-\includegraphics[height=7cm]{Figs/GDP}
-\hfill\hyperlink{afterdat}{\beamerbutton{}}
+  \includegraphics[height=7cm]{Figs/GDP}
+  \hyperlink{afterdat}{\beamerbutton{}}
 \end{frame}
   \begin{frame}{Aeolos Wind Farm}\label{aelos}
   \centering
@@ -414,6 +413,26 @@ Those without knowledge of geometry may not enter.
   	\end{itemize} 
   \end{itemize}
   \hfill\hyperlink{cont}{\beamerbutton{}}
+  \end{frame}
+  \begin{frame}{Macro Example}\label{macrores}
+  Improvement in RMSE of GDP forecasts over seasonal random walk using ARIMA models both without and with reconciliation.
+  \begin{table}
+  	\begin{center}
+  	\begin{tabular}{r|ll}
+  	\hline\hline
+  	Method & h=1 & h=2  \\
+  	\hline
+  	Base & 56.1496 & 33.8093\\
+  	BU & 54.1873 & 36.1718 \\
+  	OLS & 56.6164 & 34.6302\\
+  	WLS & 56.6819 & 36.0987\\
+  	MinT Sam. &56.2204 & 31.6136 \\
+  	MinT Shr. & 57.7249 & 36.8764 \\
+  	\hline
+  \end{tabular}
+  \end{center}
+  \end{table}
+  	\hfill\hyperlink{cont}{\beamerbutton{}}
   \end{frame}
   \begin{frame}{Simulation Results}\label{sim}
   Hierarchy from earlier bottom series are ARIMA models.  Training sample of 500, one-step ahead forecasts, 1000 replications.
