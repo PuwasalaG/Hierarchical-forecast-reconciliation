@@ -7,7 +7,7 @@
 \usepackage{url} % not crucial - just used below for the URL 
 
 \usepackage{amssymb, qtree, bm, multirow, textcmds, siunitx,paralist}
-\usepackage{mathrsfs, float, booktabs,todonotes,amsthm, xcolor}
+\usepackage{mathrsfs, float, booktabs,todonotes,amsthm, xcolor,sidenotes}
 \usepackage[bb=boondox]{mathalfa}
 \usepackage{tikz}
 \usetikzlibrary{arrows,positioning,shapes,fit,calc}
@@ -122,7 +122,7 @@
 %	
 %	The remainder of the paper is structured as follows. In Section~\ref{sec:definitions} coherence is defined geometrically for both point and probabilistic forecasts. Section~\ref{sec:reconciliation} contains definitions of point and probabilistic forecast reconciliation as well as our main theoretical results. In Section~\ref{sec:evaluation} we consider the evaluation of probabilistic hierarchical forecasts via scoring rules, while a simulation study comparing unreconciled probabilistic forecasts and different kinds of reconciled probabilistic forecasts is provided in Section~\ref{sec:gaussian}. Section~\ref{sec:conclusions} concludes with some discussion and thoughts on future research.
 	
-	\section{Forecasts reconciliation}\label{sec:definitions}
+\section{Coherent forecasts}\label{sec:CoheForecasts}
 	
 	\subsection{Notation and preliminaries}\label{sec:notation}
 	
@@ -160,7 +160,7 @@
 	
 	\subsection{Coherent point forecasts}\label{sec:cohpointf}
 	
-	It is desirable that forecasts, whether point forecasts or probabilistic forecasts, should in some sense respect inherent aggregation constraints. We follow other authors \citep{Wickramasuriya2017, FPP2018} in using the nomenclature \emph{coherence} to describe this property.  We now provide new definitions for coherent forecasts in terms of vector spaces that give a geometric understanding of the problem, thus facilitating the development of probabilistic forecast reconciliation in Section~\ref{sec:reconciliation}.
+	It is desirable that point forecasts should in some sense respect inherent aggregation constraints. We follow other authors \citep{Wickramasuriya2017, FPP2018} in using the nomenclature \emph{coherence} to describe this property.  We now provide new definitions for coherent forecasts in terms of vector spaces that give a geometric understanding of the problem.
 	
 	\begin{definition}[Coherent subspace]\label{def:cohspace}
 		The $m$-dimensional linear subspace $\mathfrak{s}\subset \mathbb{R}^n$ that is spanned by the columns of $\bm{S}$, i.e.\ $\mathfrak{s}=\text{span}(\bm{S})$, is defined as the \emph{coherent space}.
@@ -209,7 +209,10 @@
 		Let $\breve{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ be a point forecast of the values of all series in the hierarchy at time $t+h$, made using information up to and including time $t$. Then $\breve{\bm{y}}_{t+h|t}$ is \emph{coherent} if $\breve{\bm{y}}_{t+h|t} \in \mathfrak{s}$.
 	\end{definition}
 	
-	These definitions of the coherent space $\mathfrak{s}$, coherent point and coherent probabilistic forecasts in terms of the mapping $s(.)$, may give the impression that the bottom-level series play an important role. However, alternative definitions could be formed using any set of basis vectors that span $\mathfrak{s}$. For example, consider the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$. In this case the matrix $\bm{S}$ has columns $(1,1,0)'$ and $(1,0,1)'$ spanning $\mathfrak{s}$, and pre-multiplying by $\bm{S}$ transforms arbitrary values of $y_{2,t}$ and $y_{3,t}$ into a coherent vector for the full hierarchy. However the columns $(1,0,1)'$ and $(0,1,-1)'$ also span $\mathfrak{s}$ and define a mapping that transforms arbitrary values of $y_{1,t}$ and $y_{2,t}$ into a coherent vector for the full hierarchy. The definitions above could be made in terms of any series and not just the bottom-level series. In general, we call the series (or linear combinations thereof) used in the definitions of coherence \textit{basis series}. Unless stated otherwise, we will always assume that the basis series are the bottom-level series as in Definition~\ref{def:cohpoint}, since this facilitates comparison with existing approaches in the literature.
+	These definitions of the coherent space $\mathfrak{s}$ and coherent point forecasts in terms of the mapping $s(.)$, may give the impression that the bottom-level series play an important role. However, alternative definitions could be formed using any set of basis vectors that span $\mathfrak{s}$. For example, consider the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$. In this case the matrix $\bm{S}$ has columns $(1,1,0)'$ and $(1,0,1)'$ spanning $\mathfrak{s}$, and pre-multiplying by $\bm{S}$ transforms arbitrary values of $y_{2,t}$ and $y_{3,t}$ into a coherent vector for the full hierarchy. However the columns $(1,0,1)'$ and $(0,1,-1)'$ also span $\mathfrak{s}$ and define a mapping that transforms arbitrary values of $y_{1,t}$ and $y_{2,t}$ into a coherent vector for the full hierarchy. The definitions above could be made in terms of any series and not just the bottom-level series. In general, we call the series (or linear combinations thereof) used in the definitions of coherence \textit{basis series}. Unless stated otherwise, we will always assume that the basis series are the bottom-level series as in Definition~\ref{def:cohpoint}, since this facilitates comparison with existing approaches in the literature.
+	
+	
+\section{Forecasts reconciliation}\label{sec:Reconciliation}
 	
 	\subsection{Point forecast reconciliation}\label{sec:reconciliation}
 	
@@ -226,30 +229,30 @@
 		\end{equation}
 	\end{definition}
 	
-	Several choices of $g(.)$ currently extant in the literature, including the OLS, WLS and MinT methods, are special cases where $s\circ g$ is a projection. These can be defined so that $\bm{G}=({\bm{R}'_{\perp}}\bm{S})^{-1}\bm{R}_{\perp}'$ and $\bm{d}=\bm{0}$, were, ${\bm{R}_{\perp}}$ is a $n\times m$ orthogonal complement to an $n \times (n-m)$ matrix $\bm{R}$, where the columns of the latter span the null space of $\mathfrak{s}$. For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$, is the vector $(1,-1,-1)$ which is orthogonal (in the Euclidean sense) to the columns of $\bm{S}$. In this case, the matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. For this three variable hierarchy, $\bm{R}_\perp'=\bm{S}$ and reconciliation corresponds to the OLS method. For the case where $\bm{R}_\perp'\neq\bm{S}$, for example WLS and MinT, there are two possible interpretations. One is that these are oblique projections in Euclidean space where the columns of $\bm{R}$ are `directions' along which incoherent point forecasts are projected onto the coherent space $\mathfrak{s}$. Alternatively, since $\bm{R}_\perp'$ is usually written in the form $\bm{S}'{\bm{W}}^{-1}$, these projections can be thought of as orthogonal projections after pre-multiplying by ${\bm{W}^{-1/2}}$. A schematic providing a geometric interpretation of point reconciliation is given in Figure~\ref{fig:pointfr_sch}, while Table~\ref{table:2} summarises existing reconciliation methods.
+	Several choices of $g(.)$ currently extant in the literature, including the OLS, WLS and MinT methods, are special cases where $s\circ g$ is a projection. These can be defined so that $\bm{G}=({\bm{R}'_{\perp}}\bm{S})^{-1}\bm{R}_{\perp}'$ and $\bm{d}=\bm{0}$, where, ${\bm{R}_{\perp}}$ is a $n\times m$ orthogonal complement to an $n \times (n-m)$ matrix $\bm{R}$, where the columns of the latter span the null space of $\mathfrak{s}$. For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$, is the vector $(1,-1,-1)$ which is orthogonal (in the Euclidean sense) to the columns of $\bm{S}$. In this case, the matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. In OLS reconciliation, $\bm{R}_{\perp}'= \bm{S}'$ whereas in MinT or WLS reconciliation $\bm{R}_{\perp}'$ takes the form $\bm{S'W}^{-1}$. We will be discussing these projections distinctly in the next subsection. 
 	
-	\begin{table}[!h]
-		\caption{Summary of reconciliation methods that are projections. Here, $\hat{\bm{W}}^{sam}$ is the variance covariance matrix of one-step ahead forecast errors, $\hat{\bm{W}}^{shr}$ is a shrinkage estimator more suited to large dimensions proposed by \citet{Schafer2005}, $\hat{\bm{W}}^{wls}$ is the diagonal matrix with diagonal elements $w_{ii}$, and $\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{w}_{ij})}{\sum_{i \neq j}{\hat{w}}^2_{ij}}$, where $w_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{W}}^{sam}$.}\label{table:2}
-		\centering
-		\begin{tabular}{lll}
-			\toprule
-			\textbf{Method} & \textbf{$\bm{W}$} & \textbf{ $\bm{R}'_\bot$}      \\
-			\midrule
-			OLS             &
-			$\bm{I}$  &
-			$\bm{S}'$  \\
-			MinT(Sample)    &
-			$\hat{\bm{W}}^{sam}$ &
-			$\bm{S}'(\hat{\bm{W}}^{sam})^{-1}$ \\
-			MinT(Shrink)    &
-			$\tau\text{Diag}(\hat{\bm{W}}^{sam}) + (1-\tau)\hat{\bm{W}}^{sam}$ &
-			$\bm{S}'(\hat{\bm{W}}^{shr})^{-1}$ \\
-			WLS       &
-			$\text{Diag}(\hat{\bm{W}}^{shr})$ &
-			$\bm{S}'(\hat{\bm{W}}^{wls})^{-1}$ \\
-			\bottomrule
-		\end{tabular}
-	\end{table}
+%	\begin{table}[!h]
+%		\caption{Summary of reconciliation methods that are projections. Here, $\hat{\bm{W}}^{sam}$ is the variance covariance matrix of one-step ahead forecast errors, $\hat{\bm{W}}^{shr}$ is a shrinkage estimator more suited to large dimensions proposed by \citet{Schafer2005}, $\hat{\bm{W}}^{wls}$ is the diagonal matrix with diagonal elements $w_{ii}$, and $\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{w}_{ij})}{\sum_{i \neq j}{\hat{w}}^2_{ij}}$, where $w_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{W}}^{sam}$.}\label{table:2}
+%		\centering
+%		\begin{tabular}{lll}
+%			\toprule
+%			\textbf{Method} & \textbf{$\bm{W}$} & \textbf{ $\bm{R}'_\bot$}      \\
+%			\midrule
+%			OLS             &
+%			$\bm{I}$  &
+%			$\bm{S}'$  \\
+%			MinT(Sample)    &
+%			$\hat{\bm{W}}^{sam}$ &
+%			$\bm{S}'(\hat{\bm{W}}^{sam})^{-1}$ \\
+%			MinT(Shrink)    &
+%			$\tau\text{Diag}(\hat{\bm{W}}^{sam}) + (1-\tau)\hat{\bm{W}}^{sam}$ &
+%			$\bm{S}'(\hat{\bm{W}}^{shr})^{-1}$ \\
+%			WLS       &
+%			$\text{Diag}(\hat{\bm{W}}^{shr})$ &
+%			$\bm{S}'(\hat{\bm{W}}^{wls})^{-1}$ \\
+%			\bottomrule
+%		\end{tabular}
+%	\end{table}
 	
 	
 	\begin{figure}
@@ -278,12 +281,14 @@
 	\end{equation}
 	where $\bm{S}_{\bot}$ is the orthogonal complements of $\bm{S}$. Thus it follows that $\tilde{\bm{b}}_{t+h|t}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}=\bm{S}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h|t}$. Here $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$ corresponds to $\bm{G}$ as defined previously.
 	
-	Point reconciliation methods based on projections will always minimise the distance between unreconciled and reconciled forecasts, however the specific distance will depend on the choice of $\bm{R}$. For example OLS minimises the Euclidean distance between $\hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}$, while \citet{Wickramasuriya2017} show that MinT minimises the Mahalonobis distance between $\hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}$. \textcolor{red}{Explain why MinT works well}. Bottom-up methods minimise distance between reconciled and unreconciled forecasts only along dimensions corresponding to the bottom-level series. Therefore bottom-up methods should be thought of as a boundary case of reconciliation methods, since they ultimately do not use information at all levels of the hierarchy.
+	\subsection{Motivation of using projections}
 	
-	We now state two theorems that motivate the use of projections for point forecast reconciliation. First, let $\bm{\mu}_{t+h|t}:=\E(\bm{y}_{t+h}\mid\bm{y}_{1},\dots,\bm{y}_{t})$ and assume $\hat{\bm{y}}_{t+h|t}$ is an unbiased prediction; that is $\E_{1:t}(\hat{\bm{y}}_{t+h|t})=\mu_{t+h|t}$, where the subscript $1:t$ denotes an expectation taken over the training sample.
+	We have seen from the above discussion that projection is playing an important role in point forecast reconciliation. Now we turn our attention to the following two theorems that explains the motivation of using projection in this context. 
+	
+	First, let $\bm{\mu}_{t+h|t}:=\E(\bm{y}_{t+h}\mid\bm{y}_{1},\dots,\bm{y}_{t})$ and assume $\hat{\bm{y}}_{t+h|t}$ is an unbiased prediction; that is $\E_{1:t}(\hat{\bm{y}}_{t+h|t})=\bm{\mu}_{t+h|t}$, where the subscript $1:t$ denotes an expectation taken over the training sample.
 	
 	\begin{theo}[Unbiasedness preserving property]
-		For unbiased $\hat{\bm{y}}_{t+h|t}$, the reconciled point forecast is also an unbiased prediction as long as $s\circ g$ is a projection.
+		For unbiased $\hat{\bm{y}}_{t+h|t}$, the reconciled point forecast is also an unbiased prediction as long as $s\circ g$ is a projection onto $\mathfrak{s}$.
 	\end{theo}
 	\begin{proof}
 		The expected value of the reconciled forecast is given by
@@ -295,7 +300,34 @@
 		\]
 		Since the aggregation constraints hold for the true data generating process, $\bm{\mu}_{t+h|t}$ must lie in $\mathfrak{s}$. If $\bm{S}\bm{G}$ is a projection, then it is equivalent to the identity map for all vectors that lie in its range. Therefore $\bm{S}\bm{G}\bm{\mu}_{t+h|t}=\bm{\mu}_{t+h|t}$ when $\bm{S}\bm{G}$ is a projection matrix.
 	\end{proof}
-	We note the same result does not hold for general $g$ even when the range of $s\circ g$ is $\mathfrak{s}$. Now let $\bm{y}_{t+h}$ be the realisation of the data generating process at time $t+h$, and let $\|\bm{v}\|_2$ be the $L_2$ norm of vector $\bm{v}$. The following theorem shows that reconciliation never increases, and in most cases reduces, the sum of squared errors of point forecasts.
+
+	We note the above result holds when the projection $s\circ g$ is only onto the coherent subspace $\mathfrak{s}$. That is the result does not hold for any general $g$ even when the range of $s\circ g$ is $\mathfrak{s}$. To describe this more explicitly suppose $s\circ g$ is a projection to any linear subspace $\mathfrak{L}$ of $\mathfrak{s}$. Then $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$ as the projection will move $\bm{\mu}_{t+h|t}$ to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$ as depicted in the figure \ref{fig:Schematic_3D}. Thus $\E_{1:t}(\tilde{\bm{y}}_{t+h|t}) \ne \bm{\mu}_{t+h|t}$ which breaks the unbiasedness. Recall the top-down method \citep{Gross1990} with 
+	\begin{equation}\label{eq:top-downG}
+	\bm{G}=\begin{pmatrix}
+	\bm{p} & \bm{0}_{(m \times n-1)}
+	\end{pmatrix}
+	\end{equation}
+    where $\bm{p} = (p_1,\dots,p_m)'$ is an $m$-dimensional vector consisting a set of proportions which is use to disaggregate the top-level forecasts along the hierarchy. \cite{Hyndman2011} claimed that this method is not producing unbiased coherent forecasts even if the base forecasts are unbiased since $\bm{SGS} \ne \bm{S}$ for $\bm{G}$ in (\ref{eq:top-downG}). However the more rational explanation is that, in top-down approach the projection $s\circ g$ is not onto $\mathfrak{s}$, but to a linear subspace of $\mathfrak{s}$ spanned by $\bm{p}$. Thus from above explanation it follows that  $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$ and hence not producing unbiased forecasts. 
+	
+	
+	\begin{figure}[!b]
+		\centering
+		\vspace{-0.9cm}
+		\small
+		\resizebox{\linewidth}{!}{
+			\input{Figs/Schem_3D}
+		}
+		\caption{$\mathfrak{L}$ is a linear subspace of the coherent subspace $\mathfrak{s}$. If $s\circ g$ is a projection not onto $\mathfrak{s}$ but onto $\mathfrak{L}$, then $\bm{\mu} \in \mathfrak{s}$ will be moved to $\bar{\bm{\mu}} \in \mathfrak{L}$.}\label{fig:Schematic_3D}
+	\end{figure}
+	
+	
+%	Representation of a coherent subspace in a three dimensional hierarchy where $y_{\text{Tot}} = y_{\text{A}} + y_{\text{B}}$. The coherent subspace is depicted as a gray two dimensional plane labelled $\mathfrak{s}$. Note that the columns of $\vec{s}_1 = (1,1,0)'$ and $\vec{s}_2 = (1, 0, 1)'$ form a basis for $\mathfrak{s}$. The red points lying on $\mathfrak{s}$ can be either realisations or coherent forecasts.
+	
+	
+		
+	Now let $\bm{y}_{t+h}$ be the realisation of the data generating process at time $t+h$, and let $\|\bm{v}\|_2$ be the $L_2$ norm of vector $\bm{v}$. The following theorem shows that reconciliation never increases, and in most cases reduces, the sum of squared errors of point forecasts.
+	
+	
 	
 	\begin{theo}[Distance reducing property]
 		If $\tilde{\bm{y}}_{t+h|t}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}$, where $\bm{G}$ is such that $\bm{S}\bm{G}$ is an orthogonal projection onto $\mathfrak{s}$, then the following inequality holds:
@@ -304,10 +336,10 @@
 		\end{equation}
 	\end{theo}
 	\begin{proof}
-		Since the aggregation constraints must hold for all realisations, $\bm{y}_{t+h}\in\mathfrak{s}$ and $\bm{y}_{t+h}=\bm{S}\bm{G}\bm{y}_{t+h}$ whenever $\bm{S}\bm{G}$ is a projection. Therefore
+		Since the aggregation constraints must hold for all realisations, $\bm{y}_{t+h}\in\mathfrak{s}$ and $\bm{y}_{t+h}=\bm{S}\bm{G}\bm{y}_{t+h}$ whenever $\bm{S}\bm{G}$ is a projection onto $\mathfrak{s}$. Therefore,
 		\begin{align}
 		\|(\tilde{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2&=\|(\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}-\bm{S}\bm{G}\bm{y}_{t+h})\|_2\\
-		&=\|\bm{S}\bm{G}(\hat{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2\\
+		&=\|\bm{S}\bm{G}(\hat{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2.
 		\end{align}
 		The Cauchy-Schwarz inequality can be used to show that orthogonal projections are bounded operators \citep{Hun2001}, therefore
 		\begin{equation*}
@@ -316,6 +348,47 @@
 		\end{equation*}
 	\end{proof}
 	The inequality is strict whenever $\hat{\bm{y}}_{t+h|t}\notin\mathfrak{s}$.
+	
+	Point reconciliation methods based on projections will always minimise the distance between unreconciled and reconciled forecasts, however the specific distance will depend on the choice of $\bm{R}$. Following subsections will explicitly discuss the different projection based reconciliation methods and their optimality based on distinct distance measures. 
+	
+	\subsubsection{OLS reconciliation}
+	
+	Recall that in OLS reconciliation, $\bm{R}_\perp=\bm{S}$ and thus it orthogonally projects $\hat{\bm{y}}$ to the coherent subspace. Further, it minimises the Euclidean distance between $\hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}$. In addition to that figure \ref{fig:Schematic_OLSRecon} also shows that $\tilde{\bm{y}}$ is always closer to $\bm{y}$ than $\hat{\bm{y}}$ in terms of the Euclidean distance which is directly followed from the Pythagorean theorem. It also implies that the sum of squared error for OLS reconciled forecasts are always less than that for base forecasts.    
+	
+			
+	\begin{figure}[t!]
+		\centering
+		\vspace{-0.9cm}
+		\tiny
+		\resizebox{\linewidth}{!}{
+			\input{Figs/orth_pointforerec_schematic}
+		}
+		\caption{$\hat{\bm{y}}$ is orthogonally projected onto $\mathfrak{s}$ }\label{fig:Schematic_OLSRecon}
+	\end{figure}
+	
+	\subsubsection{MinT reconciliation}
+	
+	In MinT reconciliation, $\bm{R}'_\perp$ is taking the form $\bm{S}'{\bm{W}}^{-1}$, where it can be thought of as orthogonal projections after pre-multiplying by ${\bm{W}^{-1/2}}$. That is, the coordinates of incoherent space will be scaled by $\bm{W}^{-1/2}$ which is then followed by the orthogonal projection. Alternatively this can be interpreted as an oblique projections in Euclidean space where the columns of $\bm{R}$ is the `direction' along which incoherent point forecasts are projected onto the coherent space $\mathfrak{s}$ as depicted in figure \ref{fig:pointfr_sch}. In terms of distances, MinT minimises the Euclidean distance between $\hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}$ in the transformed space which is same as the scaled Euclidean distance in the original space. Latter is also referred to as the Mahalonobis distance. We also note that the WLS is a special case of MinT where $\bm{W}^{-1}$ is a diagonal matrix. 
+	
+	\citet{Wickramasuriya2017} showed that the MinT is optimal with respect to the mean squared forecast errors. 
+	We can provide a more general geometrical explanation for this optimality using the schematic in figure \ref{fig:MinT_justification}. Consider the h-step ahead reconciled forecast errors. These can be always approximated by the insample h-step ahead forecast errors. Since these errors are coherent, they lies in a direction that is closer to the coherent subspace $\mathfrak{s}$. Therefore if you project $\hat{\bm{y}}$ along the direction of these insample forecast errors, then you can get closer to the true value $\bm{y}$ as depicted in the schematic. Further, unlike OLS, the squared error for MinT reconciled forecasts is not always less than that of base forecasts in every single replication although it outperforms on average.
+
+
+	 	
+	 \begin{figure}[!b]
+	 		\centering
+	 		%\vspace{-0.9cm}
+	 		\small
+	 		\resizebox{\linewidth}{!}{
+	 			\input{Figs/MinT_justification}
+	 		}
+	 		\caption{A schematic to represent MinT reconciliation. Points in orange colour represent the insample errors. $\bm{R}$ shows the direction of the insample errors. $\hat{\bm{y}}$ is projected onto $\mathfrak{s}$ along the the direction of $\bm{R}$.}\label{fig:MinT_justification}
+	 \end{figure}
+	
+	\subsubsection{Bottom-up method}
+	
+	Bottom-up method is one of the traditional and simplest ways of producing coherent forecasts. Under this approach, the incoherent forecasts are projected to the coherent subspace along the direction which is perpendicular to the bottom level series. In terms of distances, this method minimises the distance between reconciled and unreconciled forecasts only along the dimension corresponding to the bottom-level series. Therefore bottom-up methods should be thought of as a boundary case of reconciliation methods, since they ultimately do not use information at all levels of the hierarchy.   
+	
 	
 	\section{Bias correction}
 	
