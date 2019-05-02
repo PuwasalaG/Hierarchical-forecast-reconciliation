@@ -209,7 +209,20 @@
 		Let $\breve{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ be a point forecast of the values of all series in the hierarchy at time $t+h$, made using information up to and including time $t$. Then $\breve{\bm{y}}_{t+h|t}$ is \emph{coherent} if $\breve{\bm{y}}_{t+h|t} \in \mathfrak{s}$.
 	\end{definition}
 	
-	These definitions of the coherent space $\mathfrak{s}$ and coherent point forecasts in terms of the mapping $s(.)$, may give the impression that the bottom-level series play an important role. However, alternative definitions could be formed using any set of basis vectors that span $\mathfrak{s}$. For example, consider the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$. In this case the matrix $\bm{S}$ has columns $(1,1,0)'$ and $(1,0,1)'$ spanning $\mathfrak{s}$, and pre-multiplying by $\bm{S}$ transforms arbitrary values of $y_{2,t}$ and $y_{3,t}$ into a coherent vector for the full hierarchy. However the columns $(1,0,1)'$ and $(0,1,-1)'$ also span $\mathfrak{s}$ and define a mapping that transforms arbitrary values of $y_{1,t}$ and $y_{2,t}$ into a coherent vector for the full hierarchy. The definitions above could be made in terms of any series and not just the bottom-level series. In general, we call the series (or linear combinations thereof) used in the definitions of coherence \textit{basis series}. Unless stated otherwise, we will always assume that the basis series are the bottom-level series as in Definition~\ref{def:cohpoint}, since this facilitates comparison with existing approaches in the literature.
+		\begin{figure}[H]
+		\centering
+		\vspace{-0.9cm}
+		\small
+		\resizebox{\linewidth}{!}{
+			\input{Figs/3D_hierarchy}
+		}
+		\caption{Depiction of a three dimensional hierarchy with $y_{\text{Tot}} = y_{\text{A}} + y_{\text{B}}$. The gray colour two dimensional plane reflects the coherent subspace $\mathfrak{s}$ where $\vec{s}_1 = (1,1,0)'$ and $\vec{s}_2 = (1, 0, 1)'$ are basis vectors that spans $\mathfrak{s}$. The points in $\mathfrak{s}$ represents realisations or coherent forecasts}\label{fig:3D_hierarchy}
+	\end{figure}
+	
+	
+	These definitions of the coherent space $\mathfrak{s}$ and coherent point forecasts in terms of the mapping $s(.)$, may give the impression that the bottom-level series play an important role. However, alternative definitions could be formed using any set of basis vectors that span $\mathfrak{s}$. For example, consider the most simple three variable hierarchy where $y_{Tot,t}=y_{A,t}+y_{B,t}$. Figure \ref{fig:3D_hierarchy} represent this in a 3-D diagram. In this case the matrix $\bm{S}$ has columns $\vec{s}_1=(1,1,0)'$ and $\vec{s}_2=(1,0,1)'$ spanning $\mathfrak{s}$ which is depicted in gray colour two dimensional plane. Pre-multiplying by $\bm{S}$ transforms arbitrary values of $y_{A,t}$ and $y_{B,t}$ into a coherent vector for the full hierarchy. These coherent points always lies in the $\mathfrak{s}$ plane as the red points depicted in the figure. 
+	
+	However the columns $(1,0,1)'$ and $(0,1,-1)'$ also span $\mathfrak{s}$ and define a mapping that transforms arbitrary values of $y_{Tot,t}$ and $y_{A,t}$ into a coherent vector for the full hierarchy. The definitions above could be made in terms of any series and not just the bottom-level series. In general, we call the series (or linear combinations thereof) used in the definitions of coherence \textit{basis series}. Unless stated otherwise, we will always assume that the basis series are the bottom-level series as in Definition~\ref{def:cohpoint}, since this facilitates comparison with existing approaches in the literature.
 	
 	
 \section{Forecasts reconciliation}\label{sec:Reconciliation}
@@ -301,7 +314,7 @@
 		Since the aggregation constraints hold for the true data generating process, $\bm{\mu}_{t+h|t}$ must lie in $\mathfrak{s}$. If $\bm{S}\bm{G}$ is a projection, then it is equivalent to the identity map for all vectors that lie in its range. Therefore $\bm{S}\bm{G}\bm{\mu}_{t+h|t}=\bm{\mu}_{t+h|t}$ when $\bm{S}\bm{G}$ is a projection matrix.
 	\end{proof}
 
-	We note the above result holds when the projection $s\circ g$ is only onto the coherent subspace $\mathfrak{s}$. That is the result does not hold for any general $g$ even when the range of $s\circ g$ is $\mathfrak{s}$. To describe this more explicitly suppose $s\circ g$ is a projection to any linear subspace $\mathfrak{L}$ of $\mathfrak{s}$. Then $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$ as the projection will move $\bm{\mu}_{t+h|t}$ to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$ as depicted in the figure \ref{fig:Schematic_3D}. Thus $\E_{1:t}(\tilde{\bm{y}}_{t+h|t}) \ne \bm{\mu}_{t+h|t}$ which breaks the unbiasedness. Recall the top-down method \citep{Gross1990} with 
+	We note the above result holds when the projection $s\circ g$ is only onto the coherent subspace $\mathfrak{s}$. That is the result does not hold for any general $g$ even when the range of $s\circ g$ is $\mathfrak{s}$. To describe this more explicitly suppose $s\circ g$ is a projection to any linear subspace $\mathfrak{L}$ of $\mathfrak{s}$. Then $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$ as the projection will move $\bm{\mu}_{t+h|t}$ to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$ as depicted in the Figure \ref{fig:Schematic_3D}. Thus $\E_{1:t}(\tilde{\bm{y}}_{t+h|t}) \ne \bm{\mu}_{t+h|t}$ which breaks the unbiasedness. Recall the top-down method \citep{Gross1990} with 
 	\begin{equation}\label{eq:top-downG}
 	\bm{G}=\begin{pmatrix}
 	\bm{p} & \bm{0}_{(m \times n-1)}
@@ -353,10 +366,10 @@
 	
 	\subsubsection{OLS reconciliation}
 	
-	Recall that in OLS reconciliation, $\bm{R}_\perp=\bm{S}$ and thus it orthogonally projects $\hat{\bm{y}}$ to the coherent subspace. Further, it minimises the Euclidean distance between $\hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}$. In addition to that figure \ref{fig:Schematic_OLSRecon} also shows that $\tilde{\bm{y}}$ is always closer to $\bm{y}$ than $\hat{\bm{y}}$ in terms of the Euclidean distance which is directly followed from the Pythagorean theorem. It also implies that the sum of squared error for OLS reconciled forecasts are always less than that for base forecasts.    
+	Recall that in OLS reconciliation, $\bm{R}_\perp=\bm{S}$ and thus it orthogonally projects $\hat{\bm{y}}$ to the coherent subspace. Further, it minimises the Euclidean distance between $\hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}$. In addition to that Figure \ref{fig:Schematic_OLSRecon} also shows that $\tilde{\bm{y}}$ is always closer to $\bm{y}$ than $\hat{\bm{y}}$ in terms of the Euclidean distance which is directly followed from the Pythagorean theorem. It also implies that the sum of squared error for OLS reconciled forecasts are always less than that for base forecasts.    
 	
-			
-	\begin{figure}[H]
+	\clearpage		
+	\begin{figure}[!ht]
 		\centering
 		\vspace{-0.9cm}
 		\tiny
@@ -368,10 +381,10 @@
 	
 	\subsubsection{MinT reconciliation}
 	
-	In MinT reconciliation, $\bm{R}'_\perp$ is taking the form $\bm{S}'{\bm{W}}^{-1}$, where it can be thought of as orthogonal projections after pre-multiplying by ${\bm{W}^{-1/2}}$. That is, the coordinates of incoherent space will be scaled by $\bm{W}^{-1/2}$ which is then followed by the orthogonal projection. Alternatively this can be interpreted as an oblique projections in Euclidean space where the columns of $\bm{R}$ is the `direction' along which incoherent point forecasts are projected onto the coherent space $\mathfrak{s}$ as depicted in figure \ref{fig:pointfr_sch}. In terms of distances, MinT minimises the Euclidean distance between $\hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}$ in the transformed space which is same as the scaled Euclidean distance in the original space. Latter is also referred to as the Mahalonobis distance. We also note that the WLS is a special case of MinT where $\bm{W}^{-1}$ is a diagonal matrix. 
+	In MinT reconciliation, $\bm{R}'_\perp$ is taking the form $\bm{S}'{\bm{W}}^{-1}$, where it can be thought of as orthogonal projections after pre-multiplying by ${\bm{W}^{-1/2}}$. That is, the coordinates of incoherent space will be scaled by $\bm{W}^{-1/2}$ which is then followed by the orthogonal projection. Alternatively this can be interpreted as an oblique projections in Euclidean space where the columns of $\bm{R}$ is the `direction' along which incoherent point forecasts are projected onto the coherent space $\mathfrak{s}$ as depicted in Figure \ref{fig:pointfr_sch}. In terms of distances, MinT minimises the Euclidean distance between $\hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}$ in the transformed space which is same as the scaled Euclidean distance in the original space. Latter is also referred to as the Mahalonobis distance. We also note that the WLS is a special case of MinT where $\bm{W}^{-1}$ is a diagonal matrix. 
 	
 	\citet{Wickramasuriya2017} showed that the MinT is optimal with respect to the mean squared forecast errors. 
-	We can provide a more general geometrical explanation for this optimality using the schematic in figure \ref{fig:MinT_justification}. Consider the h-step ahead reconciled forecast errors. These can be always approximated by the insample h-step ahead forecast errors. Since these errors are coherent, they lies in a direction that is closer to the coherent subspace $\mathfrak{s}$. Therefore if you project $\hat{\bm{y}}$ along the direction of these insample forecast errors, then you can get closer to the true value $\bm{y}$ as depicted in the schematic. Further, unlike OLS, the squared error for MinT reconciled forecasts is not always less than that of base forecasts in every single replication although it outperforms on average.
+	We can provide a more general geometrical explanation to this optimality using the schematic in Figure \ref{fig:MinT_justification}. Consider the h-step ahead reconciled forecast errors. These can be always approximated by the insample h-step ahead forecast errors. Since these errors are coherent, they lies in a direction that is closer to the coherent subspace $\mathfrak{s}$. Therefore if you project $\hat{\bm{y}}$ along the direction of these in-sample forecast errors, then you can get closer to the true value $\bm{y}$ as depicted in the schematic. Further, unlike OLS, the squared error for MinT reconciled forecasts is not always less than that of base forecasts in every single replication although it outperforms on average.
 
 
 	 	

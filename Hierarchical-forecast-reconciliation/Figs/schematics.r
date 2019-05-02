@@ -3,9 +3,39 @@
 library(latex2exp)
 library(tikzDevice)
 library(scatterplot3d)
+library(tidyverse)
 options(tikzLatexPackages=c(getOption("tikzLatexPackages"),"\\usepackage{amsfonts}","\\usepackage{bm}"),
         tikzFooter = "\\caption{a caption}")
 
+## 3D hierarchy
+set.seed(1989)
+
+X <- matrix(runif(40),20,2) %>% as.data.frame()
+X[,3] <- X[,1] + X[,2]
+
+colnames(X) <- c(expression('$y_A$'), 
+                 expression('$y_B$'), 
+                 expression('$y_{Tot}$'))
+
+tikz('3D_hierarchy.tex',standAlone = FALSE)
+
+s3d <- scatterplot3d(X, color = "red",
+                     angle=55, pch = 16, grid=TRUE, box=FALSE,cex.lab = 2)
+
+
+# Add regression plane
+s3d$plane3d(0,1,1, draw_lines = T, draw_polygon = T)
+
+#
+#s1pro<-s3d$xyz.convert(1,1,0)
+s1 <- s3d$xyz.convert(1,0,1)
+s2 <- s3d$xyz.convert(0,1,1)
+arrows(0,0,s1$x,s1$y,lwd = 3)
+arrows(0,0,s2$x,s2$y,lwd = 3)
+text(s1$x,s1$y, TeX('$\\textbf{s}_1$}'),col = 1, adj = c(-.1, -.1),cex = 2)
+text(s2$x,s2$y, TeX('$\\textbf{s}_2$}'),col = 1, adj = c(-.1, -.1),cex = 2)
+text(3, 3, "{\\Huge $\\mathfrak{s}$}",col = 1, adj = c(-.1, -.1))
+dev.off()
 
 
 ##Point forecast reconciliation.
