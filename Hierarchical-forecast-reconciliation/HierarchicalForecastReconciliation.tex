@@ -126,6 +126,13 @@
 	
 	\subsection{Notation and preliminaries}\label{sec:notation}
 	
+    We briefly define the concept of a \emph{hierarchical time series} in a fashion similar to \todo{citations}, before elaborating on some of the limitations of this understanding.  A \emph{hierarchical time series} is a collection of $n$ variables indexed by time, where some variables are aggregates of other variables. We let $\bm{y}_t \in \mathbb{R}^n$ be a vector comprising observations of all variables in the hierarchy at time $t$. The \emph{bottom-level series} are defined as those $m$ variables that cannot be formed as aggregates of other variables; we let $\bm{b}_t \in \mathbb{R}^m$ be a vector comprised of observations of all bottom-level series at time $t$.  The hierarchical structure of the data implies that 
+    
+    \begin{equation}
+    \bm{y}_t = \bm{Sb}_t,
+    \end{equation}
+    where $\bm{S}$ is an $n \times m$ constant matrix that encodes the aggregation constraints, holds for all $t$.  
+	
 		\begin{figure}[H]
 			\begin{center}
 				\leaf{AA} \leaf{AB}
@@ -135,17 +142,10 @@
 				\branch{2}{Tot}
 				\qobitree
 			\end{center}
-			\caption{An example of a two level hierarchical structure.}\label{fig1}
+			\caption{An example of a two level hierarchical structure.}\label{fig:basichier}
 		\end{figure}
 	
-	
-	A \emph{hierarchical time series} is a collection of $n$ variables indexed by time, where some variables are aggregates of other variables. We let $\bm{y}_t \in \mathbb{R}^n$ be a vector comprising observations of all variables in the hierarchy at time $t$. The \emph{bottom-level series} are defined as those $m$ variables that cannot be formed as aggregates of other variables; we let $\bm{b}_t \in \mathbb{R}^m$ be a vector comprised of observations of all bottom-level series at time $t$.  The hierarchical structure of the data implies that 
-	\begin{equation}
-	\bm{y}_t = \bm{Sb}_t,
-	\end{equation}
-	where $\bm{S}$ is an $n \times m$ constant matrix that encodes the aggregation constraints, holds for all $t$.  
-	
-	To clarify these concepts consider the example of the hierarchy in Figure~\ref{fig1}.  For this hierarchy, $n=7$, $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $m=4$, $\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$ and
+	To clarify these concepts consider the example of the hierarchy in Figure~\ref{fig:basichier}.  For this hierarchy, $n=7$, $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $m=4$, $\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$ and
 	\[
 	\bm{S} = \begin{pmatrix}
 	1 & 1 & 1 & 1  \\
@@ -156,73 +156,83 @@
 	\]
 	where $\bm{I}_4$ is the $4\times 4$ identity matrix.
 	
-	While most applications of hierarchical time series to date have involved data that respect an aggregation structure, in principle the matrix ${\bm S}$ can encode any linear constraints including weighted sums or even cases where some variables in the hierarchy are formed by taking the difference of two other variables.
+	While such a definition is completely serviceable, it obscures the full generality of the methodologies developed in the literature on hierarchical time series.  There are only two important characteristics of the data that we are interested in; the first is that they are multivariate, the second is that they adhere to linear constraints.  Below we provide definitions that provide geometric intuition behind the data and methodologies employed in the hierarchical forecasting.
 	
-	\subsection{Coherent point forecasts}\label{sec:cohpointf}
 	
-	It is desirable that point forecasts should in some sense respect inherent aggregation constraints. We follow other authors \citep{Wickramasuriya2017, FPP2018} in using the nomenclature \emph{coherence} to describe this property.  We now provide new definitions for coherent forecasts in terms of vector spaces that give a geometric understanding of the problem.
+	\subsection{Coherence}\label{sec:cohpointf}
 	
-	\begin{definition}[Coherent subspace]\label{def:cohspace}
-		The $m$-dimensional linear subspace $\mathfrak{s}\subset \mathbb{R}^n$ that is spanned by the columns of $\bm{S}$, i.e.\ $\mathfrak{s}=\text{span}(\bm{S})$, is defined as the \emph{coherent space}.
-	\end{definition}
+	 \begin{definition}[Coherent subspace]\label{def:cohspace}
+	 	The $m$-dimensional linear subspace $\mathfrak{s}\subset \mathbb{R}^n$ for which a set of linear constraints hold for all $\bm{y}\in\mathfrak{s}$ is defined as the \emph{coherent subspace}.
+	 \end{definition}
+ 
+     To further illustrate, Figure \ref{fig:3D_hierarchy} depicts the most simple three variable hierarchy where $y_{Tot,t}=y_{A,t}+y_{B,t}$.  The coherent subspace is depicted as a grey $2$-dimensional plane within $3$-dimensional space, i.e. $m=2$ and $n=3$.  It is worth noting that the coherent subspace is spanned by the columns of $\bm{S}$, i.e.\ $\mathfrak{s}=\text{span}(\bm{S})$.  In Figure~\ref{fig:3D_hierarchy}, these columns are $\vec{s}_1=(1,1,0)'$ and $\vec{s}_2=(1,0,1)'$.  However, it is equally important to recognise that the hierarchy could also have been defined in terms of $y_{Tot,t}$ and $y_{A,t}$ rather than the bottom level series, $y_{A,t}$ and $y_{B,t}$. In this case the corresponding `$\bm{S}$ matrix' would have columns $(1,0,1)'$ and $(0,1,-1)'$, which also span the coherent subspace.  Thus, while there are multiple ways to define a hierarchy and an associated `$\bm{S}$ matrix', the columns of any `$\bm{S}$ matrix' will always span the same unique coherent subspace.
+     
+     Also notable by its absence in the above definition is any reference to {\em aggregation}.  As the literature has shown, the linear constraints need not be aggregation constraints at all. For example \todo{find reference} consider weighted sums, while \todo{include Li and Tang reference} consider an example where one variable is the difference of two other variables. 
+     
+     		\begin{figure}[H]
+     	\centering
+     	\vspace{-0.9cm}
+     	\small
+     	\resizebox{\linewidth}{!}{
+     		\input{Figs/3D_hierarchy}
+     	}
+     	\caption{Depiction of a three dimensional hierarchy with $y_{\text{Tot}} = y_{\text{A}} + y_{\text{B}}$. The gray colour two dimensional plane reflects the coherent subspace $\mathfrak{s}$ where $\vec{s}_1 = (1,1,0)'$ and $\vec{s}_2 = (1, 0, 1)'$ are basis vectors that spans $\mathfrak{s}$. The points in $\mathfrak{s}$ represents realisations or coherent forecasts}\label{fig:3D_hierarchy}
+     \end{figure}
+     
+	 \begin{definition}[Hierarchical Time Series]\label{def:cohspace}
+	 	A hierarchical time series is an $n$-dimensional multivariate time series such that all observed values $\bm{y}_1,\ldots,\bm{y}_T$ and all future values $\bm{y}_{T+1},\bm{y}_{T+2},\ldots$  lie in the coherent subspace, i.e. $\bm{y}_t\in\mathfrak{s}\quad\forall t$.
+	 \end{definition}
+	 
+	 Despite the common use of the term {\em hierarchical time series}, it should be clear from the definition that the data need not necessarily follow a hierarchy.   In fact, the term {\em hierarchical} is misleading since the literature has covered instances that cannot easily be depicted as hierarchies as in Figure~\ref{fig:basichier}.  These include \todo{include references}.  Furthermore, although the definition makes clear reference to time series, this definition can be easily generalised to any vector-valued data for which some constraints are known to hold.
+	 
+	 
+	 
 	
-	It will sometimes be useful to think of pre-multiplication by $\bm{S}$ as a mapping from $\mathbb{R}^m$ to $\mathbb{R}^n$, in which case we use the notation $s(.)$. Although the codomain of $s(.)$ is $\mathbb{R}^n$, its image is the coherent space $\mathfrak{s}$ as depicted in Figure~\ref{fig2}.
-	
-	\begin{figure}[H]
-		\begin{center}
-			\begin{tikzpicture}[
-			>=stealth,
-			bullet/.style={
-				fill=black,
-				circle,
-				minimum width=1.5cm,
-				inner sep=0pt
-			},
-			projection/.style={
-				->,
-				thick,
-				label,
-				shorten <=2pt,
-				shorten >=2pt
-			},
-			every fit/.style={
-				ellipse,
-				draw,
-				inner sep=0pt
-			}
-			]
-			\node at (2,3) {$s$};
-			\node at (0,5) {$\mathbb{R}^m$(domain of $s$)};
-			\node at (4,5) {$\mathbb{R}^n$(codomain of $s$)};
-			\node at (4.7,2.0) {$\mathfrak{s}$(image of $s$)};
-			%\node[bullet,label=below:$f(x)$] at (4,2.5){};
-			\draw (0,2.5) ellipse (1.02cm and 2.2cm);
-			\draw (4,2.5) ellipse (1.02cm and 2.2cm);
-			\draw (4,2.5) ellipse (0.51cm and 1.1cm);
-			\draw[projection, label=below:$f$] (0.3,2.5) -- (3.8,2.5) ;
-			\end{tikzpicture}
-		\end{center}
-		\caption{The domain, codomain and image of the mapping $s$.}\label{fig2}
-	\end{figure}
+%	It will sometimes be useful to think of pre-multiplication by $\bm{S}$ as a mapping from $\mathbb{R}^m$ to $\mathbb{R}^n$, in which case we use the notation $s(.)$. Although the codomain of $s(.)$ is $\mathbb{R}^n$, its image is the coherent space $\mathfrak{s}$ as depicted in Figure~\ref{fig2}.
+%	
+%	\begin{figure}[H]
+%		\begin{center}
+%			\begin{tikzpicture}[
+%			>=stealth,
+%			bullet/.style={
+%				fill=black,
+%				circle,
+%				minimum width=1.5cm,
+%				inner sep=0pt
+%			},
+%			projection/.style={
+%				->,
+%				thick,
+%				label,
+%				shorten <=2pt,
+%				shorten >=2pt
+%			},
+%			every fit/.style={
+%				ellipse,
+%				draw,
+%				inner sep=0pt
+%			}
+%			]
+%			\node at (2,3) {$s$};
+%			\node at (0,5) {$\mathbb{R}^m$(domain of $s$)};
+%			\node at (4,5) {$\mathbb{R}^n$(codomain of $s$)};
+%			\node at (4.7,2.0) {$\mathfrak{s}$(image of $s$)};
+%			%\node[bullet,label=below:$f(x)$] at (4,2.5){};
+%			\draw (0,2.5) ellipse (1.02cm and 2.2cm);
+%			\draw (4,2.5) ellipse (1.02cm and 2.2cm);
+%			\draw (4,2.5) ellipse (0.51cm and 1.1cm);
+%			\draw[projection, label=below:$f$] (0.3,2.5) -- (3.8,2.5) ;
+%			\end{tikzpicture}
+%		\end{center}
+%		\caption{The domain, codomain and image of the mapping $s$.}\label{fig2}
+%	\end{figure}
 	
 	\begin{definition}[Coherent Point Forecasts]\label{def:cohpoint}
 		Let $\breve{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ be a point forecast of the values of all series in the hierarchy at time $t+h$, made using information up to and including time $t$. Then $\breve{\bm{y}}_{t+h|t}$ is \emph{coherent} if $\breve{\bm{y}}_{t+h|t} \in \mathfrak{s}$.
 	\end{definition}
+
+    Without any loss of generality, that above definition could also be applied to prediction for multivariate data in general, rather than just forecasting of time series.  While the observed data will be coherent by definition, it is important to note that there are a number of reasons why forecasts or predictions may be incoherent.  First, since applications of hierarchical forecasting tend to be very high dimensional a common strategy in practice is to produce forecasts for each time series independently using univariate models.  Second, even where a multivariate model is used for the full vector of observations, it may be difficult to capture the linear constraints inherent in the data particularly for complicated non-linear models.  Third, in some cases judgemental adjustments may be made inducing incoherent forecasts. 
 	
-		\begin{figure}[H]
-		\centering
-		\vspace{-0.9cm}
-		\small
-		\resizebox{\linewidth}{!}{
-			\input{Figs/3D_hierarchy}
-		}
-		\caption{Depiction of a three dimensional hierarchy with $y_{\text{Tot}} = y_{\text{A}} + y_{\text{B}}$. The gray colour two dimensional plane reflects the coherent subspace $\mathfrak{s}$ where $\vec{s}_1 = (1,1,0)'$ and $\vec{s}_2 = (1, 0, 1)'$ are basis vectors that spans $\mathfrak{s}$. The points in $\mathfrak{s}$ represents realisations or coherent forecasts}\label{fig:3D_hierarchy}
-	\end{figure}
-	
-	
-	These definitions of the coherent space $\mathfrak{s}$ and coherent point forecasts in terms of the mapping $s(.)$, may give the impression that the bottom-level series play an important role. However, alternative definitions could be formed using any set of basis vectors that span $\mathfrak{s}$. For example, consider the most simple three variable hierarchy where $y_{Tot,t}=y_{A,t}+y_{B,t}$. Figure \ref{fig:3D_hierarchy} represent this in a 3-D diagram. In this case the matrix $\bm{S}$ has columns $\vec{s}_1=(1,1,0)'$ and $\vec{s}_2=(1,0,1)'$ spanning $\mathfrak{s}$ which is depicted in gray colour two dimensional plane. Pre-multiplying by $\bm{S}$ transforms arbitrary values of $y_{A,t}$ and $y_{B,t}$ into a coherent vector for the full hierarchy. These coherent points always lies in the $\mathfrak{s}$ plane as the red points depicted in the figure. 
-	
-	However the columns $(1,0,1)'$ and $(0,1,-1)'$ also span $\mathfrak{s}$ and define a mapping that transforms arbitrary values of $y_{Tot,t}$ and $y_{A,t}$ into a coherent vector for the full hierarchy. The definitions above could be made in terms of any series and not just the bottom-level series. In general, we call the series (or linear combinations thereof) used in the definitions of coherence \textit{basis series}. Unless stated otherwise, we will always assume that the basis series are the bottom-level series as in Definition~\ref{def:cohpoint}, since this facilitates comparison with existing approaches in the literature.
 	
 	
 \section{Forecasts reconciliation}\label{sec:Reconciliation}
