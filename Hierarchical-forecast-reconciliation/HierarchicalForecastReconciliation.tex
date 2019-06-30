@@ -235,25 +235,43 @@
 	
 	
 	
-\section{Forecasts reconciliation}\label{sec:Reconciliation}
+\section{Forecast reconciliation}\label{sec:Reconciliation}
 	
-	\subsection{Point forecast reconciliation}\label{sec:reconciliation}
+	As discussed in the previous section, for a number of reasons, coherence is not guaranteed when forecasts are produced for all series.To ensure aligned decision making, it is desirable to adjust forecasts ex post to endure coherence.  This process is referred to as {\em reconciliation}.  In the most general terms, reconciliation can be defined as follows
 	
-	As discussed, reconciliation is distinct from coherence, since the former refers to a process whereby incoherent forecasts are made coherent. Although reconciliation methods for point forecasts are extant in the literature they are rarely defined explicitly.  We do so here in slightly more general terms than usual. 
-	%We then extend this idea to the novel concept of probabilistic reconciliation.
-	
-	Let $\hat{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ be any set of incoherent point forecasts at time $t+h$ conditional on information up to and including time $t$. We now introduce a linear function that converts unreconciled forecasts into new bottom level forecasts.
-	Let $\bm{G}$ and $\bm{d}$ be an $m\times n$ matrix and $m\times 1$ vector respectively, and let $g:\mathbb{R}^n \rightarrow \mathbb{R}^m$ be the mapping $g(\bm{y})=\bm{G}\bm{y}+\bm{d}$.  A composition of $g$ and $s(.)$ gives the following definition for point forecast reconciliation.
-	
-	\begin{definition}\label{def:reconpoint}
-		The point forecast $\tilde{\bm{y}}_{t+h|t}$ ``reconciles'' $\hat{\bm{y}}_{t+h|t}$ with respect to the mapping $g(.)$ iff
+	\begin{definition}[Reconciled forecasts]\label{def:reconpoint}
+		Let $\psi$ be a mapping, $\psi:\mathbb{R}^n\rightarrow\mathfrak{s}$.  The point forecast $\tilde{\bm{y}}_{t+h|t}$ ``reconciles'' $\hat{\bm{y}}_{t+h|t}$ with respect to the mapping $\psi(.)$ iff
 		\begin{equation}
-		\tilde{\bm{y}}_{t+h|t}=\bm{S}(\bm{G}\hat{\bm{y}}_{t+h|t}+\bm{d})\,.
+		\tilde{\bm{y}}_{t+h|t}=\psi\left(\hat{\bm{y}}_{t+h|t}\right)\,.
 		\end{equation}
 	\end{definition}
 	
-	Several choices of $g(.)$ currently extant in the literature, including the OLS, WLS and MinT methods, are special cases where $s\circ g$ is a projection. These can be defined so that $\bm{G}=({\bm{R}'_{\perp}}\bm{S})^{-1}\bm{R}_{\perp}'$ and $\bm{d}=\bm{0}$, where, ${\bm{R}_{\perp}}$ is a $n\times m$ orthogonal complement to an $n \times (n-m)$ matrix $\bm{R}$, where the columns of the latter span the null space of $\mathfrak{s}$. For example, a straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$, is the vector $(1,-1,-1)$ which is orthogonal (in the Euclidean sense) to the columns of $\bm{S}$. In this case, the matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. In OLS reconciliation, $\bm{R}_{\perp}'= \bm{S}'$ whereas in MinT or WLS reconciliation $\bm{R}_{\perp}'$ takes the form $\bm{S'W}^{-1}$. We will be discussing these projections distinctly in the next subsection. 
+	All reconciliation methods that we are aware of consider a linear mapping for $\psi$, and with few exceptions, these belong more specifically to the class of projections.  This involves pre-multiplying $\hat{\bm{y}}_{t+h|t}$ by a projection matrix that can be written down in a number of ways.  In \todo{references}, the projection matrix is written in the form $\bm{SG}$ (with $\bm{P}$ used in place of $\bm{G}$ in some cases).  This facilitates an interpretation of reconciliation as a two-step process, in the first step base forecasts $\hat{\bm{y}}_{t+h|t}$ are combined to form a new set of bottom level forecasts, in the second step, these mapped to a full vector of coherent forecasts via pre-multiplication by $\bm{S}$.  It should be noted that if $\bm{G}$ is set arbitrarily, then $\bm{SG}$ will not necessarily be a projection.  However for a large class of reconciliation methods, $\bm{G}$ is determined by treating forecast reconciliation as a problem in linear regression model.  In this case least squares estimators result in values of $\bm{G}$ that do in fact imply that $\bm{SG}$ is a projection.
 	
+	
+    First, the linear subspace onto which all points are projected, or the image of the projection, must be defined. In our context this can be defined by the $m$ columns of the matrix $\bm{S}$.  Second, the direction along which points are projected must be defined.  This will be achieved by defining a matrix $\bm{R}$ with $n-m$ columns then span the direction of projection. A schematic of this is presented \todo{include}.   A projection matrix can then be constructed as $\bm{S}({\bm{R}'_{\perp}}\bm{S})^{-1}\bm{R}_{\perp}'$ where, ${\bm{R}_{\perp}}$ is an $n\times m$ orthogonal complement to $\bm{R}$ such that ${\bm{R}'_{\perp}}\bm{R}=\bm{0}$. It is simple to verify that this construction satisfies the properties of a projection matrix, namely symmetry and idempotence.
+	
+	A straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$, is the vector $(1,-1,-1)$ which is orthogonal (in the Euclidean sense) to the columns of $\bm{S}$. In this case, the matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. In OLS reconciliation, $\bm{R}_{\perp}'= \bm{S}'$ whereas in MinT or WLS reconciliation $\bm{R}_{\perp}'$ takes the form $\bm{S'W}^{-1}$. We will be discussing these projections distinctly in the next subsection\todo{needs work}. 
+	
+	
+	
+	
+%	\subsection{Reconciliation in general}\label{sec:reconciliation}
+%
+%	
+%	As discussed, reconciliation is distinct from coherence, since the former refers to a process whereby incoherent forecasts are made coherent. Although reconciliation methods for point forecasts are extant in the literature they are rarely defined explicitly.  We do so here in slightly more general terms than usual. 
+%	%We then extend this idea to the novel concept of probabilistic reconciliation.
+%	
+%	Let $\hat{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ be any set of incoherent point forecasts at time $t+h$ conditional on information up to and including time $t$. We now introduce a linear function that converts unreconciled forecasts into new bottom level forecasts.
+%	Let $\bm{G}$ and $\bm{d}$ be an $m\times n$ matrix and $m\times 1$ vector respectively, and let $g:\mathbb{R}^n \rightarrow \mathbb{R}^m$ be the mapping $g(\bm{y})=\bm{G}\bm{y}+\bm{d}$.  A composition of $g$ and $s(.)$ gives the following definition for point forecast reconciliation.
+%	
+%	\begin{definition}\label{def:reconpoint}
+%		The point forecast $\tilde{\bm{y}}_{t+h|t}$ ``reconciles'' $\hat{\bm{y}}_{t+h|t}$ with respect to the mapping $g(.)$ iff
+%		\begin{equation}
+%		\tilde{\bm{y}}_{t+h|t}=\bm{S}(\bm{G}\hat{\bm{y}}_{t+h|t}+\bm{d})\,.
+%		\end{equation}
+%	\end{definition}
+		
 %	\begin{table}[!h]
 %		\caption{Summary of reconciliation methods that are projections. Here, $\hat{\bm{W}}^{sam}$ is the variance covariance matrix of one-step ahead forecast errors, $\hat{\bm{W}}^{shr}$ is a shrinkage estimator more suited to large dimensions proposed by \citet{Schafer2005}, $\hat{\bm{W}}^{wls}$ is the diagonal matrix with diagonal elements $w_{ii}$, and $\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{w}_{ij})}{\sum_{i \neq j}{\hat{w}}^2_{ij}}$, where $w_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{W}}^{sam}$.}\label{table:2}
 %		\centering
@@ -276,33 +294,33 @@
 %			\bottomrule
 %		\end{tabular}
 %	\end{table}
-	
-	
-	\begin{figure}
-		\input{Figs/pointforerec_schematic.tex}
-		\caption{Summary of probabilistic point reconciliation. The mapping $s\circ g$ projects the unreconciled forecast $\hat{\bm{y}}_{t+h|h}$ onto $\mathfrak{s}$, yielding the reconciled forecast $\tilde{\bm{y}}_{t+h|h}$ with subscripts dropped in the figure for ease of presentation. Since the smallest hierarchy involves three dimensions, this figure is only a schematic.}\label{fig:pointfr_sch}
-	\end{figure}
-	
-	The columns of $\bm{S}$ and $\bm{R}$ provide a basis for $\mathbb{R}^n$. Therefore any incoherent set of point forecasts $\hat{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ can be expressed in terms of coordinates in the basis defined by $\bm{S}$ and $\bm{R}$. Let $\tilde{\bm{b}}_{t+h|t}$ and $\tilde{\bm{a}}_{t+h|t}$ be the coordinates corresponding to $\bm{S}$ and $\bm{R}$ respectively, after a change of basis. The process of reconciliation involves setting the values of the reconciled bottom-level series to be $\tilde{\bm{b}}_{t+h|t}$, and ignoring $\tilde{\bm{a}}_{t+h|t}$ to ensure coherence. From properties of linear algebra it follows that
-	\[
-	\hat{\bm{y}}_{t+h|t} = (\bm{S} ~ \bm{R})
-	\begin{pmatrix}
-	\tilde{\bm{b}}_{t+h|t}\\ \tilde{\bm{a}}_{t+h|t}
-	\end{pmatrix}= \bm{S}\tilde{\bm{b}}_{t+h|t} + \bm{R}\tilde{\bm{a}}_{t+h|t},
-	\]
-	while the reconciled point forecast is
-	\[
-	\tilde{\bm{y}}_{t+h|t} = \bm{S}\tilde{\bm{b}}_{t+h|t}.
-	\]
-	
-	
-	In order to find $\tilde{\bm{b}}_{t+h|t}$ we require the inverse $(\bm{S} ~ \bm{R})^{-1}$ which is given by
-	\begin{equation}
-	(\bm{S} ~ \bm{R})^{-1} = \begin{pmatrix}
-	(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \\ (\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot
-	\end{pmatrix}\,,
-	\end{equation}
-	where $\bm{S}_{\bot}$ is the orthogonal complements of $\bm{S}$. Thus it follows that $\tilde{\bm{b}}_{t+h|t}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}=\bm{S}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h|t}$. Here $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$ corresponds to $\bm{G}$ as defined previously.
+%	
+%	
+%	\begin{figure}
+%		\input{Figs/pointforerec_schematic.tex}
+%		\caption{Summary of probabilistic point reconciliation. The mapping $s\circ g$ projects the unreconciled forecast $\hat{\bm{y}}_{t+h|h}$ onto $\mathfrak{s}$, yielding the reconciled forecast $\tilde{\bm{y}}_{t+h|h}$ with subscripts dropped in the figure for ease of presentation. Since the smallest hierarchy involves three dimensions, this figure is only a schematic.}\label{fig:pointfr_sch}
+%	\end{figure}
+%	
+%	The columns of $\bm{S}$ and $\bm{R}$ provide a basis for $\mathbb{R}^n$. Therefore any incoherent set of point forecasts $\hat{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ can be expressed in terms of coordinates in the basis defined by $\bm{S}$ and $\bm{R}$. Let $\tilde{\bm{b}}_{t+h|t}$ and $\tilde{\bm{a}}_{t+h|t}$ be the coordinates corresponding to $\bm{S}$ and $\bm{R}$ respectively, after a change of basis. The process of reconciliation involves setting the values of the reconciled bottom-level series to be $\tilde{\bm{b}}_{t+h|t}$, and ignoring $\tilde{\bm{a}}_{t+h|t}$ to ensure coherence. From properties of linear algebra it follows that
+%	\[
+%	\hat{\bm{y}}_{t+h|t} = (\bm{S} ~ \bm{R})
+%	\begin{pmatrix}
+%	\tilde{\bm{b}}_{t+h|t}\\ \tilde{\bm{a}}_{t+h|t}
+%	\end{pmatrix}= \bm{S}\tilde{\bm{b}}_{t+h|t} + \bm{R}\tilde{\bm{a}}_{t+h|t},
+%	\]
+%	while the reconciled point forecast is
+%	\[
+%	\tilde{\bm{y}}_{t+h|t} = \bm{S}\tilde{\bm{b}}_{t+h|t}.
+%	\]
+%	
+%	
+%	In order to find $\tilde{\bm{b}}_{t+h|t}$ we require the inverse $(\bm{S} ~ \bm{R})^{-1}$ which is given by
+%	\begin{equation}
+%	(\bm{S} ~ \bm{R})^{-1} = \begin{pmatrix}
+%	(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \\ (\bm{S}'_\bot \bm{R})^{-1}\bm{S}'_\bot
+%	\end{pmatrix}\,,
+%	\end{equation}
+%	where $\bm{S}_{\bot}$ is the orthogonal complements of $\bm{S}$. Thus it follows that $\tilde{\bm{b}}_{t+h|t}=(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}=\bm{S}(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot \hat{\bm{y}}_{t+h|t}$. Here $(\bm{R}'_\bot \bm{S})^{-1}\bm{R}'_\bot$ corresponds to $\bm{G}$ as defined previously.
 	
 	\subsection{Motivation of using projections}
 	
