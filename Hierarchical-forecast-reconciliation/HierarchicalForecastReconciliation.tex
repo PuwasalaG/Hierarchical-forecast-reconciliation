@@ -249,9 +249,88 @@
 		\end{equation}
 	\end{definition}
 	
-	All reconciliation methods that we are aware of consider a linear mapping for $\psi$, which involves pre-multiplying base forecasts by an $n\times n$ matrix that has $\mathfrak{s}$ as its image.  In \todo{references}, this matrix is written in the form $\bm{SG}$ (with $\bm{P}$ used in place of $\bm{G}$ in some cases), where $\bm{G}$ is an $(n-m)\times n$ matrix.  This facilitates an interpretation of reconciliation as a two-step process, in the first step base forecasts $\hat{\bm{y}}_{t+h|t}$ are combined to form a new set of bottom level forecasts, in the second step, these mapped to a full vector of coherent forecasts via pre-multiplication by $\bm{S}$.  
+	All reconciliation methods that we are aware of consider a linear mapping for $\psi$, which involves pre-multiplying base forecasts by an $n\times n$ matrix that has $\mathfrak{s}$ as its image.  One way to achieve this is with a matrix $\bm{SG}$ (with $\bm{P}$ used in place of $\bm{G}$ in some cases), where $\bm{G}$ is an $(n-m)\times n$ matrix.  This facilitates an interpretation of reconciliation as a two-step process, in the first step, base forecasts $\hat{\bm{y}}_{t+h|t}$ are combined to form a new set of bottom level forecasts, in the second step, these mapped to a full vector of coherent forecasts via pre-multiplication by $\bm{S}$.  
 	
-	\subsection{Unbiasedness preserving property}
+	Although pre-multiplying base forecasts by $\bm{SG}$ will result in coherent forecasts, a number of desirable properties arise when $\bm{SG}$ has the specific structure of a {\em projection} matrix.  We begin by considering the special case of an orthogonal projection whereby $\bm{G}=\left(\bm{S}'\bm{S}\right)^{-1}\bm{S}'$.  This is equivalent to so called OLS reconciliation as introduced by \cite{Hyndman2011} where the connection between OLS and orthogonal projection should be clear.
+	
+	\subsection{Orthogonal projection}
+	
+	In this section we discuss two sensible properties that can be achieved by reconciliation via orthogonal projection.  The  first is that reconciliation should adjust the base forecasts as little as possible, i.e. the base and reconciled forecast should be `close'.  The second is that reconciliation in some sense should improve forecast accuracy, or more loosely, that the reconciled forecast should be `closer' to the truth.  
+	
+	To address the first of these properties we make the concept of closeness more concrete, by considering the Euclidean distance between the base forecast $\hat{\bm{y}}$ and the reconciled forecast  $\tilde{\bm{y}}$.  A property of an orthogonal projection is that the distance between $\hat{\bm{y}}$ and $\tilde{\bm{y}}$ will be as small as possible given that $\tilde{\bm{y}}\in\mathfrak{s}$.  In this way reconciliation via orthogonal projection does not lead to large adjustments of the base forecasts.
+	
+	The second property introduced above has been the focus of theoretical results in the forecast reconciliation literature.  He we provide a more streamlined version of proofs by \cite{VanErven2015a} and \cite{Wickramasuriya2017} before providing geometrical intuition aimed at simplifying the reader's understanding of these proofs.
+	
+	Consider the Euclidean distance between a forecast and the target, which is equivalent to the root total squared error. Let $\bm{y}_{t+h}$ be the realisation of the data generating process at time $t+h$, and let $\|\bm{v}\|_2$ be the $L_2$ norm of vector $\bm{v}$. The following theorem shows that reconciliation never increases, and in most cases reduces, the sum of squared errors of point forecasts.
+	
+	
+	\begin{theo}[Distance reducing property]
+		If $\tilde{\bm{y}}_{t+h|t}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}$, where $\bm{G}$ is such that $\bm{S}\bm{G}$ is an orthogonal projection onto $\mathfrak{s}$, then the following inequality holds:
+		\begin{equation}
+		\|(\tilde{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|^2_2\le\|(\hat{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|^2_2.
+		\end{equation}
+	\end{theo}
+	\begin{proof}
+		Since the aggregation constraints must hold for all realisations, $\bm{y}_{t+h}\in\mathfrak{s}$ and $\bm{y}_{t+h}=\bm{S}\bm{G}\bm{y}_{t+h}$ whenever $\bm{S}\bm{G}$ is a projection onto $\mathfrak{s}$. Therefore,
+		\begin{align}
+		\|(\tilde{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2&=\|(\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}-\bm{S}\bm{G}\bm{y}_{t+h})\|_2\\
+		&=\|\bm{S}\bm{G}(\hat{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2.
+		\end{align}
+		The Cauchy-Schwarz inequality can be used to show that orthogonal projections are bounded operators \citep{Hun2001}, therefore
+		\begin{equation*}
+		\|\bm{S}\bm{G}(\hat{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2\le
+		\|(\hat{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2.
+		\end{equation*}
+	\end{proof}
+	The inequality is strict whenever $\hat{\bm{y}}_{t+h|t}\notin\mathfrak{s}$.
+	
+	\todo{compare to van Erven and Wickremasuriya more explictly}
+	
+	The simple geometric intuition behind the proof is demonstrated in Figure~\ref{fig:Schematic_OLSRecon}.  In this schematic, the coherent subspace is depicted as a black arrow.  The base forecast $\hat{\bm{y}}$ is shown as a blue dot.  Since it is incoherent it does not lie of $\mathfrak{s}$.  Reconciliation is an orthogonal projection from $\hat{\bm{y}}$ to the coherent subspace yielding the reconciled forecast $\tilde{\bm{y}}$ shown in red.  Finally, the target of the forecast $\bm{y}$ is displayed as a black point, and although its exact location is unknown to the forecaster, it is known that it will lie somewhere along the coherent subspace.
+	
+	\begin{figure}[H]
+		\centering
+		\vspace{-0.9cm}
+		\tiny
+		\resizebox{\linewidth}{!}{\input{Figs/orth_pointforerec_schematic}}
+		\label{fig:Schematic_OLSRecon}
+		\caption{$\hat{\bm{y}}$ is orthogonally projected onto $\mathfrak{s}$}
+		
+	\end{figure}
+	
+	
+	Figure~\ref{fig:Schematic_OLSRecon} clearly shows that $\hat{\bm{y}}$, $\tilde{\bm{y}}$ and $\bm{y}$ form a right angled triangle.  In this triangle the distance between $\bm{y}$ and $\hat{\bm{y}}$ is the hypotenuse and therefore must be longer than the distance between $\bm{y}$ and $\tilde{\bm{y}}$.  As such reconciliation is guaranteed to reduce the squared error of the forecast.  
+	
+    The theorem is in some ways perhaps more powerful than perhaps previously understood.  The theorem is often stated in terms of expectations\todo{check other proofs}.  However, the distance reducing property result is stronger than that since it will hold for any realisation and any forecast.  Nothing needs to be assumed about the statistical properties of the data generating process or the process by which forecasts are made.  
+    
+    However, in other ways, the theorem is weaker than perhaps often understood. First, when improvements in forecast accuracy are discussed in the context of the theorem, this refers to a very specific measure of forecast accuracy.  In particular, this measure is the root of the sum of squared errors of {\em all} variables in the hierarchy.  As such, while forecast improvement is guaranteed for the hierarchy overall, reconciliation can lead to worse forecasts for individual series. Second, although orthogonal projections are guaranteed to improve on base forecasts both for all realisations and in expectation, they are not necessarily the projection that leads to the greatest improvement in forecast accuracy.  As such referring to reconciliation via orthogonal projections as `optimal' is somewhat misleading since it does not have the optimality properties of some oblique projections, in particular MinT. It is to oblique projections that we now turn our attention.
+    	
+	\subsection{Oblique Projections}
+	
+	First, the linear subspace onto which all points are projected, or the image of the projection, must be defined. In our context this can be defined by the $m$ columns of the matrix $\bm{S}$.  Second, the direction along which points are projected must be defined.  This will be achieved by defining a matrix $\bm{R}$ with $n-m$ columns then span the direction of projection. A schematic of this is presented \todo{include}.   A projection matrix can then be constructed as $\bm{S}({\bm{R}'_{\perp}}\bm{S})^{-1}\bm{R}_{\perp}'$ where, ${\bm{R}_{\perp}}$ is an $n\times m$ orthogonal complement to $\bm{R}$ such that ${\bm{R}'_{\perp}}\bm{R}=\bm{0}$. It is simple to verify that this construction satisfies the properties of a projection matrix, namely symmetry and idempotence.
+	
+	A straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$, is the vector $(1,-1,-1)$ which is orthogonal (in the Euclidean sense) to the columns of $\bm{S}$. In this case, the matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. In OLS reconciliation, $\bm{R}_{\perp}'= \bm{S}'$ whereas in MinT or WLS reconciliation $\bm{R}_{\perp}'$ takes the form $\bm{S'W}^{-1}$. We will be discussing these projections distinctly in the next subsection\todo{needs work}. 
+	
+	
+	In MinT reconciliation, $\bm{R}'_\perp$ is taking the form $\bm{S}'{\bm{W}}^{-1}$, where it can be thought of as orthogonal projections after pre-multiplying by ${\bm{W}^{-1/2}}$. That is, the coordinates of incoherent space will be scaled by $\bm{W}^{-1/2}$ which is then followed by the orthogonal projection. Alternatively this can be interpreted as an oblique projections in Euclidean space where the columns of $\bm{R}$ is the `direction' along which incoherent point forecasts are projected onto the coherent space $\mathfrak{s}$ as depicted in Figure \ref{fig:pointfr_sch}. In terms of distances, MinT minimises the Euclidean distance between $\hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}$ in the transformed space which is same as the scaled Euclidean distance in the original space. Latter is also referred to as the Mahalonobis distance. We also note that the WLS is a special case of MinT where $\bm{W}^{-1}$ is a diagonal matrix. 
+	
+	\citet{Wickramasuriya2017} showed that the MinT is optimal with respect to the mean squared forecast errors. 
+	We can provide a more general geometrical explanation to this optimality using the schematic in Figure \ref{fig:MinT_justification}. Consider the h-step ahead reconciled forecast errors. These can be always approximated by the insample h-step ahead forecast errors. Since these errors are coherent, they lies in a direction that is closer to the coherent subspace $\mathfrak{s}$. Therefore if you project $\hat{\bm{y}}$ along the direction of these in-sample forecast errors, then you can get closer to the true value $\bm{y}$ as depicted in the schematic. Further, unlike OLS, the squared error for MinT reconciled forecasts is not always less than that of base forecasts in every single replication although it outperforms on average.
+	
+	
+	
+	\begin{figure}[H]
+		\centering
+		%\vspace{-0.9cm}
+		\small
+		\resizebox{\linewidth}{!}{
+			\input{Figs/MinT_justification}
+		}
+		\caption{A schematic to represent MinT reconciliation. Points in orange colour represent the insample errors. $\bm{R}$ shows the direction of the insample errors. $\hat{\bm{y}}$ is projected onto $\mathfrak{s}$ along the the direction of $\bm{R}$.}\label{fig:MinT_justification}
+	\end{figure}
+		
+	
+	\section{The issue of bias}
 	
 	A sensible property is that reconciliation should not change base forecasts that are already coherent.  That is 
 	\begin{equation}	
@@ -299,77 +378,7 @@
 	
 %	Representation of a coherent subspace in a three dimensional hierarchy where $y_{\text{Tot}} = y_{\text{A}} + y_{\text{B}}$. The coherent subspace is depicted as a gray two dimensional plane labelled $\mathfrak{s}$. Note that the columns of $\vec{s}_1 = (1,1,0)'$ and $\vec{s}_2 = (1, 0, 1)'$ form a basis for $\mathfrak{s}$. The red points lying on $\mathfrak{s}$ can be either realisations or coherent forecasts.
 	
-	\subsection{Why do projections work?}
-	
-		
-	Now let $\bm{y}_{t+h}$ be the realisation of the data generating process at time $t+h$, and let $\|\bm{v}\|_2$ be the $L_2$ norm of vector $\bm{v}$. The following theorem shows that reconciliation never increases, and in most cases reduces, the sum of squared errors of point forecasts.
-	
-	
-	
-	\begin{theo}[Distance reducing property]
-		If $\tilde{\bm{y}}_{t+h|t}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}$, where $\bm{G}$ is such that $\bm{S}\bm{G}$ is an orthogonal projection onto $\mathfrak{s}$, then the following inequality holds:
-		\begin{equation}
-		\|(\tilde{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|^2_2\le\|(\hat{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|^2_2.
-		\end{equation}
-	\end{theo}
-	\begin{proof}
-		Since the aggregation constraints must hold for all realisations, $\bm{y}_{t+h}\in\mathfrak{s}$ and $\bm{y}_{t+h}=\bm{S}\bm{G}\bm{y}_{t+h}$ whenever $\bm{S}\bm{G}$ is a projection onto $\mathfrak{s}$. Therefore,
-		\begin{align}
-		\|(\tilde{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2&=\|(\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}-\bm{S}\bm{G}\bm{y}_{t+h})\|_2\\
-		&=\|\bm{S}\bm{G}(\hat{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2.
-		\end{align}
-		The Cauchy-Schwarz inequality can be used to show that orthogonal projections are bounded operators \citep{Hun2001}, therefore
-		\begin{equation*}
-		\|\bm{S}\bm{G}(\hat{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2\le
-		\|(\hat{\bm{y}}_{t+h|t}-\bm{y}_{t+h})\|_2.
-		\end{equation*}
-	\end{proof}
-	The inequality is strict whenever $\hat{\bm{y}}_{t+h|t}\notin\mathfrak{s}$.
-	
-	Point reconciliation methods based on projections will always minimise the distance between unreconciled and reconciled forecasts, however the specific distance will depend on the choice of $\bm{R}$. Following subsections will explicitly discuss the different projection based reconciliation methods and their optimality based on distinct distance measures. 
-	
-	\subsubsection{OLS reconciliation}
-	
-	Recall that in OLS reconciliation, $\bm{R}_\perp=\bm{S}$ and thus it orthogonally projects $\hat{\bm{y}}$ to the coherent subspace. Further, it minimises the Euclidean distance between $\hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}$. In addition to that Figure \ref{fig:Schematic_OLSRecon} also shows that $\tilde{\bm{y}}$ is always closer to $\bm{y}$ than $\hat{\bm{y}}$ in terms of the Euclidean distance which is directly followed from the Pythagorean theorem. It also implies that the sum of squared error for OLS reconciled forecasts are always less than that for base forecasts.    
-	
-	\clearpage		
-	\begin{figure}[!ht]
-		\centering
-		\vspace{-0.9cm}
-		\tiny
-		\resizebox{\linewidth}{!}{
-			\input{Figs/orth_pointforerec_schematic}
-		}
-		\caption{$\hat{\bm{y}}$ is orthogonally projected onto $\mathfrak{s}$ }\label{fig:Schematic_OLSRecon}
-	\end{figure}
-	
-	\subsubsection{MinT reconciliation}
-	
-	    First, the linear subspace onto which all points are projected, or the image of the projection, must be defined. In our context this can be defined by the $m$ columns of the matrix $\bm{S}$.  Second, the direction along which points are projected must be defined.  This will be achieved by defining a matrix $\bm{R}$ with $n-m$ columns then span the direction of projection. A schematic of this is presented \todo{include}.   A projection matrix can then be constructed as $\bm{S}({\bm{R}'_{\perp}}\bm{S})^{-1}\bm{R}_{\perp}'$ where, ${\bm{R}_{\perp}}$ is an $n\times m$ orthogonal complement to $\bm{R}$ such that ${\bm{R}'_{\perp}}\bm{R}=\bm{0}$. It is simple to verify that this construction satisfies the properties of a projection matrix, namely symmetry and idempotence.
-	
-	A straightforward choice of $\bm{R}$ for the most simple three variable hierarchy where $y_{1,t}=y_{2,t}+y_{3,t}$, is the vector $(1,-1,-1)$ which is orthogonal (in the Euclidean sense) to the columns of $\bm{S}$. In this case, the matrix $\bm{R}$ can be interpreted as a `restrictions' matrix since it has the property that $\bm{R}'\bm{y}=\bm{0}$ for coherent $\bm{y}$. In OLS reconciliation, $\bm{R}_{\perp}'= \bm{S}'$ whereas in MinT or WLS reconciliation $\bm{R}_{\perp}'$ takes the form $\bm{S'W}^{-1}$. We will be discussing these projections distinctly in the next subsection\todo{needs work}. 
-	
-	
-	In MinT reconciliation, $\bm{R}'_\perp$ is taking the form $\bm{S}'{\bm{W}}^{-1}$, where it can be thought of as orthogonal projections after pre-multiplying by ${\bm{W}^{-1/2}}$. That is, the coordinates of incoherent space will be scaled by $\bm{W}^{-1/2}$ which is then followed by the orthogonal projection. Alternatively this can be interpreted as an oblique projections in Euclidean space where the columns of $\bm{R}$ is the `direction' along which incoherent point forecasts are projected onto the coherent space $\mathfrak{s}$ as depicted in Figure \ref{fig:pointfr_sch}. In terms of distances, MinT minimises the Euclidean distance between $\hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}$ in the transformed space which is same as the scaled Euclidean distance in the original space. Latter is also referred to as the Mahalonobis distance. We also note that the WLS is a special case of MinT where $\bm{W}^{-1}$ is a diagonal matrix. 
-	
-	\citet{Wickramasuriya2017} showed that the MinT is optimal with respect to the mean squared forecast errors. 
-	We can provide a more general geometrical explanation to this optimality using the schematic in Figure \ref{fig:MinT_justification}. Consider the h-step ahead reconciled forecast errors. These can be always approximated by the insample h-step ahead forecast errors. Since these errors are coherent, they lies in a direction that is closer to the coherent subspace $\mathfrak{s}$. Therefore if you project $\hat{\bm{y}}$ along the direction of these in-sample forecast errors, then you can get closer to the true value $\bm{y}$ as depicted in the schematic. Further, unlike OLS, the squared error for MinT reconciled forecasts is not always less than that of base forecasts in every single replication although it outperforms on average.
 
-
-	 	
-	 \begin{figure}[H]
-	 		\centering
-	 		%\vspace{-0.9cm}
-	 		\small
-	 		\resizebox{\linewidth}{!}{
-	 			\input{Figs/MinT_justification}
-	 		}
-	 		\caption{A schematic to represent MinT reconciliation. Points in orange colour represent the insample errors. $\bm{R}$ shows the direction of the insample errors. $\hat{\bm{y}}$ is projected onto $\mathfrak{s}$ along the the direction of $\bm{R}$.}\label{fig:MinT_justification}
-	 \end{figure}
-	
-	\subsubsection{Bottom-up method}
-	
-	Bottom-up method is one of the traditional and simplest ways of producing coherent forecasts. Under this approach, the incoherent forecasts are projected to the coherent subspace along the direction which is perpendicular to the bottom level series. In terms of distances, this method minimises the distance between reconciled and unreconciled forecasts only along the dimension corresponding to the bottom-level series. Therefore bottom-up methods should be thought of as a boundary case of reconciliation methods, since they ultimately do not use information at all levels of the hierarchy.   
 	
 	
 	\section{Bias correction}
