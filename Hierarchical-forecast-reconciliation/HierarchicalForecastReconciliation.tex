@@ -107,6 +107,14 @@
 	
 	\section{Introduction}\label{sec:intro}
 	
+	Have to explain why we are writing this
+	\begin{itemize}
+		\item Geometric intuition - restate existing results but with a new understanding.
+		\item In particular champion projections.
+		\item State that paper is in some ways a review paper.
+		\item Propose a simple solution to the issue of bias.
+	\end{itemize}
+	
 	
 %	Large collections of time series often follow some aggregation structure. For example, the electricity demand of a country can be disaggregated according to a geographic hierarchy of states, cities, and individual households. To ensure aligned decision making, it is important that forecasts at the most disaggregated level add up to forecasts at more aggregated levels. This property is called ``coherence''.  On the other hand ``reconciliation'' is a process whereby incoherent forecasts are made coherent. Both of these concepts have been developed extensively for point forecasting. Generalising both of these concepts, particularly the latter, to probabilistic forecasting is a gap that we seek to address in this work.  We do so by first providing a novel geometric interpretation to coherence and reconciliation in the point forecasting case. This can easily be generalised to probabilistic forecasting allowing us to derive further results for elliptical distributions as well as provide insight into forecast evaluation via multivariate  scoring rules. 
 %	
@@ -344,7 +352,7 @@
 	
 	\section{Bias in forecast reconciliation}
 	
-	Before turning our attention to the issue of bias itself it is important to state a sensible property that any reconciliation method should have.  That is if base forecasts are already coherent then reconciliation should not change the forecast.  As stated in Section~\ref{sec:Reconciliation}, this property holds when $\bm{SG}$ is a projection matrix.  This implies for arbitrary $\bm{G}$, reconciliation may in fact change an already coherent forecast.  
+	Before turning our attention to the issue of bias itself it is important to state a sensible property that any reconciliation method should have.  That is if base forecasts are already coherent then reconciliation should not change the forecast.  As stated in Section~\ref{sec:Reconciliation}, this property holds only when $\bm{SG}$ is a projection matrix.  As a corollary, reconciling using an arbitrary $\bm{G}$,  may in fact change an already coherent forecast.  
 	
 	The property that projections map all vectors in the coherent subspace onto themselves is useful in proving the unbiasedness preserving property of reconciliation \todo{reference Shanika and maybe van Erven Culigari}.  Before restating this proof using a  clear geometric interpretation we discuss in a precise fashion what is meant by unbiasedness.  
 	
@@ -364,13 +372,15 @@
 		Since $\bm{\mu}_{t+h|t}$ is an expectation taken with respect to the degenerate predictive density it must lie in $\mathfrak{s}$. We have already established that when $\bm{S}\bm{G}$ is a projection onto $\mathfrak{s}$ then it maps all vectors in $\mathfrak{s}$ onto themselves. As such $\bm{S}\bm{G}\bm{\mu}_{t+h|t}=\bm{\mu}_{t+h|t}$ when $\bm{S}\bm{G}$ is a projection matrix.
 	\end{proof}
 
-	We note that the above result holds when the projection $\bm{SG}$ is only onto the coherent subspace $\mathfrak{s}$ and not for all projection matrices in general. To describe this more explicitly suppose $\bm{SG}$ has as its image  $\mathfrak{L}$ which is itself a a lower dimensional linear subspace of $\mathfrak{s}$, i.e. $\mathfrak{L}\subset\mathfrak{s}$. Then for $\left\{\bm{\mu}_{t+h|t}:\bm{\mu}_{t+h|t}\in\mathfrak{s},\bm{\mu}_{t+h|t}\notin\mathfrak{L}\right\}$,  $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$. This is depicted in Figure~\ref{fig:Schematic_3D} where $\bm{\mu}_{t+h|t}$ is projected to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$.  Therefore in this case, the reconciled forecast will have as its expectation $\bar{\bm{\mu}}$ rather than $\bm{\mu}_{t+h|t}$ and be biased.  This result has implications in practice, in particular, the top-down method \citep{Gross1990} has 
+	We note that the above result holds when the projection $\bm{SG}$ has the coherent subspace $\mathfrak{s}$ as its image and not for all projection matrices in general. To describe this more explicitly suppose $\bm{SG}$ has as its image  $\mathfrak{L}$ which is itself a a lower dimensional linear subspace of $\mathfrak{s}$, i.e. $\mathfrak{L}\subset\mathfrak{s}$. Then for $\left\{\bm{\mu}_{t+h|t}:\bm{\mu}_{t+h|t}\in\mathfrak{s},\bm{\mu}_{t+h|t}\notin\mathfrak{L}\right\}$,  $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$. This is depicted in Figure~\ref{fig:Schematic_3D} where $\bm{\mu}_{t+h|t}$ is projected to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$.  In this case, the reconciled forecast will have as its expectation $\bar{\bm{\mu}}$ rather than $\bm{\mu}_{t+h|t}$ and be biased.  
+	
+	This result has implications in practice. The top-down method \citep{Gross1990} has 
 	\begin{equation}\label{eq:top-downG}
 	\bm{G}=\begin{pmatrix}
 	\bm{p} & \bm{0}_{(m \times n-1)}
 	\end{pmatrix}
 	\end{equation}
-    where $\bm{p} = (p_1,\dots,p_m)'$ is an $m$-dimensional vector consisting a set of proportions which is use to disaggregate the top-level forecasts along the hierarchy.  In this case it can be verified that $\bm{SG}$ is idempotent, i,e. $\bm{SGSG}=\bm{SG}$ and therefore $\bm{SG}$ is a projection matrix.  However the image of this projection is not an $m$-dimensional subspace but a $1$-dimensional subspace.  As such, top-down reconciliation will bias base forecasts when those base forecasts are unbiased.
+    where $\bm{p} = (p_1,\dots,p_m)'$ is an $m$-dimensional vector consisting a set of proportions used to disaggregate the top-level forecast.  In this case it can be verified that $\bm{SG}$ is idempotent, i,e. $\bm{SGSG}=\bm{SG}$ and therefore $\bm{SG}$ is a projection matrix.  However the image of this projection is not an $m$-dimensional subspace but a $1$-dimensional subspace.  As such, top-down reconciliation produces biased forecasts even when the base forecasts are unbiased.
 		
 	\begin{figure}[H]
 		\centering
@@ -382,7 +392,7 @@
 		\caption{$\mathfrak{L}$ is a linear subspace of the coherent subspace $\mathfrak{s}$. If $s\circ g$ is a projection not onto $\mathfrak{s}$ but onto $\mathfrak{L}$, then $\bm{\mu} \in \mathfrak{s}$ will be moved to $\bar{\bm{\mu}} \in \mathfrak{L}$.}\label{fig:Schematic_3D}
 	\end{figure}
 	
-	Finally, it is often stated that an assumption required to prove the unbiasedness preserving property is that $\bm{SGS}=\bm{S}$ or alternatively that $\bm{GS}=\bm{I}$.  Both of these conditions are equivalent to assuming that $\bm{SG}$ is a projection matrix.  \todo{perhaps elaborate in a proof in appendix}  When the problem is viewed through the prism of imposing a constraint $\bm{GS}=\bm{I}$ to ensure unbiasedness is preserved, one may be tempted to deal with biased forecasts by selecting $\bm{G}$ is an unconstrained manner.  However, equipped with a geometric understanding of the problem, we would advise against this approach.  Our own solution to dealing with biased forecasts is discussed in detail in the next section.  
+	Finally, it is often stated that an assumption required to prove the unbiasedness preserving property is that $\bm{SGS}=\bm{S}$ or alternatively that $\bm{GS}=\bm{I}$.  Both of these conditions are equivalent to assuming that $\bm{SG}$ is a projection matrix.  \todo{perhaps elaborate in a proof in appendix}  However, problems arise when viewing the preservation of unbiasedness through the prism of imposing a constraint $\bm{GS}=\bm{I}$. This thinking suggests that a way to deal with biased forecasts is to select $\bm{G}$ is an unconstrained manner.  However, equipped with a geometric understanding of the problem, we would advise against this approach.  Dropping the constraint is not just about bias $\bm{GS}=\bm{I}$ but rather moves away projections and all of their attractive properties.  Our own solution to dealing with biased forecasts is to bias correct, or translate the forecast prior to reconciling via projections.  It is to this approach that we now turn our attention.
 	
 	
 %	Representation of a coherent subspace in a three dimensional hierarchy where $y_{\text{Tot}} = y_{\text{A}} + y_{\text{B}}$. The coherent subspace is depicted as a gray two dimensional plane labelled $\mathfrak{s}$. Note that the columns of $\vec{s}_1 = (1,1,0)'$ and $\vec{s}_2 = (1, 0, 1)'$ form a basis for $\mathfrak{s}$. The red points lying on $\mathfrak{s}$ can be either realisations or coherent forecasts.
