@@ -1,0 +1,106 @@
+---
+title: "Prison Data Analysis"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(fpp2)
+library(Matrix)
+library(hts)
+library(readr)
+library(BigVAR)
+library(vars)
+library(tibble)
+library(kableExtra)
+
+```
+
+Prison data disaggregate into $4$ grouping variables, namely states(8), gender(2), legal status(2) and indigenous/non-indigenous. We chose only states, gender and legal status as the grouping variables in this analysis. Thus we have $m=32$ bottom level series and $n=81$ total number of series in the hierarchy. 
+
+```{r echo=FALSE}
+load("PrisonData_PointFRecon_LASSOandLS.RData")
+
+Prison.gts %>% aggts(level=0:3) %>% autoplot()
+
+```
+
+In this experiment we are trying to show that the reconciliation via projection still increase the accuracy for biased incoherent forecasts after adjusting for bias. To show this, we first obtain the incoherent forecasts via lasso type models. 
+
+For all aggregate-level series we fit AR(1) model including all bottom-level series at lag $1$ as exogenous variables. i.e., we fit the following model,
+
+$$y'_{i,t} = \gamma + \alpha_1 y'_{i,t-1} + \alpha_2 y'_{i,t-2} + \alpha_3 y'_{i,t-3} + \alpha_4 y'_{i,t-4} + \boldsymbol{\beta b'}_{t-1} + \boldsymbol{u}_t, \quad i=1,...,n-m, \quad t=1,...,T.$$
+
+where $\boldsymbol{b}_t$ is the vector of bottom level series. When estimating the parameters, we add lasso type penalisation. Thus we are minimising the following objective function to estimate $\gamma, \alpha$ and $\boldsymbol{\beta}$. 
+$$\operatorname{min}_{\gamma, \alpha, \boldsymbol{\beta}} \sum_{t=1}^T ||y'_{i,t} - \gamma - \alpha_1 y'_{i,t-1}- \alpha_2 y'_{i,t-2} - \alpha_3 y'_{i,t-3} - \alpha_4 y'_{i,t-4} - \boldsymbol{\beta b}_{t-1}||_2^2 + \lambda(||\boldsymbol{\alpha}||_1+||\boldsymbol{\beta}||_1),$$
+where, 
+$\boldsymbol{\alpha} = (\alpha_1, \alpha_2, \alpha_3, \alpha_4)$.
+
+The forecasts follows from this optimisation will be biased. Also we get the least squares estimator without the regularisation thus giving us unbiased forecasts. 
+
+Similarly for bottom-level series we fit a VAR(1) system with the penalty and without penalty to get biased and unbiased forecasts. 
+
+### Experiment 1
+
+We consider data from Q1-2005 to Q4-2013 as the training set and Q1-2014 to Q4-2018 as test set. This will give us more observations than the number of paramters to be estimated. Thus least squares estimation method will also works.
+
+```{r echo=FALSE}
+
+DF %>% 
+  filter(`F-method`=="Lasso") %>% 
+  group_by(`F-method`, `R-method`) %>% 
+  summarise(MSE = round(mean(SquaredE), digits = 4)) %>% 
+  kable(format = "latex") %>% kable_styling("striped")
+
+DF %>% 
+  filter(`F-method`=="Least Squares") %>% 
+  group_by(`F-method`, `R-method`) %>% 
+  summarise(MSE = round(mean(SquaredE), digits = 4)) %>% 
+  kable(format = "latex") %>% kable_styling("striped")
+
+```
+
+```{r echo=FALSE}
+DF %>% 
+  group_by(`F-method`, `R-method`, Replication) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  filter(`F-method`=="Lasso", `R-method`%in% c("Base_bias.adjust", "OLS")) %>% 
+  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+  geom_line() + ggtitle("OLS vs Base(LASSO)")
+
+```
+
+```{r echo=FALSE}
+DF %>% 
+  group_by(`F-method`, `R-method`, Replication) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  filter(`F-method`=="Lasso", `R-method`%in% c("Base_bias.adjust", "MinT(Shrink)")) %>% 
+  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+  geom_line() + ggtitle("MinT(Shrink) vs Base(LASSO)")
+
+  
+```
+
+```{r echo=FALSE}
+DF %>% 
+  group_by(`F-method`, `R-method`, Replication) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  filter(`F-method`=="Least Squares", `R-method`%in% c("Base", "OLS")) %>% 
+  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+  geom_line() + ggtitle("OLS vs Base(Least squares)")
+
+
+```
+
+```{r echo=FALSE}
+DF %>% 
+  group_by(`F-method`, `R-method`, Replication) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  filter(`F-method`=="Least Squares", `R-method`%in% c("Base", "MinT(Shrink)")) %>% 
+  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+  geom_line() + ggtitle("MinT(Shrink) vs Base(Least squares)")
+
+
+```
