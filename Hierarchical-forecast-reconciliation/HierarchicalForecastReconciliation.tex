@@ -56,7 +56,7 @@
 	
 	\if1\blind
 	{
-		\title{\bf Hierarchical Forecasts Reconciliation}
+		\title{\bf Forecasts Reconciliation: A geometric view with new insights on bias correction.}
 		\author{Puwasala Gamakumara\thanks{
 				The authors gratefully acknowledge the support of Australian Research Council Grant DP140103220.  We also thank Professor Mervyn Silvapulle for valuable comments.}\hspace{.2cm}\\
 			Department of Econometrics and Business Statistics,\\
@@ -191,7 +191,7 @@
 	 	A hierarchical time series is an $n$-dimensional multivariate time series such that all observed values $\bm{y}_1,\ldots,\bm{y}_T$ and all future values $\bm{y}_{T+1},\bm{y}_{T+2},\ldots$  lie in the coherent subspace, i.e. $\bm{y}_t\in\mathfrak{s}\quad\forall t$.
 	 \end{definition}
 	 
-	 Despite the common use of the term {\em hierarchical time series}, it should be clear from the definition that the data need not necessarily follow a hierarchy.  Also notable by its absence in the above definition is any reference to {\em aggregation}. In some ways, terms such as {\em hierarchical} and {\em aggregation} can be misleading since the literature has covered instances that cannot easily be depicted in a similar fashion to Figure~\ref{fig:basichier} and or do not involve aggregation. {\bf Include brief summary of all non-traditional hierarchies - e.g. grouped hierarchies, temporal hierarchies with wierd overlapping, problems where we look at differences between variables etc.}  Finally, although Definition~\ref{def:cohspace} makes clear reference to time series, this definition can be easily generalised to any vector-valued data for which some linear constraints are known to hold for all realisations.
+	 Despite the common use of the term {\em hierarchical time series}, it should be clear from the definition that the data need not necessarily follow a hierarchy.  Also notable by its absence in the above definition is any reference to {\em aggregation}. In some ways, terms such as {\em hierarchical} and {\em aggregation} can be misleading since the literature has covered instances that cannot be depicted in a similar fashion to Figure~\ref{fig:basichier} and/or do not involve aggregation. {\bf Include brief summary of all non-traditional hierarchies - e.g. grouped hierarchies, temporal hierarchies with wierd overlapping, problems where we look at differences between variables etc.}  Finally, although Definition~\ref{def:cohspace} makes reference to time series, this definition can be easily generalised to any vector-valued data for which some linear constraints are known to hold for all realisations.
 	 
 	 
 	 
@@ -239,18 +239,18 @@
 		Let $\breve{\bm{y}}_{t+h|t} \in \mathbb{R}^n$ be a vector of point forecasts of all series in the hierarchy at time $t+h$, made using information up to and including time $t$. Then $\breve{\bm{y}}_{t+h|t}$ is \emph{coherent} if $\breve{\bm{y}}_{t+h|t} \in \mathfrak{s}$.
 	\end{definition}
 
-    Without any loss of generality, that above definition could also be applied to prediction for multivariate data in general, rather than just forecasting of time series.  While the observed data will be coherent by definition, it is important to note that there are a number of reasons why forecasts or predictions may be incoherent.  \todo{some discussion about why reconciliation v single level}    
+    Without any loss of generality, the above definition could also be applied to prediction for multivariate data in general, rather than just forecasting of time series.  Much of the early literature that dealt with the problem of forecasting hierarchical time series \citep[see][and references therein]{Gross1990} produced forecasts at a single level of the hierarchy in the first stage. Subsequently forecasts for all series were recovered through aggregation, disaggregation according to historical or forecast proportions or some combination of both.  As such incoherent forecasts were not a problem in these earlier papers.  
     
-    First, since applications of hierarchical forecasting tend to be very high dimensional a common strategy in practice is to produce forecasts for each time series independently using univariate models.  Second, even where a multivariate model is used for the full vector of observations, it may be difficult to capture the linear constraints inherent in the data particularly for complicated non-linear models.  Third, in some cases judgemental adjustments may be made inducing incoherent forecasts. 
+    Forecasting a single level of the hierarchy did not, however echo common practice within many industries.\todo{might need refs}  In many organisations different departments or `silos' each produced their own forecasts, often with their own information sets and judgemental adjustments.  This approach does have several advantages over only forecasting a single level.  First, there is no loss of information since all bottom levels are modelled.  Second, modelling top level series often identifies features such as trend and seasonality that cannot be detected in noisy disaggregate data.  Unfortunately, however, when forecasts are produced independently at all levels, forecasts are likely to be incoherent.  This problem of incoherent forecasts cannot in general be solved by multivariate modelling either.  Instead, the solution to incoherent forecasts is to make an ex post adjustment that ensures coherence, a process known as {\em forecast reconciliation}
 	
 	
 	
 \section{Forecast reconciliation}\label{sec:Reconciliation}
 	
-	As discussed in the previous section, coherence is not guaranteed for a number of reasons.  To ensure aligned decision making, it is desirable to adjust forecasts ex post to ensure coherence.  This process is referred to as {\em reconciliation}.  In the most general terms, reconciliation can be defined as follows
+	The problem of forecast reconciliation is predicated on there being an $n$-vector of forecasts that are incoherent.  We will call these {\em base forecasts} and denote them as $\hat{\bm{y}}_{t+h|h}$, where the subscript $t+h|h$ implies that the forecast is made as time $t$ for a period $h$ steps into the future.  In the sequel, this subscript will be dropped at times for ease of exposition.  In the most general terms, reconciliation can be defined as follows
 	
 	\begin{definition}[Reconciled forecasts]\label{def:reconpoint}
-		Let $\psi$ be a mapping, $\psi:\mathbb{R}^n\rightarrow\mathfrak{s}$.  The point forecast $\tilde{\bm{y}}_{t+h|t}=\psi\left(\hat{\bm{y}}_{t+h|t}\right)$ is said to ``reconcile'' $\hat{\bm{y}}_{t+h|t}$ with respect to the mapping $\psi(.)$
+		Let $\psi$ be a mapping, $\psi:\mathbb{R}^n\rightarrow\mathfrak{s}$.  The point forecast $\tilde{\bm{y}}_{t+h|t}=\psi\left(\hat{\bm{y}}_{t+h|t}\right)$ is said to ``reconcile'' a base forecast $\hat{\bm{y}}_{t+h|t}$ with respect to the mapping $\psi(.)$
 	\end{definition}
 	
 	All reconciliation methods that we are aware of consider a linear mapping for $\psi$, which involves pre-multiplying base forecasts by an $n\times n$ matrix that has $\mathfrak{s}$ as its image.  One way to achieve this is with a matrix $\bm{SG}$, where $\bm{G}$ is an $(n-m)\times n$ matrix  (some authors use $\bm{P}$ used in place of $\bm{G}$).  This facilitates an interpretation of reconciliation as a two-step process, in the first step, base forecasts $\hat{\bm{y}}_{t+h|t}$ are combined to form a new set of bottom level forecasts, in the second step, these mapped to a full vector of coherent forecasts via pre-multiplication by $\bm{S}$.  
