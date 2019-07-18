@@ -1,0 +1,190 @@
+---
+title: "Prison Data Analysis"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(fpp2)
+library(Matrix)
+library(hts)
+library(readr)
+library(BigVAR)
+library(vars)
+library(tibble)
+library(kableExtra)
+library(reshape2)
+
+```
+
+Prison data disaggregate into $4$ grouping variables, namely states(8), gender(2), legal status(2) and indigenous/non-indigenous. We chose only states, gender and legal status as the grouping variables in this analysis. Thus we have $m=32$ bottom level series and $n=81$ total number of series in the hierarchy. 
+
+```{r echo=FALSE}
+load("PrisonData_PointFRecon_LogTrans_UnivARIMA.RData")
+
+Prison.gts %>% aggts(level=0:3) %>% autoplot()
+
+```
+
+In this experiment we are trying to show that the reconciliation via projection still increase the accuracy for biased incoherent forecasts after adjusting for bias.  
+
+
+### Experiment 1 - Univariate ARIMA models with log transformation
+
+We consider data from Q1-2005 to Q4-2013 as the training set and Q1-2014 to Q4-2018 as test set. we fit univariate ARIMA models for each series for log transformed data. The back-transformed forecasts will be biased. Unbiased forecasts will be obtained by adjusting the bias forecasts. 
+
+```{r echo=FALSE}
+
+DF %>% 
+  group_by(`F-method`, `R-method`, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) -> Avg_MSE
+
+Avg_MSE_tab1 <- Avg_MSE %>% dcast(`R-method` ~ Forecast_Horizon + `F-method`, value.var = "MSE") 
+
+colnames(Avg_MSE_tab1) <- c("R-method", rep(c("Biased", "Unbiased"), 4))
+
+Avg_MSE_tab1 %>% 
+  kable(format = "latex") %>% 
+  kableExtra::add_header_above(c(" " = 1, "h=1" = 2, "h=2" = 2, "h=3" = 2, "h=4" = 2)) 
+
+Avg_MSE %>% filter(`F-method` == "ARIMA_bias", `R-method` == "Base") %>% 
+  slice() %>% 
+  ungroup() %>% 
+  dplyr::select(MSE) %>% 
+  as_vector() -> ARIMA_bias_Base
+
+
+Avg_MSE %>% filter(`F-method` == "ARIMA_unbias", `R-method` == "Base") %>% 
+  slice() %>% 
+  ungroup() %>% 
+  dplyr::select(MSE) %>% 
+  as_vector() -> ARIMA_unbias_Base
+
+Avg_MSE %>% 
+  spread(key = `F-method`, value = MSE) %>% 
+  mutate(Bias_SS.MSE = round((1-(ARIMA_bias/ARIMA_bias_Base))*100, digits = 2), 
+         Unbias_SS.MSE = round((1-(ARIMA_unbias/ARIMA_unbias_Base))*100, digits = 2)) -> Avg_SS.MSE
+
+Avg_SS.MSE %>% 
+  filter(`R-method` == "Base") %>% 
+  mutate(Bias_SS.MSE = ARIMA_bias, Unbias_SS.MSE = ARIMA_unbias) %>% 
+  rbind(Avg_SS.MSE) %>% 
+  filter(Bias_SS.MSE != 0) %>% 
+  dplyr::select(-ARIMA_bias, -ARIMA_unbias) %>% 
+  gather(Bias_SS.MSE, Unbias_SS.MSE, key = "F-method", value = Skill.Score) -> Avg_SS.MSE
+
+Avg_SS.MSE_tab1 <- Avg_SS.MSE %>% dcast(`R-method` ~ Forecast_Horizon + `F-method`, value.var = "Skill.Score") 
+
+colnames(Avg_SS.MSE_tab1) <- c("R-method", rep(c("Biased", "Unbiased"), 4))
+
+Avg_SS.MSE_tab1 %>% 
+  kable(format = "latex") %>% 
+  kableExtra::add_header_above(c(" " = 1, "h=1" = 2, "h=2" = 2, "h=3" = 2, "h=4" = 2)) 
+  
+
+```
+
+
+```{r echo=FALSE}
+
+DF %>% 
+  group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  filter(`F-method`=="ARIMA_bias", `R-method`%in% c("Base", "OLS")) %>% 
+  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+  geom_line() + 
+  facet_wrap( ~ Forecast_Horizon, scales = "free_y") + 
+  ggtitle("OLS Vs Base (Biased)")
+
+DF %>% 
+  group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "OLS")) %>% 
+  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+  geom_line() + 
+  facet_wrap( ~ Forecast_Horizon, scales = "free_y")+ 
+  ggtitle("OLS Vs Base (Unbiased)")
+
+DF %>% 
+  group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  filter(`F-method`=="ARIMA_bias", `R-method`%in% c("Base", "MinT(Shrink)")) %>% 
+  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+  geom_line() + 
+  facet_wrap( ~ Forecast_Horizon, scales = "free_y") + 
+  ggtitle("MinT(Shrink) Vs Base (Biased)")
+
+DF %>% 
+  group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "MinT(Shrink)")) %>% 
+  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+  geom_line() + 
+  facet_wrap( ~ Forecast_Horizon, scales = "free_y")+ 
+  ggtitle("MinT(Shrink) Vs Base (Unbiased)")
+
+
+```
+
+
+### Experiment 2 - Time series regression with ARIMA errors for log transformed data
+
+In this exercise we fit time series regression models with ARIMA errors for each series for log transformed data. All bottom level series were considered as the regressors for each aggregate level series. Lag of all bottom level series except the bottom level regresand were considered as the regressors. All models were fitted to the back-transformed series. Then the back-transformed forecasts will be biased. Unbiased forecasts will be obtained by adjusting the bias forecasts. 
+
+```{r echo=FALSE}
+load("PrisonData_PointFRecon_LogTrans_DynReg_H1-H4.RData")
+```
+
+
+```{r echo=FALSE}
+
+DF %>% 
+  group_by(`F-method`, `R-method`, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) -> Avg_MSE
+
+Avg_MSE_tab1 <- Avg_MSE %>% dcast(`R-method` ~ Forecast_Horizon + `F-method`, value.var = "MSE") 
+
+colnames(Avg_MSE_tab1) <- c("R-method", rep(c("Biased", "Unbiased"), 4))
+
+Avg_MSE_tab1 %>% 
+  kable(format = "latex") %>% 
+  kableExtra::add_header_above(c(" " = 1, "h=1" = 2, "h=2" = 2, "h=3" = 2, "h=4" = 2)) 
+
+Avg_MSE %>% filter(`F-method` == "ARIMA_bias", `R-method` == "Base") %>% 
+  slice() %>% 
+  ungroup() %>% 
+  dplyr::select(MSE) %>% 
+  as_vector() -> ARIMA_bias_Base
+
+
+Avg_MSE %>% filter(`F-method` == "ARIMA_unbias", `R-method` == "Base") %>% 
+  slice() %>% 
+  ungroup() %>% 
+  dplyr::select(MSE) %>% 
+  as_vector() -> ARIMA_unbias_Base
+
+Avg_MSE %>% 
+  spread(key = `F-method`, value = MSE) %>% 
+  mutate(Bias_SS.MSE = round((1-(ARIMA_bias/ARIMA_bias_Base))*100, digits = 2), 
+         Unbias_SS.MSE = round((1-(ARIMA_unbias/ARIMA_unbias_Base))*100, digits = 2)) -> Avg_SS.MSE
+
+Avg_SS.MSE %>% 
+  filter(`R-method` == "Base") %>% 
+  mutate(Bias_SS.MSE = ARIMA_bias, Unbias_SS.MSE = ARIMA_unbias) %>% 
+  rbind(Avg_SS.MSE) %>% 
+  filter(Bias_SS.MSE != 0) %>% 
+  dplyr::select(-ARIMA_bias, -ARIMA_unbias) %>% 
+  gather(Bias_SS.MSE, Unbias_SS.MSE, key = "F-method", value = Skill.Score) -> Avg_SS.MSE
+
+Avg_SS.MSE_tab1 <- Avg_SS.MSE %>% dcast(`R-method` ~ Forecast_Horizon + `F-method`, value.var = "Skill.Score") 
+
+colnames(Avg_SS.MSE_tab1) <- c("R-method", rep(c("Biased", "Unbiased"), 4))
+
+Avg_SS.MSE_tab1 %>% 
+  kable(format = "latex") %>% 
+  kableExtra::add_header_above(c(" " = 1, "h=1" = 2, "h=2" = 2, "h=3" = 2, "h=4" = 2)) 
+  
+
+```
