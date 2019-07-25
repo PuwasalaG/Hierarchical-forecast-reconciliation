@@ -86,48 +86,88 @@ Avg_SS.MSE_tab1 %>%
 
 ```
 
+```{r}
+
+# Avg_MSE_Base <- Avg_MSE %>% 
+#   filter(`R-method` == "Base") %>% 
+#   ungroup() %>% 
+#   mutate(`F-method` = recode(`F-method`, "ARIMA_bias"= "Bias", "ARIMA_unbias" = "Unbiase"))
+# 
+# Avg_MSE_MinT <- Avg_MSE %>% 
+#   filter(`R-method` == "MinT(Shrink)") %>% 
+#   ungroup() %>% 
+#   mutate(`F-method` = recode(`F-method`, "ARIMA_bias"= "Bias", "ARIMA_unbias" = "Unbiase")) 
+# 
+# 
+# Avg_MSE_Base %>% 
+#   ggplot(aes(x = Forecast_Horizon, y = MSE, color = `F-method`, shape = `F-method`)) + 
+#   geom_point(size = 3) + 
+#   scale_color_manual(values = c("Green", "Red")) +
+#   scale_shape_manual(values=0:1) + 
+#   geom_point(data = Avg_MSE_MinT, aes(x = Forecast_Horizon, y = MSE, 
+#                                       color = `F-method`, shape = `F-method`), size = 3) + 
+#   scale_shape_manual(values=2:3) +
+#   geom_line()
+
+```
 
 ```{r echo=FALSE}
-
-DF %>% 
+DF_MSE <- DF %>% 
   group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
   summarise(MSE = mean(SquaredE)) %>% 
-  filter(`F-method`=="ARIMA_bias", `R-method`%in% c("Base", "OLS")) %>% 
-  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
-  geom_line() + 
-  facet_wrap( ~ Forecast_Horizon, scales = "free_y") + 
-  ggtitle("OLS Vs Base (Biased)")
+  mutate(Forecast_Horizon = recode(Forecast_Horizon, "1" = "h=1", "2" = "h=2", "3"= "h=3", "4" = "h=4"))
 
-DF %>% 
-  group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
-  summarise(MSE = mean(SquaredE)) %>% 
-  filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "OLS")) %>% 
-  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
-  geom_line() + 
-  facet_wrap( ~ Forecast_Horizon, scales = "free_y")+ 
-  ggtitle("OLS Vs Base (Unbiased)")
 
-DF %>% 
-  group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
-  summarise(MSE = mean(SquaredE)) %>% 
-  filter(`F-method`=="ARIMA_bias", `R-method`%in% c("Base", "MinT(Shrink)")) %>% 
-  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
-  geom_line() + 
-  facet_wrap( ~ Forecast_Horizon, scales = "free_y") + 
-  ggtitle("MinT(Shrink) Vs Base (Biased)")
+DF_MSE %>% 
+  filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "OLS", "MinT(Shrink)")) %>% 
+  spread(key = `R-method`, value = MSE) %>% 
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)` ) %>% 
+  dplyr::select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`) %>% 
+  gather(`Base-MinT`, `Base-OLS`, key = Method, value = MSE) %>% 
+  ggplot(aes(x = Method, y = MSE)) + geom_boxplot() + facet_wrap(~`Forecast_Horizon`)
 
-DF %>% 
-  group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
-  summarise(MSE = mean(SquaredE)) %>% 
-  filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "MinT(Shrink)")) %>% 
-  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
-  geom_line() + 
-  facet_wrap( ~ Forecast_Horizon, scales = "free_y")+ 
-  ggtitle("MinT(Shrink) Vs Base (Unbiased)")
+
+# DF %>% 
+#   group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+#   summarise(MSE = mean(SquaredE)) %>% 
+#   filter(`F-method`=="ARIMA_bias", `R-method`%in% c("Base", "OLS")) %>% 
+#   ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+#   geom_line() + 
+#   facet_wrap( ~ Forecast_Horizon, scales = "free_y") + 
+#   ggtitle("OLS Vs Base (Biased)")
+# 
+# DF %>% 
+#   group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+#   summarise(MSE = mean(SquaredE)) %>% 
+#   filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "OLS")) %>% 
+#   ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+#   geom_line() + 
+#   facet_wrap( ~ Forecast_Horizon, scales = "free_y")+ 
+#   ggtitle("OLS Vs Base (Unbiased)")
+# 
+# DF %>% 
+#   group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+#   summarise(MSE = mean(SquaredE)) %>% 
+#   filter(`F-method`=="ARIMA_bias", `R-method`%in% c("Base", "MinT(Shrink)")) %>% 
+#   ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+#   geom_line() + 
+#   facet_wrap( ~ Forecast_Horizon, scales = "free_y") + 
+#   ggtitle("MinT(Shrink) Vs Base (Biased)")
+# 
+# DF %>% 
+#   group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+#   summarise(MSE = mean(SquaredE)) %>% 
+#   filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "MinT(Shrink)")) %>% 
+#   ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+#   geom_line() + 
+#   facet_wrap( ~ Forecast_Horizon, scales = "free_y")+ 
+#   ggtitle("MinT(Shrink) Vs Base (Unbiased)")
 
 
 ```
 
+\newpage
 
 ### Experiment 2 - Time series regression with ARIMA errors for log transformed data
 

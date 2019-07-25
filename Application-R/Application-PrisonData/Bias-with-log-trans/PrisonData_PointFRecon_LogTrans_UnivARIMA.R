@@ -298,11 +298,24 @@ DF %>%
   geom_line() + 
   facet_wrap( ~ Forecast_Horizon, scales = "free_y")
 
-DF %>% 
+
+## Box-plots for the differences of MSE between OLS, MinT vs the base
+
+DF_MSE <- DF %>% 
   group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
   summarise(MSE = mean(SquaredE)) %>% 
-  filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "MinT(Shrink)")) %>% 
-  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
-  geom_line() + 
-  facet_wrap( ~ Forecast_Horizon, scales = "free_y")
+  mutate(Forecast_Horizon = recode(Forecast_Horizon, "1" = "h=1", "2" = "h=2", "3"= "h=3", "4" = "h=4"))
+
+
+DF_MSE %>% 
+  filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "OLS", "MinT(Shrink)")) %>% 
+  spread(key = `R-method`, value = MSE) %>% 
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)` ) %>% 
+  select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`) %>% 
+  gather(`Base-MinT`, `Base-OLS`, key = Method, value = MSE) %>% 
+  ggplot(aes(x = Method, y = MSE)) + geom_boxplot() + facet_wrap(~`Forecast_Horizon`)
+  
+  
+  
 

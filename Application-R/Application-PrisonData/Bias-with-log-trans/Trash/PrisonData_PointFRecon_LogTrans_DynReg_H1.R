@@ -32,7 +32,7 @@ Prison_bot.ts_log_diff <- apply(Prison_bot.ts_log, 2, diff)
 
 m <- ncol(Prison_bot.ts)
 n <- ncol(Prison_allts)
-H <- 4
+H <- 1
 C <- 20 # number of replications
 
 S <- smatrix(Prison.gts)
@@ -112,7 +112,6 @@ for (j in 1:C) {#C
   
   if(j==C){
     Test <- as.matrix(Test) %>% t()
-    Bts_tst <- as.matrix(Bts_tst) %>% t()
   }
   
   Base_forecasts_biased <- matrix(NA, nrow = min(H, nrow(Test)), ncol = n)
@@ -137,10 +136,10 @@ for (j in 1:C) {#C
     
     xreg_newdata <- Bts_tst %>%
       as.data.frame() %>%
-      slice(1:min(H, nrow(Test))) %>%
+      slice(1:H) %>%
       as.matrix()
     
-    Fc <- forecast(fit, h=min(H, nrow(Test)), xreg = xreg_newdata, bootstrap = TRUE)
+    Fc <- forecast(fit, h=min(H, nrow(Test)), xreg = xreg_newdata, bootstrap = FALSE)
     Fc_log_diff <- Fc$mean
     L_PI <- Fc$lower[,"95%"]
     sig_h <- (Fc_log_diff - L_PI)/1.96
@@ -203,11 +202,11 @@ for (j in 1:C) {#C
     
     xreg_newdata <- Bts_tst %>%
       as.data.frame() %>%
-      slice(1:min(H, nrow(Test))) %>%
+      slice(1:H) %>%
       dplyr::select(-l) %>%
       as.matrix()
     
-    Fc <- forecast(fit, h=min(H, nrow(Test)), xreg = xreg_newdata, bootstrap = TRUE)
+    Fc <- forecast(fit, h=min(H, nrow(Test)), xreg = xreg_newdata, bootstrap = FALSE)
     Fc_log_diff <- Fc$mean
     L_PI <- Fc$lower[,"95%"]
     sig_h <- (Fc_log_diff - L_PI)/1.96
@@ -257,10 +256,10 @@ for (j in 1:C) {#C
   
   End_fit <- Sys.time()
   
-  # #--Bias correction--#
-  # 
-  # Bias <- apply(Residuals_BackTransformed, 2, mean)
-  # Base_forecasts_unbiased <- Base_forecasts_biased - Bias
+  #--Bias correction--#
+
+  Bias <- apply(Residuals_BackTransformed, 2, mean)
+  Base_forecasts_unbiased <- Base_forecasts_biased - Bias
   
   
   #--Adding base forecasts to the DF--#
@@ -385,7 +384,7 @@ for (j in 1:C) {#C
 }
 End <- Sys.time()
 
-save.image("PrisonData_PointFRecon_LogTrans_DynReg_H1-H4.RData")
+save.image("PrisonData_PointFRecon_LogTrans_DynReg_H1.RData")
 
 DF %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF
 
