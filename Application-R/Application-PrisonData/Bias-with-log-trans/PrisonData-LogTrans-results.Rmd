@@ -87,6 +87,32 @@ Avg_SS.MSE_tab1 %>%
 ```
 
 ```{r}
+Avg_MSE %>% 
+   spread(key = `F-method`, value = MSE) %>% 
+   mutate(Bias_SS.MSE = round((1-(ARIMA_bias/ARIMA_bias_Base))*100, digits = 2), 
+          Unbias_SS.MSE = round((1-(ARIMA_unbias/ARIMA_bias_Base))*100, digits = 2)) -> Avg_MSE_SS
+
+Avg_MSE_SS %>% 
+  gather(key = "F-method", value = SS_MSE, Bias_SS.MSE, Unbias_SS.MSE) %>% 
+  mutate(`F-method` = recode(`F-method`, "Bias_SS.MSE" = "Bias", "Unbias_SS.MSE" = "Unbias")) %>%
+  filter(`R-method` %in% c("MinT(Shrink)", "OLS", "WLS")) %>% 
+  ggplot(aes(x = Forecast_Horizon, y = SS_MSE, color = `F-method`, shape = `F-method`)) + 
+  facet_wrap(~ `R-method`, scales = "free_y") +
+  geom_point(size = 3) + 
+  scale_shape_manual(values = 15:16) +
+  scale_color_manual(values = c("Red", "#33CC33")) + 
+  ylab("Skill Score (MSE) %") + 
+  xlab("h")
+
+
+
+
+```
+
+
+
+
+```{r}
 
 # Avg_MSE_Base <- Avg_MSE %>% 
 #   filter(`R-method` == "Base") %>% 
@@ -119,13 +145,14 @@ DF_MSE <- DF %>%
 
 
 DF_MSE %>% 
-  filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "OLS", "MinT(Shrink)")) %>% 
+  filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "OLS", "MinT(Shrink)", "WLS")) %>% 
   spread(key = `R-method`, value = MSE) %>% 
   mutate("Base-OLS" = Base - OLS,
-         "Base-MinT" = Base - `MinT(Shrink)` ) %>% 
-  dplyr::select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`) %>% 
-  gather(`Base-MinT`, `Base-OLS`, key = Method, value = MSE) %>% 
-  ggplot(aes(x = Method, y = MSE)) + geom_boxplot() + facet_wrap(~`Forecast_Horizon`)
+         "Base-MinT" = Base - `MinT(Shrink)`,
+         "Base-WLS" = Base - WLS) %>% 
+  dplyr::select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`, `Base-WLS`) %>% 
+  gather(`Base-OLS`, `Base-WLS`, `Base-MinT`,  key = Method, value = MSE) %>% 
+  ggplot(aes(x = Method, y = MSE)) + geom_boxplot() + facet_wrap(~`Forecast_Horizon`, scales = "free_y")
 
 
 # DF %>% 

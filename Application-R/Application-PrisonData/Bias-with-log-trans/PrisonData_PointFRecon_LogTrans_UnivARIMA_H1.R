@@ -27,7 +27,7 @@ Prison_allts <- allts(Prison.gts)
 
 m <- ncol(Prison_bot.ts)
 n <- ncol(Prison_allts)
-H <- 4 
+H <- 4
 C <- 20 # number of replications
 
 S <- smatrix(Prison.gts)
@@ -86,9 +86,15 @@ for (j in 1:C) {#C
   Base_forecasts_unbiased <- matrix(NA, nrow = min(H, nrow(Test)), ncol = n)
   
   Residuals_Transformed <- matrix(NA, nrow = nrow(Train), ncol = n)
-  Residuals_BackTransformed <- matrix(NA, nrow = nrow(Train), ncol = n)
-  Residuals_BackTransformed_biasadjust <- matrix(NA, nrow = nrow(Train), ncol = n)
   
+  Residuals_BackTransformed <- list(H1 = matrix(NA, nrow = nrow(Train), ncol = n),
+                                    H2 = matrix(NA, nrow = nrow(Train), ncol = n), 
+                                    H3 = matrix(NA, nrow = nrow(Train), ncol = n),
+                                    H4 = matrix(NA, nrow = nrow(Train), ncol = n))
+  Residuals_BackTransformed_biasadjust <- list(H1 = matrix(NA, nrow = nrow(Train), ncol = n),
+                                               H2 = matrix(NA, nrow = nrow(Train), ncol = n), 
+                                               H3 = matrix(NA, nrow = nrow(Train), ncol = n),
+                                               H4 = matrix(NA, nrow = nrow(Train), ncol = n))
   # for (i in 1:n) {
   #   
   #   TS_log <- log(Train[,i])
@@ -113,21 +119,42 @@ for (j in 1:C) {#C
   for (i in 1:n) {
     
     TS <- Train[,i]
-    fit_bias <- auto.arima(TS, lambda = 0) #This will give back-transformed fitted values
+    fit_bias <- auto.arima(TS, lambda = 0, allowdrift = F) #This will give back-transformed fitted values
     fit_unbiased <- auto.arima(TS, lambda = 0, biasadj = TRUE) #This will give back transformed bias-adjusted fitted values
     
     Base_forecasts_biased[,i] <- forecast(fit_bias, h=min(H, nrow(Test)), biasadj = FALSE)$mean 
-    Base_forecasts_unbiased[,i] <- forecast(fit_unbiased, h=min(H, nrow(Test)), biasadj = TRUE)$mean 
+    # Base_forecasts_unbiased[,i] <- forecast(fit_unbiased, h=min(H, nrow(Test)), biasadj = TRUE)$mean
     
     #fit$residuals from fit_bias and fit_unbiased are always in the transformed space i.e in the log space
     #Therefore we find the resduals that are in the original space as follows
-    Residuals_BackTransformed[,i] <- as.vector(TS - fit_bias$fitted)
-    Residuals_BackTransformed_biasadjust[,i] <- as.vector(TS - fit_unbiased$fitted)
+    # Residuals_BackTransformed[,i] <- as.vector(TS - fit_bias$fitted)
+    # Residuals_BackTransformed_biasadjust[,i] <- as.vector(TS - fit_unbiased$fitted)
+    
+    for (h in 1:min(H, nrow(Test))) {
+      
+      Residuals_BackTransformed[[h]][,i] <- residuals(fit_bias, h=h, type = "response")
+      
+    }
     
 
   }
   
+  #--Bias correction--#
   
+  Bias <- matrix(NA, nrow = min(H, nrow(Test)), ncol = n)
+  
+  for (h in 1:min(H, nrow(Test))) {
+    
+    Bias[h, ] <- apply(Residuals_BackTransformed[[h]], 2, mean, na.rm = TRUE)
+    
+    Bias_mat <- matrix(rep(Bias[h,], nrow(Train)), nrow = nrow(Train), ncol = n, byrow = T)
+    Residuals_BackTransformed_biasadjust[[h]] <- Residuals_BackTransformed[[h]] - Bias_mat
+  }
+  
+  Base_forecasts_unbiased <- Base_forecasts_biased - Bias
+  
+  
+
   
   #--Adding base forecasts to the DF--#
   
@@ -170,57 +197,118 @@ for (j in 1:C) {#C
   
   # WLS_BackTrans G (This G matrix is calculated using back-transformed residuals)
   
-  SamCov_BackTrans <- cov(Residuals_BackTransformed)
-  Inv_SamCov_BackTrans <- diag(1/diag(SamCov_BackTrans), n, n)
-
-  WLS_G_BackTrans <- solve(t(S) %*% Inv_SamCov_BackTrans %*% S) %*% t(S) %*% Inv_SamCov_BackTrans
+  WLS_G_BackTrans <- list()
   
+  for (h in 1:min(H, nrow(Test))) {
+    
+    SamCov_BackTrans <- cov(na.omit(Residuals_BackTransformed[[h]]))
+    Inv_SamCov_BackTrans <- diag(1/diag(SamCov_BackTrans), n, n)
+    
+    WLS_G_BackTrans[[h]] <- solve(t(S) %*% Inv_SamCov_BackTrans %*% S) %*% t(S) %*% 
+      Inv_SamCov_BackTrans
+    
+    
+  }
+    
   # WLS_BT_biasadjust G (This G matrix is calculated using back-transformed, bias adjusted residuals)
 
-  SamCov_BT_biasadjust <- cov(Residuals_BackTransformed_biasadjust)
-  Inv_SamCov_BT_biasadjust <- diag(1/diag(SamCov_BT_biasadjust), n, n)
+  WLS_G_BT_biasadjust <- list()
+  
+  for (h in 1:min(H, nrow(Test))) {
+    
+    SamCov_BT_biasadjust <- cov(na.omit(Residuals_BackTransformed_biasadjust[[h]]))
+    Inv_SamCov_BT_biasadjust <- diag(1/diag(SamCov_BT_biasadjust), n, n)
+    
+    WLS_G_BT_biasadjust[[h]] <- solve(t(S) %*% Inv_SamCov_BT_biasadjust %*% S) %*% t(S) %*% 
+      Inv_SamCov_BT_biasadjust
+    
+    
+  }
 
-  WLS_G_BT_biasadjust <- solve(t(S) %*% Inv_SamCov_BT_biasadjust %*% S) %*% t(S) %*% Inv_SamCov_BT_biasadjust
-  
-  
   # MinT(Shrink)_BackTrans G (This G matrix is calculated using back-transformed residuals)
   
-  targ_BackTrans <- lowerD(Residuals_BackTransformed)
-  shrink_BackTrans <- shrink.estim(Residuals_BackTransformed, targ_BackTrans)
-  Shr.cov_BackTrans <- shrink_BackTrans[[1]]
-  Inv_Shr.cov_BackTrans <- solve(Shr.cov_BackTrans)
+  MinT.shr_G_BackTrans <- list()
   
-  MinT.shr_G_BackTrans <- solve(t(S) %*% Inv_Shr.cov_BackTrans %*% S) %*% t(S) %*% 
-    Inv_Shr.cov_BackTrans
+  for (h in 1:min(H, nrow(Test))) {
     
+    targ_BackTrans <- lowerD(na.omit(Residuals_BackTransformed[[h]]))
+    shrink_BackTrans <- shrink.estim(na.omit(Residuals_BackTransformed[[h]]), targ_BackTrans)
+    Shr.cov_BackTrans <- shrink_BackTrans[[1]]
+    Inv_Shr.cov_BackTrans <- solve(Shr.cov_BackTrans)
+  
+    MinT.shr_G_BackTrans[[h]] <- solve(t(S) %*% Inv_Shr.cov_BackTrans %*% S) %*% t(S) %*% 
+      Inv_Shr.cov_BackTrans
+
+  }
+  
+      
   # MinT(Shrink)_BT_biasadjust G (This G matrix is calculated using back-transformed, bias adjusted residuals)
   
-  targ_BT_biasadjust <- lowerD(Residuals_BackTransformed_biasadjust)
-  shrink_BT_biasadjust <- shrink.estim(Residuals_BackTransformed_biasadjust, targ_BT_biasadjust)
-  Shr.cov_BT_biasadjust <- shrink_BT_biasadjust[[1]]
-  Inv_Shr.cov_BT_biasadjust <- solve(Shr.cov_BT_biasadjust)
+  MinT.shr_G_BT_biasadjust <- list()
   
-  MinT.shr_G_BT_biasadjust <- solve(t(S) %*% Inv_Shr.cov_BT_biasadjust %*% S) %*% t(S) %*% 
-    Inv_Shr.cov_BT_biasadjust
+  for (h in 1:min(H, nrow(Test))) {
+    
+    targ_BT_biasadjust <- lowerD(na.omit(Residuals_BackTransformed_biasadjust[[h]]))
+    shrink_BT_biasadjust <- shrink.estim(na.omit(Residuals_BackTransformed_biasadjust[[h]]), 
+                                         targ_BT_biasadjust)
+    Shr.cov_BT_biasadjust <- shrink_BT_biasadjust[[1]]
+    Inv_Shr.cov_BT_biasadjust <- solve(Shr.cov_BT_biasadjust)
+    
+    MinT.shr_G_BT_biasadjust[[h]] <- solve(t(S) %*% Inv_Shr.cov_BT_biasadjust %*% S) %*% t(S) %*% 
+      Inv_Shr.cov_BT_biasadjust
+
+  }
+  
+  
   
   #--Reconciling bias base forecasts--#
   
+  # Recon_Bias_WLS <- matrix(NA, nrow = min(H, nrow(Test)), ncol = n)
+  # Recon_Bias_MinT <- matrix(NA, nrow = min(H, nrow(Test)), ncol = n)
+  # Recon_Unbias_WLS <- matrix(NA, nrow = min(H, nrow(Test)), ncol = n)
+  # Recon_Unbias_MinT <- matrix(NA, nrow = min(H, nrow(Test)), ncol = n)
+  # 
+  # #Follows From biased forecasts
+  # Recon_Bias_BU <- t(S %*% BU_G %*% t(Base_forecasts_biased))
+  # Recon_Bias_OLS <- t(S %*% OLS_G %*% t(Base_forecasts_biased))
+  # 
+  # for (h in 1:min(H, nrow(Test))) {
+  #   
+  #   Recon_Bias_WLS[h,] <- S %*% WLS_G_BackTrans[[h]] %*% Base_forecasts_biased[h,]
+  #   Recon_Bias_MinT[h,] <- S %*% MinT.shr_G_BackTrans[[h]] %*% Base_forecasts_biased[h,]
+  #   
+  # }
+  # 
+  # 
+  # #Follows From bias adjusted forecasts
+  # Recon_Unbias_BU <- t(S %*% BU_G %*% t(Base_forecasts_unbiased))
+  # Recon_Unbias_OLS <- t(S %*% OLS_G %*% t(Base_forecasts_unbiased))
+  # 
+  # for (h in 1:min(H, nrow(Test))) {
+  # 
+  #   Recon_Unbias_WLS[h,] <- S %*% WLS_G_BT_biasadjust[[h]] %*% Base_forecasts_unbiased[h,]
+  #   Recon_Unbias_MinT[h,] <- S %*% MinT.shr_G_BT_biasadjust[[h]] %*% Base_forecasts_unbiased[h,]
+  #   
+  # }
+  
   Recon_Bias_BU <- t(S %*% BU_G %*% t(Base_forecasts_biased))
   Recon_Bias_OLS <- t(S %*% OLS_G %*% t(Base_forecasts_biased))
-  Recon_Bias_WLS <- t(S %*% WLS_G_BackTrans %*% t(Base_forecasts_biased))
-  Recon_Bias_MinT <- t(S %*% MinT.shr_G_BackTrans %*% t(Base_forecasts_biased))
+  Recon_Bias_WLS <- t(S %*% WLS_G_BackTrans[[1]] %*% t(Base_forecasts_biased))
+  Recon_Bias_MinT <- t(S %*% MinT.shr_G_BackTrans[[1]] %*% t(Base_forecasts_biased))
   
   #Follows From bias adjusted forecasts
   Recon_Unbias_BU <- t(S %*% BU_G %*% t(Base_forecasts_unbiased))
   Recon_Unbias_OLS <- t(S %*% OLS_G %*% t(Base_forecasts_unbiased))
-  Recon_Unbias_WLS <- t(S %*% WLS_G_BackTrans %*% t(Base_forecasts_unbiased))
-  Recon_Unbias_MinT <- t(S %*% MinT.shr_G_BackTrans %*% t(Base_forecasts_unbiased))
+  Recon_Unbias_WLS <- t(S %*% WLS_G_BT_biasadjust[[1]] %*% t(Base_forecasts_unbiased))
+  Recon_Unbias_MinT <- t(S %*% MinT.shr_G_BT_biasadjust[[1]] %*% t(Base_forecasts_unbiased))
   
+
   
   
   #--Adding the reconcilied forecasts from biased base forecasts to the DF--#
   
-  Fltr <- DF %>% dplyr::filter(`F-method`=="ARIMA_bias", `R-method`=="Base", `Replication`==j) %>% 
+  Fltr <- DF %>% 
+    dplyr::filter(`F-method`=="ARIMA_bias", `R-method`=="Base", `Replication`==j) %>% 
     dplyr::select(-Forecasts, -`R-method`)
   
   cbind(Fltr, Forecasts = as.vector(Recon_Bias_BU), "R-method" = "Bottom-up") -> Df_BU
@@ -243,7 +331,8 @@ for (j in 1:C) {#C
   
   #--Adding the reconcilied forecasts from unbiased base forecasts to the DF--#
   
-  Fltr <- DF %>% dplyr::filter(`F-method`=="ARIMA_unbias", `R-method`=="Base", `Replication`==j) %>% 
+  Fltr <- DF %>% 
+    dplyr::filter(`F-method`=="ARIMA_unbias", `R-method`=="Base", `Replication`==j) %>% 
     dplyr::select(-Forecasts, -`R-method`)
   
   cbind(Fltr, Forecasts = as.vector(Recon_Unbias_BU), "R-method" = "Bottom-up") -> Df_BU
