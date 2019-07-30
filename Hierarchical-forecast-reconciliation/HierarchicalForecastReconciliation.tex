@@ -6,7 +6,8 @@
 \usepackage{url} % not crucial - just used below for the URL 
 
 \usepackage{amssymb, qtree, bm, multirow, textcmds, siunitx,paralist}
-\usepackage{mathrsfs, float, booktabs,todonotes,amsthm, xcolor,sidenotes}
+\usepackage{mathrsfs, float, booktabs,todonotes,amsthm, xcolor,sidenotes, caption, subcaption}
+
 \usepackage[bb=boondox]{mathalfa}
 \usepackage{tikz}
 \usetikzlibrary{arrows,positioning,shapes,fit,calc}
@@ -350,6 +351,50 @@
 		\caption{A schematic to represent MinT reconciliation. Grey points indicate potential realisations of the base forecast while the blue dot indicates one such realisation. The black dot ${\bm y}$ denotes the (unknown) target of the forecast.}\label{fig:MinT_justification2}
 	\end{figure}
 	
+	\begin{figure}[H]
+		\centering
+		%\vspace{-0.9cm}
+		\small
+		\resizebox{\linewidth}{!}{
+			\includegraphics{Figs/OrthProj.pdf}}
+		\caption{\textcolor{red}{include caption}}\label{fig:Orthogonal_projection}
+	\end{figure}
+	
+	
+	\begin{figure}[H]
+	\centering
+	%\vspace{-0.9cm}
+	\small
+	\resizebox{\linewidth}{!}{
+		\includegraphics{Figs/ObliqueProjection.pdf}}
+	\caption{\textcolor{red}{include caption}}\label{fig:Oblique_projection}
+	\end{figure}
+	
+%		\begin{figure}[H]
+%		\centering
+%		%\vspace{-0.9cm}
+%		\small
+%		\resizebox{\linewidth}{!}{
+%			\input{Figs/ObliqueProjection}
+%		}
+%		\caption{\textcolor{red}{write caption}}\label{fig:Oblique_projection}
+%	\end{figure}
+	
+%\begin{figure}
+%	\centering
+%	\begin{subfigure}{0.47\textwidth}
+%		\resizebox{\linewidth}{!}{
+%			\input{Figs/Orth.proj.tex}}
+%		\caption{bla bla}
+%	\end{subfigure}
+%	\begin{subfigure}{0.47\textwidth}
+%		\resizebox{\linewidth}{!}{
+%			\input{Figs/ObliqueProjection.tex}}
+%			\caption{bla bla}
+%	\end{subfigure}
+%\end{figure}
+
+	
 	\section{Bias in forecast reconciliation}
 	
 	Before turning our attention to the issue of bias itself it is important to state a sensible property that any reconciliation method should have.  That is if base forecasts are already coherent then reconciliation should not change the forecast.  As stated in Section~\ref{sec:Reconciliation}, this property holds only when $\bm{SG}$ is a projection matrix.  As a corollary, reconciling using an arbitrary $\bm{G}$,  may in fact change an already coherent forecast.  
@@ -372,7 +417,7 @@
 		Since $\bm{\mu}_{t+h|t}$ is an expectation taken with respect to the degenerate predictive density it must lie in $\mathfrak{s}$. We have already established that when $\bm{S}\bm{G}$ is a projection onto $\mathfrak{s}$ then it maps all vectors in $\mathfrak{s}$ onto themselves. As such $\bm{S}\bm{G}\bm{\mu}_{t+h|t}=\bm{\mu}_{t+h|t}$ when $\bm{S}\bm{G}$ is a projection matrix.
 	\end{proof}
 
-	We note that the above result holds when the projection $\bm{SG}$ has the coherent subspace $\mathfrak{s}$ as its image and not for all projection matrices in general. To describe this more explicitly suppose $\bm{SG}$ has as its image  $\mathfrak{L}$ which is itself a a lower dimensional linear subspace of $\mathfrak{s}$, i.e. $\mathfrak{L}\subset\mathfrak{s}$. Then for $\left\{\bm{\mu}_{t+h|t}:\bm{\mu}_{t+h|t}\in\mathfrak{s},\bm{\mu}_{t+h|t}\notin\mathfrak{L}\right\}$,  $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$. This is depicted in Figure~\ref{fig:Schematic_3D} where $\bm{\mu}_{t+h|t}$ is projected to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$.  In this case, the reconciled forecast will have as its expectation $\bar{\bm{\mu}}$ rather than $\bm{\mu}_{t+h|t}$ and be biased.  
+	We note that the above result holds when the projection $\bm{SG}$ has the coherent subspace $\mathfrak{s}$ as its image and not for all projection matrices in general. To describe this more explicitly suppose $\bm{SG}$ has as its image  $\mathfrak{L}$ which is itself a lower dimensional linear subspace of $\mathfrak{s}$, i.e. $\mathfrak{L}\subset\mathfrak{s}$. Then for $\left\{\bm{\mu}_{t+h|t}:\bm{\mu}_{t+h|t}\in\mathfrak{s},\bm{\mu}_{t+h|t}\notin\mathfrak{L}\right\}$,  $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$. This is depicted in Figure~\ref{fig:Schematic_3D} where $\bm{\mu}_{t+h|t}$ is projected to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$.  In this case, the expectation of reconciled forecast will be $\bar{\bm{\mu}}$ rather than $\bm{\mu}_{t+h|t}$ and hence biased.  
 	
 	This result has implications in practice. The top-down method \citep{Gross1990} has 
 	\begin{equation}\label{eq:top-downG}
@@ -402,7 +447,8 @@
 	
 	\section{Bias correction}
 	
-	Our approach to bias correction is to simply estimate the bias by taking the sample mean of $\bm{y_{t+h}}-\hat{\bm{y}_{t+h|t}}$ for all $t+h$ in the training sample.  This can be then subtracted from future forecasts.  As stated in the discussion of MinT, in-sample errors are already used to estimate the optimal direction of projection.  As such we see no problems with using the same errors to bias correct.  Geometrically, the intuition is simple.  In Figure~\ref{fig:MinT_justification1}, the orange points are centered around the origin as would be expected from an unbiased forecast.  If forecasts are biased, then errors should simply be translated until they are centered at the origin.
+	Our approach to bias correction is to simply estimate the bias by taking the sample mean of $\bm{y
+	}_{t+h}-\hat{\bm{y}}_{t+h|t}$ for all $t+h$ in the training sample.  This can be then subtracted from future forecasts.  As stated in the discussion of MinT, in-sample errors are already used to estimate the optimal direction of projection.  As such we see no problems with using the same errors to bias correct.  Geometrically, the intuition is simple.  In Figure~\ref{fig:MinT_justification1}, the orange points are centered around the origin as would be expected from an unbiased forecast.  If forecasts are biased, then errors should simply be translated until they are centered at the origin.
 	
 	\section{Application}
 	

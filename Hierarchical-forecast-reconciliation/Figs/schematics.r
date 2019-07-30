@@ -69,7 +69,7 @@ dev.off()
 
 ##OLS reconciliation
 
-tikz('orth_pointforerec_schematic.tex',width=4)
+tikz('orth_pointforerec_schematic.tex',width=4, height = 4)
 plot.new()
 plot.window(xlim = c(-0.25,4),ylim = c(-0.5,4),asp=1)
 lines(c(0,0),c(-1,3))
@@ -103,10 +103,52 @@ text(y[1],y[2],"{\\large $\\color{black}{{\\bm{y}}}$}",pos=1,offset = 1.5)
 
 dev.off()
 
+#--Orthogonal projection of the points
+
+# Possible estimates
+
+tikz('OrthProj.tex',height=5, width = 5, standAlone = TRUE)
+plot.new()
+plot.window(xlim = c(-0.25,4),ylim = c(-0.5,5))
+lines(c(0,0),c(-1,5))
+lines(c(-1,5),c(0,0))
+#lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
+arrows(0,0,3.5,1.75,lwd=3)
+text(3.5,1.75,"{\\huge $\\mathfrak{s}$}",pos=4)
+
+rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
+e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
+e_sample <- e + matrix(rep(c(0.6,0.3), 100), nrow = 100, ncol = 2, byrow = T)
+points(e_sample[,1],e_sample[,2],pch=19,col='gray')
+
+arrows(0,0,1,4,lwd=3)
+text(1,4,"{\\Large ${\\bm R}$}",pos=3)
+
+S <- c(2,1)
+SP = S %*% solve(t(S) %*% S) %*% t(S)
+# SP<-matrix(c(0.8,0.4,0.4,0.2),2,2)
+
+e_OLS <- t(SP%*%t(e_sample))
+points(e_OLS[,1],e_OLS[,2],pch=19,col='red')
+
+arrows(x0 = e_sample[,1], y0 = e_sample[,2], 
+       x1 = e_OLS[,1], y1 = e_OLS[,2], code = 0,
+       lty = 2, col = "blue")
+
+# points(1.5,3,pch=20,cex=2,col='blue')
+# text(1.5,3,"{\\huge $\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3,offset = 1.5)
+
+points(0.6,0.3,pch=20,cex=2,col='black')
+text(0.6,0.3,"{\\huge $\\color{black}{\\bm{y}}$}",pos = 1,offset = 1)
+dev.off()
+
+tools::texi2dvi('OrthProj.tex',pdf=T)
+
+
 
 #How MinT outperforms
 
-tikz('MinT_justification.tex',height=5)
+tikz('MinT_justification.tex',height=5, width = 5)
 plot.new()
 plot.window(xlim = c(-0.25,4),ylim = c(-0.5,5))
 lines(c(0,0),c(-1,5))
@@ -135,6 +177,51 @@ arrows(1.5,3,6/7,3/7,col='blue')
 points(0.6,0.3,pch=20,cex=2,col='black')
 text(0.6,0.3,"{\\huge $\\color{black}{\\bm{y}}$}",pos = 1,offset = 1)
 dev.off()
+
+#--Oblique projection of the points
+
+# Possible estimates
+
+tikz('ObliqueProjection.tex',height=5, width = 5, standAlone = TRUE)
+plot.new()
+plot.window(xlim = c(-0.25,4),ylim = c(-0.5,5))
+lines(c(0,0),c(-1,5))
+lines(c(-1,5),c(0,0))
+#lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
+arrows(0,0,3.5,1.75,lwd=3)
+text(3.5,1.75,"{\\huge $\\mathfrak{s}$}",pos=4)
+
+rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
+e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
+e_sample <- e + matrix(rep(c(0.6,0.3), 100), nrow = 100, ncol = 2, byrow = T)
+points(e_sample[,1],e_sample[,2],pch=19,col='gray')
+
+
+S <- c(2,1)
+W <- cov(e_sample)
+W_inv <- solve(W)
+SP <- S %*% solve(t(S) %*% W_inv %*% S) %*% t(S) %*% W_inv
+
+e_MinT <- t(SP%*%t(e_sample))
+points(e_MinT[,1],e_MinT[,2],pch=19,col='red')
+
+arrows(0,0,1,4,lwd=3)
+text(1,4,"{\\Large ${\\bm R}$}",pos=3)
+
+arrows(x0 = e_sample[,1], y0 = e_sample[,2], 
+       x1 = e_MinT[,1], y1 = e_MinT[,2], code = 0,
+       lty = 2, col = "blue")
+
+
+# points(1.5,3,pch=20,cex=2,col='blue')
+# text(1.5,3,"{\\huge $\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3,offset = 1.5)
+
+points(0.6,0.3,pch=20,cex=2,col='black')
+text(0.6,0.3,"{\\huge $\\color{black}{\\bm{y}}$}",pos = 1,offset = 1)
+dev.off()
+
+tools::texi2dvi('ObliqueProjection.tex',pdf=T)
+
 
 
 
