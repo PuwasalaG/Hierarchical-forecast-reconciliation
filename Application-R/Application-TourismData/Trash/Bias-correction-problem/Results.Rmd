@@ -1,0 +1,51 @@
+---
+title: "Bias vs Bias adjusted forecasts for Tourism data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+library(tidyverse)
+library(fpp2)
+library(hts)
+load("TourismData_BoxCoxTrans-BiasCorrection_UnivARIMA.RData")
+
+```
+
+Univariate ARIMA models were fitted for the transformed data (using BoxCox transformation). 
+The back transformed data was adjusted for bias to get unbiased forecasts
+
+Table shows the MSE for base-biased and base-unbiased forecasts for $h=1,..,6$
+
+```{r}
+
+DF %>% 
+  group_by(`F-method`, `R-method`, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  ungroup() %>% 
+  mutate(Forecast_Horizon = recode(Forecast_Horizon, "1" = "h=1",  "2" = "h=2",
+                                    "3" = "h=3",  "4" = "h=4",  "5" = "h=5",  
+                                   "6" = "h=6"),
+         `F-method` = recode(`F-method`, "ARIMA_bias" = "Base-biased", 
+                             "ARIMA_unbias" = "Base-unbiased")) %>% 
+  select(-`R-method`) %>% 
+  spread(key = Forecast_Horizon, value = MSE)
+
+DF %>% 
+  mutate(Forecast_Horizon = recode(Forecast_Horizon, "1" = "h=1",  "2" = "h=2",
+                                    "3" = "h=3",  "4" = "h=4",  "5" = "h=5",  
+                                   "6" = "h=6")) %>%
+  group_by(`F-method`, `R-method`, Forecast_Horizon, Replication) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  spread(key = `F-method`, value = MSE) %>% 
+  mutate("Bias-Unbias" = `ARIMA_bias` - `ARIMA_unbias`) %>% 
+  ggplot(aes(x = Replication, y = `Bias-Unbias`)) + geom_point() + 
+  facet_wrap(~Forecast_Horizon, scales = "free_y") +
+  ylab("MSE (bias - unbias)")
+
+
+```
+
+

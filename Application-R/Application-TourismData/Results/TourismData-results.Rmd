@@ -1,0 +1,214 @@
+---
+title: "Tourism Data Analysis"
+output:
+  pdf_document: default
+  html_document: default
+date: "31 July 2019"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(fpp2)
+library(Matrix)
+library(hts)
+library(readr)
+library(BigVAR)
+library(vars)
+library(tibble)
+library(kableExtra)
+library(reshape2)
+library(ggpubr)
+library(gridExtra)
+```
+
+<!-- ### Estimating the bias from the mean of the insample residuals -->
+<!-- ```{r, echo=FALSE} -->
+<!-- DF_Exp_1 <- read.csv("DF_Exp-1.csv")[,-1] -->
+
+<!-- DF_Exp_1 %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_Exp_1 -->
+
+<!-- DF_Exp_1 %>%  -->
+<!--   group_by(`F.method`, `R.method`, Forecast_Horizon) %>%  -->
+<!--   summarise(MSE = mean(SquaredE)) -> Avg_MSE_Exp1 -->
+
+<!-- Avg_MSE_tab1_Exp1 <- Avg_MSE_Exp1 %>%  -->
+<!--   dcast(`R.method` ~ Forecast_Horizon + `F.method`, value.var = "MSE")  -->
+
+<!-- colnames(Avg_MSE_tab1_Exp1) <- c("R.method", rep(c("Biased", "Unbiased"), 6)) -->
+
+<!-- Avg_MSE_tab1_Exp1 %>%  -->
+<!--   kable(format = "latex") %>%  -->
+<!--   kableExtra::add_header_above(c(" " = 1, "h=1" = 2, "h=2" = 2, "h=3" = 2, "h=4" = 2, -->
+<!--                                  "h=5" = 2, "h=6" = 2))  -->
+
+<!-- ``` -->
+
+### Bias adjusted forecasts are given as follows:
+
+$$ y_t = 
+  \begin{cases} 
+   \exp{x_t}[1+\frac{\sigma_h^2}{2}] & \text{if } \lambda = 0 \\ \\
+   (\lambda x_t + 1)^{1/\lambda}[1 + \frac{\sigma_h^2(1-\lambda)}{2(\lambda x_t + 1)^2}]       & \text{Otherwise}
+  \end{cases}$$
+
+
+### For BoxCox transformed data (Using the BoxCox function in the forecast package)
+
+In this exercise I have used the `BoxCox.lambda()` function in forecast package to automatically find a proper transformation for each series.
+```{r, echo=FALSE}
+load("TourismData_BoxCoxTransBiasCorrection_UnivARIMA.RData")
+
+DF %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_BoxCox_1
+
+DF_BoxCox_1 %>% 
+  group_by(`F-method`, `R-method`, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) -> Avg_MSE_BC_1
+
+Avg_MSE_tab1_BC_1 <- Avg_MSE_BC_1 %>% 
+  dcast(`R-method` ~ Forecast_Horizon + `F-method`, value.var = "MSE") 
+
+colnames(Avg_MSE_tab1_BC_1) <- c("R-method", rep(c("Biased", "Unbiased"), 6))
+
+Avg_MSE_tab1_BC_1 %>% 
+  kable(format = "latex") %>% 
+  kableExtra::add_header_above(c(" " = 1, "h=1" = 2, "h=2" = 2, "h=3" = 2, "h=4" = 2,
+                                 "h=5" = 2, "h=6" = 2)) 
+
+DF_BoxCox_1 %>% 
+  mutate(Forecast_Horizon = recode(Forecast_Horizon, "1" = "h=1",  "2" = "h=2",
+                                    "3" = "h=3",  "4" = "h=4",  "5" = "h=5",  
+                                   "6" = "h=6")) %>%
+  filter(`R-method` == "Base") %>% 
+  group_by(`F-method`, `R-method`, Forecast_Horizon, Replication) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  spread(key = `F-method`, value = MSE) %>% 
+  mutate("Bias-Unbias" = `ARIMA_bias` - `ARIMA_unbias`) %>% 
+  ggplot(aes(x = Replication, y = `Bias-Unbias`)) + geom_point() + 
+  facet_wrap(~Forecast_Horizon, scales = "free_y") +
+  ylab("MSE (bias - unbias)") + 
+  ggtitle("MSE Difference between Biased-base and Unbiased-base")
+
+```
+
+The above graph shows the difference between the MSE of `Base-biased forecasts` and `Base-unbiased forecasts`. As we can see, this difference is very large for some of the replications which courses the large average MSE in unbiased-base forecasts shown in the table 1.  
+
+However an important thing to notice here is that although the unbiased base forecasts are terrible, MinT has adjusted these through the reconciliation. In fact the MinT reconciled unbiased forecasts are even better than the MinT reconciled biased forecasts. 
+
+
+We have also noticed that the based-bias adjusted forecasts are going worst for only one variable which is `Adelaide Hills`. If we visualise this time series we get, 
+
+```{r}
+AllTS %>% 
+  dplyr::select(`Adelaide Hills`) %>% 
+  as.ts() %>% 
+  autoplot()
+```
+
+We can see this variable has a very unusual observation which might be an outlier. To avoid this, I have replaced this observation with the average of it's adjacent observations. Then I have refitted the models for automatically chosen BoxCox transformed data and back-transformed and back-transformed bias-adjusted forecasts were obtained. The results are as follows. 
+
+```{r echo=FALSE}
+load("TourismData_BoxCoxTransBiasCorrection_UnivARIMA_new.RData")
+
+DF %>% 
+  mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_BoxCox_2
+
+DF_BoxCox_2 %>% 
+  group_by(`F-method`, `R-method`, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) -> Avg_MSE_BC_2
+
+Avg_MSE_tab1_BC_2 <- Avg_MSE_BC_2 %>% 
+  dcast(`R-method` ~ Forecast_Horizon + `F-method`, value.var = "MSE") 
+
+colnames(Avg_MSE_tab1_BC_2) <- c("R-method", rep(c("Biased", "Unbiased"), 6))
+
+Avg_MSE_tab1_BC_2 %>% 
+  kable(format = "latex") %>% 
+  kableExtra::add_header_above(c(" " = 1, "h=1" = 2, "h=2" = 2, "h=3" = 2, "h=4" = 2,
+                                 "h=5" = 2, "h=6" = 2)) 
+
+```
+
+
+These results also shows that, even though the bias-adjusted based forecasts are worst than that of biased base forecasts, the MinT reconicilation is outperforming.
+
+```{r}
+Avg_MSE_BC_2 %>% filter(`F-method` == "ARIMA_bias", `R-method` == "Base") %>% 
+  slice() %>% 
+  ungroup() %>% 
+  dplyr::select(MSE) %>% 
+  as_vector() -> ARIMA_bias_Base
+
+Avg_MSE_BC_2 %>% 
+   spread(key = `F-method`, value = MSE) %>% 
+   mutate(Bias_SS.MSE = round((1-(ARIMA_bias/ARIMA_bias_Base))*100, digits = 2), 
+          Unbias_SS.MSE = round((1-(ARIMA_unbias/ARIMA_bias_Base))*100, digits = 2)) -> Avg_MSE_BC_2_SS
+
+Avg_MSE_BC_2_SS %>% 
+  gather(key = "F-method", value = SS_MSE, Bias_SS.MSE, Unbias_SS.MSE) %>% 
+  mutate(`F-method` = recode(`F-method`, "Bias_SS.MSE" = "Bias", "Unbias_SS.MSE" = "Unbias")) %>%
+  ungroup() %>% 
+  rename("Forecasting method" = "F-method") %>% 
+  mutate(`R-method` = factor(`R-method`, levels = c("Base", "MinT(Shrink)", "WLS", "OLS"))) %>% 
+  filter(`R-method` %in% c("Base", "MinT(Shrink)", "WLS", "OLS" )) %>%
+  ggplot(aes(x = Forecast_Horizon, y = SS_MSE, 
+             color = `Forecasting method`, shape = `Forecasting method`)) + 
+  theme(legend.position="bottom") +
+  facet_wrap(~ `R-method`, scales = "free_y") +
+  geom_point(size = 3) + 
+  scale_shape_manual(values = 15:16) +
+  scale_color_manual(values = c("Red", "#33CC33")) + 
+  ylab("Skill Score (MSE) %") + 
+  xlab("h")
+
+
+
+```
+
+```{r}
+
+DF_MSE <- DF %>% 
+  mutate(SquaredE = (`Actual` - `Forecasts`)^2) %>% 
+  group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  mutate(Forecast_Horizon = recode(Forecast_Horizon, "1" = "h=1", "2" = "h=2", "3"= "h=3", "4" = "h=4", "5" = "h=5", "6" = "h=6"))
+
+
+DF_MSE %>% 
+  filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "OLS", "MinT(Shrink)", "WLS")) %>% 
+  spread(key = `R-method`, value = MSE) %>% 
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)`,
+         "Base-WLS" = Base - WLS) %>% 
+  dplyr::select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`, `Base-WLS`) %>% 
+  gather(`Base-OLS`, `Base-WLS`, `Base-MinT`,  key = Method, value = MSE) %>% 
+  ggplot(aes(x = Method, y = MSE)) + geom_boxplot() + facet_wrap(~`Forecast_Horizon`, scales = "free_y")
+```
+
+
+### For Log transformed data 
+
+In this exercise I have used only the log transformation. As we can see from the results, the bias adjusted forecasts are outperforming biased forecasts as we would expect. 
+```{r, echo=FALSE}
+load("TourismData_LogTransBiasCorrection_UnivARIMA.RData")
+
+DF -> DF_Log
+
+DF_Log %>% 
+  group_by(`F-method`, `R-method`, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) -> Avg_MSE_Log
+
+Avg_MSE_tab1_Log <- Avg_MSE_Log %>% 
+  dcast(`R-method` ~ Forecast_Horizon + `F-method`, value.var = "MSE") 
+
+colnames(Avg_MSE_tab1_Log) <- c("R-method", rep(c("Biased", "Unbiased"), 6))
+
+Avg_MSE_tab1_Log %>% 
+  kable(format = "latex") %>% 
+  kableExtra::add_header_above(c(" " = 1, "h=1" = 2, "h=2" = 2, "h=3" = 2, "h=4" = 2,
+                                 "h=5" = 2, "h=6" = 2)) 
+
+```
+
+
