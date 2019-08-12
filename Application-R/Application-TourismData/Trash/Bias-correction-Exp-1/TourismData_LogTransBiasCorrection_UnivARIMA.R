@@ -128,15 +128,15 @@ for (j in 1:1) {#C = 140
   
   Start_fit <- Sys.time()
   
-  for (i in 61:n) {
+  for (i in 1:n) {
     
     TS <- Train[,i]
-    fit_bias <- auto.arima(TS, lambda = "auto", allowdrift = F) #This will give back-transformed fitted values
-    # fit_unbiased <- auto.arima(TS, lambda = 0, biasadj = TRUE) #This will give back transformed bias-adjusted fitted values
+    TS <- TS+1 # adding 1 since some series has zero values which is problamatic when taking log transformation
+
+    fit_bias <- auto.arima(TS, lambda = 0)
     
-    Base_forecasts_biased[,i] <- forecast(fit_bias, h=min(H, nrow(Test)), biasadj = FALSE)$mean 
-    # Base_forecasts_unbiased[,i] <- forecast(fit_unbiased, h=min(H, nrow(Test)), biasadj = TRUE)$mean
-    
+    Base_forecasts_biased[,i] <- forecast(fit_bias, h=min(H, nrow(Test)), biasadj = FALSE)$mean - 1 #removing the 1 we added initially
+
     for (h in 1:min(H, nrow(Test))) {
       
       Residuals_BackTransformed[[h]][,i] <- residuals(fit_bias, h=min(H, nrow(Test)), 
@@ -365,6 +365,10 @@ for (j in 1:1) {#C = 140
 }
 
 End <- Sys.time()
+
+write.csv(x=DF, file = "Results/DF_1-50.csv")
+save.image("Results/TourismData_LogTransBiasCorrection_UnivARIMA_1-50.RData")
+
 
 DF %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF
 

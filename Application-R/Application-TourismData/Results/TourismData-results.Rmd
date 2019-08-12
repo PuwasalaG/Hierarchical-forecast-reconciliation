@@ -102,11 +102,61 @@ We have also noticed that the based-bias adjusted forecasts are going worst for 
 ```{r}
 AllTS %>% 
   dplyr::select(`Adelaide Hills`) %>% 
-  as.ts() %>% 
+  ts(start = c(1998, 1), frequency = 12) %>% 
   autoplot()
 ```
 
-We can see this variable has a very unusual observation which might be an outlier. To avoid this, I have replaced this observation with the average of it's adjacent observations. Then I have refitted the models for automatically chosen BoxCox transformed data and back-transformed and back-transformed bias-adjusted forecasts were obtained. The results are as follows. 
+
+We can see this variable has an anomalous observation on Dec-2002 which might be an outlier. 
+
+```{r}
+AllTS %>% 
+  dplyr::select(`Adelaide Hills`) %>% 
+  slice(3:102) %>% 
+  as.ts() %>% 
+  BoxCox.lambda() -> lambda
+  
+
+```
+
+If we do Box-Cox transformation for this series we get  $\lambda = `r lambda`$. The transformed series with this $\lambda$ looks like
+
+```{r}
+AllTS %>% 
+  dplyr::select(`Adelaide Hills`) %>% 
+  slice(3:102) %>% 
+  ts(start = c(1998, 1), frequency = 12) %>% 
+  BoxCox(lambda = lambda) %>% 
+  autoplot()
+
+```
+
+
+```{r echo=FALSE}
+TS <- AllTS %>% 
+  dplyr::select(`Adelaide Hills`) %>% 
+  slice(3:102) %>% 
+  ts(start = c(1998, 1), frequency = 12)
+```
+
+
+```{r echo=FALSE}
+# TS %>% 
+#   auto.arima(lambda = "auto") %>% 
+#   forecast(h=6, biasadj = FALSE) %>% 
+#   autoplot() + 
+#   ggtitle("Biased forecasts")
+# 
+# TS %>% 
+#   auto.arima(lambda = "auto") %>% 
+#   forecast(h=6, biasadj = TRUE) %>% 
+#   autoplot() + 
+#   ggtitle("Bias-adjusted forecasts")
+
+```
+
+
+I have replaced the anomalous observation in this series with the average of December for predecessive and successive years of 2002. Then I have refitted the models for automatically chosen Box-Cox transformed data. Back-transformed and back-transformed bias-adjusted forecasts were then obtained. The results are as follows. 
 
 ```{r echo=FALSE}
 load("TourismData_BoxCoxTransBiasCorrection_UnivARIMA_new.RData")
@@ -116,7 +166,7 @@ DF %>%
 
 DF_BoxCox_2 %>% 
   group_by(`F-method`, `R-method`, Forecast_Horizon) %>% 
-  summarise(MSE = mean(SquaredE)) -> Avg_MSE_BC_2
+  summarise(MSE = round(mean(SquaredE)/1e3, digits = 2)) -> Avg_MSE_BC_2
 
 Avg_MSE_tab1_BC_2 <- Avg_MSE_BC_2 %>% 
   dcast(`R-method` ~ Forecast_Horizon + `F-method`, value.var = "MSE") 
@@ -131,9 +181,9 @@ Avg_MSE_tab1_BC_2 %>%
 ```
 
 
-These results also shows that, even though the bias-adjusted based forecasts are worst than that of biased base forecasts, the MinT reconicilation is outperforming.
+These results also shows that, even though the bias-adjusted based forecasts are worst than that of biased base forecasts, the MinT reconciliation is outperforming.
 
-```{r}
+```{r echo=FALSE}
 Avg_MSE_BC_2 %>% filter(`F-method` == "ARIMA_bias", `R-method` == "Base") %>% 
   slice() %>% 
   ungroup() %>% 
@@ -166,7 +216,7 @@ Avg_MSE_BC_2_SS %>%
 
 ```
 
-```{r}
+```{r echo=FALSE}
 
 DF_MSE <- DF %>% 
   mutate(SquaredE = (`Actual` - `Forecasts`)^2) %>% 
@@ -181,9 +231,15 @@ DF_MSE %>%
   mutate("Base-OLS" = Base - OLS,
          "Base-MinT" = Base - `MinT(Shrink)`,
          "Base-WLS" = Base - WLS) %>% 
-  dplyr::select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`, `Base-WLS`) %>% 
-  gather(`Base-OLS`, `Base-WLS`, `Base-MinT`,  key = Method, value = MSE) %>% 
-  ggplot(aes(x = Method, y = MSE)) + geom_boxplot() + facet_wrap(~`Forecast_Horizon`, scales = "free_y")
+  dplyr::select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`, `Base-WLS`) %>%
+  rename("OLS" = "Base-OLS", "MinT" = "Base-MinT", "WLS" = "Base-WLS") %>% 
+  gather(`OLS`, `WLS`, `MinT`,  key = Method, value = MSE) %>% 
+  mutate(Method = factor(Method, levels = c("OLS", "MinT", "WLS"))) %>% 
+  ggplot(aes(x = Method, y = MSE)) + 
+  geom_boxplot() + 
+  facet_wrap(~`Forecast_Horizon`, scales = "free_y") + 
+  ylab("MSE") + xlab("Reconciliation Method")
+
 ```
 
 
@@ -196,8 +252,9 @@ load("TourismData_LogTransBiasCorrection_UnivARIMA.RData")
 DF -> DF_Log
 
 DF_Log %>% 
+  mutate(SquaredE = (`Actual` - `Forecasts`)^2) %>% 
   group_by(`F-method`, `R-method`, Forecast_Horizon) %>% 
-  summarise(MSE = mean(SquaredE)) -> Avg_MSE_Log
+  summarise(MSE = mean(SquaredE)/1e3) -> Avg_MSE_Log
 
 Avg_MSE_tab1_Log <- Avg_MSE_Log %>% 
   dcast(`R-method` ~ Forecast_Horizon + `F-method`, value.var = "MSE") 

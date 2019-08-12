@@ -22,41 +22,43 @@ library(tibble)
 
 OvernightTrips_Region <- read_csv("OvernightTrips_2017.csv")[,-(1:3)]
 
-#generating the hierarchy
-#Hierarchy<-suppressMessages(hts(Bottom_level, list(7, c(14,21,12,12,5,5,7))))
-Hierarchy <- suppressMessages(hts(OvernightTrips_Region, list(7, c(6,5,4,4,3,3,2), 
-                                                            c(2,2,1,4,4,1,3,1,3,6,7,3,4,3,2,3,
-                                                              3,4,2,3,1,1,1,2,2,3,4))))
-AllTS <- allts(Hierarchy) %>% 
-  as_tibble()
-
 ## Replacing the odd value in `Adelaide Hills` with the average of its adjecent numbers ##
 
-AllTS %>% 
-  select(`Adelaide Hills`) %>% 
+OvernightTrips_Region %>% 
+  dplyr::select(`Adelaide Hills`) %>% 
   filter(`Adelaide Hills` > 80) %>% 
   as.numeric() -> a
 
-which(AllTS$`Adelaide Hills`==a) -> x
+which(OvernightTrips_Region$`Adelaide Hills`==a) -> x
 
-AllTS %>% 
-  select(`Adelaide Hills`) %>% 
+OvernightTrips_Region %>% 
+  dplyr::select(`Adelaide Hills`) %>% 
   filter(row_number() %in% c(60+12,60-12)) %>% 
   summarise(mean(`Adelaide Hills`)) %>% 
   as.numeric() -> b
 
-AllTS_new <- AllTS %>% 
+OvernightTrips_Region_new <- OvernightTrips_Region %>% 
   mutate(`Adelaide Hills` = case_when(`Adelaide Hills`%% a == 0 ~ b, 
                                       TRUE ~ as.double(`Adelaide Hills`)))
 
-n <- ncol(AllTS)
+#generating the hierarchy
+#Hierarchy<-suppressMessages(hts(Bottom_level, list(7, c(14,21,12,12,5,5,7))))
+Hierarchy <- suppressMessages(hts(OvernightTrips_Region_new, list(7, c(6,5,4,4,3,3,2), 
+                                                              c(2,2,1,4,4,1,3,1,3,6,7,3,4,3,2,3,
+                                                                3,4,2,3,1,1,1,2,2,3,4))))
+AllTS_new <- allts(Hierarchy) %>%
+  as_tibble()
+
+
+
+n <- ncol(AllTS_new)
 l1 <- 1
 l2 <- sum(7)
 l3 <- sum(6,5,4,4,3,3,2)
-m <- ncol(OvernightTrips_Region)
+m <- ncol(OvernightTrips_Region_new)
 H <- 6
 L <- 100 #Size of the training sample 
-C <- nrow(AllTS) - L
+C <- nrow(AllTS_new) - L
 
 
 #Generating the summing matrix

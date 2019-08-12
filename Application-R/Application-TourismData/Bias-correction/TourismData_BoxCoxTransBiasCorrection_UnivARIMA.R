@@ -110,9 +110,9 @@ for (j in 1:C) {#C = 140
   Train <- AllTS[j:(L+j-1),]
   Test <- AllTS[(L+j):nrow(AllTS),]
   
-  if(j==C){
-    Test <- as.matrix(Test) %>% t()
-  }
+  # if(j==C){
+  #   Test <- as.matrix(Test) %>% t()
+  # }
   Names <- colnames(AllTS)
 
   Base_forecasts_biased <- matrix(NA, nrow = min(H, nrow(Test)), ncol = n)

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.12.10)  5 AUG 2019 21:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.12.10)  9 AUG 2019 14:18
 entering extended mode
 **./TourismData-results.tex
 (TourismData-results.tex
@@ -1162,36 +1162,91 @@ Package pdftex.def Info: TourismData-results_files/figure-latex/unnamed-chunk-2
 -1.pdf used on input line 204.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (235.51714pt too wide) in paragraph at lines 213--230
-[][] 
- []
+Package xcolor Warning: Incompatible color definition on input line 209.
+
+
+Package xcolor Warning: Incompatible color definition on input line 217.
+
+
+Package xcolor Warning: Incompatible color definition on input line 217.
+
+
+Package xcolor Warning: Incompatible color definition on input line 223.
+
+
+Package xcolor Warning: Incompatible color definition on input line 232.
+
+
+Package xcolor Warning: Incompatible color definition on input line 232.
+
+
+Package xcolor Warning: Incompatible color definition on input line 232.
 
 [2 <./TourismData-results_files/figure-latex/unnamed-chunk-2-1.pdf>]
-Overfull \hbox (226.90561pt too wide) in paragraph at lines 241--258
+
+Package xcolor Warning: Incompatible color definition on input line 232.
+
+
+Package xcolor Warning: Incompatible color definition on input line 232.
+
+
+<TourismData-results_files/figure-latex/unnamed-chunk-4-1.pdf, id=52, 469.755pt
+ x 325.215pt>
+File: TourismData-results_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file
+ (type pdf)
+<use TourismData-results_files/figure-latex/unnamed-chunk-4-1.pdf>
+Package pdftex.def Info: TourismData-results_files/figure-latex/unnamed-chunk-4
+-1.pdf used on input line 234.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Overfull \hbox (165.34819pt too wide) in paragraph at lines 242--259
 [][] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 260.
-[3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 260.
+
+<TourismData-results_files/figure-latex/unnamed-chunk-8-1.pdf, id=53, 469.755pt
+ x 325.215pt>
+File: TourismData-results_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file
+ (type pdf)
+<use TourismData-results_files/figure-latex/unnamed-chunk-8-1.pdf>
+Package pdftex.def Info: TourismData-results_files/figure-latex/unnamed-chunk-8
+-1.pdf used on input line 264.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[3 <./TourismData-results_files/figure-latex/unnamed-chunk-4-1.pdf>]
+<TourismData-results_files/figure-latex/unnamed-chunk-9-1.pdf, id=63, 469.755pt
+ x 325.215pt>
+File: TourismData-results_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file
+ (type pdf)
+<use TourismData-results_files/figure-latex/unnamed-chunk-9-1.pdf>
+Package pdftex.def Info: TourismData-results_files/figure-latex/unnamed-chunk-9
+-1.pdf used on input line 270.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[4 <./TourismData-results_files/figure-latex/unnamed-chunk-8-1.pdf>]
+Overfull \hbox (221.90561pt too wide) in paragraph at lines 278--295
+[][] 
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 297.
+[5 <./TourismData-results_files/figure-latex/unnamed-chunk-9-1.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 297.
 (TourismData-results.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 260.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 260.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 297.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 297.
 Package rerunfilecheck Info: File `TourismData-results.out' has not changed.
 (rerunfilecheck)             Checksum: C418C0DA378048ABFF0F8AB9112743F6;941.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 260.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 297.
  ) 
 Here is how much of TeX's memory you used:
- 14703 strings out of 493320
- 210708 string characters out of 3138947
+ 14719 strings out of 493320
+ 211533 string characters out of 3138947
  331716 words of memory out of 3000000
- 17956 multiletter control sequences out of 15000+200000
- 41293 words of font info for 57 fonts, out of 3000000 for 9000
+ 17968 multiletter control sequences out of 15000+200000
+ 41376 words of font info for 58 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,10n,38p,535b,339s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ts1.enc}{C:/Program Files/
-MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/
-dvips/lm/lm-mathsy.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.en
+ 34i,10n,38p,535b,374s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Program Fil
+es/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ts1.enc}{C:/Program Files/MiKTeX 2.9/fonts/
+enc/dvips/lm/lm-ec.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.en
 c}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Fil
 es/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathex.enc}<C:/Program Files/MiKTeX 2.9/fon
 ts/type1/public/lm/lmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/l
@@ -1202,11 +1257,12 @@ eX 2.9/fonts/type1/public/lm/lmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
 fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr5.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/lm/lmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/
 type1/public/lm/lmri12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/l
-msy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmtk10.pfb><C:/Prog
-ram Files/MiKTeX 2.9/fonts/type1/public/lm/lmtt10.pfb>
-Output written on TourismData-results.pdf (3 pages, 266161 bytes).
+msy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy7.pfb><C:/Prog
+ram Files/MiKTeX 2.9/fonts/type1/public/lm/lmtk10.pfb><C:/Program Files/MiKTeX 
+2.9/fonts/type1/public/lm/lmtt10.pfb>
+Output written on TourismData-results.pdf (5 pages, 302413 bytes).
 PDF statistics:
- 108 PDF objects out of 1000 (max. 8388607)
- 7 named destinations out of 1000 (max. 500000)
- 8227 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 138 PDF objects out of 1000 (max. 8388607)
+ 9 named destinations out of 1000 (max. 500000)
+ 8242 words of extra memory for PDF output out of 10000 (max. 10000000)
 

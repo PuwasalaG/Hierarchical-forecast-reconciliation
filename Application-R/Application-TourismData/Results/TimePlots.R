@@ -8,7 +8,7 @@ AllTS %>%
   dplyr::select("Total") %>% 
   ts(start = c(1998, 1), frequency = 12) %>% 
   autoplot() + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("Total") + theme(legend.position="bottom") -> Plot_total
+  ggtitle("Total overnight trips") + theme(legend.position="bottom") -> Plot_total
 
 #States
 
@@ -23,14 +23,51 @@ AllTS %>%
 
 #Zones
 
+# "AA", "AB", "AC", "AD", "AE", "AF", "BA", "BB", "BC", "BD", "BE",
+# "CA", "CB", "CC", "CD", "DA", "DB", "DC", "DD", "EA", "EB","EC", 
+# "FA", "FB", "FC", "GA", "GB"
+
 AllTS %>% 
-  dplyr::select("AA", "AB", "AC", "AD", "AE", "AF", "BA", "BB", "BC", "BD", "BE",
-                "CA", "CB", "CC", "CD", "DA", "DB", "DC", "DD", "EA", "EB","EC", 
-                "FA", "FB", "FC", "GA", "GB") %>% 
+  dplyr::select("AA", "AF", "BB", "BE",
+                "CA", "CD", "DC", "DD", "EB","EC", 
+                "FA", "FB", "GA", "GB") %>% 
+  rename("Metro NSW" = "AA", "ACT" = "AF", "West Coast VIC" = "BB",
+         "North East VIC" = "BE", "Metro QLD" = "CA", "Inland QLD" = "CD",
+         "Inland SA" = "DC", "West Coast SA" = "DD", "North WA" = "EB",
+         "South WA" = "EC", "South TAS" = "FA", "North East TAS" = "FB",
+         "North Coast NT" = "GA", "Central NT" = "GB") %>% 
   ts(start = c(1998, 1), frequency = 12) %>% 
   autoplot() + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("States") + theme(legend.position="bottom")
+  ggtitle("Zones") + theme(legend.position="bottom") -> Plot_Zones
 
+
+AllTS %>% 
+  dplyr::select("Central Coast", "Hunter",
+                "Riverina", "Canberra", "Peninsula", 
+                "Melbourne", "Phillip Island") %>% 
+  ts(start = c(1998, 1), frequency = 12) %>% 
+  autoplot() + ylab("Overnight trips") + xlab("Time") + 
+  ggtitle("Regions") + theme(legend.position="bottom") -> Plot_regions_1
+
+AllTS %>% 
+  dplyr::select("Bendigo Loddon",
+                "Gold Coast", "Tropical North Queensland", "Adelaide Hills", 
+                "Experience Perth", "Darwin") %>% 
+  rename("Tropical Nth QLD" = "Tropical North Queensland", "Perth" = "Experience Perth") %>% 
+  ts(start = c(1998, 1), frequency = 12) %>% 
+  autoplot() + ylab("Overnight trips") + xlab("Time") + 
+  ggtitle("Regions") + theme(legend.position="bottom") -> Plot_regions_2
+
+grid.arrange(arrangeGrob(Plot_regions_1), arrangeGrob(Plot_regions_2), ncol = 2) -> Plot_regions
+
+grid.arrange(arrangeGrob(Plot_Sates, Plot_Zones, Plot_regions ))
+
+
+
+
+###############################
+
+###############################
 
 # Series related to State - A
 AllTS %>% 

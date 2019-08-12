@@ -131,20 +131,16 @@ for (j in 51:100) {#C = 140
   for (i in 1:n) {
     
     TS <- Train[,i]
-    fit_bias <- auto.arima(TS, lambda = "auto", allowdrift = F) #This will give back-transformed fitted values
-    # fit_unbiased <- auto.arima(TS, lambda = 0, biasadj = TRUE) #This will give back transformed bias-adjusted fitted values
+    TS <- TS+1 # adding 1 since some series has zero values which is problamatic when taking log transformation
     
-    Base_forecasts_biased[,i] <- forecast(fit_bias, h=min(H, nrow(Test)), biasadj = FALSE)$mean 
-    # Base_forecasts_unbiased[,i] <- forecast(fit_unbiased, h=min(H, nrow(Test)), biasadj = TRUE)$mean
+    fit_bias <- auto.arima(TS, lambda = 0)
     
-    #fit$residuals from fit_bias and fit_unbiased are always in the transformed space i.e in the log space
-    #Therefore we find the resduals that are in the original space as follows
-    # Residuals_BackTransformed[,i] <- as.vector(TS - fit_bias$fitted)
-    # Residuals_BackTransformed_biasadjust[,i] <- as.vector(TS - fit_unbiased$fitted)
+    Base_forecasts_biased[,i] <- forecast(fit_bias, h=min(H, nrow(Test)), biasadj = FALSE)$mean - 1 #removing the 1 we added initially
     
     for (h in 1:min(H, nrow(Test))) {
       
-      Residuals_BackTransformed[[h]][,i] <- residuals(fit_bias, h=h, type = "response")
+      Residuals_BackTransformed[[h]][,i] <- residuals(fit_bias, h=min(H, nrow(Test)), 
+                                                      type = "response")
       
     }
     
@@ -373,55 +369,56 @@ End <- Sys.time()
 write.csv(x=DF, file = "Results/DF_51-100.csv")
 save.image("Results/TourismData_LogTransBiasCorrection_UnivARIMA_51-100.RData")
 
-# DF %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF
-# 
-# DF %>% 
-#   group_by(`F-method`, `R-method`, Forecast_Horizon) %>% 
-#   summarise(MSE = mean(SquaredE)) %>% 
-#   spread(key = Forecast_Horizon, value = MSE)
-# 
-# DF %>% 
-#   group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
-#   summarise(MSE = mean(SquaredE)) %>% 
-#   filter(`F-method`=="ARIMA_bias", `R-method`%in% c("Base", "OLS")) %>% 
-#   ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
-#   geom_line() + 
-#   facet_wrap( ~ Forecast_Horizon, scales = "free_y")
-# 
-# DF %>% 
-#   group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
-#   summarise(MSE = mean(SquaredE)) %>% 
-#   filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "OLS")) %>% 
-#   ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
-#   geom_line() + 
-#   facet_wrap( ~ Forecast_Horizon, scales = "free_y")
-# 
-# DF %>% 
-#   group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
-#   summarise(MSE = mean(SquaredE)) %>% 
-#   filter(`F-method`=="ARIMA_bias", `R-method`%in% c("Base", "MinT(Shrink)")) %>% 
-#   ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
-#   geom_line() + 
-#   facet_wrap( ~ Forecast_Horizon, scales = "free_y")
-# 
-# 
-# ## Box-plots for the differences of MSE between OLS, MinT vs the base
-# 
-# DF_MSE <- DF %>% 
-#   group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
-#   summarise(MSE = mean(SquaredE)) %>% 
-#   mutate(Forecast_Horizon = recode(Forecast_Horizon, "1" = "h=1", "2" = "h=2", "3"= "h=3", "4" = "h=4"))
-# 
-# 
-# DF_MSE %>% 
-#   filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "OLS", "MinT(Shrink)")) %>% 
-#   spread(key = `R-method`, value = MSE) %>% 
-#   mutate("Base-OLS" = Base - OLS,
-#          "Base-MinT" = Base - `MinT(Shrink)` ) %>% 
-#   select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`) %>% 
-#   gather(`Base-MinT`, `Base-OLS`, key = Method, value = MSE) %>% 
-#   ggplot(aes(x = Method, y = MSE)) + geom_boxplot() + facet_wrap(~`Forecast_Horizon`)
-# 
+
+DF %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF
+
+DF %>% 
+  group_by(`F-method`, `R-method`, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  spread(key = Forecast_Horizon, value = MSE)
+
+DF %>% 
+  group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  filter(`F-method`=="ARIMA_bias", `R-method`%in% c("Base", "OLS")) %>% 
+  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+  geom_line() + 
+  facet_wrap( ~ Forecast_Horizon, scales = "free_y")
+
+DF %>% 
+  group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "OLS")) %>% 
+  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+  geom_line() + 
+  facet_wrap( ~ Forecast_Horizon, scales = "free_y")
+
+DF %>% 
+  group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  filter(`F-method`=="ARIMA_bias", `R-method`%in% c("Base", "MinT(Shrink)")) %>% 
+  ggplot(aes(x = Replication, y = MSE, color = `R-method`)) + 
+  geom_line() + 
+  facet_wrap( ~ Forecast_Horizon, scales = "free_y")
+
+
+## Box-plots for the differences of MSE between OLS, MinT vs the base
+
+DF_MSE <- DF %>% 
+  group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  mutate(Forecast_Horizon = recode(Forecast_Horizon, "1" = "h=1", "2" = "h=2", "3"= "h=3", "4" = "h=4"))
+
+
+DF_MSE %>% 
+  filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "OLS", "MinT(Shrink)")) %>% 
+  spread(key = `R-method`, value = MSE) %>% 
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)` ) %>% 
+  select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`) %>% 
+  gather(`Base-MinT`, `Base-OLS`, key = Method, value = MSE) %>% 
+  ggplot(aes(x = Method, y = MSE)) + geom_boxplot() + facet_wrap(~`Forecast_Horizon`)
+
 
 
 
