@@ -134,7 +134,7 @@ lambda <- numeric()
 # }
 
 j = 130
-Train <- AllTS_new[j:(100+j-1), "Total"] %>% as.ts()
+Train <- AllTS_new[j:(100+j-1), "Total"] %>% ts(frequency = 12)
 
 fit <- auto.arima(Train, lambda = "auto")
 summary(fit)
