@@ -94,7 +94,7 @@ text(ytilde[1],ytilde[2],"{\\large $\\color{red}{\\tilde{\\bm{y}}}$}",pos=1,offs
 arrows(yhat[1],yhat[2],ytilde[1],ytilde[2],col='blue')
 y <- c(6/7,3/7)
 #lines(c(yhat[1],yhat[2]),c(y[1],y[2]), lty = 2)
-arrows(yhat[1],yhat[2],y[1],y[2], lty = 2)
+arrows(yhat[1],yhat[2],y[1],y[2], lty = 2, length = 0)
 
 #text(1.25,2,"{\\large ${\\color{blue} S\\circ P}$}",pos=4)
 
@@ -224,9 +224,6 @@ tools::texi2dvi('ObliqueProjection.tex',pdf=T)
 
 
 
-
-
-
 ###3D Scatter plot
 
 set.seed(1989)
@@ -267,7 +264,7 @@ text(p1$x,p1$y, "{$\\mathfrak{L}$}",col = 1, adj = c(-.1, -.1),cex = 2)
 text(p2$x,p2$y, "{$\\mu$}",col = 1, pos=1,offset = 1,cex = 2)
 text(p3$x,p3$y, "{$\\bar{\\mu}$}",col = 1, pos=1,offset = 1,cex = 2)
 
-text(3,5.2,"{\\Huge ${\\color{blue} s\\circ g}$}",pos=4)
+# text(3,5.2,"{\\Huge ${\\color{blue} s\\circ g}$}",pos=4)
 text(4, 3, "{\\Huge $\\mathfrak{s}$}",col = 1, adj = c(-.1, -.1))
 dev.off()
 
