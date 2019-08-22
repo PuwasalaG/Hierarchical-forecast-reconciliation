@@ -27,28 +27,53 @@ OvernightTrips_Region_new <- OvernightTrips_Region %>%
 Hierarchy <- suppressMessages(hts(OvernightTrips_Region_new, 
                                   list(7, c(6,5,4,4,3,3,2), c(2,2,1,4,4,1,3,1,3,6,7,3,4,3,2,3,3,4,2,3,1,1,1,2,2,3,4))))
 
-AllTS_new <- allts(Hierarchy) %>%
+AllTS <- allts(Hierarchy) %>%
   as_tibble()
 
-AllTS_new <- AllTS_new + 1 # Add 1 since some series has zero observations and this will affect taking log transformations
+AllTS_new <- AllTS + 1 # Add 1 since some series has zero observations and this will affect taking log transformations
 
 #Total Series
-AllTS_new %>% 
+
+AllTS %>% log() %>% 
   dplyr::select("Total") %>% 
   ts(start = c(1998, 1), frequency = 12) %>% 
-  autoplot() + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("Total overnight trips") + theme(legend.position="bottom") -> Plot_total
+  autoplot() + ylab("log(Overnight trips)") + xlab("Time") + 
+  theme(legend.position="bottom") -> TSPlot_total
+
+AllTS %>% log() %>% 
+  dplyr::select("Total") %>% 
+  ts(start = c(1998, 1), frequency = 12) %>% 
+  ggsubseriesplot() + ylab("log(Overnight trips)") + 
+  theme(legend.position="bottom") +
+  ggtitle("Subseries plot") -> subseries_total
+
+AllTS %>% log() %>% 
+  dplyr::select("Total") %>% 
+  ts(start = c(1998, 1), frequency = 12) %>% 
+  ggseasonplot() + ylab("log(Overnight trips)") + 
+  theme(legend.position="bottom") +
+  ggtitle("Seasonal plot") -> seasonalplot_total
+
+grid.arrange( arrangeGrob(subseries_total),
+              arrangeGrob(seasonalplot_total),
+              ncol=2) -> subseries_seasonal_total
+
+grid.arrange( arrangeGrob(TSPlot_total, top = "Total Overnight trips"), 
+              arrangeGrob(subseries_seasonal_total), ncol = 1, heights = c(4,4))
+
+
+
 
 #States
 
-AllTS_new %>% 
+AllTS_new %>% log() %>% 
   dplyr::select("A", "B", "C", "D", "E", "F", "G" ) %>% 
   rename("NSW" = "A", "Victoria" = "B", "Queensland" = "C", 
          "South Australia" = "D", "Western Australia" = "E", "Tasmania" = "F",
          "Northern Territory" = "G") %>% 
   ts(start = c(1998, 1), frequency = 12) %>% 
-  autoplot() + ylab("Overnight trips") + xlab("Time") + 
-  y_scal
+  autoplot() + ylab("log(Overnight trips)") + xlab("Time") + 
+  scale_y_log10() +
   ggtitle("States") + theme(legend.position="bottom") -> Plot_Sates
 
 #Zones
@@ -57,7 +82,7 @@ AllTS_new %>%
 # "CA", "CB", "CC", "CD", "DA", "DB", "DC", "DD", "EA", "EB","EC", 
 # "FA", "FB", "FC", "GA", "GB"
 
-AllTS_new %>% 
+AllTS_new %>% log() %>% 
   dplyr::select("AA", "AF", "BB", "BE",
                 "CA", "CD", "DC", "DD", "EB","EC", 
                 "FA", "FB", "GA", "GB") %>% 
@@ -67,25 +92,25 @@ AllTS_new %>%
          "South WA" = "EC", "South TAS" = "FA", "North East TAS" = "FB",
          "North Coast NT" = "GA", "Central NT" = "GB") %>% 
   ts(start = c(1998, 1), frequency = 12) %>% 
-  autoplot() + ylab("Overnight trips") + xlab("Time") + 
+  autoplot() + ylab("log(Overnight trips)") + xlab("Time") + 
   ggtitle("Zones") + theme(legend.position="bottom") -> Plot_Zones
 
 
-AllTS_new %>% 
+AllTS_new %>% log() %>% 
   dplyr::select("Central Coast", "Hunter",
                 "Riverina", "Canberra", "Peninsula", 
                 "Melbourne", "Phillip Island") %>% 
   ts(start = c(1998, 1), frequency = 12) %>% 
-  autoplot() + ylab("Overnight trips") + xlab("Time") + 
+  autoplot() + ylab("log(Overnight trips)") + xlab("Time") + 
   ggtitle("Regions") + theme(legend.position="bottom") -> Plot_regions_1
 
-AllTS_new %>% 
+AllTS_new %>% log() %>% 
   dplyr::select("Bendigo Loddon",
                 "Gold Coast", "Tropical North Queensland", "Adelaide Hills", 
                 "Experience Perth", "Darwin") %>% 
   rename("Tropical Nth QLD" = "Tropical North Queensland", "Perth" = "Experience Perth") %>% 
   ts(start = c(1998, 1), frequency = 12) %>% 
-  autoplot() + ylab("Overnight trips") + xlab("Time") + 
+  autoplot() + ylab("log(Overnight trips)") + xlab("Time") + 
   ggtitle("Regions") + theme(legend.position="bottom") -> Plot_regions_2
 
 grid.arrange(arrangeGrob(Plot_regions_1), arrangeGrob(Plot_regions_2), ncol = 2) -> Plot_regions

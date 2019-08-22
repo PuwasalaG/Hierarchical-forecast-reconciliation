@@ -84,7 +84,7 @@ DF_BoxCoxTrans_Tot_h1 %>%
   geom_line(aes(x = Replication, y = Val, color = `Forecasts/Actual`)) + 
   ylab("Forecasts/Actual") + 
   ggtitle("Forecasts follow from BoxCox Transformation") + 
-  theme(legend.position="bottom") 
+  theme(legend.position="bottom", legend.title = element_blank()) 
   
   
 
@@ -124,14 +124,20 @@ AllTS_new <- allts(Hierarchy) %>%
 
 lambda <- numeric()
 
-for (j in 1:140) {#C=140
-  
-  Train <- AllTS_new[j:(100+j-1), "Total"] %>% as.ts()
+# for (j in 1:140) {#C=140
+#   
+#   Train <- AllTS_new[j:(100+j-1), "Total"] %>% as.ts()
+# 
+#   lambda[j] <- BoxCox.lambda(Train)
+#   
+#   
+# }
 
-  lambda[j] <- BoxCox.lambda(Train)
-  
-  
-}
+j = 130
+Train <- AllTS_new[j:(100+j-1), "Total"] %>% as.ts()
+
+fit <- auto.arima(Train, lambda = "auto")
+summary(fit)
 ```
 
 
