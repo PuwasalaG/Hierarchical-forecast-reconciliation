@@ -166,15 +166,8 @@
 	 \begin{definition}[Coherent subspace]\label{def:cohspace}
 	 	The $m$-dimensional linear subspace $\mathfrak{s}\subset \mathbb{R}^n$ for which a set of linear constraints holds for all $\bm{y}\in\mathfrak{s}$ is defined as the \emph{coherent subspace}.
 	 \end{definition}
-<<<<<<< HEAD
- 
-     To further illustrate, Figure \ref{fig:3D_hierarchy} depicts the most simple three variable hierarchy where $y_{Tot,t}=y_{A,t}+y_{B,t}$.  The coherent subspace is depicted as a grey $2$-dimensional plane within $3$-dimensional space, i.e. $m=2$ and $n=3$.  It is worth noting that the coherent subspace is spanned by the columns of $\bm{S}$, i.e.\ $\mathfrak{s}=\text{span}(\bm{S})$.  In Figure \ref{fig:3D_hierarchy}, these columns are $\vec{s}_1=(1,1,0)'$ and $\vec{s}_2=(1,0,1)'$.  However, it is equally important to recognise that the hierarchy could also have been defined in terms of $y_{Tot,t}$ and $y_{A,t}$ rather than the bottom level series, $y_{A,t}$ and $y_{B,t}$. In this case the corresponding `$\bm{S}$ matrix' would have columns $(1,0,1)'$ and $(0,1,-1)'$.  However, while there are multiple ways to define an $\bm{S}$ matrix, in all cases the columns will span the same coherent subspace, which is unique.
-     
-=======
-
      To further illustrate, Figure \ref{fig:3D_hierarchy} depicts the most simple three variable hierarchy where $y_{Tot,t}=y_{A,t}+y_{B,t}$.  The coherent subspace is depicted as a grey $2$-dimensional plane within $3$-dimensional space, i.e. $m=2$ and $n=3$.  It is worth noting that the coherent subspace is spanned by the columns of $\bm{S}$, i.e.\ $\mathfrak{s}=\text{span}(\bm{S})$.  In Figure~\ref{fig:3D_hierarchy}, these columns are $\vec{s}_1=(1,1,0)'$ and $\vec{s}_2=(1,0,1)'$.  However, it is equally important to recognise that the hierarchy could also have been defined in terms of $y_{Tot,t}$ and $y_{A,t}$ rather than the bottom-level series, $y_{A,t}$ and $y_{B,t}$. In this case the corresponding `$\bm{S}$ matrix' would have columns $(1,0,1)'$ and $(0,1,-1)'$.  However, while there are multiple ways to define an $\bm{S}$ matrix, in all cases the columns will span the same coherent subspace, which is unique.
 
->>>>>>> 23c3f1ccc1691ad30f9023dfa82585e9a244d50d
      \begin{figure}[H]
      	\centering
      	\vspace{-0.9cm}
@@ -188,16 +181,9 @@
 	 \begin{definition}[Hierarchical Time Series]\label{def:cohspace}
 	 	A hierarchical time series is an $n$-dimensional multivariate time series such that all observed values $\bm{y}_1,\ldots,\bm{y}_T$ and all future values $\bm{y}_{T+1},\bm{y}_{T+2},\ldots$  lie in the coherent subspace, i.e. $\bm{y}_t\in\mathfrak{s}\quad\forall t$.
 	 \end{definition}
-<<<<<<< HEAD
-	 
-	 Despite the common use of the term {\em hierarchical time series}, it should be clear from the definition that the data need not necessarily follow a hierarchy.  Also notable by its absence in the above definition is any reference to {\em aggregation}. In some ways, terms such as {\em hierarchical} and {\em aggregation} can be misleading since the literature has covered instances that cannot be depicted in a similar fashion to Figure\ref{fig:basichier} and/or do not involve aggregation. {\bf Include brief summary of all non-traditional hierarchies - e.g. grouped hierarchies, temporal hierarchies with weird overlapping, problems where we look at differences between variables etc.}  Finally, although Definition~\ref{def:cohspace} makes reference to time series, this definition can be easily generalised to any vector-valued data for which some linear constraints are known to hold for all realisations.
-	 
-	 
-	 
-=======
+
 	
 	 Despite the common use of the term {\em hierarchical time series}, it should be clear from the definition that the data need not necessarily follow a hierarchy.  Also notable by its absence in the above definition is any reference to {\em aggregation}. In some ways, terms such as {\em hierarchical} and {\em aggregation} can be misleading since the literature has covered instances that cannot be depicted in a similar fashion to Figure~\ref{fig:basichier} and/or do not involve aggregation. Examples include, temporal hierarchies which involve grouped structures \citep[see][]{AthEtAl2017}, overlapping temporal hierarchies \citep[see][]{JeoEtAl2019}, applications for which the difference rather than the aggregate is of interest \cite[see][]{LiTan2019}, or structures that involve both cross-sectional and temporal dimensions referred to as cross-temporal structures \citep[see][]{KouAth2019}. Finally, although Definition~\ref{def:cohspace} makes reference to time series, this definition can be easily generalised to any vector-valued data for which some linear constraints are known to hold for all realisations.
->>>>>>> 23c3f1ccc1691ad30f9023dfa82585e9a244d50d
 	
 %	It will sometimes be useful to think of pre-multiplication by $\bm{S}$ as a mapping from $\mathbb{R}^m$ to $\mathbb{R}^n$, in which case we use the notation $s(.)$. Although the codomain of $s(.)$ is $\mathbb{R}^n$, its image is the coherent space $\mathfrak{s}$ as depicted in Figure \ref{fig2}.
 %	
@@ -345,7 +331,6 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	
 	\todo{Rob can you please read to make sure you are happy with this.}Note here that we rely here on the generalised Pythagorean Theorem (which involves an equality).  In contrast, \cite{WicEtAl2019} follow \cite{VanErven2015a} in stating their result in terms of the Generalised Pythagorean Inequality.  The proof of \cite{WicEtAl2019} requires an assumption about convexity so that the angle between the base forecast and coherent subspace must be greater than 90 degrees.  The proof we have provided here requires no such assumption, since this may not hold for an arbitrary $\bm{W}$.  As such the statement from \cite{WicEtAl2019} that {\em``MinT reconciled forecasts are at least as good as the incoherent forecasts''} should be qualified; this is only true in with respect to a loss function that depends on ${\bm W}$.  If Euclidean distance (or mean squared error) is used, there will be cases where the MinT estimator does not improve upon base forecasts.
 	
-<<<<<<< HEAD
 	{\bf Discuss results in Figure 4 here} 
 	
 	\begin{figure}[H]
@@ -354,20 +339,12 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 		\includegraphics[width = \textwidth]{Figs/BaseVsRecon_Emp_results.pdf}
 		\caption{Difference of MSE between Base forecasts and reconciled forecasts over the replications is presented. Positive values of the difference implies reconciliation improves the forecast accuracy than base forecasts.}\label{fig:BaseVSRecon_Fc}
 	\end{figure}
-=======
-	{\bf Discuss results in Figure 11 here}
->>>>>>> 23c3f1ccc1691ad30f9023dfa82585e9a244d50d
-	
 	
 	\subsection{MinT}
 	
 	While the properties discussed so far hold for any projection matrix, the MinT method of \cite{WicEtAl2019} has an additional optimality property.  \cite{WicEtAl2019} show that for unbiased base forecasts, the trace of the forecast error covariance matrix of reconciled forecasts is minimised by an oblique projection with a particular choice of $\bm{W}$.  This choice is that $\bm{W}$ should be the forecast error covariance matrix where errors come from using the base forecasts.  Although the base forecast error covariance matrix is unknown, it can be estimated using in-sample errors.
 	
-<<<<<<< HEAD
-	Figure \ref{fig:MinT_justification1} provides geometrical intuition into the MinT method.  Suppose the in-sample errors are given by the orange points.  They provide information on the most likely direction of large deviations from the coherent subspace.  This direction is denoted by $\bm{R}$.  Figure \ref{fig:MinT_justification2} then shows a target value of $\bm{y}$, while the grey points indicate possible values for the base forecasts (the base forecasts are of course stochastic).  One possible value of the forecast is depicted in blue as $\hat{\bm{y}}$.  An oblique projection of the blue point back along the direction of $\bm{R}$ yields a reconciled forecast closer to the target, especially compared to an orthogonal projection showed as in Figure \ref{fig:Orthogonal_projection_all_points}.  Figure \ref{fig:Oblique_projection_all_points} depicts a similar oblique projection along $\bm{R}$ for all the gray points yield reconciled forecasts tightly packed near the target $\bm{y}$.  In this sense, the oblique MinT projection minimises the forecast error variance of reconciled forecasts. In contrast to the result in Theorem~\ref{th:gdistred}, this property is a statistical property in the sense that MinT is optimal in expectation.
-=======
 	Figure~\ref{fig:MinT_justification1} provides geometrical intuition into the MinT method.  Suppose the in-sample errors are given by the orange points.  They provide information on the most likely direction of large deviations from the coherent subspace.  This direction is denoted by $\bm{R}$.  Figure~\ref{fig:MinT_justification2} then shows a target value of $\bm{y}$, while the grey points indicate possible values for the base forecasts (the base forecasts are of course stochastic).  One possible value of the forecast is depicted in blue as $\hat{\bm{y}}$.  An oblique projection of the blue point back along the direction of $\bm{R}$ yields a reconciled forecast closer to the target, especially compared to an orthogonal projection shown in Figure \ref{fig:Orthogonal_projection_all_points}.  Figure \ref{fig:Oblique_projection_all_points} depicts an oblique projection along $\bm{R}$ for all the gray points, yielding reconciled forecasts tightly packed near the target $\bm{y}$.  In this sense, the oblique MinT projection minimises the forecast error variance of the reconciled forecasts. In contrast to the result in Theorem~\ref{th:gdistred}, this property is a statistical property in the sense that MinT is optimal in expectation.
->>>>>>> 23c3f1ccc1691ad30f9023dfa82585e9a244d50d
 	
 %	\begin{figure}[H]
 %		\centering
@@ -424,7 +401,6 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 %			\label{fig:InsampDir_2}
 		\end{subfigure}
 		
-<<<<<<< HEAD
 		\vspace{1cm}
 		
 		\begin{subfigure}[t]{0.45\textwidth}
@@ -445,35 +421,6 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 %			\caption{Price regulation} \label{fig:timing3}
 %		\end{subfigure}
 		\caption{A schematic to represent orthogonal and oblique reconciliation.  Points in orange colour in top left figure represent the insample errors. $\bm{R}$ shows the most likely direction of deviations from the coherent subspace $\mathfrak{s}$. Grey points in top right figure indicate  potential realisations of the base forecast while the blue dot ${\hat{\bm y}}$ indicates one such realisation. The black dot ${\bm y}$ denotes the (unknown) target of the forecast. Bottom left figure shows the orthogonal projection of all potential realisations onto the coherent subspace while bottom right figure shows the oblique projection.} \label{fig:OthogonalVSOblique_projection}
-=======
-	\begin{figure}[H]
-		\centering
-		%\vspace{-0.9cm}
-		\small
-		\resizebox{\linewidth}{!}{
-			\input{Figs/oblique_justification2}
-		}
-		\caption{A schematic to represent MinT reconciliation. Grey points indicate potential realisations of the base forecast while the blue dot indicates one such realisation. The black dot ${\bm y}$ denotes the (unknown) target of the forecast.}\label{fig:MinT_justification2}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		%\vspace{-0.9cm}
-		\small
-		\resizebox{\linewidth}{!}{
-			\includegraphics{Figs/OrthProj.pdf}}
-		\caption{All gray points are orthogonally projected onto the coherent subspace $\mathfrak{s}$. Reconciled forecasts marked in red dots are widely spread about the target $\bm{y}$.}\label{fig:Orthogonal_projection_all_points}
-	\end{figure}
-	
-	
-	\begin{figure}[H]
-	\centering
-	%\vspace{-0.9cm}
-	\small
-	\resizebox{\linewidth}{!}{
-		\includegraphics{Figs/ObliqueProjection.pdf}}
-	\caption{All gray points are obliquely projected along the direction of $\bm{R}$. Reconciled points denoted in red dots are concentrated about the target $\bm{y}$.}\label{fig:Oblique_projection_all_points}
->>>>>>> 23c3f1ccc1691ad30f9023dfa82585e9a244d50d
 	\end{figure}
 
 
@@ -526,11 +473,7 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 		Since $\bm{\mu}_{t+h|t}$ is an expectation taken with respect to the degenerate predictive density it must lie in $\mathfrak{s}$. We have already established that when $\bm{S}\bm{G}$ is a projection onto $\mathfrak{s}$ then it maps all vectors in $\mathfrak{s}$ onto themselves. As such $\bm{S}\bm{G}\bm{\mu}_{t+h|t}=\bm{\mu}_{t+h|t}$ when $\bm{S}\bm{G}$ is a projection matrix.
 	\end{proof}
 
-<<<<<<< HEAD
-	We note that the above result holds when the projection $\bm{SG}$ has the coherent subspace $\mathfrak{s}$ as its image and not for all projection matrices in general. To describe this more explicitly suppose $\bm{SG}$ has as its image  $\mathfrak{L}$ which is itself a lower dimensional linear subspace of $\mathfrak{s}$, i.e. $\mathfrak{L}\subset\mathfrak{s}$. Then for $\left\{\bm{\mu}_{t+h|t}:\bm{\mu}_{t+h|t}\in\mathfrak{s},\bm{\mu}_{t+h|t}\notin\mathfrak{L}\right\}$,  $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$. This is depicted in Figure \ref{fig:Schematic_3D} where $\bm{\mu}_{t+h|t}$ is projected to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$.  In this case, the expectation of reconciled forecast will be $\bar{\bm{\mu}}$ rather than $\bm{\mu}_{t+h|t}$ and hence biased.  
-=======
 	We note that the above result holds when the projection $\bm{SG}$ has the coherent subspace $\mathfrak{s}$ as its image and not for all projection matrices in general. To describe this more explicitly suppose $\bm{SG}$ has as its image  $\mathfrak{L}$ which is itself a lower dimensional linear subspace of $\mathfrak{s}$, i.e. $\mathfrak{L}\subset\mathfrak{s}$. Then for $\left\{\bm{\mu}_{t+h|t}:\bm{\mu}_{t+h|t}\in\mathfrak{s},\bm{\mu}_{t+h|t}\notin\mathfrak{L}\right\}$,  $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$. This is depicted in Figure~\ref{fig:Schematic_3D} where $\bm{\mu}_{t+h|t}$ is projected to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$.  In this case, the expectation of reconciled forecast will be $\bar{\bm{\mu}}$ rather than $\bm{\mu}_{t+h|t}$ and hence biased.
->>>>>>> 23c3f1ccc1691ad30f9023dfa82585e9a244d50d
 	
 	This result has implications in practice. The top-down method \citep{Gross1990} has
 	\begin{equation}\label{eq:top-downG}
@@ -550,19 +493,14 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 		\caption{$\mathfrak{L}$ is a linear subspace of the coherent subspace $\mathfrak{s}$. If $s\circ g$ is a projection not onto $\mathfrak{s}$ but onto $\mathfrak{L}$, then $\bm{\mu} \in \mathfrak{s}$ will be moved to $\bar{\bm{\mu}} \in \mathfrak{L}$.}\label{fig:Schematic_3D}
 	\end{figure}
 	
-<<<<<<< HEAD
-	Finally, it is often stated that an assumption required to prove the unbiasedness preserving property is that $\bm{SGS}=\bm{S}$ or alternatively that $\bm{GS}=\bm{I}$.  Both of these conditions are equivalent to assuming that $\bm{SG}$ is a projection matrix.  \todo{perhaps elaborate in a proof in appendix}  However, problems arise when viewing the preservation of unbiasedness through the prism of imposing a constraint $\bm{GS}=\bm{I}$. This thinking suggests that a way to deal with biased forecasts is to select $\bm{G}$ in an unconstrained manner.  However, equipped with a geometric understanding of the problem, we would advise against this approach.  The constraint $\bm{GS}=\bm{I}$  is not just about bias and dropping the constraint compromises all of the attractive properties of projections.  Opening the door to reconciliation methods that change already coherent base forecast would seem to suggest an increase in the variability of the forecast.  This seems particularly perverse when the motivation for using a biased method in the first place is to reduce variance. 
-=======
 	Finally, it is often stated that an assumption required to prove the unbiasedness preserving property is that $\bm{SGS}=\bm{S}$ or alternatively that $\bm{GS}=\bm{I}$.  Both of these conditions are equivalent to assuming that $\bm{SG}$ is a projection matrix. However, problems arise when viewing the preservation of unbiasedness through the prism of imposing a constraint $\bm{GS}=\bm{I}$. This thinking suggests that a way to deal with biased forecasts is to select $\bm{G}$ in an unconstrained manner.  However, equipped with a geometric understanding of the problem, we would advise against this approach.  The constraint $\bm{GS}=\bm{I}$  is not just about bias and dropping the constraint compromises all of the attractive properties of projections.  Opening the door to reconciliation methods that change already coherent base forecast would seem to suggest an increase in the variability of the forecast.  This seems particularly perverse when the motivation for using a biased method in the first place is to reduce variance is to reduce variance.
 
     \subsection{Bias correction}
->>>>>>> 23c3f1ccc1691ad30f9023dfa82585e9a244d50d
 	
 	Our own solution to dealing with biased forecasts is to bias correct {\em before} reconciliation.  In many cases the method for bias correction will be context specific.  For instance, in  our empirical study in Section~\ref{sec:EmpStudy} we consider a scenario where bias is induced via taking a Box-Cox transformation before modelling.  In this well-known case a number of bias correction methods exist.  Our particular choice of bias correction will be the Guererro method \citep{guerrero1993time}. \textcolor{red}{TODO: Read this again after the empirical application has been completed. I am saying this because my understanding is that we use the Guererro method to choose the lambda for the BoxCox transformation. Then we back transform the forecasts using the same lambda once with bias correcting using the factor that comes out of a Taylor series expansion around $\mu$ (programmed in fable/forecast package) and once without it hence looking at medians and not means - hence biased base forecasts. If my understanding here is correct I am not sure we can say we are using the Guererro method to bias correct.}
 
 
 	
-<<<<<<< HEAD
 	Alternatively, a more general purpose approach to bias correction is to simply estimate the bias by taking the sample mean of $\bm{y
 	}_{t+h}-\hat{\bm{y}}_{t+h|t}$ for all $t+h$ in the training sample.  This can be then subtracted from future forecasts.  As stated in the discussion of MinT, in-sample errors are already used to estimate the optimal direction of projection.  As such we see no problems with using the same errors to bias correct.  Geometrically, the intuition is simple.  In top left panel in Figure \ref{fig:OthogonalVSOblique_projection}, the orange points are centered around the origin as would be expected from an unbiased forecast.  If forecasts are biased, then errors should simply be translated until they are centered at the origin.
 	
@@ -582,29 +520,11 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	Figure \ref{fig:States_Zones_Regs_TSplots} shows time plots for some selected series from states, zones and regions of the hierarchy. While observing the series in state level, we could see that Northern Territory(NT) has a different seasonal patterns compared to the other states. Highest overnight trips to NT happens during June - August where July being the peak. Lowest trips happens during December - February. This is perhaps Australians prefer to visit North of Australia during its dry season rather than in wet season. This pattern also reflect in zones and regions associated to NT as well as regions in north Queensland. All other states and their associated zones and regions show peak overnight trips in January. 	 
 	
 	Further we noticed that the signal-to-noise ratio decreases with the level of disaggregation of the hierarchy. We can see much noisier series in regional and zone levels whereas the noise is comparatively stabilised in the upper levels. We have also observed that the overnight trips to `Adelaide Hills' has an anomalous observation on December-2002. We replace this observation with the average overnight trips on December-2001 and December-2003 for the same destination.
-=======
-	Alternatively, a more general purpose approach to bias correction is to simply estimate the bias by taking the sample mean of $\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t}$ for all $t+h$ in the training sample.  This can be then subtracted from future forecasts.  As stated in the discussion of MinT, in-sample errors are already used to estimate the optimal direction of projection.  As such we see no problems with using the same errors to bias correct.  Geometrically, the intuition is simple.  In Figure~\ref{fig:MinT_justification1}, the orange points are centered around the origin as would be expected from an unbiased forecast.  If forecasts are biased, then errors should simply be translated until they are centered at the origin.
-	
-	\section{Empirical study} \label{sec:EmpStudy}
-	
-	Total tourism flow of any country can naturally disaggregate along a geographical hierarchy. Producing accurate forecasts for these hierarchical time series while preserving the coherency is important for making align business decisions in the tourism industry. Many applications related to Australian tourism flow have pronounced that reconciliation improves the point forecast accuracy (\cite{Athanasopoulos2009}, \cite{Hyndman2011}, \cite{WicEtAl2019}).
-	
-	Using a similar empirical application to tourism forecasting in Australia, we show how to use projection-based reconciliation when we have a set of biased incoherent forecasts. As we mentioned in the previous section our focus is to bias adjust the incoherent forecasts first and then do the reconciliation.
-	
-	\subsubsection*{Data:}
-	We use ``overnight trips" as a measure of domestic tourism flow in Australia. Total ``overnight trips" in Australia can be disaggregated into 7 states, 27 zones and 75 regions forming a geographical hierarchy with $110$ total number of series and $75$ bottom-level series. More information about the series of this hierarchy is given in Table \ref{table:A1} in the appendix. Data were obtained from the National Visitor Survey (NVS) which were collected through telephone interviews from an annual sample of $120,000$ Australian residents aged $15$ years or more. Data form a monthly series starting from January 1998 to December 2017 which gives a total of $240$ observations per series.
-	
-	We produce $h=1$ to $h=6$ months ahead forecasts using a rolling window approach. First training window of $100$ observations is considered from Jan-$1998$ to Apr-$2006$ and produce forecasts for May-$2006$ to Oct-$2006$. Then we roll the training window one month at a time where the final forecast is produced for Dec-$2017$. This directs to $140 \quad 1$-step-ahead, $139 \quad 2$-step-ahead through $135 \quad 6$-step-ahead forecasts left for evaluation.
->>>>>>> 23c3f1ccc1691ad30f9023dfa82585e9a244d50d
-	
+
 	
 	Using this data we produce $h=1$ to $h=6$ month ahead forecasts based on a rolling window approach. First a training window of $100$ observations is considered from Jan-$1998$ to Apr-$2006$ and  forecasts produce for May-$2006$ to Oct-$2006$. Then we roll the training window one month at a time where the final forecast is produced for Dec-$2017$. This leads to $140 \quad 1$-step-ahead, $139 \quad 2$-step-ahead through $135 \quad 6$-step-ahead forecasts left for evaluation.
 	
 		
-<<<<<<< HEAD
-=======
-	While observing the patterns of individual series, we noticed that the signal-to-noise ratio decreases with the disaggregate level of the hierarchy. From Figure \ref{fig:Total_TSplots} and \ref{fig:States_Zones_Regs_TSplots} this is depicted well as we see much noisier series in the bottom-level whereas the noise level is comparatively stabilised in the upper levels. We have also observed that the overnight trips for `Adelaide Hills` has an anomalous observation on December-2002. We replaced this observation with the average overnight trips on December-2001 and December-2003 for the same destination.
->>>>>>> 23c3f1ccc1691ad30f9023dfa82585e9a244d50d
 	
 	\begin{figure}
 		\centering
@@ -623,7 +543,6 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 
 	\subsection{Base forecasts and reconciliation:}
 	
-<<<<<<< HEAD
 	First we transform each series in the hierarchy to stabilise any variations in the data. We use two types of transformation, namely, log transformation and more general Box-Cox transformation. Equation (\ref{eq:BoxCox_transformation}) gives the mathematical formula for these transformations. A constant is added to each series to avoid the impact of zero observations when taking log transformations. We note here that the two transformations were applied separately to the series in the hierarchy and treated distinctly.
 		
 	\begin{equation} \label{eq:BoxCox_transformation}
@@ -641,25 +560,6 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	\begin{cases} 
 	\exp({x_{t+h}}) & \text{if log transformation, $\lambda = 0$} \\
 	(\lambda x_{t+h} + 1)^{1/\lambda}  & \text{if Box-Cox transformation, $\lambda \ne 0$}
-=======
-	We first transform each series in the hierarchy using the Box-Cox transformation as given in equation (\ref{eq:BoxCox_transformation}) to stabilise any variations in the data.
-		
-	\begin{equation} \label{eq:BoxCox_transformation}
-	x_t =
-	\begin{cases}
-	\log(y_t) & \text{if } \lambda = 0 \\
-	\frac{y_t^\lambda - 1}{\lambda}  & \text{if } \lambda \ne 0
-	\end{cases}
-	\end{equation}
-	
-	We use "guerrero" method \citep{guerrero1993time} implemented in \verb|BoxCox.lambda()| function in \verb|forecast| package R software \citep{Rforecast} to select optimal $\lambda$. Then  we fit univariate ARIMA models for the transformed series. We use \verb|auto.arima()| function in \verb|forecast| package to choose the best model that minimises the AIC. Using the fitted models we produce $h=1,...,6$ months ahead forecasts for each series in the hierarchy. These forecasts are then back-transformed using equation (\ref{eq:BoxCox_back-transformation}) to scale them back into the original space. However, the back transformed forecasts will be biased \citep{FPP2018}.
-	
-	\begin{equation} \label{eq:BoxCox_back-transformation}
-	y_{t+h} =
-	\begin{cases}
-	\exp({x_{t+h}}) & \text{if } \lambda = 0 \\
-	(\lambda x_{t+h} + 1)^{1/\lambda}  & \text{if } \lambda \ne 0
->>>>>>> 23c3f1ccc1691ad30f9023dfa82585e9a244d50d
 	\end{cases}
 	\end{equation}
 	
@@ -667,15 +567,6 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	Hence the reconciled forecasts that follow from these forecasts will also be biased. This is the exact scenario that we want to demonstrate in this study. As proposed before, we first adjust for the bias in base forecasts prior to the reconciliation. We use the de-biasing factor proposed by \cite{taylor1986retransformed} to calculate the back-transformed bias-adjusted forecasts. These are given in equation (\ref{eq:BoxCox_BT_biasadj}) .
 	
 	\begin{equation} \label{eq:BoxCox_BT_biasadj}
-<<<<<<< HEAD
-	 y_{t+h} = 
-	\begin{cases} 
-	\exp({x_{t+h}})[1+\frac{\sigma_h^2}{2}] & \text{if log transformation, $\lambda = 0$} \\
-	(\lambda x_{t+h} + 1)^{1/\lambda}[1 + \frac{\sigma_h^2(1-\lambda)}{2(\lambda x_{t+h} + 1)^2}]       & \text{if Box-Cox transformation, $\lambda \ne 0$}
-	\end{cases}
-	\end{equation}
-	where, $x_{t+h}$ is the $h$-step-ahead forecasts from the log/Box-Cox transformed series and $\sigma_h^2$ is the variance of $x_{t+h}$. Unbiased forecasts from this method is referred to as Unbiased (Method-1). We also applied a more general bias adjustment method by estimating the bias using in-sample residual means as explained in Section \ref{sec:BiasInRecon}. Unbiased forecasts from this general method is referred to as Unbiased (Method-2).\todo{Should we give more concise words for these two methods??}
-=======
 	 y_{t+h} =
 	\begin{cases}
 	\exp({x_{t+h}})[1+\frac{\sigma_h^2}{2}] & \text{if } \lambda = 0 \\
@@ -683,12 +574,10 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	\end{cases}
 	\end{equation}
 	where, $x_{t+h}$ is the $h$-step-ahead forecasts from the Box-Cox transformed series and $\sigma_h^2$ is the variance of $x_{t+h}$.
->>>>>>> 23c3f1ccc1691ad30f9023dfa82585e9a244d50d
 	
 	Once we get the base forecasts for all series in the hierarchy, we can do the projection-based reconciliation to get coherent forecasts. We reconcile both biased and bias-corrected (Unbiased) base forecasts to demonstrate how the reconciliation follows from unbiased base forecasts improves the forecast accuracy. MinT(Shrink), WLS, OLS and bottom-up methods are used for reconciliation.   
 	
 	
-<<<<<<< HEAD
 %	
 %	\begin{table}
 %		\caption {Average {MSE($\times 10^3$)} of base and reconciled point forecasts at forecasts horizons $h=1,...,6$ are presented. Bias and unbiased columns represent the results for biased-base/biased-reconciled and unbiased-base/unbiased-reconciled forecasts respectively. Comparisons can be made across biased vs unbiased forecasts as well as base vs reconciled forecasts.}
@@ -727,10 +616,6 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	\caption {Average {MSE($\times 10^3$)} of base and reconciled $1$-step-ahead point forecasts are presented for log transformation and Box-Cox transformation. Unbiased(Method-1) follows from the bias adjustment via Taylor's de-biasing factor whereas Unbiased(Method-2) follows from residual mean adjustment.} 
 	\label{tab:Results_MSE}
 	\centering
-=======
-	Mean Squared Error (MSE) is used to measure the forecast accuracy and results are presented in Table \ref{tab:Results_MSE}. Recall that projections preserve the unbiasedness in reconciled forecasts only if the base forecasts are unbiased. As a consequence, the reconciled forecasts follow from the biased base forecasts will also be biased. We can see from the results that unbiased-reconciled forecasts from MinT(Shrink) and WLS are better than that of biased-reconciled forecasts although the unbiased-base forecasts are not necessarily better than the biased-base forecasts. Furthermore, unbiased MinT reconciled forecasts are outperforming all biased and unbiased forecasts. These results are true for all forecast horizons.
->>>>>>> 23c3f1ccc1691ad30f9023dfa82585e9a244d50d
-	
 	\resizebox{\linewidth}{!}{
 		\begin{tabular}{@{}lcccccc@{}}
 			\toprule
@@ -841,12 +726,6 @@ We have presented results only for one forecast horizon. However, results for ot
 %	\end{figure}
 %	
 	
-	
-<<<<<<< HEAD
-%	Following the distance reducing property in Theorem \ref{th:distred} and the discussion therein, we have noted that the orthogonal projections will always improve the base forecasts with respect to the mean squared errors whereas, the oblique projections will not always, but improves only on average. Figure \ref{fig:BaseVSRecon_Fc} shows the MSE difference between base forecasts and reconciled forecasts - MinT, OLS and WLS for all replications in different forecast horizons. Recall that OLS reconciliation is doing orthogonal projection whereas MinT and WLS are doing oblique projections onto the coherent subspace. It is apparent from the plot that the MSE difference for OLS is always positive, implying that OLS improves the base in terms of MSE in all replications. On the other hand,  there are some instances that this difference for MinT and WLS is negative which is reflected from the short negative tails of box-plots. This implies that oblique projections will not improve the base forecasts in every case. However, these projections will outperform the base with respect to MSE on average which is again reflected from the highly positive skewed MSE differences.  
-=======
-	Following the distance reducing property in Theorem \ref{th:distred} and the discussion therein, we have noted that the orthogonal projections will always improve the base forecasts with respect to the mean squared errors whereas, the oblique projections will not always, but improves only on average. Figure \ref{fig:BaseVSRecon_Fc} shows the MSE difference between base forecasts and reconciled forecasts - MinT, OLS and WLS for all replications in different forecast horizons. Recall that OLS reconciliation is doing orthogonal projection whereas MinT and WLS are doing oblique projections onto the coherent subspace. It is apparent from the plot that the MSE difference for OLS is always positive, implying that OLS improves the base in terms of MSE in all replications. On the other hand,  there are some instances that this difference for MinT and WLS is negative which is reflected from the short negative tails of box-plots. This implies that oblique projections will not improve the base forecasts in every case. However, these projections will outperform the base with respect to MSE on average which is again reflected from the highly positive skewed MSE differences.
->>>>>>> 23c3f1ccc1691ad30f9023dfa82585e9a244d50d
 	
 	
 	
