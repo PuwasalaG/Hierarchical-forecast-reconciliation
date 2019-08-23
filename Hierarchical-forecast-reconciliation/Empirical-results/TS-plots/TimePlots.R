@@ -200,11 +200,11 @@ grid.arrange(arrangeGrob(Plot_regions_1),
              ncol = 2) -> Plot_regions
 
 # ok tried to play with the save below but cannot get as good as
-# using the export with max plot window
+# using the pdf export with save to device with width 10 and height 12.4
 
-# pdf("Timeplots.pdf",paper="a4",height = 12,width = 30)
-# grid.arrange(arrangeGrob(Plot_Sates, Plot_Zones, Plot_regions ))
-# dev.off()
+#pdf("Timeplots4.pdf",paper="a4",height = 10.27,width = 9.7)
+grid.arrange(arrangeGrob(Plot_Sates, Plot_Zones, Plot_regions ))
+#dev.off()
 
 
 ###############################

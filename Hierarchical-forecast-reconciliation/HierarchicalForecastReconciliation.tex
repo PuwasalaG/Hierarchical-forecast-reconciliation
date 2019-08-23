@@ -513,15 +513,13 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	
 	\subsection{Data}
 	
-	We use ``overnight trips'' across Australia as a measure of domestic tourism flows. The data are provided by the National Visitor Survey (NVS) and are collected through telephone interviews from an annual sample of $120,000$ Australian residents aged $15$ years or more. Tourism flows in Australia can be disaggregated into 7 states, 27 zones and 75 regions forming a natural geographical hierarchy that is of interest to tourism operators and policy makers. Hence, there are $110$ series across the hierarchy with $75$ bottom-level series. More information about the series and the geographical hierarchy is presented in Table \ref{table:A1} in the Appendix. The data span the period January 1998 to December 2017, which gives a total of $240$ observations per series.
+	We use ``overnight trips'' across Australia as a measure of domestic tourism flows. The data are provided by the National Visitor Survey (NVS) and are collected through telephone interviews from an annual sample of $120,000$ Australian residents aged $15$ years or more. We disaggregate Tourism flows into 7 states, 27 zones and 75 regions forming a natural geographical hierarchy that is of interest to tourism operators and policy makers. Hence, there are $110$ series across the hierarchy with $75$ bottom-level series. More information about the series and the geographical hierarchy is presented in Table \ref{table:A1} in the Appendix. The data span the period January 1998 to December 2017, which gives a total of $240$ observations per series.
 
-Figure \ref{fig:Total_TSplots} shows time, sub-series and seasonal plots of the total aggregate overnight trips. As is usual with tourism flows these show a strong seasonal pattern. Overnight trips peak in January corresponding to the summer vacation season in Australia. There are also some lower peaks observed in April, July and October corresponding to school holidays. On the other hand the month with the least overnight trips is February indicating that people travel least for the month following their summer vacation. The time plot shows a pronounced upward trend starting from around 2010 till the end of the sample, with the data being fairly flat from the beginning of the sample and a slight downward trend during 2004-2010.
+Figure \ref{fig:Total_TSplots} shows time, sub-series and seasonal plots of the aggregate overnight trips for Australia. As is usual with tourism data, overnight these show a strong seasonal pattern. Overnight trips peak in January corresponding to the summer vacation season in Australia. There are also some lower peaks observed in April, July and October corresponding to school term breaks. On the other hand the month with the least overnight trips is February indicating that people travel least for the month following their summer vacation. The time plot also shows a pronounced upward trend starting from around 2010 till the end of the sample, with flows being fairly flat from the beginning of the sample and a slight downward trend during 2004-2010.
 
-The top panel of Figure \ref{fig:States_Zones_Regs_TSplots} shows time plots for the seven states, hence the first-level of the hierarchy. The panels below show some selected series from the second-level zones and the bottom-level regions of the geographical hierarchy. The plots display the diversity of time series features, within but also between levels. For example, noticeable at the first-level is the asynchronous seasonal pattern of the Northern Territory to the other states. For the Northern Territory the high tourist season occurs during June-August with July being the peak, while the low season is during December-February. This reflects the tropical climate of the Northern Territory, with Australians mostly visiting the North during its dry winter-season rather than the wet summer season. Noticeable as we move to the lower levels is the variation in the signal-to-noise ratio, with the regional bottom-level series being noisier compared to the series from levels above. This of course highlights the importance of modelling series at all levels without any loss of valuable information.
+The top panel of Figure \ref{fig:States_Zones_Regs_TSplots} shows time plots for the seven states, hence the first-level of the hierarchy. The panels below show some selected series from the second-level zones and the bottom-level regions of the geographical hierarchy. The plots display the diversity of time series features, within but also between levels. For example, noticeable at the first-level is the asynchronous seasonal pattern between Northern Territory and the other states. For the Northern Territory the high tourist season occurs during June-August with July being the peak, while the low season is during December-February. This reflects the tropical climate of the Northern Territory, with Australians mostly visiting the North during its dry winter-season rather than the wet summer season. Noticeable as we move to the lower levels is the variation in the signal-to-noise ratio, with the regional bottom-level series being noisier compared to the series from levels above. This of course highlights the importance of modelling series at all levels without any loss of valuable information. We should note here that we observed an anomalous (extremely high) observation for `Adelaide Hills' for December-2002. We replaced this observation with the average overnight trips on December-2001 and December-2003 for the same destination.
 
-We should note here that we have observed an anomalous observation for `Adelaide Hills' for December-2002. We replace this observation with the average overnight trips on December-2001 and December-2003 for the same destination. \textcolor{red}{Puwasala can you please describe here how this was anomalous. I'm wondering if this is a Bali bombing effect where we had a huge spike in Australian domestic tourism because of the Bali bombings in Oct with Australians travelling within Australia due to them being scared basically.}
-
-Starting from a training window of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$ we generate $h=1$ to $h=6$ steps-ahead forecasts. Using a rolling window we repeat the exercise until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $135~6$-steps-ahead forecasts available for forecast evaluation.
+Starting from a training window of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$ we generate $h=1$ to $h=6$ steps-ahead forecasts. Using a rolling window we repeat the exercise one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $135~6$-steps-ahead forecasts available for forecast evaluation.
 		
 	\begin{figure}
 		\centering
@@ -530,84 +528,56 @@ Starting from a training window of $100$ observations, i.e., Jan-$1998$ to Apr-$
 		\caption{Total domestic overnight trips (in logs) for Australia from January 1998 to December 2017. The top-panel shows a time plot; the bottom-left panel a sub-series plot for each month; the bottom-right panel shows a seasonal plot coloured by year.} \label{fig:Total_TSplots}
 	\end{figure}
 	
-	
-	\begin{figure}
+\begin{figure}
 		\centering
 		\small
-		\includegraphics[width = \textwidth]{Empirical-results/TS-plots/States_Zones_Regs_TSplots1.pdf}
+		\includegraphics[width= \textwidth]{Empirical-results/TS-plots/States_Zones_Regs_TSplots1.pdf}
 		\caption{Time plot of overnight trips for some selected series from different disaggregate levels of the hierarchy. All values are presented in log scale. To avoid impact from the zero values we added a constant 1 to all observations}\label{fig:States_Zones_Regs_TSplots}
-	\end{figure}
+\end{figure}
 
-	\subsection{Transformations and bias adjustments}
+\clearpage
+	\subsection{Transformations and bias adjustment}
 	
-	We first transform each series in the hierarchy using two types of transformations. Namely, we perform a log-transformation and also a more general Box-Cox transformation
+	We first transform each series in the hierarchy using two types of transformations. Namely, we perform a log-transformation and also the more general Box-Cox transformation. A Box-Cox transformation is defined as,
 		
 \begin{equation} \label{eq:BoxCox_transformation}
-	x_t =
+	w_t =
 	\begin{cases}
-	\log(y_t) & \text{for log transformation} \\
-	\frac{y_t^\lambda - 1}{\lambda}  & \text{for Box-Cox transformation, $\lambda \ne 0$}
+	\log(y_t) & \text{if}~\lambda=0;\\
+	\frac{y_t^\lambda - 1}{\lambda}  & \text{otherwise}.
 	\end{cases}
 \end{equation}
 
-. Equation (\ref{eq:BoxCox_transformation}) gives the mathematical formula for these transformations. A constant (in particular $1$) is added to each series to avoid the impact of zero observations when taking log transformations, as some zeros exist in the bottom-level series.
+We first set $\lambda=0$ and hence consider only a log transformation. For the second more general Box-Cox transformation we select $\lambda$ using the ``Guerrero'' method \citep{guerrero1993time} implemented in the \verb|BoxCox.lambda()| function in the \verb|forecast| package in R \citep{Rforecast}. As observations with zero value exist in some of the bottom-level series, before transforming we add a constant (more specifically $1$) to each series. This overcomes the challenge of undefined transformed values for zero observations when we specifically implement the log transformation or when $\lambda$ is selected to be zero by the ``Guerrero'' method. The constant is subtracted from the final forecasts.
 
-	
-We note here that the two sets of transformations (log and the general Box-Cox) were applied separately to the series in the hierarchy and are treated distinctly.	The ``Guerrero" method \citep{guerrero1993time} implemented in \verb|BoxCox.lambda()| function in \verb|forecast| package in R software \citep{Rforecast} is uses to select $\lambda$ for the Box-Cox transformations. For the log transformations we simply set $\lambda = 0$. 
+After transformation we fit univariate ARIMA models to each transformed series. The \verb|auto.arima()| function in the \verb|forecast| package is used to choose the best model that minimises the AICc. Using the fitted models, forecasts are produced for $h=1$ to $6$-steps ahead for each series in the hierarchy.
 
-Then  we fit univariate ARIMA models for the transformed series. \verb|auto.arima()| function in \verb|forecast| package is use to choose the best model that minimises the AIC. Using the fitted models, forecasts are produced for $6$ forecast horizons for each series in the hierarchy. These forecasts are then back-transformed using equation (\ref{eq:BoxCox_back-transformation}) to scale them back into the original space. However, the back transformed forecasts will be biased \citep{guerrero1993time}.
-	
-	\begin{equation} \label{eq:BoxCox_back-transformation}
-	y_{t+h} =
+The forecasts are then back-transformed by simply reversing the Box-Cox transformation using
+
+\begin{equation} \label{eq:BoxCox_back-transformation}
+	\hat{y}_{t+h|t} =
 	\begin{cases}
-	\exp({x_{t+h}}) & \text{if log transformation, $\lambda = 0$} \\
-	(\lambda x_{t+h} + 1)^{1/\lambda}  & \text{if Box-Cox transformation, $\lambda \ne 0$}
+	\exp({\hat{w}_{t+h|t}}) & \text{if}~\lambda = 0; \\
+	(\lambda \hat{w}_{t+h|t} + 1)^{1/\lambda}  & \text{otherwise.}
+	\end{cases}
+\end{equation}
+
+These back-transformed forecasts are potentially biased as they are not the mean of the forecast distribution but the median (assuming that the distribution of the transformed space is symmetric). Hence, the reconciled forecasts that follow from these forecasts will also be biased. This is the exact scenario that we want to demonstrate in this study and we next move to our proposed solution of bias correcting the base forecasts before reconciling for which we explore two scenarios.
+
+Using a Taylor series expansion \todo{Rob do we need a reference here or is this obvious/well known?} the back-transformed mean of the forecast distribution for a Box-Cox transformation is given by
+
+\begin{equation} \label{eq:BoxCox_BT_biasadj}
+	 \hat{y}_{t+h|t} =
+	\begin{cases}
+	\exp({\hat{w}_{t+h|t}})[1+\frac{\sigma_h^2}{2}] & \text{if}~\lambda = 0; \\
+	(\lambda \hat{w}_{t+h|t} + 1)^{1/\lambda}[1 + \frac{\sigma_h^2(1-\lambda)}{2(\lambda \hat{w}_{t+h|t} + 1)^2}]       & \text{if}~\lambda \ne 0,
 	\end{cases}
 	\end{equation}
-	
-	
-	Hence the reconciled forecasts that follow from these forecasts will also be biased. This is the exact scenario that we want to demonstrate in this study. As proposed before, we first adjust for the bias in base forecasts prior to the reconciliation. We use the de-biasing factor proposed by \cite{taylor1986retransformed} to calculate the back-transformed bias-adjusted forecasts. These are given in equation (\ref{eq:BoxCox_BT_biasadj}) .
-	
-	\begin{equation} \label{eq:BoxCox_BT_biasadj}
-	 y_{t+h} =
-	\begin{cases}
-	\exp({x_{t+h}})[1+\frac{\sigma_h^2}{2}] & \text{if } \lambda = 0 \\
-	(\lambda x_{t+h} + 1)^{1/\lambda}[1 + \frac{\sigma_h^2(1-\lambda)}{2(\lambda x_{t+h} + 1)^2}]       & \text{if } \lambda \ne 0
-	\end{cases}
-	\end{equation}
-	where, $x_{t+h}$ is the $h$-step-ahead forecasts from the Box-Cox transformed series and $\sigma_h^2$ is the variance of $x_{t+h}$.
-	
-	Once we get the base forecasts for all series in the hierarchy, we can do the projection-based reconciliation to get coherent forecasts. We reconcile both biased and bias-corrected (Unbiased) base forecasts to demonstrate how the reconciliation follows from unbiased base forecasts improves the forecast accuracy. MinT(Shrink), WLS, OLS and bottom-up methods are used for reconciliation.
-	
-	
-%	
-%	\begin{table}
-%		\caption {Average {MSE($\times 10^3$)} of base and reconciled point forecasts at forecasts horizons $h=1,...,6$ are presented. Bias and unbiased columns represent the results for biased-base/biased-reconciled and unbiased-base/unbiased-reconciled forecasts respectively. Comparisons can be made across biased vs unbiased forecasts as well as base vs reconciled forecasts.}
-%		\label{tab:Results_MSE}
-%		\centering\tabcolsep=0.08cm
-%		\resizebox{\linewidth}{!}{
-%		\begin{tabular}{@{}lSSSSSSSSSSSS@{}}
-%			\toprule
-%			\multicolumn{1}{c}{ } & \multicolumn{2}{c}{h=1} & \multicolumn{2}{c}{h=2} & \multicolumn{2}{c}{h=3} & \multicolumn{2}{c}{h=4} & \multicolumn{2}{c}{h=5} & \multicolumn{2}{c}{h=6} \\
-%			\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7} \cmidrule(lr){8-9} \cmidrule(lr){10-11} \cmidrule(lr){12-13}
-%			Method & Biased & Unbiased & Biased & Unbiased & Biased & Unbiased & Biased & Unbiased & Biased & Unbiased & Biased & Unbiased\\
-%			\midrule
-%			Base & 12.18 & 161.63 & 13.14 & 243.13 & 14.08 & 269.20 & 15.88 & 325.41 & 15.49 & 332.11 & 15.79 & 344.40\\
-%			\hline
-%			MinT(Shrink) & 10.14 & $\bm{9.96}$ & 11.47 & $\bm{10.78}$ & 12.55 & $\bm{11.94}$ & 15.53 & $\bm{14.03}$ & 14.63 & $\bm{13.46}$ & 15.28 & $\bm{13.78}$\\
-%			\hline
-%			WLS & 15.62 & 13.97 & 15.93 & 13.71 & 16.65 & 14.50 & 18.91 & 16.26 & 18.76 & 16.20 & 18.85 & 15.83\\	
-%			\hline
-%			OLS & 11.73 & 135.17 & 12.80 & 204.42 & 13.73 & 225.59 & 15.56 & 272.41 & 15.17 & 278.08 & 15.49 & 288.21\\
-%			\hline
-%			Bottom-up & 17.86 & 15.55 & 17.86 & 14.90 & 18.47 & 15.61 & 20.50 & 17.21 & 20.34 & 17.04 & 20.39 & 16.69\\
-%			
-%			\bottomrule
-%		\end{tabular}
-%	}
-%	\end{table}
+where, $\hat{w}_{t+h|t}$ is the $h$-step-ahead forecast from the Box-Cox transformed series and $\sigma_h^2$ is the variance of $\hat{w}_{t+h|t}$. Using the mean of the forecast distribution returns bias adjusted base forecasts compared to the simple back-transformation of \eqref{eq:BoxCox_back-transformation}. We refer to this as Method-1 in the results that follow.
 
-%%%%%%%%%%%%%%%%%%%
+The second scenario of bias adjustment we explore is using the in-sample forecast error mean of the biased forecasts to adjust the out of sample forecasts. We refer to this a Method-2 in the results that follow.
+	
+Using the three sets of base forecasts we generate coherent forecasts using the bottom-up approach but also implementing OLS, WLS and MinT reconciliation projections and compare the results for when the base forecasts are biased and bias-adjusted (unbiased). We discuss the results next. 
 
 \subsection{Results and discussion}
 
@@ -644,7 +614,14 @@ Then  we fit univariate ARIMA models for the transformed series. \verb|auto.arim
 
 
 
-Mean Squared Error (MSE) is used to measure the forecast accuracy. Average MSE over $140$ replications for $1$-step-ahead forecasts are presented for log transformation and Box-Cox transformation separately in Table \ref{tab:Results_MSE}.
+Table \ref{tab:Results_MSE} presents the Mean Squared Error (MSE) over the $140$ replications for $1$-step-ahead forecasts. Note that the conclusion that follow extend almost identically to forecast horizons $2-6$. We do not present these here to save space but they are available upon request.
+
+General findings: 
+
+- Bias adjusting using Method 1, i.e., a proper method improves forecast accuracy.
+- Bias adjusting using Method 2, does not. The transformations we consider here are multiplicative type transformations - the in-sample residual adjustment is an additive adjustment hence it does not help. 
+
+\textcolor{red}{I have stopped here. Will continue after we have all results.}
 
 Let us first consider the results from log transformation. We see that the unbiased forecasts from Method-1 has less MSE compared to the biased forecasts in base level. This holds for all reconciled forecasts as well. It implies that the bias correction has improved the forecast accuracy. Further, unbiased reconciled forecasts from OLS and MinT perform better than the base forecasts. Moreover, Unbiased MinT reconciled forecasts are outperforming.
 We also note that the bias correction via Method-2 has not necessarily work well in this empirical example.
