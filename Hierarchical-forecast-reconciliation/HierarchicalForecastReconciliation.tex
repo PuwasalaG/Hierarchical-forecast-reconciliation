@@ -719,10 +719,25 @@ We have presented results only for one forecast horizon. However, results for ot
 	
 	\section{Appendix}
 	%\thisfloatpagestyle{empty}
-	\input{Appendix}
-
+	\subsection{Proof $\bm{S}\bm{G}\bm{S}=\bm{S}$ implies $\bm{S}\bm{G}$ is a projection}
+	Here we establish that if $\bm{S}\bm{G}$ is a projection onto the linear subspace spanned by $\bm{S}$ then $\bm{S}\bm{G}\bm{S}=\bm{S}$.  We also prove that the converse holds, namely that if the condition $\bm{S}\bm{G}\bm{S}=\bm{S}$ holds then $\bm{S}\bm{G}$ must be a projection onto the linear subspace spanned by $\bm{S}$.
 	
+	To establish the first statement let $\bm{s}_j$ be the $j^{th}$ column of $\bm{S}$.  Since by definition, $\bm{s}_j$ lies in in $\mathfrak{s}$, it must hold that $\bm{S}\bm{G}\bm{s}_j=\bm{s}_j$.  Stacking these vectors horizontally
+	\begin{align}
+	\bm{S}\bm{G}\bm{S}&=\begin{pmatrix}
+	\bm{S}\bm{G}\bm{s}_1, & \bm{S}\bm{G}\bm{s}_2, & \cdots & \bm{S}\bm{G}\bm{s}_m
+	\end{pmatrix}\\
+	&=\begin{pmatrix}
+	\bm{s}_1, & \bm{s}_2, & \cdots & \bm{s}_m
+	\end{pmatrix}\\
+	&=\bm{S}
+	\end{align}
+	
+	To establish the converse it suffices to postmultiply the condition $\bm{S}\bm{G}\bm{S}=\bm{S}$ by $\bm{G}$.  This yields $\bm{S}\bm{G}\bm{S}\bm{G}=\bm{S}\bm{G}$ which in turn implies idempotence since $(\bm{S}\bm{G})^2=\bm{S}\bm{G}$.
+	\input{Appendix}
 	\newpage
+	
+
 	
 	\bibliographystyle{agsm}
 	
