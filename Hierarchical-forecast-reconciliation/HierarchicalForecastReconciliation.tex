@@ -180,7 +180,7 @@
      \end{figure}
 
 	 \begin{definition}[Hierarchical Time Series]\label{def:cohspace}
-	 	A hierarchical time series is an $n$-dimensional multivariate time series such that all observed values $\bm{y}_1,\ldots,\bm{y}_T$ and all future values $\bm{y}_{T+1},\bm{y}_{T+2},\ldots$  lie in the coherent subspace, i.e. $\bm{y}_t\in\mathfrak{s}\quad\forall t$.
+	 	A hierarchical time series is an $n$-dimensional multivariate time series such that all observed values $\bm{y}_1,\ldots,\bm{y}_T$ and all future values $\bm{y}_{T+1},\bm{y}_{T+2},\ldots$  lie in the coherent subspace, i.e., $\bm{y}_t\in\mathfrak{s}\quad\forall t$.
 	 \end{definition}
 
 	
@@ -330,7 +330,7 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	
 	The implication of Theorem~\ref{th:gdistred} is that if the objective function is some weighted sum of squared errors, or a Mahalanobis distance, then the projection matrix $\bm{S}\left(\bm{S}'\bm{W}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{W}^{-1}$ is guaranteed to improve forecast accuracy over base forecasts, for an appropriately selected $\bm{W}$.
 	
-	\todo{Rob can you please read to make sure you are happy with this.}Note here that we rely here on the generalised Pythagorean Theorem (which involves an equality).  In contrast, \cite{WicEtAl2019} follow \cite{VanErven2015a} in stating their result in terms of the Generalised Pythagorean Inequality.  The proof of \cite{WicEtAl2019} requires an assumption about convexity so that the angle between the base forecast and coherent subspace must be greater than 90 degrees.  The proof we have provided here requires no such assumption, since this may not hold for an arbitrary $\bm{W}$.  As such the statement from \cite{WicEtAl2019} that {\em``MinT reconciled forecasts are at least as good as the incoherent forecasts''} should be qualified; this is only true in with respect to a loss function that depends on ${\bm W}$.  If Euclidean distance (or mean squared error) is used, there will be cases where the MinT estimator does not improve upon base forecasts.
+	\todo{Rob can you please read to make sure you are happy with this.}Note here that we rely here on the generalised Pythagorean Theorem (which involves an equality).  In contrast, \cite{WicEtAl2019} follow \cite{VanErven2015a} in stating their result in terms of the Generalised Pythagorean Inequality.  The proof of \cite{WicEtAl2019} requires an assumption about convexity so that the angle between the base forecast and coherent subspace must be greater than 90 degrees.  The proof we have provided here requires no such assumption, since this may not hold for an arbitrary $\bm{W}$.  As such the statement from \cite{WicEtAl2019} that {\em``MinT reconciled forecasts are at least as good as the incoherent forecasts''} should be qualified; this is only true with respect to a loss function that depends on ${\bm W}$.  If Euclidean distance (or mean squared error) is used, there will be cases where the MinT estimator does not improve upon base forecasts.
 	
 	{\bf Discuss results in Figure 4 here}
 	
