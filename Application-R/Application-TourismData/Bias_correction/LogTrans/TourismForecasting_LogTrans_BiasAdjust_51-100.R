@@ -126,11 +126,11 @@ for (j in 51:100) {#C=140
   
   for (i in 1:n) {
     
-    TS <- Train[,i] %>% as.ts()
+    TS <- Train[,i] %>% ts(frequency = 12)
     TS_adj <- TS+1 # adding 1 since some series has zero values which is problamatic when taking log transformation
     
-    fit_bias <- auto.arima(TS_adj, lambda = 0, allowdrift = F, biasadj = FALSE)
-    fit_unbias <- auto.arima(TS_adj, lambda = 0, allowdrift = F, biasadj = TRUE)
+    fit_bias <- auto.arima(TS_adj, lambda = 0, biasadj = FALSE)
+    fit_unbias <- auto.arima(TS_adj, lambda = 0, biasadj = TRUE)
     
     #--Biased and Biased adjusted_M1 forecasts--#
     

@@ -14,8 +14,22 @@ write.csv(x=DF_LogTrans, file = "DF_LogTrans.csv")
 
 DF_LogTrans %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_LogTrans
 
-DF_LogTrans %>% 
+# DF_LogTrans_1_50 %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_LogTrans_1_50
+# DF_LogTrans_51_100 %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_LogTrans_51_100
+# DF_LogTrans_101_140 %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_LogTrans_101_140
+# 
+# DF_LogTrans_101_140 %>% filter(Replication != 130) %>% 
+#   group_by(`F.method`, `R.method`, Forecast_Horizon) %>% 
+#   summarise(MSE = mean(SquaredE)) %>% 
+#   spread(key = Forecast_Horizon, value = MSE)
+
+
+DF_LogTrans %>% filter(Replication != 103) %>% 
   group_by(`F.method`, `R.method`, Forecast_Horizon) %>% 
   summarise(MSE = mean(SquaredE)) %>% 
-  spread(key = Forecast_Horizon, value = MSE)
+  filter(Forecast_Horizon == 1) %>% 
+  ungroup() %>% 
+  dplyr::select(-Forecast_Horizon) %>% 
+  spread(key = F.method, value = MSE)
+
 

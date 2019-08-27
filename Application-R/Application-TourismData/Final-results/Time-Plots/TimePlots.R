@@ -30,9 +30,19 @@ Hierarchy <- suppressMessages(hts(OvernightTrips_Region_new,
 AllTS <- allts(Hierarchy) %>%
   as_tibble()
 
+n<-ncol(AllTS)
+l1<-1
+l2<-sum(7)
+l3<-sum(6,5,4,4,3,3,2)
+m<-ncol(OvernightTrips_Region)
+
+
 AllTS_new <- AllTS + 1 # Add 1 since some series has zero observations and this will affect taking log transformations
 
-#Total Series
+
+###################
+  #Total Series#
+###################
 
 AllTS %>% log() %>% 
   dplyr::select("Total") %>% 
@@ -63,8 +73,9 @@ grid.arrange( arrangeGrob(TSPlot_total, top = "Total Overnight trips"),
 
 
 
-
-#States
+##################
+      #States#
+##################
 
 AllTS_new %>% log() %>% 
   dplyr::select("A", "B", "C", "D", "E", "F", "G" ) %>% 
@@ -76,11 +87,30 @@ AllTS_new %>% log() %>%
   scale_y_log10() +
   ggtitle("States") + theme(legend.position="bottom") -> Plot_Sates
 
-#Zones
+
+##############
+    #Zones
+##############
+
+#(l1+l2+1):(l1+l2+l3)
 
 # "AA", "AB", "AC", "AD", "AE", "AF", "BA", "BB", "BC", "BD", "BE",
 # "CA", "CB", "CC", "CD", "DA", "DB", "DC", "DD", "EA", "EB","EC", 
 # "FA", "FB", "FC", "GA", "GB"
+
+AllTS_new %>% log() %>% 
+  dplyr::select((l1+l2+1):(l1+l2+l3)) %>% 
+  ts(start = c(1998, 1), frequency = 12) %>% 
+  autoplot() + ylab("log(Overnight trips)") + xlab("Time") + 
+  ggtitle("Zones") + theme(legend.position="bottom") 
+
+
+###Ploting only selected series
+
+# "AA", "AB", "AC", "AD", "AE", "AF", "BA", "BB", "BC", "BD", "BE",
+# "CA", "CB", "CC", "CD", "DA", "DB", "DC", "DD", "EA", "EB","EC", 
+# "FA", "FB", "FC", "GA", "GB"
+
 
 AllTS_new %>% log() %>% 
   dplyr::select("AA", "AF", "BB", "BE",
@@ -94,6 +124,21 @@ AllTS_new %>% log() %>%
   ts(start = c(1998, 1), frequency = 12) %>% 
   autoplot() + ylab("log(Overnight trips)") + xlab("Time") + 
   ggtitle("Zones") + theme(legend.position="bottom") -> Plot_Zones
+
+
+##################
+    #Regions#
+##################
+
+
+AllTS_new %>% log() %>% 
+  dplyr::select((n-m+1):n) %>% 
+  ts(start = c(1998, 1), frequency = 12) %>% 
+  autoplot() + ylab("log(Overnight trips)") + xlab("Time") + 
+  ggtitle("Regions") + theme(legend.position="bottom") 
+
+
+###Ploting only selected series
 
 
 AllTS_new %>% log() %>% 
@@ -124,107 +169,107 @@ grid.arrange(arrangeGrob(Plot_Sates, Plot_Zones, Plot_regions ))
 
 ###############################
 
-# Series related to State - A
-AllTS %>% 
-  dplyr::select("A") %>% 
-  ts(start = c(1998, 1), frequency = 12) %>% 
-  autoplot() + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("State-A") + theme(legend.position="bottom") -> Plot_A
-
-AllTS %>% 
-  dplyr::select("AA", "AB", "AC", "AD", "AE", "AF") %>% 
-  ts(start = c(1998, 1), frequency = 12) %>%  
-  as.tsibble() %>% rename("Zones" = "key") %>% 
-  ggplot(aes(x = index, y = value, color = Zones)) + 
-  geom_line()  + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("Zones in State A") + theme(legend.position="bottom") -> Plot_A_Zone
-
-AllTS %>% 
-  dplyr::select("AAA", "AAB", "ABA", "ABB", "ACA", "ADA", "ADB", "ADC", "ADD", "AEA", "AEB",
-                "AEC", "AED", "AFA") %>% 
-  ts(start = c(1998, 1), frequency = 12) %>%  
-  as.tsibble() %>% rename("Regions" = "key") %>% 
-  ggplot(aes(x = index, y = value, color = Regions)) + 
-  geom_line()  + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("Regions in State A") + theme(legend.position = "bottom") -> Plot_A_Region
-
-grid.arrange(arrangeGrob(Plot_A, Plot_A_Zone, Plot_A_Region))
-
-# Series related to State - B
-AllTS %>% 
-  dplyr::select("B") %>% 
-  ts(start = c(1998, 1), frequency = 12) %>% 
-  autoplot() + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("State-B") + theme(legend.position="bottom") -> Plot_B
-
-AllTS %>% 
-  dplyr::select("BA", "BB", "BC", "BD", "BE") %>% 
-  ts(start = c(1998, 1), frequency = 12) %>%  
-  as.tsibble() %>% rename("Zones" = "key") %>% 
-  ggplot(aes(x = index, y = value, color = Zones)) + 
-  geom_line()  + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("Zones in State B") + theme(legend.position="bottom") -> Plot_B_Zone
-
-AllTS %>% 
-  dplyr::select("BAA", "BAB", "BAC", "BBA", "BCA", "BCB", "BCC", "BDA", "BDB",
-                "BDC", "BDD", "BDE", "BDF", "BEA", "BEB", "BEC", "BED", "BEE",
-                "BEF", "BEG") %>% 
-  ts(start = c(1998, 1), frequency = 12) %>%  
-  as.tsibble() %>% rename("Regions" = "key") %>% 
-  ggplot(aes(x = index, y = value, color = Regions)) + 
-  geom_line()  + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("Regions in State B") + theme(legend.position = "bottom") -> Plot_B_Region
-
-grid.arrange(arrangeGrob(Plot_B, Plot_B_Zone, Plot_B_Region))
-
-# Series related to State - C
-AllTS %>% 
-  dplyr::select("C") %>% 
-  ts(start = c(1998, 1), frequency = 12) %>% 
-  autoplot() + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("State-C") + theme(legend.position="bottom") -> Plot_C
-
-AllTS %>% 
-  dplyr::select("CA", "CB", "CC", "CD") %>% 
-  ts(start = c(1998, 1), frequency = 12) %>%  
-  as.tsibble() %>% rename("Zones" = "key") %>% 
-  ggplot(aes(x = index, y = value, color = Zones)) + 
-  geom_line()  + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("Zones in State C") + theme(legend.position="bottom") -> Plot_C_Zone
-
-AllTS %>% 
-  dplyr::select("CAA", "CAB", "CAC", "CBA", "CBB", "CBC", "CBD",
-                "CCA", "CCB", "CCC", "CDA", "CDB") %>% 
-  ts(start = c(1998, 1), frequency = 12) %>%  
-  as.tsibble() %>% rename("Regions" = "key") %>% 
-  ggplot(aes(x = index, y = value, color = Regions)) + 
-  geom_line()  + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("Regions in State C") + theme(legend.position = "bottom") -> Plot_C_Region
-
-grid.arrange(arrangeGrob(Plot_C, Plot_C_Zone, Plot_C_Region))
-
-# Series related to State - D
-AllTS %>% 
-  dplyr::select("D") %>% 
-  ts(start = c(1998, 1), frequency = 12) %>% 
-  autoplot() + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("State-D") + theme(legend.position="bottom") -> Plot_D
-
-AllTS %>% 
-  dplyr::select("DA", "DB", "DC", "DD") %>% 
-  ts(start = c(1998, 1), frequency = 12) %>%  
-  as.tsibble() %>% rename("Zones" = "key") %>% 
-  ggplot(aes(x = index, y = value, color = Zones)) + 
-  geom_line()  + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("Zones in State D") + theme(legend.position="bottom") -> Plot_D_Zone
-
-AllTS %>% 
-  dplyr::select("DAA", "DAB", "DAC", "DBA", "DBB", "DBC", "DCA",
-                "DCB", "DCC", "DCD", "DDA", "DDB") %>% 
-  ts(start = c(1998, 1), frequency = 12) %>%  
-  as.tsibble() %>% rename("Regions" = "key") %>% 
-  ggplot(aes(x = index, y = value, color = Regions)) + 
-  geom_line()  + ylab("Overnight trips") + xlab("Time") + 
-  ggtitle("Regions in State D") + theme(legend.position = "bottom") -> Plot_D_Region
-
-grid.arrange(arrangeGrob(Plot_D, Plot_D_Zone, Plot_D_Region))
+# # Series related to State - A
+# AllTS %>% 
+#   dplyr::select("A") %>% 
+#   ts(start = c(1998, 1), frequency = 12) %>% 
+#   autoplot() + ylab("Overnight trips") + xlab("Time") + 
+#   ggtitle("State-A") + theme(legend.position="bottom") -> Plot_A
+# 
+# AllTS %>% 
+#   dplyr::select("AA", "AB", "AC", "AD", "AE", "AF") %>% 
+#   ts(start = c(1998, 1), frequency = 12) %>%  
+#   as.tsibble() %>% rename("Zones" = "key") %>% 
+#   ggplot(aes(x = index, y = value, color = Zones)) + 
+#   geom_line()  + ylab("Overnight trips") + xlab("Time") + 
+#   ggtitle("Zones in State A") + theme(legend.position="bottom") -> Plot_A_Zone
+# 
+# AllTS %>% 
+#   dplyr::select("AAA", "AAB", "ABA", "ABB", "ACA", "ADA", "ADB", "ADC", "ADD", "AEA", "AEB",
+#                 "AEC", "AED", "AFA") %>% 
+#   ts(start = c(1998, 1), frequency = 12) %>%  
+#   as.tsibble() %>% rename("Regions" = "key") %>% 
+#   ggplot(aes(x = index, y = value, color = Regions)) + 
+#   geom_line()  + ylab("Overnight trips") + xlab("Time") + 
+#   ggtitle("Regions in State A") + theme(legend.position = "bottom") -> Plot_A_Region
+# 
+# grid.arrange(arrangeGrob(Plot_A, Plot_A_Zone, Plot_A_Region))
+# 
+# # Series related to State - B
+# AllTS %>% 
+#   dplyr::select("B") %>% 
+#   ts(start = c(1998, 1), frequency = 12) %>% 
+#   autoplot() + ylab("Overnight trips") + xlab("Time") + 
+#   ggtitle("State-B") + theme(legend.position="bottom") -> Plot_B
+# 
+# AllTS %>% 
+#   dplyr::select("BA", "BB", "BC", "BD", "BE") %>% 
+#   ts(start = c(1998, 1), frequency = 12) %>%  
+#   as.tsibble() %>% rename("Zones" = "key") %>% 
+#   ggplot(aes(x = index, y = value, color = Zones)) + 
+#   geom_line()  + ylab("Overnight trips") + xlab("Time") + 
+#   ggtitle("Zones in State B") + theme(legend.position="bottom") -> Plot_B_Zone
+# 
+# AllTS %>% 
+#   dplyr::select("BAA", "BAB", "BAC", "BBA", "BCA", "BCB", "BCC", "BDA", "BDB",
+#                 "BDC", "BDD", "BDE", "BDF", "BEA", "BEB", "BEC", "BED", "BEE",
+#                 "BEF", "BEG") %>% 
+#   ts(start = c(1998, 1), frequency = 12) %>%  
+#   as.tsibble() %>% rename("Regions" = "key") %>% 
+#   ggplot(aes(x = index, y = value, color = Regions)) + 
+#   geom_line()  + ylab("Overnight trips") + xlab("Time") + 
+#   ggtitle("Regions in State B") + theme(legend.position = "bottom") -> Plot_B_Region
+# 
+# grid.arrange(arrangeGrob(Plot_B, Plot_B_Zone, Plot_B_Region))
+# 
+# # Series related to State - C
+# AllTS %>% 
+#   dplyr::select("C") %>% 
+#   ts(start = c(1998, 1), frequency = 12) %>% 
+#   autoplot() + ylab("Overnight trips") + xlab("Time") + 
+#   ggtitle("State-C") + theme(legend.position="bottom") -> Plot_C
+# 
+# AllTS %>% 
+#   dplyr::select("CA", "CB", "CC", "CD") %>% 
+#   ts(start = c(1998, 1), frequency = 12) %>%  
+#   as.tsibble() %>% rename("Zones" = "key") %>% 
+#   ggplot(aes(x = index, y = value, color = Zones)) + 
+#   geom_line()  + ylab("Overnight trips") + xlab("Time") + 
+#   ggtitle("Zones in State C") + theme(legend.position="bottom") -> Plot_C_Zone
+# 
+# AllTS %>% 
+#   dplyr::select("CAA", "CAB", "CAC", "CBA", "CBB", "CBC", "CBD",
+#                 "CCA", "CCB", "CCC", "CDA", "CDB") %>% 
+#   ts(start = c(1998, 1), frequency = 12) %>%  
+#   as.tsibble() %>% rename("Regions" = "key") %>% 
+#   ggplot(aes(x = index, y = value, color = Regions)) + 
+#   geom_line()  + ylab("Overnight trips") + xlab("Time") + 
+#   ggtitle("Regions in State C") + theme(legend.position = "bottom") -> Plot_C_Region
+# 
+# grid.arrange(arrangeGrob(Plot_C, Plot_C_Zone, Plot_C_Region))
+# 
+# # Series related to State - D
+# AllTS %>% 
+#   dplyr::select("D") %>% 
+#   ts(start = c(1998, 1), frequency = 12) %>% 
+#   autoplot() + ylab("Overnight trips") + xlab("Time") + 
+#   ggtitle("State-D") + theme(legend.position="bottom") -> Plot_D
+# 
+# AllTS %>% 
+#   dplyr::select("DA", "DB", "DC", "DD") %>% 
+#   ts(start = c(1998, 1), frequency = 12) %>%  
+#   as.tsibble() %>% rename("Zones" = "key") %>% 
+#   ggplot(aes(x = index, y = value, color = Zones)) + 
+#   geom_line()  + ylab("Overnight trips") + xlab("Time") + 
+#   ggtitle("Zones in State D") + theme(legend.position="bottom") -> Plot_D_Zone
+# 
+# AllTS %>% 
+#   dplyr::select("DAA", "DAB", "DAC", "DBA", "DBB", "DBC", "DCA",
+#                 "DCB", "DCC", "DCD", "DDA", "DDB") %>% 
+#   ts(start = c(1998, 1), frequency = 12) %>%  
+#   as.tsibble() %>% rename("Regions" = "key") %>% 
+#   ggplot(aes(x = index, y = value, color = Regions)) + 
+#   geom_line()  + ylab("Overnight trips") + xlab("Time") + 
+#   ggtitle("Regions in State D") + theme(legend.position = "bottom") -> Plot_D_Region
+# 
+# grid.arrange(arrangeGrob(Plot_D, Plot_D_Zone, Plot_D_Region))

@@ -146,67 +146,125 @@
 \hline
 R.method & Bias & Unbiased (Method 1) & Unbiased (Method 2)\\
 \hline
-Base & 12.27 & 139.94 & 13.45\\
+Base & 4.64 & 3521.02 & 6.73\\
 \hline
-Bottom-up & 18.06 & 15.76 & 23.33\\
+Bottom-up & 6.47 & 5.29 & 8.10\\
 \hline
-MinT(Shrink) & 10.27 & 10.11 & 12.43\\
+MinT(Shrink) & 4.35 & 4.23 & 4.67\\
 \hline
-OLS & 11.84 & 116.91 & 12.96\\
+OLS & 4.50 & 2938.01 & 6.38\\
 \hline
-WLS & 15.83 & 14.20 & 19.51\\
+WLS & 4.90 & 4.40 & 5.55\\
 \hline
 \end{tabular}
 
 \section{More analysis on BoxCox transformed
-resulst}\label{more-analysis-on-boxcox-transformed-resulst}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{DF_BoxCoxTrans }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(}\StringTok{`}\DataTypeTok{F.method}\StringTok{`}\NormalTok{, }\StringTok{`}\DataTypeTok{R.method}\StringTok{`}\NormalTok{, Forecast_Horizon, Series) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{MSE =} \KeywordTok{round}\NormalTok{(}\KeywordTok{mean}\NormalTok{(SquaredE)}\OperatorTok{/}\FloatTok{1e3}\NormalTok{, }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{filter}\NormalTok{(R.method }\OperatorTok{==}\StringTok{ "Base"}\NormalTok{, Forecast_Horizon }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{, }
-\NormalTok{         F.method }\OperatorTok{%in%}\KeywordTok{c}\NormalTok{(}\StringTok{"Bias"}\NormalTok{,}\StringTok{"Unbiased_M1"}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{R.method, }\OperatorTok{-}\NormalTok{Forecast_Horizon) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{spread}\NormalTok{(}\DataTypeTok{key =}\NormalTok{ F.method, }\DataTypeTok{value =}\NormalTok{ MSE) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\StringTok{"Bias-Unbiase"}\NormalTok{ =}\StringTok{ }\NormalTok{Bias }\OperatorTok{-}\StringTok{ }\NormalTok{Unbiased_M1) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{filter}\NormalTok{(}\StringTok{`}\DataTypeTok{Bias-Unbiase}\StringTok{`} \OperatorTok{<}\StringTok{ }\OperatorTok{-}\DecValTok{5}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+results}\label{more-analysis-on-boxcox-transformed-results}
 
 \begin{verbatim}
 ## # A tibble: 1 x 4
 ##   Series  Bias Unbiased_M1 `Bias-Unbiase`
 ##   <fct>  <dbl>       <dbl>          <dbl>
-## 1 Total   808.      14866.        -14058.
+## 1 Total   275.     386984.       -386710.
 \end{verbatim}
 
 Bias correction is giving wiered results for \texttt{Total} series.
 
+\includegraphics{TourismData-Final-results_files/figure-latex/unnamed-chunk-3-1.pdf}
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{DF_BoxCoxTrans }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{filter}\NormalTok{(Forecast_Horizon }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{) ->}\StringTok{ }\NormalTok{DF_BoxCoxTrans_h1}
-
-\NormalTok{DF_BoxCoxTrans_h1 }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{filter}\NormalTok{(Series }\OperatorTok{==}\StringTok{ "Total"}\NormalTok{, R.method }\OperatorTok{==}\StringTok{ "Base"}\NormalTok{, F.method }\OperatorTok{==}\StringTok{ "Bias"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(Actual, Replication) ->}\StringTok{ }\NormalTok{Total_True}
-  
-  
-\NormalTok{DF_BoxCoxTrans_h1 }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{filter}\NormalTok{(Series }\OperatorTok{==}\StringTok{ "Total"}\NormalTok{, R.method }\OperatorTok{==}\StringTok{ "Base"}\NormalTok{, F.method }\OperatorTok{%in%}\KeywordTok{c}\NormalTok{(}\StringTok{"Bias"}\NormalTok{,}\StringTok{"Unbiased_M1"}\NormalTok{)) ->}\StringTok{ }\NormalTok{Total_Fc}
-
-
-\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ Total_Fc, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Replication, }\DataTypeTok{y =}\NormalTok{ Forecasts, }\DataTypeTok{color =} \StringTok{`}\DataTypeTok{F.method}\StringTok{`}\NormalTok{)) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ Total_True, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Replication, }\DataTypeTok{y =}\NormalTok{ Actual)) }\OperatorTok{+}\StringTok{ }
-\StringTok{    }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Forecasts/True"}\NormalTok{)}
+\NormalTok{DF_BoxCoxTrans_Tot_h1 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{spread}\NormalTok{(}\DataTypeTok{key =} \StringTok{`}\DataTypeTok{Forecasts/Actual}\StringTok{`}\NormalTok{, }\DataTypeTok{value =}\NormalTok{ Val) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\StringTok{"Unb-Act"}\NormalTok{ =}\StringTok{ }\NormalTok{Unbiased_M1 }\OperatorTok{-}\StringTok{ }\NormalTok{Actual) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\StringTok{`}\DataTypeTok{Unb-Act}\StringTok{`}\OperatorTok{>}\DecValTok{1000}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{TourismData-Final-results_files/figure-latex/unnamed-chunk-3-1.pdf}
+\begin{verbatim}
+##    Replication    Actual     Bias Unbiased_M1   Unb-Act
+## 1           24  6690.320 7942.644    7929.872  1239.551
+## 2           67  6922.011 6256.862   32427.930 25505.920
+## 3           68  6253.403 5990.885   28965.728 22712.325
+## 4           69  9742.298 9074.247   88888.278 79145.980
+## 5           71  6735.583 6492.927   35741.613 29006.030
+## 6           73  6129.598 6408.122   40797.225 34667.627
+## 7           74  6266.592 6297.023   32998.078 26731.487
+## 8           75  7240.105 7236.467   47696.759 40456.654
+## 9           76  6333.832 6456.888   35207.147 28873.315
+## 10          77  6347.804 6727.321   39234.151 32886.347
+## 11          78  7770.601 7162.167   46393.968 38623.367
+## 12          79  7427.809 6689.464   38641.113 31213.304
+## 13          80  6640.508 6034.327   29470.252 22829.744
+## 14          81  9419.311 9672.074  106057.019 96637.708
+## 15          82  5605.903 5534.823   23602.321 17996.418
+## 16          83  7058.426 6578.873   36903.003 29844.577
+## 17          85  6566.996 6308.722   33039.816 26472.820
+## 18          86  6258.781 6578.185    8721.849  2463.068
+## 19          87  7098.180 6994.092   43522.680 36424.500
+## 20          88  6436.991 6633.680   37729.921 31292.930
+## 21          89  7071.804 6554.580   36555.710 29483.905
+## 22          90  8106.166 7703.135   12245.860  4139.695
+## 23          91  6839.574 7390.927   50397.661 43558.087
+## 24          92  6482.379 6460.287   35188.677 28706.298
+## 25          93 10445.812 9631.840  104815.092 94369.280
+## 26          94  5847.470 5615.639   24482.840 18635.370
+## 27          95  8089.742 7008.365   51987.132 43897.390
+## 28          96  8678.255 8423.320   86514.330 77836.075
+## 29          97  7095.224 6789.855   47695.463 40600.240
+## 30          98  8116.618 6635.950   44825.584 36708.966
+## 31          99  7611.168 7986.305   11211.788  3600.620
+\end{verbatim}
+
+Very large bias corrected forecasts are given for some replications. For
+example in the rolling window Jul-2003 to Oct-2011. Observing the model
+auto.arima fits:
+
+\begin{verbatim}
+## Warning: Missing column names filled in: 'X1' [1]
+\end{verbatim}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   `Month returned from trip` = col_character()
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## See spec(...) for full column specifications.
+\end{verbatim}
+
+\begin{verbatim}
+## Series: TS 
+## ARIMA(0,0,0)(2,1,1)[12] with drift 
+## Box Cox transformation: lambda= -0.9999242 
+## 
+## Coefficients:
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in sqrt(diag(x$var.coef)): NaNs produced
+\end{verbatim}
+
+\begin{verbatim}
+##          sar1     sar2     sma1  drift
+##       -0.1604  -0.3213  -0.7427      0
+## s.e.   0.0666   0.0815   0.1256    NaN
+## 
+## sigma^2 estimated as 1.429e-07:  log likelihood=878.67
+## AIC=-1747.34   AICc=-1746.61   BIC=-1734.95
+## 
+## Training set error measures:
+##                    ME     RMSE      MAE      MPE     MAPE     MASE
+## Training set 758.0031 2294.668 1101.829 9.975516 15.40116 2.203493
+##                   ACF1
+## Training set 0.8644324
+\end{verbatim}
+
+The estimated drift term has a very large standard error. Further the
+variance of \(\hat{y}_{t+1}\) is 6903171.42872441 which is very large
 
 \section{Log Transformation}\label{log-transformation}
 
@@ -214,23 +272,17 @@ Bias correction is giving wiered results for \texttt{Total} series.
 \hline
 R.method & Bias & Unbiased (Method 1) & Unbiased (Method 2)\\
 \hline
-Base & 12.06 & 11.87 & 12.52\\
+Base & 4.47 & 4.43 & 4.51\\
 \hline
-Bottom-up & 17.37 & 15.47 & 21.58\\
+Bottom-up & 6.36 & 5.26 & 8.06\\
 \hline
-MinT(Shrink) & 9.36 & 9.25 & 10.35\\
+MinT(Shrink) & 4.32 & 4.16 & 4.61\\
 \hline
-OLS & 11.59 & 11.41 & 11.98\\
+OLS & 4.34 & 4.31 & 4.36\\
 \hline
-WLS & 15.00 & 13.83 & 17.55\\
+WLS & 4.82 & 4.38 & 5.43\\
 \hline
 \end{tabular}
-
-\begin{verbatim}
-## Adding missing grouping variables: `F.method`
-\end{verbatim}
-
-\includegraphics{TourismData-Final-results_files/figure-latex/unnamed-chunk-5-1.pdf}
 
 
 \end{document}
