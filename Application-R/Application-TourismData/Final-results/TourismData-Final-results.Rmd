@@ -28,31 +28,25 @@ library(kableExtra)
 OvernightTrips_OriginalScale_Fc <- read.csv("OvernightTrips_OriginalScale_Fc.csv")[,-1]
 
 OvernightTrips_OriginalScale_Fc %>% 
-  mutate(SquaredE = (Overnight_Trips - Overnight_Trips_Fc)^2) %>% 
+  mutate(SquaredE = (Overnight_Trips - Overnight_Trips_Fc)^2, 
+         Fc_horizon = recode(Fc_horizon, "1" = "h=1", "2" = "h=2",
+                             "3" = "h=3", "4" = "h=4", "5" = "h=5", "6" = "h=6")) %>% 
   group_by(`R.method`, Fc_horizon, Replication) %>% 
   summarise(MSE = mean(SquaredE)) -> OvernightTrips_OriginalScale_MSE
 
 
-DF_MSE <- DF_LogTrans %>%
-  mutate(SquaredE = (`Actual` - `Forecasts`)^2) %>%
-  filter(`Forecast_Horizon` == 1) %>%
-  dplyr::select(-`Forecast_Horizon`) %>%
-  group_by(`F.method`, `R.method`, Replication) %>%
-  summarise(MSE = mean(SquaredE))
-
-
-DF_MSE %>%
-  filter(`F.method`=="Unbiased_M1", `R.method`%in% c("Base", "OLS", "MinT(Shrink)", "WLS")) %>%
+OvernightTrips_OriginalScale_MSE %>%
+  filter(`R.method`%in% c("Base", "OLS", "MinT(Shrink)", "WLS")) %>%
   spread(key = `R.method`, value = MSE) %>%
   mutate("Base-OLS" = Base - OLS,
          "Base-MinT" = Base - `MinT(Shrink)`,
          "Base-WLS" = Base - WLS) %>%
-  dplyr::select(Replication, `Base-OLS`, `Base-MinT`, `Base-WLS`) %>%
+  dplyr::select(Fc_horizon, Replication, `Base-OLS`, `Base-MinT`, `Base-WLS`) %>%
   rename("OLS" = "Base-OLS", "MinT" = "Base-MinT", "WLS" = "Base-WLS") %>%
   gather(`OLS`, `WLS`, `MinT`,  key = Method, value = MSE) %>%
   mutate(Method = factor(Method, levels = c("OLS", "MinT", "WLS"))) %>%
   ggplot(aes(x = Method, y = MSE)) +
-  geom_boxplot() +
+  geom_boxplot() + facet_wrap(~ Fc_horizon) +
   ylab("MSE") + xlab("Reconciliation Method")
 
 ```
