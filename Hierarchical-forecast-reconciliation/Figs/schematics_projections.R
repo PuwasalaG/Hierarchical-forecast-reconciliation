@@ -4,12 +4,13 @@ library(latex2exp)
 library(tikzDevice)
 library(scatterplot3d)
 library(tidyverse)
-options(tikzLatexPackages=c(getOption("tikzLatexPackages"),"\\usepackage{amsfonts}","\\usepackage{bm}"),
+options(tikzDefaultEngine = 'pdftex', tikzLatexPackages=c(getOption("tikzLatexPackages"),"\\usepackage{amsfonts}","\\usepackage{bm}"),
         tikzFooter = "\\caption{a caption}")
 
 
 # Generating errors
 set.seed(1989)
+rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
 e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
 e_sample <- e + matrix(rep(c(0.6,0.3), 100), nrow = 100, ncol = 2, byrow = T)
 
@@ -21,9 +22,9 @@ tikz('InsampDir_1.tex',height=5, width = 5, standAlone = TRUE)
 # dev.control(displaylist="enable")
 
 plot.new()
-plot.window(xlim = c(-0.25,4),ylim = c(-0.5,5), asp = 1)
-lines(c(0,0),c(-1,5))
-lines(c(-1,5),c(0,0))
+plot.window(xlim = c(-1,4),ylim = c(-3,5), asp = 1)
+lines(c(0,0),c(-3,5))
+lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,3.5,1.75,lwd=3)
 text(3.5,1.75,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 2.5)
@@ -40,6 +41,8 @@ text(1,4,"{${\\bm R}$}",pos=3, cex = 2.5)
 dev.off()
 tools::texi2dvi('InsampDir_1.tex',pdf=T)
 
+tools::texi2pdf('InsampDir_1.tex')
+
 
 ####################
 
@@ -49,9 +52,9 @@ tikz('InsampDir_2.tex',height=5, width = 5, standAlone = TRUE)
 # dev.control(displaylist="enable")
 
 plot.new()
-plot.window(xlim = c(-0.25,4),ylim = c(-0.5,5), asp = 0.8)
-lines(c(0,0),c(-1,5))
-lines(c(-1,5),c(0,0))
+plot.window(xlim = c(-1,4),ylim = c(-3,5), asp = 1)
+lines(c(0,0),c(-3,5))
+lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,3.5,1.75,lwd=3)
 text(3.5,1.75,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 2.5)
@@ -65,7 +68,7 @@ arrows(0,0,1,4,lwd=3)
 text(1,4,"{${\\bm R}$}",pos=3, cex = 2.5)
 
 points(1.5,3,pch=20,cex=2,col='blue')
-text(1.5,3,"{$\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3,offset = 1.5, cex = 2.5)
+text(1.8,3,"{$\\small \\color{blue}{\\hat{\\bm{y}}}$}",pos = 3,offset = 1.5, cex = 2.5)
 
 points(0.6,0.3,pch=20,cex=2,col='black')
 text(0.6,0.3,"{$\\color{black}{\\bm{y}}$}",pos = 1,offset = 1, font = 4, cex = 2.5)
@@ -83,9 +86,9 @@ tikz('OrthProj.tex',height=5, width = 5, standAlone = TRUE)
 # dev.control(displaylist="enable")
 
 plot.new()
-plot.window(xlim = c(-0.25,4),ylim = c(-0.5,5), asp = 1)
-lines(c(0,0),c(-1,5))
-lines(c(-1,5),c(0,0))
+plot.window(xlim = c(-1,4),ylim = c(-3,5), asp = 1)
+lines(c(0,0),c(-3,5))
+lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,3.5,1.75,lwd=3)
 text(3.5,1.75,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 2.5)
@@ -109,7 +112,7 @@ arrows(x0 = e_sample[,1], y0 = e_sample[,2],
        x1 = e_OLS[,1], y1 = e_OLS[,2], code = 0,
        lty = 2, col = "blue")
 
-# points(1.5,3,pch=20,cex=2,col='blue')
+# points(1.5,3,pch=20,cex=2,col='gray')
 # text(1.5,3,"{\\huge $\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3,offset = 1.5)
 
 points(0.6,0.3,pch=20,cex=2,col='black')
@@ -131,9 +134,9 @@ tikz('ObliqProj.tex',height=5, width = 5, standAlone = TRUE)
 
 
 plot.new()
-plot.window(xlim = c(-0.25,4),ylim = c(-0.5,5), asp = 0.8)
-lines(c(0,0),c(-1,5))
-lines(c(-1,5),c(0,0))
+plot.window(xlim = c(-1,4),ylim = c(-3,5), asp = 1)
+lines(c(0,0),c(-3,5))
+lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,3.5,1.75,lwd=3)
 text(3.5,1.75,"{$\\Huge \\mathfrak{s}$}",pos=4, cex = 2.5)
@@ -160,7 +163,7 @@ arrows(x0 = e_sample[,1], y0 = e_sample[,2],
        lty = 2, col = "blue")
 
 
-# points(1.5,3,pch=20,cex=2,col='blue')
+# points(1.5,3,pch=20,cex=2,col='gray')
 # text(1.5,3,"{\\huge $\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3,offset = 1.5)
 
 points(0.6,0.3,pch=20,cex=2,col='black')

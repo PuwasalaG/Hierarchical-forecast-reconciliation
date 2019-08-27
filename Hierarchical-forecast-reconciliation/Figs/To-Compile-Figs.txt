@@ -1,0 +1,17 @@
+\documentclass[10pt]{article}
+\usepackage{tikz}
+
+\usepackage[active,tightpage,psfixbb]{preview}
+
+\PreviewEnvironment{pgfpicture}
+
+\setlength\PreviewBorder{0pt}
+
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage{amsfonts}
+\usepackage{bm}\begin{document}
+
+
+
+\end{document}
