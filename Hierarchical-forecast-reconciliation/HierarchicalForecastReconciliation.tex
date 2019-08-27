@@ -8,6 +8,7 @@
 \usepackage{lipsum}
 \usepackage{amssymb, qtree, bm, multirow, textcmds, siunitx,paralist}
 \usepackage{mathrsfs, float, booktabs,todonotes,amsthm, xcolor,sidenotes, caption, subcaption}
+\usepackage[export]{adjustbox}
 
 \usepackage[bb=boondox]{mathalfa}
 \usepackage{tikz}
@@ -336,8 +337,8 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	\begin{figure}[H]
 		\centering
 		\small
-		\includegraphics[width = \textwidth]{Figs/BaseVsRecon_Emp_results.pdf}
-		\caption{Difference of MSE between Base forecasts and reconciled forecasts over the replications is presented. Positive values of the difference implies reconciliation improves the forecast accuracy than base forecasts.}\label{fig:BaseVSRecon_Fc}
+		\includegraphics[width = \textwidth]{Figs/OrthVsOblq_Proj_Emp_results.pdf}
+		\caption{MSE difference between base forecasts and reconciled forecasts over the replications is presented for forecast horizons $h = 1,...,6$. Positive values of the difference implies reconciliation improves the forecast accuracy than base forecasts.}\label{fig:BaseVSRecon_Fc}
 	\end{figure}
 	
 	\subsection{MinT}
@@ -388,43 +389,82 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 
 %%%%%%%%%%%%%%%%%%%
 
-	\begin{figure}
-		\centering
-		\begin{subfigure}[t]{0.45\textwidth}
-			\centering
-			\includegraphics[width=\linewidth]{Figs/InsampDir_1.pdf} 
-%			\label{fig:InsampDir_1}
-		\end{subfigure}
-		\hfill
-		\begin{subfigure}[t]{0.45\textwidth}
-			\centering
-			\includegraphics[width=\linewidth]{Figs/InsampDir_2.pdf} 
-%			\label{fig:InsampDir_2}
-		\end{subfigure}
-		
-		\vspace{1cm}
-		
-		\begin{subfigure}[t]{0.45\textwidth}
-			\centering
-			\includegraphics[width=\linewidth]{Figs/OrthProj.pdf} 
-%			\label{fig:OrthProj}
-		\end{subfigure}
-		\hfill
-		\begin{subfigure}[t]{0.5\textwidth}
-			\centering
-			\includegraphics[width=\linewidth]{Figs/ObliqProj.pdf} 
-%			\label{fig:ObliqProj}
-		\end{subfigure}
-		
-%		\begin{subfigure}[t]{\textwidth}
+%	\begin{figure}
+%		\centering
+%		\begin{subfigure}[t]{0.45\textwidth}
 %			\centering
-%			\includegraphics[width=\linewidth]{example-image-c.pdf} 
-%			\caption{Price regulation} \label{fig:timing3}
+%			\includegraphics[width=\linewidth]{Figs/InsampDir_1.pdf} 
+%%			\label{fig:InsampDir_1}
 %		\end{subfigure}
-		\caption{A schematic to represent orthogonal and oblique reconciliation.  Points in orange colour in top left figure represent the insample errors. $\bm{R}$ shows the most likely direction of deviations from the coherent subspace $\mathfrak{s}$. Grey points in top right figure indicate  potential realisations of the base forecast while the blue dot ${\hat{\bm y}}$ indicates one such realisation. The black dot ${\bm y}$ denotes the (unknown) target of the forecast. Bottom left figure shows the orthogonal projection of all potential realisations onto the coherent subspace while bottom right figure shows the oblique projection.} \label{fig:OthogonalVSOblique_projection}
-	\end{figure}
+%		\hfill
+%		\begin{subfigure}[t]{0.45\textwidth}
+%			\centering
+%			\includegraphics[width=\linewidth]{Figs/InsampDir_2.pdf} 
+%%			\label{fig:InsampDir_2}
+%		\end{subfigure}
+%		
+%		\vspace{1cm}
+%		
+%		\begin{subfigure}[t]{0.45\textwidth}
+%			\centering
+%			\includegraphics[width=\linewidth]{Figs/OrthProj.pdf} 
+%%			\label{fig:OrthProj}
+%		\end{subfigure}
+%		\hfill
+%		\begin{subfigure}[t]{0.45\textwidth}
+%			\centering
+%			\includegraphics[width=\linewidth]{Figs/ObliqProj.pdf} 
+%%			\label{fig:ObliqProj}
+%		\end{subfigure}
+%		
+%%		\begin{subfigure}[t]{\textwidth}
+%%			\centering
+%%			\includegraphics[width=\linewidth]{example-image-c.pdf} 
+%%			\caption{Price regulation} \label{fig:timing3}
+%%		\end{subfigure}
+%		\caption{A schematic to represent orthogonal and oblique reconciliation.  Points in orange colour in top left figure represent the insample errors. $\bm{R}$ shows the most likely direction of deviations from the coherent subspace $\mathfrak{s}$. Grey points in top right figure indicate  potential realisations of the base forecast while the blue dot ${\hat{\bm y}}$ indicates one such realisation. The black dot ${\bm y}$ denotes the (unknown) target of the forecast. Bottom left figure shows the orthogonal projection of all potential realisations onto the coherent subspace while bottom right figure shows the oblique projection.} \label{fig:OthogonalVSOblique_projection}
+%	\end{figure}
 
 
+	\begin{figure}
+	
+	\begin{adjustbox}{minipage=\linewidth,scale=0.7}
+	\begin{subfigure}[t]{0.45\textwidth}
+%		\centering
+		\input{Figs/InsampDir_1} 
+		%			\label{fig:InsampDir_1}
+	\end{subfigure}
+	\hspace{1cm}
+	\begin{subfigure}[t]{0.45\textwidth}
+%		\centering
+		\input{Figs/InsampDir_2} 
+		%			\label{fig:InsampDir_2}
+	\end{subfigure}
+	
+	\vfill
+%	\vspace{0.3cm}
+	
+	\begin{subfigure}[t]{0.45\textwidth}
+%		\centering
+		\input{Figs/OrthProj} 
+		%			\label{fig:OrthProj}
+	\end{subfigure}
+	\hspace{1cm}
+	\begin{subfigure}[t]{0.45\textwidth}
+%		\centering
+		\input{Figs/ObliqProj} 
+		%			\label{fig:ObliqProj}
+	\end{subfigure}
+	
+	%		\begin{subfigure}[t]{\textwidth}
+	%			\centering
+	%			\includegraphics[width=\linewidth]{example-image-c.pdf} 
+	%			\caption{Price regulation} \label{fig:timing3}
+	%		\end{subfigure}
+	
+	\end{adjustbox}
+\caption{A schematic to represent orthogonal and oblique reconciliation.  Orange colour points in top left figure represent the insample errors. $\bm{R}$ shows the most likely direction of deviations from the coherent subspace $\mathfrak{s}$. Grey points in top right figure indicate  potential realisations of the base forecast while the blue dot ${\hat{\bm y}}$ indicates one such realisation. The black dot ${\bm y}$ denotes the (unknown) target of the forecast. Bottom left figure shows the orthogonal projection of all potential realisations onto the coherent subspace while bottom right figure shows the oblique projection.} \label{fig:OthogonalVSOblique_projection}
+\end{figure}
 
 	
 %		\begin{figure}[H]
