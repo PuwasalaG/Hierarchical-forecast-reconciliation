@@ -299,7 +299,7 @@
 	\end{figure}
 	
 	
-	Figure \ref{fig:Schematic_OLSRecon} clearly shows that $\hat{\bm{y}}$, $\tilde{\bm{y}}$ and $\bm{y}$ form a right angled triangle with $\tilde{y}$ at the right-angled vertex.  In this triangle the line between $\bm{y}$ and $\hat{\bm{y}}$ is the hypotenuse and therefore must be longer than the distance between $\bm{y}$ and $\tilde{\bm{y}}$.  As such reconciliation is guaranteed to reduce the squared error of the forecast.
+	Figure \ref{fig:Schematic_OLSRecon} clearly shows that $\hat{\bm{y}}$, $\tilde{\bm{y}}$ and $\bm{y}$ form a right angled triangle with $\tilde{\bm{y}}$ at the right-angled vertex.  In this triangle the line between $\bm{y}$ and $\hat{\bm{y}}$ is the hypotenuse and therefore must be longer than the distance between $\bm{y}$ and $\tilde{\bm{y}}$.  As such reconciliation is guaranteed to reduce the squared error of the forecast.
 	
     Theorem~\ref{th:distred} is in some ways more powerful than perhaps previously understood.  Crucially, the result is not a result that requires taking expectations.  This distance reducing property will hold for any realisation and any forecast and not just on average.  Nothing needs to be assumed about the statistical properties of the data generating process or the process by which forecasts are made.
 
@@ -394,13 +394,13 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 %		\centering
 %		\begin{subfigure}[t]{0.45\textwidth}
 %			\centering
-%			\includegraphics[width=\linewidth]{Figs/InsampDir_1.pdf} 
+%			\includegraphics[width=\linewidth]{Figs/InsampDir_1.pdf}
 %%			\label{fig:InsampDir_1}
 %		\end{subfigure}
 %		\hfill
 %		\begin{subfigure}[t]{0.45\textwidth}
 %			\centering
-%			\includegraphics[width=\linewidth]{Figs/InsampDir_2.pdf} 
+%			\includegraphics[width=\linewidth]{Figs/InsampDir_2.pdf}
 %%			\label{fig:InsampDir_2}
 %		\end{subfigure}
 %		
@@ -408,19 +408,19 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 %		
 %		\begin{subfigure}[t]{0.45\textwidth}
 %			\centering
-%			\includegraphics[width=\linewidth]{Figs/OrthProj.pdf} 
+%			\includegraphics[width=\linewidth]{Figs/OrthProj.pdf}
 %%			\label{fig:OrthProj}
 %		\end{subfigure}
 %		\hfill
 %		\begin{subfigure}[t]{0.45\textwidth}
 %			\centering
-%			\includegraphics[width=\linewidth]{Figs/ObliqProj.pdf} 
+%			\includegraphics[width=\linewidth]{Figs/ObliqProj.pdf}
 %%			\label{fig:ObliqProj}
 %		\end{subfigure}
 %		
 %%		\begin{subfigure}[t]{\textwidth}
 %%			\centering
-%%			\includegraphics[width=\linewidth]{example-image-c.pdf} 
+%%			\includegraphics[width=\linewidth]{example-image-c.pdf}
 %%			\caption{Price regulation} \label{fig:timing3}
 %%		\end{subfigure}
 %		\caption{A schematic to represent orthogonal and oblique reconciliation.  Points in orange colour in top left figure represent the insample errors. $\bm{R}$ shows the most likely direction of deviations from the coherent subspace $\mathfrak{s}$. Grey points in top right figure indicate  potential realisations of the base forecast while the blue dot ${\hat{\bm y}}$ indicates one such realisation. The black dot ${\bm y}$ denotes the (unknown) target of the forecast. Bottom left figure shows the orthogonal projection of all potential realisations onto the coherent subspace while bottom right figure shows the oblique projection.} \label{fig:OthogonalVSOblique_projection}
@@ -431,13 +431,13 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	\begin{adjustbox}{minipage=\linewidth,scale=0.7}
 	\begin{subfigure}[t]{0.45\textwidth}
 %		\centering
-		\input{Figs/InsampDir_1} 
+		\input{Figs/InsampDir_1}
 		%			\label{fig:InsampDir_1}
 	\end{subfigure}
 	\hspace{1cm}
 	\begin{subfigure}[t]{0.45\textwidth}
 %		\centering
-		\input{Figs/InsampDir_2} 
+		\input{Figs/InsampDir_2}
 		%			\label{fig:InsampDir_2}
 	\end{subfigure}
 	
@@ -446,19 +446,19 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	
 	\begin{subfigure}[t]{0.45\textwidth}
 %		\centering
-		\input{Figs/OrthProj} 
+		\input{Figs/OrthProj}
 		%			\label{fig:OrthProj}
 	\end{subfigure}
 	\hspace{1cm}
 	\begin{subfigure}[t]{0.45\textwidth}
 %		\centering
-		\input{Figs/ObliqProj} 
+		\input{Figs/ObliqProj}
 		%			\label{fig:ObliqProj}
 	\end{subfigure}
 	
 	%		\begin{subfigure}[t]{\textwidth}
 	%			\centering
-	%			\includegraphics[width=\linewidth]{example-image-c.pdf} 
+	%			\includegraphics[width=\linewidth]{example-image-c.pdf}
 	%			\caption{Price regulation} \label{fig:timing3}
 	%		\end{subfigure}
 	
@@ -617,7 +617,7 @@ where, $\hat{w}_{t+h|t}$ is the $h$-step-ahead forecast from the Box-Cox transfo
 
 The second scenario of bias adjustment we explore is using the in-sample forecast error mean of the biased forecasts to adjust the out of sample forecasts. We refer to this a Method-2 in the results that follow.
 	
-Using the three sets of base forecasts we generate coherent forecasts using the bottom-up approach but also implementing OLS, WLS and MinT reconciliation projections and compare the results for when the base forecasts are biased and bias-adjusted (unbiased). We discuss the results next. 
+Using the three sets of base forecasts we generate coherent forecasts using the bottom-up approach but also implementing OLS, WLS and MinT reconciliation projections and compare the results for when the base forecasts are biased and bias-adjusted (unbiased). We discuss the results next.
 
 \subsection{Results and discussion}
 
@@ -656,10 +656,10 @@ Using the three sets of base forecasts we generate coherent forecasts using the 
 
 Table \ref{tab:Results_MSE} presents the Mean Squared Error (MSE) over the $140$ replications for $1$-step-ahead forecasts. Note that the conclusion that follow extend almost identically to forecast horizons $2-6$. We do not present these here to save space but they are available upon request.
 
-General findings: 
+General findings:
 
 - Bias adjusting using Method 1, i.e., a proper method improves forecast accuracy.
-- Bias adjusting using Method 2, does not. The transformations we consider here are multiplicative type transformations - the in-sample residual adjustment is an additive adjustment hence it does not help. 
+- Bias adjusting using Method 2, does not. The transformations we consider here are multiplicative type transformations - the in-sample residual adjustment is an additive adjustment hence it does not help.
 
 \textcolor{red}{I have stopped here. Will continue after we have all results.}
 
