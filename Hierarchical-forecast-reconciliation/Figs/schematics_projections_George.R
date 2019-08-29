@@ -27,10 +27,10 @@ lines(c(0,0),c(-3,5))
 lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,4.6,1.25,lwd=2)
-text(4.6,1.25,"{$\\large \\mathfrak{s}$}",pos=4, cex = 1)
+text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1)
 
 arrows(0,0,2.4,4.8,lwd=2)
-text(2.4,4.8,"{$\\large \\bm{R}$}",pos=3, cex = 1)
+text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1)
 
 #rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
 # e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
@@ -54,11 +54,11 @@ lines(c(0,0),c(-3,5))
 lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,4.6,1.25,lwd=2)
-text(4.6,1.25,"{$\\large \\mathfrak{s}$}",pos=4, cex = 1)
+text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1)
 
 
 arrows(0,0,2.4,4.8,lwd=2)
-text(2.4,4.8,"{$\\large \\bm{R}$}",pos=3, cex = 1)
+text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1)
 
 #rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
 # e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
@@ -89,11 +89,11 @@ lines(c(0,0),c(-3,5))
 lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,4.6,1.25,lwd=2)
-text(4.6,1.25,"{$\\large \\mathfrak{s}$}",pos=4, cex = 1)
+text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1)
 
 
 arrows(0,0,2.4,4.8,lwd=2)
-text(2.4,4.8,"{$\\large \\bm{R}$}",pos=3, cex = 1)
+text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1)
 
 #rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
 # e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
@@ -131,11 +131,11 @@ lines(c(0,0),c(-3,5))
 lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,4.6,1.25,lwd=2)
-text(4.6,1.25,"{$\\large \\mathfrak{s}$}",pos=4, cex = 1)
+text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1)
 
 
 arrows(0,0,2.4,4.8,lwd=2)
-text(2.4,4.8,"{$\\large \\bm{R}$}",pos=3, cex = 1)
+text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1)
 
 #rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
 # e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
@@ -179,11 +179,11 @@ lines(c(0,0),c(-3,5))
 lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,4.6,1.25,lwd=2)
-text(4.6,1.25,"{$\\large \\mathfrak{s}$}",pos=4, cex = 1)
+text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1)
 
 
 arrows(0,0,2.4,4.8,lwd=2)
-text(2.4,4.8,"{$\\large \\bm{R}$}",pos=3, cex = 1)
+text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1)
 
 #rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
 # e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
