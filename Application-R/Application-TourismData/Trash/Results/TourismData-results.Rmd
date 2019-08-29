@@ -10,12 +10,9 @@ date: "31 July 2019"
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
-library(fpp2)
 library(Matrix)
 library(hts)
 library(readr)
-library(BigVAR)
-library(vars)
 library(tibble)
 library(kableExtra)
 library(reshape2)
@@ -159,7 +156,7 @@ TS <- AllTS %>%
 I have replaced the anomalous observation in this series with the average of December for predecessive and successive years of 2002. Then I have refitted the models for automatically chosen Box-Cox transformed data. Back-transformed and back-transformed bias-adjusted forecasts were then obtained. The results are as follows. 
 
 ```{r echo=FALSE}
-load("TourismData_BoxCoxTransBiasCorrection_UnivARIMA_new.RData")
+load("TourismData_BoxCoxTransBiasCorrectionM1_UnivARIMA_AnomalyAdj.RData")
 
 DF %>% 
   mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_BoxCox_2
@@ -247,7 +244,7 @@ DF_MSE %>%
 
 In this exercise I have used only the log transformation. As we can see from the results, the bias adjusted forecasts are outperforming biased forecasts as we would expect. 
 ```{r, echo=FALSE}
-load("TourismData_LogTransBiasCorrection_UnivARIMA.RData")
+load("TourismData_LogTransBiasCorrectionM1_UnivARIMA.RData")
 
 DF -> DF_Log
 
@@ -267,5 +264,30 @@ Avg_MSE_tab1_Log %>%
                                  "h=5" = 2, "h=6" = 2)) 
 
 ```
+
+```{r}
+
+DF_log_MSE <- DF_Log %>% 
+  mutate(SquaredE = (`Actual` - `Forecasts`)^2) %>% 
+  group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>% 
+  summarise(MSE = mean(SquaredE)) %>% 
+  mutate(Forecast_Horizon = recode(Forecast_Horizon, "1" = "h=1", "2" = "h=2", "3"= "h=3", "4" = "h=4", "5" = "h=5", "6" = "h=6"))
+
+
+DF_log_MSE %>% 
+  filter(`F-method`=="ARIMA_unbias", `R-method`%in% c("Base", "OLS", "MinT(Shrink)", "WLS"), Forecast_Horizon == "h=1") %>% 
+  spread(key = `R-method`, value = MSE) %>% 
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)`,
+         "Base-WLS" = Base - WLS) %>% 
+  dplyr::select(Replication, `Base-OLS`, `Base-MinT`, `Base-WLS`) %>%
+  rename("OLS" = "Base-OLS", "MinT" = "Base-MinT", "WLS" = "Base-WLS") %>% 
+  gather(`OLS`, `WLS`, `MinT`,  key = Method, value = MSE) %>% 
+  mutate(Method = factor(Method, levels = c("OLS", "MinT", "WLS"))) %>% 
+  ggplot(aes(x = Method, y = MSE)) + 
+  geom_boxplot() + 
+  ylab("MSE") + xlab("Reconciliation Method")
+
+  ```
 
 

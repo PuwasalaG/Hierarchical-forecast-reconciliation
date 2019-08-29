@@ -20,18 +20,18 @@ library(kableExtra)
 ```
 
 
-# Box and whisker plots for orthogonal and oblique projections
+# Box and whisker plots for orthogonal and oblique projections from better models
 
 
 
 ```{r, echo=FALSE}
 OvernightTrips_OriginalScale_Fc <- read.csv("OvernightTrips_OriginalScale_Fc.csv")[,-1]
 
-OvernightTrips_OriginalScale_Fc %>% 
-  mutate(SquaredE = (Overnight_Trips - Overnight_Trips_Fc)^2, 
+OvernightTrips_OriginalScale_Fc %>%
+  mutate(SquaredE = (Overnight_Trips - Overnight_Trips_Fc)^2,
          Fc_horizon = recode(Fc_horizon, "1" = "h=1", "2" = "h=2",
-                             "3" = "h=3", "4" = "h=4", "5" = "h=5", "6" = "h=6")) %>% 
-  group_by(`R.method`, Fc_horizon, Replication) %>% 
+                             "3" = "h=3", "4" = "h=4", "5" = "h=5", "6" = "h=6")) %>%
+  group_by(`R.method`, Fc_horizon, Replication) %>%
   summarise(MSE = mean(SquaredE)) -> OvernightTrips_OriginalScale_MSE
 
 
@@ -51,182 +51,42 @@ OvernightTrips_OriginalScale_MSE %>%
 
 ```
 
+# Box and whisker plots for orthogonal and oblique projections from misspecified models
 
 
-
-# BoxCox Transformation
 
 ```{r, echo=FALSE}
-DF_BoxCoxTrans <- read.csv("DF_BoxCoxTrans.csv")[,-1]
+OvernightTrips_OriginalScaleMisspecified_Fc <- read.csv("OvernightTrips_OriginalScaleMisspecified_Fc.csv")[,-1]
 
-DF_BoxCoxTrans %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_BoxCoxTrans
-
-DF_BoxCoxTrans %>%
-  group_by(`F.method`, `R.method`, Forecast_Horizon) %>%
-  summarise(MSE = round(mean(SquaredE)/1e3, digits = 2)) %>%
-  filter(Forecast_Horizon == 1) %>%
-  ungroup() %>%
-  dplyr::select(-Forecast_Horizon)-> Avg_BoxCox_MSE_h1
-
-Avg_BoxCox_MSE_h1 %>%
-  mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)",
-                           Unbiased_M2 = "Unbiased (Method 2)")) %>%
-  spread(key = F.method, value = MSE) %>%
-  kable(format = "latex")
-
-```
-
-# More analysis on BoxCox transformed results
-
-```{r echo=FALSE}
-DF_BoxCoxTrans %>% 
-  group_by(`F.method`, `R.method`, Forecast_Horizon, Series) %>% 
-  summarise(MSE = round(mean(SquaredE)/1e3, digits = 2)) %>% 
-  filter(R.method == "Base", Forecast_Horizon == 1, 
-         F.method %in%c("Bias","Unbiased_M1")) %>% 
-  ungroup() %>% 
-  dplyr::select(-R.method, -Forecast_Horizon) %>% 
-  spread(key = F.method, value = MSE) %>% 
-  mutate("Bias-Unbiase" = Bias - Unbiased_M1) %>% 
-  filter(`Bias-Unbiase` < -100)
+OvernightTrips_OriginalScaleMisspecified_Fc %>%
+  mutate(SquaredE = (Overnight_Trips - Overnight_Trips_Fc)^2,
+         Fc_horizon = recode(Fc_horizon, "1" = "h=1", "2" = "h=2",
+                             "3" = "h=3", "4" = "h=4", "5" = "h=5", "6" = "h=6")) %>%
+  group_by(`R.method`, Fc_horizon, Replication) %>%
+  summarise(MSE = mean(SquaredE)) -> OvernightTrips_OriginalScaleMisspecified_MSE
 
 
+OvernightTrips_OriginalScaleMisspecified_MSE %>%
+  filter(`R.method`%in% c("Base", "OLS", "MinT(Shrink)", "WLS")) %>%
+  spread(key = `R.method`, value = MSE) %>%
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)`,
+         "Base-WLS" = Base - WLS) %>%
+  dplyr::select(Fc_horizon, Replication, `Base-OLS`, `Base-MinT`, `Base-WLS`) %>%
+  rename("OLS" = "Base-OLS", "MinT" = "Base-MinT", "WLS" = "Base-WLS") %>%
+  gather(`OLS`, `WLS`, `MinT`,  key = Method, value = MSE) %>%
+  mutate(Method = factor(Method, levels = c("OLS", "MinT", "WLS"))) %>%
+  ggplot(aes(x = Method, y = MSE)) +
+  geom_boxplot() + facet_wrap(~ Fc_horizon) +
+  ylab("MSE") + xlab("Reconciliation Method")
 
 ```
 
-Bias correction is giving wiered results for `Total` series. 
-
-```{r echo=FALSE}
-DF_BoxCoxTrans %>% 
-  filter(Forecast_Horizon == 1, Series == "Total") -> DF_BoxCoxTrans_Tot_h1
-
-# DF_BoxCoxTrans %>% 
-#   filter(Forecast_Horizon == 1, Series == "A") -> DF_BoxCoxTrans_A_h1
-# 
-# DF_BoxCoxTrans %>% 
-#   filter(Forecast_Horizon == 1, Series == "B") -> DF_BoxCoxTrans_B_h1
-
-
-
-# DF_BoxCoxTrans_h1 %>% 
-#   filter(Series == "Total", R.method == "Base", F.method == "Bias") %>% 
-#   dplyr::select(Actual, Replication) -> Total_BoxCox_True
-  
-  
-DF_BoxCoxTrans_Tot_h1 %>% 
-  filter(R.method == "Base", F.method %in%c("Bias","Unbiased_M1")) %>%
-  ungroup() %>% 
-  dplyr::select(F.method, Forecasts, Actual, Replication) %>% 
-  spread(key = F.method, value = Forecasts) %>% 
-  gather(-Replication, key = "Forecasts/Actual", value = Val) -> DF_BoxCoxTrans_Tot_h1
-  
-DF_BoxCoxTrans_Tot_h1 %>% 
-  mutate(`Forecasts/Actual` = recode(`Forecasts/Actual`, "Unbiased_M1" = "Unbiased")) %>%   ggplot() + 
-  geom_line(aes(x = Replication, y = Val, color = `Forecasts/Actual`)) + 
-  ylab("Forecasts/Actual") + 
-  ggtitle("Forecasts for Total series follow from BoxCox Transformation") + 
-  theme(legend.position="bottom", legend.title = element_blank()) 
-  
-#  DF_BoxCoxTrans_A_h1 %>% 
-#   filter(R.method == "Base", F.method %in%c("Bias","Unbiased_M1")) %>%
-#   ungroup() %>% 
-#   dplyr::select(F.method, Forecasts, Actual, Replication) %>% 
-#   spread(key = F.method, value = Forecasts) %>% 
-#   gather(-Replication, key = "Forecasts/Actual", value = Val) -> DF_BoxCoxTrans_A_h1
-#   
-# DF_BoxCoxTrans_A_h1 %>% 
-#   mutate(`Forecasts/Actual` = recode(`Forecasts/Actual`, "Unbiased_M1" = "Unbiased")) %>%   ggplot() + 
-#   geom_line(aes(x = Replication, y = Val, color = `Forecasts/Actual`)) + 
-#   ylab("Forecasts/Actual") + 
-#   ggtitle("Forecasts for NSW series follow from BoxCox Transformation") + 
-#   theme(legend.position="bottom", legend.title = element_blank()) 
-#  
-#  DF_BoxCoxTrans_B_h1 %>% 
-#   filter(R.method == "Base", F.method %in%c("Bias","Unbiased_M1")) %>%
-#   ungroup() %>% 
-#   dplyr::select(F.method, Forecasts, Actual, Replication) %>% 
-#   spread(key = F.method, value = Forecasts) %>% 
-#   gather(-Replication, key = "Forecasts/Actual", value = Val) -> DF_BoxCoxTrans_B_h1
-#   
-# DF_BoxCoxTrans_B_h1 %>% 
-#   mutate(`Forecasts/Actual` = recode(`Forecasts/Actual`, "Unbiased_M1" = "Unbiased")) %>%   ggplot() + 
-#   geom_line(aes(x = Replication, y = Val, color = `Forecasts/Actual`)) + 
-#   ylab("Forecasts/Actual") + 
-#   ggtitle("Forecasts for Victoria series follow from BoxCox Transformation") + 
-#   theme(legend.position="bottom", legend.title = element_blank()) 
-
-
-```
-
-```{r}
-
-DF_BoxCoxTrans_Tot_h1 %>% 
-  spread(key = `Forecasts/Actual`, value = Val) %>% 
-  mutate("Unb-Act" = Unbiased_M1 - Actual) %>% 
-  filter(`Unb-Act`>1000)
-
-```
-
-Very large bias corrected forecasts are given for some replications. For example in the rolling window Jul-2003 to Oct-2011. Observing the model auto.arima fits: 
-
-```{r echo=FALSE}
-OvernightTrips_Region <- read_csv("OvernightTrips_2017.csv")[,-(1:3)]
-
-## Replacing the odd value in `Adelaide Hills` with the average of its adjecent numbers ##
-
-OvernightTrips_Region %>% 
-  dplyr::select(`Adelaide Hills`) %>% 
-  filter(`Adelaide Hills` > 80) %>% 
-  as.numeric() -> a
-
-which(OvernightTrips_Region$`Adelaide Hills`==a) -> x
-
-OvernightTrips_Region %>% 
-  dplyr::select(`Adelaide Hills`) %>% 
-  filter(row_number() %in% c(60+12,60-12)) %>% 
-  summarise(mean(`Adelaide Hills`)) %>% 
-  as.numeric() -> b
-
-OvernightTrips_Region_new <- OvernightTrips_Region %>% 
-  mutate(`Adelaide Hills` = case_when(`Adelaide Hills`%% a == 0 ~ b, 
-                                      TRUE ~ as.double(`Adelaide Hills`)))
-
-#generating the hierarchy
-#Hierarchy<-suppressMessages(hts(Bottom_level, list(7, c(14,21,12,12,5,5,7))))
-Hierarchy <- suppressMessages(hts(OvernightTrips_Region_new, list(7, c(6,5,4,4,3,3,2), 
-                                                                  c(2,2,1,4,4,1,3,1,3,6,7,3,4,3,2,3,
-                                                                    3,4,2,3,1,1,1,2,2,3,4))))
-AllTS_new <- allts(Hierarchy) %>%
-  as_tibble()
-
-L <- 100
-
-```
-
-
-```{r echo=FALSE}
-j = 67
-Train <- AllTS_new[j:(L+j-1),]
-TS <- Train[,"Total"] %>% ts(frequency = 12)
-fit <- auto.arima(TS, lambda = "auto", biasadj = FALSE, stepwise = FALSE, approximation = FALSE)
-Fc <- forecast(fit, h=1)
-
-Fc_trans <- Fc$mean
-L_PI <- Fc$lower[,"95%"]
-sig_h <- (Fc_trans - L_PI)/1.96
-sig2_h <- sig_h^2
-
-summary(fit)
-
-
-```
-
-The estimated drift term has a very large standard error. Further the variance of $\hat{y}_{t+1}$ is `r sig2_h` which is very large
 
 # Log Transformation
 
 ```{r, echo=FALSE}
-DF_LogTrans <- read.csv("DF_LogTrans.csv")[,-1]
+DF_LogTrans <- read.csv("OvernightTrips_LogTrans_Fc.csv")[,-1]
 
 DF_LogTrans %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_LogTrans
 
@@ -246,4 +106,50 @@ Avg_Log_MSE_h1 %>%
 ```
 
 
+# BoxCox Transformation for $\lambda \in (0,1)$
 
+
+
+```{r, echo=FALSE}
+DF_BoxCoxTrans_set1 <- read.csv("OvernightTrips_BoxCoxTrans_set1_Fc.csv")[,-1]
+
+DF_BoxCoxTrans_set1 %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_BoxCoxTrans_set1
+
+DF_BoxCoxTrans_set1 %>%
+  group_by(`F.method`, `R.method`, Forecast_Horizon) %>%
+  summarise(MSE = round(mean(SquaredE)/1e3, digits = 2)) %>%
+  filter(Forecast_Horizon == 1) %>%
+  ungroup() %>%
+  dplyr::select(-Forecast_Horizon)-> Avg_BoxCox_set1_MSE_h1
+
+Avg_BoxCox_set1_MSE_h1 %>%
+  mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)",
+                           Unbiased_M2 = "Unbiased (Method 2)")) %>%
+  spread(key = F.method, value = MSE) %>%
+  kable(format = "latex")
+
+```
+
+# BoxCox Transformation for $\lambda \in (-0.5,2)$
+
+
+
+```{r, echo=FALSE}
+DF_BoxCoxTrans_set2 <- read.csv("OvernightTrips_BoxCoxTrans_set2_Fc.csv")[,-1]
+
+DF_BoxCoxTrans_set2 %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_BoxCoxTrans_set2
+
+DF_BoxCoxTrans_set2 %>%
+  group_by(`F.method`, `R.method`, Forecast_Horizon) %>%
+  summarise(MSE = round(mean(SquaredE)/1e3, digits = 2)) %>%
+  filter(Forecast_Horizon == 1) %>%
+  ungroup() %>%
+  dplyr::select(-Forecast_Horizon)-> Avg_BoxCox_set2_MSE_h1
+
+Avg_BoxCox_set2_MSE_h1 %>%
+  mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)",
+                           Unbiased_M2 = "Unbiased (Method 2)")) %>%
+  spread(key = F.method, value = MSE) %>%
+  kable(format = "latex")
+
+```
