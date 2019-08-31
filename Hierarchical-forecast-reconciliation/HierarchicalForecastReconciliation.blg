@@ -1,4 +1,6 @@
-This is BibTeX, Version 0.99dThe top-level auxiliary file: HierarchicalForecastReconciliation.aux
+This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: HierarchicalForecastReconciliation.aux
 The style file: agsm.bst
 Database file #1: References_paper1.bib
 Repeated entry---line 94 of file References_paper1.bib
@@ -11,4 +13,45 @@ Repeated entry---line 442 of file References_paper1.bib
 I'm skipping whatever remains of this entry
 Warning--can't use both author and editor fields in VanErven2015a
 Warning--empty publisher in VanErven2015a
+You've used 19 entries,
+            2909 wiz_defined-function locations,
+            786 strings with 8578 characters,
+and the built_in function-call counts, 107563 in all, are:
+= -- 17819
+> -- 1325
+< -- 1
++ -- 8663
+- -- 407
+* -- 9531
+:= -- 21111
+add.period$ -- 20
+call.type$ -- 19
+change.case$ -- 264
+chr.to.int$ -- 19
+cite$ -- 21
+duplicate$ -- 311
+empty$ -- 647
+format.name$ -- 474
+if$ -- 19346
+int.to.chr$ -- 5
+int.to.str$ -- 0
+missing$ -- 19
+newline$ -- 63
+num.names$ -- 201
+pop$ -- 74
+preamble$ -- 1
+purify$ -- 285
+quote$ -- 0
+skip$ -- 257
+stack$ -- 0
+substring$ -- 25595
+swap$ -- 60
+text.length$ -- 267
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 72
+warning$ -- 2
+while$ -- 431
+width$ -- 0
+write$ -- 253
 (There were 2 error messages)
