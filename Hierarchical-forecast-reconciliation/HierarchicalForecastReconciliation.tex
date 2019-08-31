@@ -330,16 +330,8 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	
 	The implication of Theorem~\ref{th:gdistred} is that if the objective function is some weighted sum of squared errors, or a Mahalanobis distance, then the projection matrix $\bm{S}\left(\bm{S}'\bm{W}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{W}^{-1}$ is guaranteed to improve forecast accuracy over base forecasts, for an appropriately selected $\bm{W}$.
 	
-	\todo{Rob can you please read to make sure you are happy with this.}Note here that we rely here on the generalised Pythagorean Theorem (which involves an equality).  In contrast, \cite{WicEtAl2019} follow \cite{VanErven2015a} in stating their result in terms of the Generalised Pythagorean Inequality.  The proof of \cite{WicEtAl2019} requires an assumption about convexity so that the angle between the base forecast and coherent subspace must be greater than 90 degrees.  The proof we have provided here requires no such assumption, since this may not hold for an arbitrary $\bm{W}$.  As such the statement from \cite{WicEtAl2019} that {\em``MinT reconciled forecasts are at least as good as the incoherent forecasts''} should be qualified; this is only true with respect to a loss function that depends on ${\bm W}$.  If Euclidean distance (or mean squared error) is used, there will be cases where the MinT estimator does not improve upon base forecasts.
+	\todo{Rob can you please read to make sure you are happy with this.}Note here that we rely here on the generalised Pythagorean Theorem (which involves an equality).  In contrast, \cite{WicEtAl2019} follow \cite{VanErven2015a} in stating their result in terms of the Generalised Pythagorean Inequality.  The proof of \cite{WicEtAl2019} requires an assumption about convexity so that the angle between the base forecast and coherent subspace must be greater than 90 degrees.  The proof we have provided here requires no such assumption, since this may not hold for an arbitrary $\bm{W}$.  As such the statement from \cite{WicEtAl2019} that {\em``MinT reconciled forecasts are at least as good as the incoherent forecasts''} should be qualified; this is only true with respect to a loss function that depends on ${\bm W}$.  If Euclidean distance (or mean squared error) is used, there will be cases where the MinT estimator does not improve upon base forecasts.  This will be demonstrated using a real data set in the empirical study in section~\ref{sec:comparebase}.
 	
-	{\bf Discuss results in Figure 4 here}
-	
-	\begin{figure}[H]
-		\centering
-		\small
-		\includegraphics[width = \textwidth]{Figs/OrthVsOblq_Proj_Emp_results.pdf}
-		\caption{MSE difference between base forecasts and reconciled forecasts over the replications is presented for forecast horizons $h = 1,...,6$. Positive values of the difference implies reconciliation improves the forecast accuracy than base forecasts.}\label{fig:BaseVSRecon_Fc}
-	\end{figure}
 	
 	\subsection{MinT}
 	
@@ -597,6 +589,19 @@ Starting from a training window of $100$ observations, i.e., Jan-$1998$ to Apr-$
 \end{figure}
 
 \clearpage
+
+    \subsection{Comparison to Base Forecasts}\label{sec:comparebase}
+    
+    {\bf Discuss results here}
+    
+    \begin{figure}[H]
+    	\centering
+    	\small
+    	\includegraphics[width = \textwidth]{Figs/OrthVsOblq_Proj_Emp_results.pdf}
+    	\caption{MSE difference between base forecasts and reconciled forecasts over the replications is presented for forecast horizons $h = 1,...,6$. Positive values of the difference implies reconciliation improves the forecast accuracy than base forecasts.}\label{fig:BaseVSRecon_Fc}
+    \end{figure}
+         
+
 	\subsection{Transformations and bias adjustment}
 	
 	We first transform each series in the hierarchy using two types of transformations. Namely, we perform a log-transformation and also the more general Box-Cox transformation. A Box-Cox transformation is defined as,
