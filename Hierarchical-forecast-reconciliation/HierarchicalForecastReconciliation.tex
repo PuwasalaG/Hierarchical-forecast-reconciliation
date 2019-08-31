@@ -252,7 +252,7 @@
 	
 	We begin by considering the special case of an orthogonal projection whereby $\bm{G}=\left(\bm{S}'\bm{S}\right)^{-1}\bm{S}'$.  This is equivalent to so called OLS reconciliation as introduced by \cite{Hyndman2011}.  We refrain from any discussion of regression models focusing instead on geometric interpretations.  However the connection between OLS and orthogonal projection should be clear, in the context of regression modelling predicted values from OLS are obtained via an orthogonal projection of the response onto the span of the regressors.
 	
-	\subsection{Orthogonal projection}
+	\subsection{Orthogonal projection}\label{sec:orthogonal}
 	
 	In this section we discuss two sensible properties that can be achieved by reconciliation via orthogonal projection.
 \begin{itemize}
@@ -571,8 +571,6 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 Figure \ref{fig:Total_TSplots} shows time, sub-series and seasonal plots of the aggregate overnight trips for Australia. As is usual with tourism data, overnight these show a strong seasonal pattern. Overnight trips peak in January corresponding to the summer vacation season in Australia. There are also some lower peaks observed in April, July and October corresponding to school term breaks. On the other hand the month with the least overnight trips is February indicating that people travel least for the month following their summer vacation. The time plot also shows a pronounced upward trend starting from around 2010 till the end of the sample, with flows being fairly flat from the beginning of the sample and a slight downward trend during 2004-2010.
 
 The top panel of Figure \ref{fig:States_Zones_Regs_TSplots} shows time plots for the seven states, hence the first-level of the hierarchy. The panels below show some selected series from the second-level zones and the bottom-level regions of the geographical hierarchy. The plots display the diversity of time series features, within but also between levels. For example, noticeable at the first-level is the asynchronous seasonal pattern between Northern Territory and the other states. For the Northern Territory the high tourist season occurs during June-August with July being the peak, while the low season is during December-February. This reflects the tropical climate of the Northern Territory, with Australians mostly visiting the North during its dry winter-season rather than the wet summer season. Noticeable as we move to the lower levels is the variation in the signal-to-noise ratio, with the regional bottom-level series being noisier compared to the series from levels above. This of course highlights the importance of modelling series at all levels without any loss of valuable information. We should note here that we observed an anomalous (extremely high) observation for `Adelaide Hills' for December-2002. We replaced this observation with the average overnight trips on December-2001 and December-2003 for the same destination.
-
-Starting from a training window of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$ we generate $h=1$ to $h=6$ steps-ahead forecasts. Using a rolling window we repeat the exercise one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $135~6$-steps-ahead forecasts available for forecast evaluation.
 		
 	\begin{figure}
 		\centering
@@ -592,7 +590,9 @@ Starting from a training window of $100$ observations, i.e., Jan-$1998$ to Apr-$
 
     \subsection{Comparison to Base Forecasts}\label{sec:comparebase}
     
-    {\bf Discuss results here}
+    To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts.  For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package.  Using these fitted models, base forecasts are produced for $h=1$ to $6$-steps ahead for each series in the hierarchy.  This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $135~6$-steps-ahead forecasts available for forecast evaluation.
+    
+    After obtaining the base forecasts these are reconciled using three different methods; OLS reconciliation, WLS reconciliation using variance scaling\todo{George please check} and MinT use a shrinkage estimator for ${\bm W}$.  Squared forecast errors are computed for each series and aggregated, i.e. we compute the loss function described in Section~\ref{sec:othogonal}.  We then compute the difference in this loss function between base forecasts and reconciled forecasts, where positive values indicat that reconciled forecasts are more accurate. The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this measure over each rolling window.  As the theory predicts, OLS reconciliation always leads to an improvement relative to base forecasts, the entire boxplot for OLS reconciliation is above zero.  This is not the case for WLS and MinT which for some windows perform worse than base forecasts.  The boxplots also demonstrate that OLS reconciliation is more stable than WLS and MinT reconciliation, a result not entirely unsurprising since the latter two methods require estimation of a ${\bm W}$ matrix which in practice is not trivial.  Nonetheless when averaging over the entire rolling window the MinT estimator performs best on average which is again precisely what the theorem proved in \cite{WicEtAl2019} would suggest.
     
     \begin{figure}[H]
     	\centering
