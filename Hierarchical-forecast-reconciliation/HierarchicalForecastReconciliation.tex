@@ -417,48 +417,48 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 %%		\end{subfigure}
 %		\caption{A schematic to represent orthogonal and oblique reconciliation.  Points in orange colour in top left figure represent the insample errors. $\bm{R}$ shows the most likely direction of deviations from the coherent subspace $\mathfrak{s}$. Grey points in top right figure indicate  potential realisations of the base forecast while the blue dot ${\hat{\bm y}}$ indicates one such realisation. The black dot ${\bm y}$ denotes the (unknown) target of the forecast. Bottom left figure shows the orthogonal projection of all potential realisations onto the coherent subspace while bottom right figure shows the oblique projection.} \label{fig:OthogonalVSOblique_projection}
 %	\end{figure}
+%
+%	\begin{figure}
+%	
+%	\begin{adjustbox}{minipage=\linewidth,scale=0.7}
+%	\begin{subfigure}[t]{0.45\textwidth}
+%%		\centering
+%		\input{Figs/InsampDir_1}
+%		%			\label{fig:InsampDir_1}
+%	\end{subfigure}
+%	\hspace{1cm}
+%	\begin{subfigure}[t]{0.45\textwidth}
+%%		\centering
+%		\input{Figs/InsampDir_2}
+%		%			\label{fig:InsampDir_2}
+%	\end{subfigure}
+%	
+%	\vfill
+%%	\vspace{0.3cm}
+%	
+%	\begin{subfigure}[t]{0.45\textwidth}
+%%		\centering
+%		\input{Figs/Orthproj}
+%		%			\label{fig:OrthProj}
+%	\end{subfigure}
+%	\hspace{1cm}
+%	\begin{subfigure}[t]{0.45\textwidth}
+%%		\centering
+%		\input{Figs/ObliqProj}
+%		%			\label{fig:ObliqProj}
+%	\end{subfigure}
+%	
+%	%		\begin{subfigure}[t]{\textwidth}
+%	%			\centering
+%	%			\includegraphics[width=\linewidth]{example-image-c.pdf}
+%	%			\caption{Price regulation} \label{fig:timing3}
+%	%		\end{subfigure}
+%	
+%	\end{adjustbox}
+%\caption{A schematic to represent orthogonal and oblique reconciliation.  Orange colour points in top left figure represent the insample errors. $\bm{R}$ shows the most likely direction of deviations from the coherent subspace $\mathfrak{s}$. Grey points in top right figure indicate  potential realisations of the base forecast while the blue dot ${\hat{\bm y}}$ indicates one such realisation. The black dot ${\bm y}$ denotes the (unknown) target of the forecast. Bottom left figure shows the orthogonal projection of all potential realisations onto the coherent subspace while bottom right figure shows the oblique projection.} \label{fig:OthogonalVSOblique_projection}
+%\end{figure}
 
-	\begin{figure}
-	
-	\begin{adjustbox}{minipage=\linewidth,scale=0.7}
-	\begin{subfigure}[t]{0.45\textwidth}
-%		\centering
-		\input{Figs/InsampDir_1}
-		%			\label{fig:InsampDir_1}
-	\end{subfigure}
-	\hspace{1cm}
-	\begin{subfigure}[t]{0.45\textwidth}
-%		\centering
-		\input{Figs/InsampDir_2}
-		%			\label{fig:InsampDir_2}
-	\end{subfigure}
-	
-	\vfill
-%	\vspace{0.3cm}
-	
-	\begin{subfigure}[t]{0.45\textwidth}
-%		\centering
-		\input{Figs/Orthproj}
-		%			\label{fig:OrthProj}
-	\end{subfigure}
-	\hspace{1cm}
-	\begin{subfigure}[t]{0.45\textwidth}
-%		\centering
-		\input{Figs/ObliqProj}
-		%			\label{fig:ObliqProj}
-	\end{subfigure}
-	
-	%		\begin{subfigure}[t]{\textwidth}
-	%			\centering
-	%			\includegraphics[width=\linewidth]{example-image-c.pdf}
-	%			\caption{Price regulation} \label{fig:timing3}
-	%		\end{subfigure}
-	
-	\end{adjustbox}
-\caption{A schematic to represent orthogonal and oblique reconciliation.  Orange colour points in top left figure represent the insample errors. $\bm{R}$ shows the most likely direction of deviations from the coherent subspace $\mathfrak{s}$. Grey points in top right figure indicate  potential realisations of the base forecast while the blue dot ${\hat{\bm y}}$ indicates one such realisation. The black dot ${\bm y}$ denotes the (unknown) target of the forecast. Bottom left figure shows the orthogonal projection of all potential realisations onto the coherent subspace while bottom right figure shows the oblique projection.} \label{fig:OthogonalVSOblique_projection}
-\end{figure}
-
-\begin{figure}[!h]
+\begin{figure}[H]
     \centering
     \begin{subfigure}[!h]{0.48\textwidth}
         \includegraphics[width=\textwidth]{Figs/InsampDir_1_George.pdf}
@@ -511,7 +511,7 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	
 	The property that projections map all vectors in the coherent subspace onto themselves is also useful in proving the unbiasedness preserving property of reconciliation of \cite{WicEtAl2019}.  Before restating this proof using a  clear geometric interpretation we discuss in a precise fashion what is meant by unbiasedness.
 	
-	Suppose that the target of a point forecast is $\bm{\mu}_{t+h|t}:=\E(\bm{y}_{t+h}\mid\bm{y}_{1},\dots,\bm{y}_{t})$ where the expectation is taken over the predictive density.  Our point forecast can be thought of as an estimate of this quantity. The forecast is random due to uncertainty in the training sample and it is with respect to this uncertainty that unbiasedness is referred to \todo{or do we want to define unbiasedness of a forecast as the expected value of the forecast equals realisation? George: are these not equivalent? Should be put both? Rob what do think?}.  More concretely, the point forecast will be unbiased if $\E_{1:t}(\hat{\bm{y}}_{t+h|t})=\bm{\mu}_{t+h|t}$, where the subscript $1:t$ denotes an expectation taken over the training sample.
+	Suppose that the target of a point forecast is $\bm{\mu}_{t+h|t}:=\E(\bm{y}_{t+h}\mid\bm{y}_{1},\dots,\bm{y}_{t})$ where the expectation is taken over the predictive density.  Our point forecast can be thought of as an estimate of this quantity. The forecast is random due to uncertainty in the training sample and it is with respect to this uncertainty that unbiasedness is referred to.  More concretely, the point forecast will be unbiased if $\E_{1:t}(\hat{\bm{y}}_{t+h|t})=\bm{\mu}_{t+h|t}$, where the subscript $1:t$ denotes an expectation taken over the training sample.
 	
 	\begin{theo}[Unbiasedness preserving property]
 		For unbiased $\hat{\bm{y}}_{t+h|t}$, the reconciled point forecast is also an unbiased prediction as long as $\bm{SG}$ is a projection onto $\mathfrak{s}$.
@@ -551,17 +551,18 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 
     \subsection{Bias correction}
 	
-	Our own solution to dealing with biased forecasts is to bias correct {\em before} reconciliation.  In many cases the method for bias correction will be context specific.  For instance, in  our empirical study in Section~\ref{sec:EmpStudy} we consider a scenario where bias is induced via taking a Box-Cox transformation before modelling.  In this well-known case a number of bias correction methods exist.  Our particular choice of bias correction will be the Guererro method \citep{guerrero1993time}. \textcolor{red}{TODO: Read this again after the empirical application has been completed. I am saying this because my understanding is that we use the Guererro method to choose the lambda for the BoxCox transformation. Then we back transform the forecasts using the same lambda once with bias correcting using the factor that comes out of a Taylor series expansion around $\mu$ (programmed in fable/forecast package) and once without it hence looking at medians and not means - hence biased base forecasts. If my understanding here is correct I am not sure we can say we are using the Guererro method to bias correct.}
+	Our own solution to dealing with biased forecasts is to bias correct {\em before} reconciliation.  In many cases the method for bias correction will be context specific.  For instance, in  our empirical study in Section~\ref{sec:EmpStudy} we consider a scenario where bias is induced via taking either a log transformation or a Box-Cox transformation before modelling.  In this well-known case a number of bias correction methods exist based on Taylor expansions. %\textcolor{red}{TODO: Read this again after the empirical application has been completed. I am saying this because my understanding is that we use the Guererro method to choose the lambda for the BoxCox transformation. Then we back transform the forecasts using the same lambda once with bias correcting using the factor that comes out of a Taylor series expansion around $\mu$ (programmed in fable/forecast package) and once without it hence looking at medians and not means - hence biased base forecasts. If my understanding here is correct I am not sure we can say we are using the Guererro method to bias correct.}
 
 
 	
 	Alternatively, a more general purpose approach to bias correction is to simply estimate the bias by taking the sample mean of $\bm{y
-	}_{t+h}-\hat{\bm{y}}_{t+h|t}$ for all $t+h$ in the training sample.  This can be then subtracted from future forecasts.  As stated in the discussion of MinT, in-sample errors are already used to estimate the optimal direction of projection.  As such we see no problems with using the same errors to bias correct.  Geometrically, the intuition is simple.  In top left panel in Figure \ref{fig:OthogonalVSOblique_projection}, the orange points are centered around the origin as would be expected from an unbiased forecast.  If forecasts are biased, then errors should simply be translated until they are centered at the origin.
+	}_{t+h}-\hat{\bm{y}}_{t+h|t}$ for all $t+h$ in the training sample.  This can be then subtracted from future forecasts.  As stated in the discussion of MinT, in-sample errors are already used to estimate the optimal direction of projection.  As such it may be possible to use the same errors to bias correct.  Geometrically, the intuition is simple.  In top left panel in Figure \ref{fig:OthogonalVSOblique_projection_new}, the orange points are centered around the origin as would be expected from an unbiased forecast.  If forecasts are biased, then errors should simply be translated until they are centered at the origin.  Nonetheless there are also a number of pitfalls to such an approach.  First, for the very construction we consider, where bias is induced by taking a log or Box Cox transformation, bias should be corrected by a multiplicative rather than an additive factor.  Second, if in-sample errors are non-stationary due to model misspecification structural breaks then the proposes method for bias correction may break down. 
 	
 	\section{Empirical study} \label{sec:EmpStudy}
 	
 	
-	\textcolor{red}{GA: I will rewrite/review this when we decide where we put all our results - I am referring to the projection results - currently I think it is best that everything goes here and we make a comment at the end of Section 3.3 guiding the reader to the results here. This will make the empirical application a bit broader not only about bias correction, i.e., both about showing how projections work and how bias correction works.} Using an empirical application to forecast Australian domestic tourism flow, we illustrate the usefulness of projection based reconciliation in practice. Previous studies have pronounced that the reconciliation improves point forecast accuracy in domestic tourism flow in Australia (\cite{Athanasopoulos2009}, \cite{Hyndman2011}, \cite{WicEtAl2019}). However, our motivation in this study is twofold.  First, we demonstrate the implications of Theorem~\ref{th:distred} by comparing reconciled and base forecasts and in contrast to previous studies we consider individual periods rather than computing averages over a rolling window.  The second, we demonstrate how the bias correction methods discussed in previous section along with the projection-based reconciliation help to improve the forecast accuracy.
+	%\textcolor{red}{GA: I will rewrite/review this when we decide where we put all our results - I am referring to the projection results - currently I think it is best that everything goes here and we make a comment at the end of Section 3.3 guiding the reader to the results here. This will make the empirical application a bit broader not only about bias correction, i.e., both about showing how projections work and how bias correction works.} 
+	Using an empirical application to forecast Australian domestic tourism flow, we illustrate the usefulness of projection based reconciliation in practice. Previous studies have pronounced that the reconciliation improves point forecast accuracy in domestic tourism flow in Australia (\cite{Athanasopoulos2009}, \cite{Hyndman2011}, \cite{WicEtAl2019}). However, our motivation in this study is twofold.  First, we demonstrate the implications of Theorem~\ref{th:distred} by comparing reconciled and base forecasts and in contrast to previous studies we consider individual periods rather than computing averages over a rolling window.  Second, we demonstrate how the bias correction methods discussed in previous section along with the projection-based reconciliation help to improve the forecast accuracy.
 	
 	
 	\subsection{Data}
@@ -592,7 +593,7 @@ The top panel of Figure \ref{fig:States_Zones_Regs_TSplots} shows time plots for
     
     To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts.  For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package.  Using these fitted models, base forecasts are produced for $h=1$ to $6$-steps ahead for each series in the hierarchy.  This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $135~6$-steps-ahead forecasts available for forecast evaluation.
     
-    After obtaining the base forecasts these are reconciled using three different methods; OLS reconciliation, WLS reconciliation using variance scaling\todo{George please check} and MinT use a shrinkage estimator for ${\bm W}$.  Squared forecast errors are computed for each series and aggregated, i.e. we compute the loss function described in Section~\ref{sec:othogonal}.  We then compute the difference in this loss function between base forecasts and reconciled forecasts, where positive values indicat that reconciled forecasts are more accurate. The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this measure over each rolling window.  As the theory predicts, OLS reconciliation always leads to an improvement relative to base forecasts, the entire boxplot for OLS reconciliation is above zero.  This is not the case for WLS and MinT which for some windows perform worse than base forecasts.  The boxplots also demonstrate that OLS reconciliation is more stable than WLS and MinT reconciliation, a result not entirely unsurprising since the latter two methods require estimation of a ${\bm W}$ matrix which in practice is not trivial.  Nonetheless when averaging over the entire rolling window the MinT estimator performs best on average which is again precisely what the theorem proved in \cite{WicEtAl2019} would suggest.
+    After obtaining the base forecasts these are reconciled using three different methods; OLS reconciliation, WLS reconciliation using variance scaling \todo{George please check} and MinT use a shrinkage estimator for ${\bm W}$.  Squared forecast errors are computed for each series and aggregated, i.e. we compute the loss function described in Section~\ref{sec:orthogonal}.  We then compute the difference in this loss function between base forecasts and reconciled forecasts, where positive values indicat that reconciled forecasts are more accurate. The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this measure over each rolling window.  As the theory predicts, OLS reconciliation always leads to an improvement relative to base forecasts, the entire boxplot for OLS reconciliation is above zero.  This is not the case for WLS and MinT which for some windows perform worse than base forecasts.  The boxplots also demonstrate that OLS reconciliation is more stable than WLS and MinT reconciliation, a result not entirely unsurprising since the latter two methods require estimation of a ${\bm W}$ matrix which in practice is not trivial.  Nonetheless when averaging over the entire rolling window the MinT estimator performs best on average which is again precisely what the theorem proved in \cite{WicEtAl2019} would suggest.\todo{Get correct results in for figure with boxplots}
     
     \begin{figure}[H]
     	\centering
