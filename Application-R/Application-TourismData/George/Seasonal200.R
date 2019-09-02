@@ -60,6 +60,14 @@ H <- 12
 L <- 200 #Size of the training sample
 C <- nrow(AllTS_new) - L
 
+AllTS_new$Total %>% ts(start = 1998, frequency = 12) %>%
+  autoplot() +geom_vline(xintercept=2006, colour='black', size=1.2) +
+  geom_vline(xintercept=2016.917, colour='black', size=1.2) +
+  geom_vline(xintercept=2006.333, colour='blue', size=1.2)+
+  geom_vline(xintercept=2008.417, colour='blue', size=1.2)+
+  geom_vline(xintercept=2014.67, colour='red', size=1.2)+
+  geom_vline(xintercept=2016.75, colour='red', size=1.2)+
+  geom_vline(xintercept=2012.75, colour='green', size=1.2)
 
 #Generating the summing matrix
 S <- smatrix(Hierarchy)
@@ -294,6 +302,30 @@ DF_MSE %>%
   select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`,`Base-WLS`,`Base-WLS_sd`) %>%
   gather(`Base-OLS`,`Base-MinT`, `Base-WLS`,`Base-WLS_sd`, key = Method, value = MSE) %>%
   ggplot(aes(x = Method, y = MSE)) + geom_boxplot() + facet_wrap(~`Forecast_Horizon`)
+
+DF_MSE %>%
+  filter(`F-method`=="ARIMA", `R-method`%in% c("Base", "OLS", "MinT(Shrink)","WLS","WLS_sd"),
+         `Forecast_Horizon`%in% 1:12) %>%
+  spread(key = `R-method`, value = MSE) %>%
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)`,
+         "Base-WLS" = Base - WLS,
+         "Base-WLS_sd" = Base - WLS_sd) %>%
+  select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`,`Base-WLS`,`Base-WLS_sd`) %>%
+  gather(`Base-OLS`,`Base-MinT`, `Base-WLS`,`Base-WLS_sd`, key = Method, value = MSE) %>%
+  ggplot(aes(x = Replication, y = MSE,color=Method)) + geom_line() + facet_wrap(~`Forecast_Horizon`)
+
+
+
+# Average measures
+
+DF_MSE %>% group_by(`R-method`,Forecast_Horizon) %>%
+  summarise(MSE = mean(MSE)) %>%
+  spread(key = `R-method`, value = MSE)
+
+DF_MSE %>% group_by(`R-method`) %>%
+  summarise(MSE = mean(MSE)) %>%
+  spread(key = `R-method`, value = MSE)
 
 
 

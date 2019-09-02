@@ -50,7 +50,6 @@ AllTS_new <- allts(Hierarchy) %>%
   as_tibble()
 
 
-
 n <- ncol(AllTS_new)
 l1 <- 1
 l2 <- sum(7)
@@ -100,6 +99,12 @@ DF <- tibble("Series" = character(),
              "Actual" = double(),
              "Replication" = integer())
 
+TREND <- tibble("Replication"=integer(),
+                "d"=integer(),
+                "D"=integer(),
+                "intercept"=integer(),
+                "drift"=integer())
+
 # A function to return back transformed forecasts and bias adjust back transformed forecasts
 # given the forecasts in the transformed space
 
@@ -147,7 +152,14 @@ for (j in 1:C) {#C = 140
   for (i in 1:n) {
 
     TS <- Train[,i] %>% ts(frequency = 12)
+    #TS <- Train[,i] %>% as.ts()
+
     fit <- auto.arima(TS)
+
+    if (i==1){
+    TR<- c(fit$arma[6],fit$arma[7],
+             !is.na(fit$coef["intercept"]),!is.na(fit$coef["drift"]))
+    }
 
     Fc <- forecast(fit, h=min(H, nrow(Test)))
     Fc_mean <- Fc$mean
@@ -191,6 +203,11 @@ for (j in 1:C) {#C = 140
                        Actual = as.numeric(Test_1),
                        Replication = rep(j, n*min(H, nrow(Test_1))))
 
+  TREND <- TREND %>% add_row(Replication = j,
+                             d=TR[1],
+                             D=TR[2],
+                             intercept=TR[3],
+                             drift=TR[4])
 
   ###--Reconciliation--###
 
@@ -264,13 +281,13 @@ DF %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF
 
 DF %>%
   group_by(`F-method`, `R-method`, Forecast_Horizon) %>%
-  summarise(MSE = mean(SquaredE)) %>%
+  summarise(MSE = mean(SquaredE, na.rm = TRUE)) %>%
   spread(key = Forecast_Horizon, value = MSE)
 
 DF %>%
   group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>%
   summarise(MSE = mean(SquaredE)) %>%
-  filter(`F-method`=="ARIMA", `R-method`%in% c("Base", "OLS", "MinT(Shrink)","WLS","WLS_sd"),
+  filter(`R-method`%in% c("Base", "OLS", "MinT(Shrink)","WLS","WLS_sd"),
          `Forecast_Horizon`%in% 1:12) %>%
   ggplot(aes(x = Replication, y = MSE, color = `R-method`)) +
   geom_line() +
@@ -282,6 +299,52 @@ DF_MSE <- DF %>%
   group_by(`F-method`, `R-method`, Replication, Forecast_Horizon) %>%
   summarise(MSE = mean(SquaredE))
 
+DF_MSE %>% filter(is.na(MSE)) -> NAs
+NAs %>% View()
+
+DF_MSE %>%
+  filter(`R-method`%in% c("Base", "OLS", "MinT(Shrink)","WLS","WLS_sd"),
+         `Forecast_Horizon`%in% 1:6) %>%
+  spread(key = `R-method`, value = MSE) %>%
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)`,
+         "Base-WLS" = Base - WLS,
+         "Base-WLS_sd" = Base - WLS_sd) %>%
+  select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`,`Base-WLS`,`Base-WLS_sd`) %>%
+  gather(`Base-OLS`,`Base-MinT`, `Base-WLS`,`Base-WLS_sd`, key = Method, value = MSE) %>%
+  ggplot(aes(x = Method, y = MSE)) + geom_boxplot() + facet_wrap(~`Forecast_Horizon`)
+
+# picking out the first half and the second half of the sample
+
+DF_MSE %>%
+  filter(`F-method`=="ARIMA", `R-method`%in% c("Base", "OLS", "MinT(Shrink)","WLS","WLS_sd"),
+         `Forecast_Horizon`%in% 1:12) %>%
+  filter(Replication %in% 1:80) %>%
+  spread(key = `R-method`, value = MSE) %>%
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)`,
+         "Base-WLS" = Base - WLS,
+         "Base-WLS_sd" = Base - WLS_sd) %>%
+  select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`,`Base-WLS`,`Base-WLS_sd`) %>%
+  gather(`Base-OLS`,`Base-MinT`, `Base-WLS`,`Base-WLS_sd`, key = Method, value = MSE) %>%
+  ggplot(aes(x = Method, y = MSE)) + geom_boxplot() + facet_wrap(~`Forecast_Horizon`) +
+  ggtitle("Replications 1-80")
+
+DF_MSE %>%
+  filter(`F-method`=="ARIMA", `R-method`%in% c("Base", "OLS", "MinT(Shrink)","WLS","WLS_sd"),
+         `Forecast_Horizon`%in% 1:12) %>%
+  filter(Replication %in% 81:140) %>%
+  spread(key = `R-method`, value = MSE) %>%
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)`,
+         "Base-WLS" = Base - WLS,
+         "Base-WLS_sd" = Base - WLS_sd) %>%
+  select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`,`Base-WLS`,`Base-WLS_sd`) %>%
+  gather(`Base-OLS`,`Base-MinT`, `Base-WLS`,`Base-WLS_sd`, key = Method, value = MSE) %>%
+  ggplot(aes(x = Method, y = MSE)) + geom_boxplot() + facet_wrap(~`Forecast_Horizon`) +
+  ggtitle("Replications 81-140")
+
+# Time series of MSE differences
 DF_MSE %>%
   filter(`F-method`=="ARIMA", `R-method`%in% c("Base", "OLS", "MinT(Shrink)","WLS","WLS_sd"),
          `Forecast_Horizon`%in% 1:12) %>%
@@ -292,17 +355,70 @@ DF_MSE %>%
          "Base-WLS_sd" = Base - WLS_sd) %>%
   select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`,`Base-WLS`,`Base-WLS_sd`) %>%
   gather(`Base-OLS`,`Base-MinT`, `Base-WLS`,`Base-WLS_sd`, key = Method, value = MSE) %>%
-  ggplot(aes(x = Method, y = MSE)) + geom_boxplot() + facet_wrap(~`Forecast_Horizon`)
+  ggplot(aes(x = Replication, y = MSE,color=Method)) + geom_point() + geom_line()+ facet_wrap(~`Forecast_Horizon`)
+
+DF_MSE %>%
+  filter(`F-method`=="ARIMA", `R-method`%in% c("Base", "OLS", "MinT(Shrink)"),
+         `Forecast_Horizon`%in% 1:12) %>%
+  spread(key = `R-method`, value = MSE) %>%
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)`) %>%
+  select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`) %>%
+  gather(`Base-OLS`,`Base-MinT`, key = Method, value = MSE) %>%
+  ggplot(aes(x = Replication, y = MSE,color=Method)) + geom_point() + geom_line()+ facet_wrap(~`Forecast_Horizon`)
+
+DF_MSE %>%
+  filter(`F-method`=="ARIMA", `R-method`%in% c("Base", "OLS","WLS","WLS_sd"),
+         `Forecast_Horizon`%in% 1:12) %>%
+  spread(key = `R-method`, value = MSE) %>%
+  mutate("Base-OLS" = Base - OLS,
+         "Base-WLS" = Base - WLS,
+         "Base-WLS_sd" = Base - WLS_sd) %>%
+  select(Replication, Forecast_Horizon, `Base-OLS`, `Base-WLS`,`Base-WLS_sd`) %>%
+  gather(`Base-OLS`, `Base-WLS`,`Base-WLS_sd`, key = Method, value = MSE) %>%
+  ggplot(aes(x = Replication, y = MSE,color=Method)) + geom_point() + geom_line()+ facet_wrap(~`Forecast_Horizon`)
+
 
 # Average measures
 
 DF_MSE %>% group_by(`R-method`,Forecast_Horizon) %>%
-  summarise(MSE = mean(MSE)) %>%
+  summarise(MSE = mean(MSE, na.rm = TRUE)) %>%
   spread(key = `R-method`, value = MSE)
 
-DF_MSE %>% group_by(`R-method`) %>%
-  summarise(MSE = mean(MSE)) %>%
+DF_MSE %>%
+  filter(`Forecast_Horizon`%in% 1) %>%
+  group_by(`R-method`) %>%
+  summarise(MSE = mean(MSE, na.rm = TRUE)) %>%
   spread(key = `R-method`, value = MSE)
 
+TREND %>% mutate(tr=`d`+`D`+`intercept`+`drift`) -> TREND
+TREND$tr %>% plot(xlab="Replication")
 
+
+# PRINTING FINAL TABLES
+DF_MSE %>%
+  filter(`Forecast_Horizon`%in% 1) %>%
+  spread(key = `R-method`, value = MSE) %>%
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)`,
+         "Base-WLS" = Base - WLS,
+         "Base-Bottom-up"= Base - `Bottom-up`) %>%
+  select(Replication, Forecast_Horizon, `Base-OLS`, `Base-MinT`,`Base-WLS`, `Base-Bottom-up`) %>%
+  rename("OLS"=`Base-OLS`, "MinT"= `Base-MinT`,"WLS"=`Base-WLS`, "Bottom-up"=`Base-Bottom-up`) %>%
+  gather(OLS,MinT, WLS,`Bottom-up`, key = Method, value = MSE) %>%
+  mutate(Method = factor(Method, levels = c("OLS", "MinT", "WLS","Bottom-up"))) %>%
+  ggplot(aes(x = Method, y = MSE)) +
+  geom_boxplot() +
+  ylab("MSE") + xlab("Method") -> BoxPlot
+
+pdf("BoxPlot.pdf",height=4)
+BoxPlot
+dev.off()
+
+options(pillar.sigfig = 6)
+DF_MSE %>%
+  filter(`Forecast_Horizon`%in% 1) %>%
+  group_by(`R-method`) %>%
+  summarise(MSE = mean(MSE, na.rm = TRUE)) %>%
+  spread(key = `R-method`, value = MSE)
 

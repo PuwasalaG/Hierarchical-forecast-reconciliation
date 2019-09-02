@@ -27,10 +27,10 @@ lines(c(0,0),c(-3,5))
 lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,4.6,1.25,lwd=2)
-text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1)
+text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1.3)
 
 arrows(0,0,2.4,4.8,lwd=2)
-text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1)
+text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1.2)
 
 #rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
 # e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
@@ -54,11 +54,11 @@ lines(c(0,0),c(-3,5))
 lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,4.6,1.25,lwd=2)
-text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1)
+text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1.3)
 
 
 arrows(0,0,2.4,4.8,lwd=2)
-text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1)
+text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1.2)
 
 #rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
 # e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
@@ -66,10 +66,10 @@ text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1)
 points(e_sample[,1],e_sample[,2],pch=19,col='gray')
 
 points(2.15,2.6,pch=20,cex=2,col='blue')
-text(2.15,2.6,"{$\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3,cex = 1)
+text(2.15,2.6,"{$\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3,cex = 1.2)
 
 points(0.4,0.12,pch=20,cex=2,col='black')
-text(0.4,0.12,"{$\\color{black}{\\bm{y}}$}",pos = 1, cex = 1)
+text(0.4,0.12,"{$\\color{black}{\\bm{y}}$}",pos = 1, cex = 1.2)
 
 # Plot_InsampDir_2 <- recordPlot()
 # invisible(dev.off())
@@ -89,24 +89,24 @@ lines(c(0,0),c(-3,5))
 lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,4.6,1.25,lwd=2)
-text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1)
+text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1.3)
 
 
 arrows(0,0,2.4,4.8,lwd=2)
-text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1)
+text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1.2)
 
 #rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
 # e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
 points(e_sample[,1],e_sample[,2],pch=19,col='gray')
 
 points(0.4,0.12,pch=20,cex=2,col='black')
-text(0.4,0.12,"{$\\color{black}{\\bm{y}}$}",pos = 1, cex = 1)
+text(0.4,0.12,"{$\\color{black}{\\bm{y}}$}",pos = 1, cex = 1.2)
 
 points(2.15,2.6,pch=20,cex=2,col='blue')
-text(2.15,2.6,"{$\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3, cex = 1)
+text(2.15,2.6,"{$\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3, cex = 1.2)
 
 points(0.95,0.25,pch=20,cex=2,col='red')
-text(0.95,0.15,"{$\\color{red}{\\tilde{\\bm{y}}}$}",pos = 1, cex = 1)
+text(0.95,0.15,"{$\\color{red}{\\tilde{\\bm{y}}}$}",pos = 1, cex = 1.2)
 
 lines(c(0.15,3.2),c(-1.4,4.7),lty=2)
 arrows(2.15,2.6,0.95,0.25,lwd=2,col = 'blue')
@@ -131,11 +131,11 @@ lines(c(0,0),c(-3,5))
 lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,4.6,1.25,lwd=2)
-text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1)
+text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1.3)
 
 
 arrows(0,0,2.4,4.8,lwd=2)
-text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1)
+text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1.2)
 
 #rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
 # e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
@@ -153,7 +153,7 @@ arrows(x0 = e_sample[,1], y0 = e_sample[,2],
        lty = 2, col = "blue")
 
 points(0.4,0.12,pch=20,cex=2,col='black')
-text(0.4,0.12,"{$\\color{black}{\\bm{y}}$}",pos = 1, cex = 1)
+text(0.4,0.12,"{$\\color{black}{\\bm{y}}$}",pos = 1, cex = 1.2)
 
 # points(1.5,3,pch=20,cex=2,col='gray')
 # text(1.5,3,"{\\huge $\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3,offset = 1.5)
@@ -179,11 +179,11 @@ lines(c(0,0),c(-3,5))
 lines(c(-2,5),c(0,0))
 #lines(c(-1,3.5),c(-0.5,1.75),lwd=2)
 arrows(0,0,4.6,1.25,lwd=2)
-text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1)
+text(4.6,1.25,"{$\\huge \\mathfrak{s}$}",pos=4, cex = 1.3)
 
 
 arrows(0,0,2.4,4.8,lwd=2)
-text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1)
+text(2.4,4.8,"{$\\huge \\bm{R}$}",pos=3, cex = 1.2)
 
 #rmat<-matrix(c(1,4,-0.5,0.25),2,2,byrow = FALSE)
 # e<-t(rmat%*%matrix(rnorm(200,0,0.3),2,100))
@@ -208,7 +208,7 @@ arrows(x0 = e_sample[,1], y0 = e_sample[,2],
 # text(1.5,3,"{\\huge $\\color{blue}{\\hat{\\bm{y}}}$}",pos = 3,offset = 1.5)
 
 points(0.4,0.12,pch=20,cex=2,col='black')
-text(0.4,0.12,"{$\\color{black}{\\bm{y}}$}",pos = 1, cex = 1)
+text(0.4,0.12,"{$\\color{black}{\\bm{y}}$}",pos = 1, cex = 1.2)
 
 
 # Plot_ObliqProj <- recordPlot()
