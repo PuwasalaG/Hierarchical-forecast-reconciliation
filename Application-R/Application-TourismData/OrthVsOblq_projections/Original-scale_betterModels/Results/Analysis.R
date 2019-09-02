@@ -3,6 +3,7 @@ library(tidyverse)
 
 
 
+
 OvernightTrips_OriginalScale_Fc_1_50 <- read.csv("DF_OriginalScale_1-50.csv")[,-1]
 OvernightTrips_OriginalScale_Fc_51_100 <- read.csv("DF_OriginalScale_51-100.csv")[,-1]
 OvernightTrips_OriginalScale_Fc_101_140 <- read.csv("DF_OriginalScale_101-140.csv")[,-1]
@@ -22,3 +23,26 @@ OvernightTrips_OriginalScale_Fc %>%
   spread(key = Fc_horizon, value = MSE)
 
 
+OvernightTrips_OriginalScale_Fc <- read.csv("OvernightTrips_OriginalScale_Fc.csv")[,-1]
+
+OvernightTrips_OriginalScale_Fc %>%
+  mutate(SquaredE = (Overnight_Trips - Overnight_Trips_Fc)^2,
+         Fc_horizon = recode(Fc_horizon, "1" = "h=1", "2" = "h=2",
+                             "3" = "h=3", "4" = "h=4", "5" = "h=5", "6" = "h=6")) %>%
+  group_by(`R.method`, Fc_horizon, Replication) %>%
+  summarise(MSE = mean(SquaredE)) -> OvernightTrips_OriginalScale_MSE
+
+
+OvernightTrips_OriginalScale_MSE %>%
+  filter(`R.method`%in% c("Base", "OLS", "MinT(Shrink)", "WLS")) %>%
+  spread(key = `R.method`, value = MSE) %>%
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)`,
+         "Base-WLS" = Base - WLS) %>%
+  filter(Replication == 10) 
+  
+  
+OvernightTrips_OriginalScale_Fc %>% 
+  filter(Fc_horizon == 1, Replication == 15) %>% 
+  summarise(Diff = )
+  

@@ -100,7 +100,9 @@
 \begin{document}
 \maketitle
 
-\section{Log Transformation}\label{log-transformation}
+\section{Log Transformation with 100 observations of training window
+(Average MSE calculated over 140
+replications)}\label{log-transformation-with-100-observations-of-training-window-average-mse-calculated-over-140-replications}
 
 \begin{tabular}{l|r|r|r}
 \hline
@@ -118,41 +120,65 @@ WLS & 4.82 & 4.38 & 5.43\\
 \hline
 \end{tabular}
 
-\section{\texorpdfstring{BoxCox Transformation for
-\(\lambda \in (0,1)\)}{BoxCox Transformation for \textbackslash{}lambda \textbackslash{}in (0,1)}}\label{boxcox-transformation-for-lambda-in-01}
+\section{Log Transformation with 180 observations of training window
+(Average MSE calculated over 60
+replications)}\label{log-transformation-with-180-observations-of-training-window-average-mse-calculated-over-60-replications}
 
 \begin{tabular}{l|r|r|r}
 \hline
 R.method & Bias & Unbiased (Method 1) & Unbiased (Method 2)\\
 \hline
-Base & 4.49 & 4.45 & 4.52\\
+Base & 4.89 & 4.78 & 5.08\\
 \hline
-Bottom-up & 5.90 & 5.29 & 6.87\\
+Bottom-up & 9.71 & 6.97 & 12.70\\
 \hline
-MinT(Shrink) & 4.29 & 4.20 & 4.48\\
+MinT(Shrink) & 4.75 & 4.63 & 5.35\\
 \hline
-OLS & 4.37 & 4.34 & 4.40\\
+OLS & 4.67 & 4.60 & 4.81\\
 \hline
-WLS & 4.70 & 4.45 & 5.06\\
+WLS & 6.33 & 5.22 & 7.58\\
 \hline
 \end{tabular}
 
 \section{\texorpdfstring{BoxCox Transformation for
-\(\lambda \in (-0.5,2)\)}{BoxCox Transformation for \textbackslash{}lambda \textbackslash{}in (-0.5,2)}}\label{boxcox-transformation-for-lambda-in--0.52}
+\(\lambda \in (-0.5,2)\) with 100 observations of training window
+(Average MSE calculated over 140
+replications)}{BoxCox Transformation for \textbackslash{}lambda \textbackslash{}in (-0.5,2) with 100 observations of training window (Average MSE calculated over 140 replications)}}\label{boxcox-transformation-for-lambda-in--0.52-with-100-observations-of-training-window-average-mse-calculated-over-140-replications}
 
 \begin{tabular}{l|r|r|r}
 \hline
 R.method & Bias & Unbiased (Method 1) & Unbiased (Method 2)\\
 \hline
-Base & 4.58 & 4.52 & 4.77\\
+Base & 4.59 & 4.52 & 4.78\\
 \hline
 Bottom-up & 6.21 & 5.31 & 7.46\\
 \hline
 MinT(Shrink) & 4.29 & 4.17 & 4.54\\
 \hline
-OLS & 4.45 & 4.40 & 4.63\\
+OLS & 4.46 & 4.40 & 4.63\\
 \hline
-WLS & 4.76 & 4.42 & 5.23\\
+WLS & 4.77 & 4.42 & 5.23\\
+\hline
+\end{tabular}
+
+\section{\texorpdfstring{BoxCox Transformation for
+\(\lambda \in (-0.5,2)\) with 180 observations of training window
+(Average MSE calculated over 60
+replications)}{BoxCox Transformation for \textbackslash{}lambda \textbackslash{}in (-0.5,2) with 180 observations of training window (Average MSE calculated over 60 replications)}}\label{boxcox-transformation-for-lambda-in--0.52-with-180-observations-of-training-window-average-mse-calculated-over-60-replications}
+
+\begin{tabular}{l|r|r|r}
+\hline
+R.method & Bias & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 4.61 & 4.58 & 4.72\\
+\hline
+Bottom-up & 9.17 & 7.00 & 11.43\\
+\hline
+MinT(Shrink) & 4.50 & 4.53 & 4.82\\
+\hline
+OLS & 4.43 & 4.43 & 4.52\\
+\hline
+WLS & 6.24 & 5.45 & 7.11\\
 \hline
 \end{tabular}
 
