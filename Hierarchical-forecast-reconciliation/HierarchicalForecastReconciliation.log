@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.21)  3 SEP 2019 14:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.21)  3 SEP 2019 17:30
 entering extended mode
 **./HierarchicalForecastReconciliation.tex
 (HierarchicalForecastReconciliation.tex
@@ -1327,62 +1327,62 @@ LaTeX Font Info:    Try loading font information for U+rsfs on input line 49.
 ("C:\Program Files\MiKTeX 2.9\tex/latex/jknappen\ursfs.fd"
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 83.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 82.
 
 ("C:\Program Files\MiKTeX 2.9\tex/latex/base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 83.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 82.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 83.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 82.
  [1
 Non-PDF special ignored!
 <special> header=psfrag.pro
 
 {C:/Users/gathana/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
-Overfull \hbox (1.82187pt too wide) in paragraph at lines 115--115
+Overfull \hbox (1.82187pt too wide) in paragraph at lines 114--114
 [][]\OT1/cmr/m/n/12 include 
  []
 
 
-Overfull \hbox (1.82187pt too wide) in paragraph at lines 115--115
+Overfull \hbox (1.82187pt too wide) in paragraph at lines 114--114
 [][]\OT1/cmr/m/n/12 include 
  []
 
 
-Overfull \hbox (15.26895pt too wide) in paragraph at lines 117--117
+Overfull \hbox (15.26895pt too wide) in paragraph at lines 116--116
 [][]\OT1/cmr/m/n/12 references  
  []
 
 
-Overfull \hbox (15.26895pt too wide) in paragraph at lines 117--117
+Overfull \hbox (15.26895pt too wide) in paragraph at lines 116--116
 [][]\OT1/cmr/m/n/12 references  
  []
 
 [3] [4] [5]
-LaTeX Font Info:    Try loading font information for U+euf on input line 168.
+LaTeX Font Info:    Try loading font information for U+euf on input line 167.
  ("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\ueuf.fd"
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 ) [6]
 (Figs/3D_hierarchy.tex) [7] [8] [9]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 259.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 258.
  [10]
 <Figs/orth_pointforerec_schematic.pdf, id=77, 198.7425pt x 189.70876pt>
 File: Figs/orth_pointforerec_schematic.pdf Graphic file (type pdf)
 <use Figs/orth_pointforerec_schematic.pdf>
 Package pdftex.def Info: Figs/orth_pointforerec_schematic.pdf  used on input li
-ne 291.
+ne 290.
 (pdftex.def)             Requested size: 277.3648pt x 264.7857pt.
  [11] [12 <./Figs/orth_pointforerec_schematic.pdf>] [13]
-Overfull \hbox (19.51671pt too wide) in paragraph at lines 321--322
+Overfull \hbox (19.51671pt too wide) in paragraph at lines 320--321
 \OT1/cmr/m/n/12 Pythagorean The-o-rem (ap-pli-ca-ble to Gen-er-alised Eu-clidea
 n space) rather than the Pythagorean
  []
 
 
-Overfull \hbox (7.12779pt too wide) in paragraph at lines 324--325
+Overfull \hbox (7.12779pt too wide) in paragraph at lines 323--324
 \OT1/cmr/m/n/12 squared er-rors, or a Ma-ha-lanobis dis-tance, then the pro-jec
 -tion ma-trix $\OML/cmm/b/it/12 S [][] S[]W[]$
  []
@@ -1391,22 +1391,22 @@ Overfull \hbox (7.12779pt too wide) in paragraph at lines 324--325
 <Figs/InsampDir_1_George.pdf, id=110, 225.84375pt x 252.945pt>
 File: Figs/InsampDir_1_George.pdf Graphic file (type pdf)
 <use Figs/InsampDir_1_George.pdf>
-Package pdftex.def Info: Figs/InsampDir_1_George.pdf  used on input line 340.
+Package pdftex.def Info: Figs/InsampDir_1_George.pdf  used on input line 339.
 (pdftex.def)             Requested size: 221.88762pt x 248.52896pt.
 <Figs/InsampDir_2_George.pdf, id=111, 225.84375pt x 252.945pt>
 File: Figs/InsampDir_2_George.pdf Graphic file (type pdf)
 <use Figs/InsampDir_2_George.pdf>
-Package pdftex.def Info: Figs/InsampDir_2_George.pdf  used on input line 344.
+Package pdftex.def Info: Figs/InsampDir_2_George.pdf  used on input line 343.
 (pdftex.def)             Requested size: 221.88762pt x 248.52896pt.
 <Figs/OrthProj_George.pdf, id=112, 225.84375pt x 252.945pt>
 File: Figs/OrthProj_George.pdf Graphic file (type pdf)
 <use Figs/OrthProj_George.pdf>
-Package pdftex.def Info: Figs/OrthProj_George.pdf  used on input line 348.
+Package pdftex.def Info: Figs/OrthProj_George.pdf  used on input line 347.
 (pdftex.def)             Requested size: 221.88762pt x 248.52896pt.
 <Figs/ObliqProj_George.pdf, id=113, 225.84375pt x 252.945pt>
 File: Figs/ObliqProj_George.pdf Graphic file (type pdf)
 <use Figs/ObliqProj_George.pdf>
-Package pdftex.def Info: Figs/ObliqProj_George.pdf  used on input line 351.
+Package pdftex.def Info: Figs/ObliqProj_George.pdf  used on input line 350.
 (pdftex.def)             Requested size: 221.88762pt x 248.52896pt.
  [15]
 Overfull \vbox (64.87749pt too high) has occurred while \output is active []
@@ -1419,7 +1419,7 @@ hProj_George.pdf> <./Figs/ObliqProj_George.pdf>] [17] (Figs/Schem_3D.tex)
 File: Empirical-results/TS-plots/Total_TSplots.pdf Graphic file (type pdf)
 <use Empirical-results/TS-plots/Total_TSplots.pdf>
 Package pdftex.def Info: Empirical-results/TS-plots/Total_TSplots.pdf  used on 
-input line 431.
+input line 430.
 (pdftex.def)             Requested size: 462.26999pt x 436.60242pt.
 <Empirical-results/TS-plots/States_Zones_Regs_TSplots1.pdf, id=170, 722.7pt x 8
 95.345pt>
@@ -1427,37 +1427,37 @@ File: Empirical-results/TS-plots/States_Zones_Regs_TSplots1.pdf Graphic file (t
 ype pdf)
 <use Empirical-results/TS-plots/States_Zones_Regs_TSplots1.pdf>
 Package pdftex.def Info: Empirical-results/TS-plots/States_Zones_Regs_TSplots1.
-pdf  used on input line 438.
+pdf  used on input line 437.
 (pdftex.def)             Requested size: 462.26999pt x 572.70462pt.
 
 
-LaTeX Warning: Float too large for page by 25.00946pt on input line 440.
+LaTeX Warning: Float too large for page by 25.00946pt on input line 439.
 
 [22] [23 <./Empirical-results/TS-plots/Total_TSplots.pdf>] [24 <./Empirical-res
 ults/TS-plots/States_Zones_Regs_TSplots1.pdf>]
 <Figs/BoxPlot.pdf, id=191, 505.89pt x 289.08pt>
 File: Figs/BoxPlot.pdf Graphic file (type pdf)
 <use Figs/BoxPlot.pdf>
-Package pdftex.def Info: Figs/BoxPlot.pdf  used on input line 455.
+Package pdftex.def Info: Figs/BoxPlot.pdf  used on input line 454.
 (pdftex.def)             Requested size: 462.26999pt x 264.15714pt.
  [25 <./Figs/BoxPlot.pdf>]
 [26]
-Overfull \hbox (8.08847pt too wide) in paragraph at lines 495--495
+Overfull \hbox (8.08847pt too wide) in paragraph at lines 494--494
 \OT1/cmr/m/n/12 ous/well 
  []
 
 
-Overfull \hbox (4.10657pt too wide) in paragraph at lines 495--495
+Overfull \hbox (4.10657pt too wide) in paragraph at lines 494--494
 \OT1/cmr/m/n/12 known?  
  []
 
 
-Overfull \hbox (8.08847pt too wide) in paragraph at lines 495--495
+Overfull \hbox (8.08847pt too wide) in paragraph at lines 494--494
 \OT1/cmr/m/n/12 ous/well 
  []
 
 
-Overfull \hbox (4.10657pt too wide) in paragraph at lines 495--495
+Overfull \hbox (4.10657pt too wide) in paragraph at lines 494--494
 \OT1/cmr/m/n/12 known?  
  []
 
@@ -1479,7 +1479,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  32348 strings out of 492895
  675575 string characters out of 3133473
- 825588 words of memory out of 3000000
+ 826588 words of memory out of 3000000
  35705 multiletter control sequences out of 15000+200000
  569610 words of font info for 172 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1506,7 +1506,7 @@ ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti7.pfb><C:/Program Files
 /MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Program Files/MiKTeX 
 2.9/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/gathana/AppData/Roam
 ing/MiKTeX/2.9/fonts/type1/public/boondox/zxxrl8a.pfb>
-Output written on HierarchicalForecastReconciliation.pdf (33 pages, 490316 byte
+Output written on HierarchicalForecastReconciliation.pdf (33 pages, 490336 byte
 s).
 PDF statistics:
  300 PDF objects out of 1000 (max. 8388607)
