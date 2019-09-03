@@ -445,29 +445,26 @@ The top panel of Figure \ref{fig:States_Zones_Regs_TSplots} shows time plots for
 
     To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts.  For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package.  Using these fitted models, base forecasts are produced for $h=1$ to $6$-steps ahead for each series in the hierarchy.  This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $135~6$-steps-ahead forecasts available for forecast evaluation.
 
-    After obtaining the base forecasts these are reconciled using three different methods; OLS reconciliation, WLS reconciliation using variance scaling and MinT using a shrinkage estimator for ${\bm W}$. Squared forecast errors are computed for each series and aggregated across the whole hierarchy, i.e., we compute the loss function described in Section~\ref{sec:orthogonal}.  We then compute the difference in this loss function between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate. We also include bottom-up forecasts in this comparison for completeness. 
+    After obtaining the base forecasts these are reconciled using three different methods; OLS reconciliation, WLS reconciliation using variance scaling and MinT using a shrinkage estimator for ${\bm W}$. Squared forecast errors are computed for each series and aggregated across the whole hierarchy, i.e., we compute the loss function described in Section~\ref{sec:orthogonal}.  We then compute the difference in this loss function between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate. We also include bottom-up forecasts in this comparison for completeness.
+
+    The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this measure over each rolling window. We only present the results for $h=1$ but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available upon request. 
     
-    The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this measure over each rolling window. We only present the results for $h=1$ but the story is identical for the other longer forecast horizons.
-     
-    As the theory predicts, OLS reconciliation always leads to an improvement relative to base forecasts. The entire boxplot for OLS reconciliation is above zero.  This is not the case for WLS and MinT which for some windows generate forecasts less accurate than the base forecasts. 
-    
-    The boxplots also demonstrate that OLS reconciliation is more stable than WLS and MinT reconciliation, a result not entirely unsurprising since the latter two methods require estimation of a ${\bm W}$ matrix which in practice is not trivial.  Nonetheless when averaging over the entire rolling window the MinT estimator performs best on average which is again precisely what the theorem proved in \cite{WicEtAl2019} would suggest. The average MSE across the entire rolling window of 140 replications are shown in Table \ref{tab:AveraveDifferences}.
+    As the theory predicts, OLS reconciliation always leads to an improvement relative to base forecasts. The entire boxplot for OLS reconciliation is above zero.  This is not the case for WLS and MinT which for some windows generate forecasts less accurate than the base forecasts. The boxplots also demonstrate that OLS reconciliation is more stable than WLS and MinT reconciliation, a result not entirely unsurprising since the latter two methods require estimation of a ${\bm W}$ matrix which in practice is not trivial.  Nonetheless when averaging over the entire rolling window the MinT estimator performs best on average which is again precisely what the theorem proved in \cite{WicEtAl2019} would suggest. The average MSEs across the entire rolling window of 140 replications are shown in Table \ref{tab:AveraveDifferences}.
 
 \begin{figure}[H]
     	\centering
     	\small
     	\includegraphics[width = \textwidth]{Figs/BoxPlot.pdf}
-    	\caption{MSE differences between base forecasts and reconciled forecasts using OLS, MinT and WLS, and also the bottom-up approach for $h = 1$. A positive value indicates that the coherent forecasts are an improvement over the base forecasts. }\label{fig:BaseVSRecon_Fc}
+    	\caption{MSE differences between base forecasts and reconciled forecasts using OLS, MinT and WLS, and also the bottom-up approach for $h = 1$. A positive value indicates that the coherent forecasts are an improvement over the base forecasts.} \label{fig:BaseVSRecon_Fc}
 \end{figure}
 
 \begin{table}[H]
-	\caption {Average {MSE($\times 10^3$)} across the whole hierarchy and over all 140 replications for h=1.}
-	\label{tab:AveraveDifferences}
+	\caption {Average {MSE($\times 10^3$)} over all 140 rolling window replications for $h=1$.} \label{tab:AveraveDifferences}
 	\centering \tabcolsep=0.4cm
 		\begin{tabular}{lccccc}
 	\toprule
             & Base & OLS & MinT & WLS & Bottom-up \\
-     MSE    & 4.31 & 4.20 & 4.16 & 4.48 & 5.28 \\
+     MSE    & 4.31 & 4.20 & \textbf{4.16} & 4.48 & 5.28 \\
     \bottomrule
     \end{tabular}
 \end{table}
@@ -483,150 +480,57 @@ The top panel of Figure \ref{fig:States_Zones_Regs_TSplots} shows time plots for
 	\frac{y_t^\lambda - 1}{\lambda}  & \text{otherwise}.
 	\end{cases}
 \end{equation}
-
-We first set $\lambda=0$ and hence consider only a log transformation. For the second more general Box-Cox transformation we select $\lambda$ using the ``Guerrero'' method \citep{guerrero1993time} implemented in the \verb|BoxCox.lambda()| function in the \verb|forecast| package in R \citep{Rforecast}. As observations with zero value exist in some of the bottom-level series, before transforming we add a constant (more specifically $1$) to each series. This overcomes the challenge of undefined transformed values for zero observations when we specifically implement the log transformation or when $\lambda$ is selected to be zero by the ``Guerrero'' method. The constant is subtracted from the final forecasts.
+We first set $\lambda=0$ and hence consider only a log transformation. For the second more general Box-Cox transformation we select $\lambda$ using the ``Guerrero'' method \citep{guerrero1993time} implemented in the \verb|BoxCox.lambda()| function in the \verb|forecast| package in R \citep{Rforecast}. In order to avoid extreme and volatile transformations we restrict $\lambda \in (0.5,2)$. As zero observations exist in some of the bottom-level series, before transforming we add a constant (more specifically $1$) to each series. This overcomes the challenge of undefined transformed values for zero observations when we specifically implement the log transformation or when $\lambda$ is selected to be zero by the ``Guerrero'' method. The constant is subtracted from the final forecasts.
 
 After transformation we fit univariate ARIMA models to each transformed series. The \verb|auto.arima()| function in the \verb|forecast| package is used to choose the best model that minimises the AICc. Using the fitted models, forecasts are produced for $h=1$ to $6$-steps ahead for each series in the hierarchy.
 
-The forecasts are then back-transformed by simply reversing the Box-Cox transformation using
-
+The forecasts are then back-transformed by simply reversing the Box-Cox transformation using,
 \begin{equation} \label{eq:BoxCox_back-transformation}
 	\hat{y}_{t+h|t} =
 	\begin{cases}
-	\exp({\hat{w}_{t+h|t}}) & \text{if}~\lambda = 0; \\
+	\exp({\hat{w}_{t+h|t}}) & \text{if}~\lambda = 0, \\
 	(\lambda \hat{w}_{t+h|t} + 1)^{1/\lambda}  & \text{otherwise.}
 	\end{cases}
 \end{equation}
-
-These back-transformed forecasts are potentially biased as they are not the mean of the forecast distribution but the median (assuming that the distribution of the transformed space is symmetric). Hence, the reconciled forecasts that follow from these forecasts will also be biased. This is the exact scenario that we want to demonstrate in this study and we next move to our proposed solution of bias correcting the base forecasts before reconciling for which we explore two scenarios.
+These back-transformed forecasts are potentially biased as they are not the mean of the forecast distribution but the median (assuming that the distribution of the transformed space is symmetric). Hence, the reconciled forecasts that follow from these forecasts will also be biased. We refer to these as ``Biased'' forecasts in the results that follow. This is the exact scenario we want to demonstrate in this study and we next move to our proposed solution of bias correcting the base forecasts before reconciling for which we explore two scenarios.
 
 Using a Taylor series expansion \todo{Rob do we need a reference here or is this obvious/well known?} the back-transformed mean of the forecast distribution for a Box-Cox transformation is given by
 
 \begin{equation} \label{eq:BoxCox_BT_biasadj}
 	 \hat{y}_{t+h|t} =
 	\begin{cases}
-	\exp({\hat{w}_{t+h|t}})[1+\frac{\sigma_h^2}{2}] & \text{if}~\lambda = 0; \\
+	\exp({\hat{w}_{t+h|t}})[1+\frac{\sigma_h^2}{2}] & \text{if}~\lambda = 0, \\
 	(\lambda \hat{w}_{t+h|t} + 1)^{1/\lambda}[1 + \frac{\sigma_h^2(1-\lambda)}{2(\lambda \hat{w}_{t+h|t} + 1)^2}]       & \text{if}~\lambda \ne 0,
 	\end{cases}
 	\end{equation}
-where, $\hat{w}_{t+h|t}$ is the $h$-step-ahead forecast from the Box-Cox transformed series and $\sigma_h^2$ is the variance of $\hat{w}_{t+h|t}$. Using the mean of the forecast distribution returns bias adjusted base forecasts compared to the simple back-transformation of \eqref{eq:BoxCox_back-transformation}. We refer to this as Method-1 in the results that follow.
+where, $\hat{w}_{t+h|t}$ is the $h$-step-ahead forecast from the Box-Cox transformed series and $\sigma_h^2$ is the variance of $\hat{w}_{t+h|t}$. Using the mean of the forecast distribution returns bias adjusted base forecasts compared to the simple back-transformation of \eqref{eq:BoxCox_back-transformation}. We refer to this as Method-1 in the results that follow. The second scenario of bias adjustment we explore is using the in-sample forecast error mean of the biased forecasts to adjust the out-of-sample forecasts. We refer to this as Method-2 in the results that follow.
 
-The second scenario of bias adjustment we explore is using the in-sample forecast error mean of the biased forecasts to adjust the out of sample forecasts. We refer to this a Method-2 in the results that follow.
-	
-Using the three sets of base forecasts we generate coherent forecasts using the bottom-up approach but also implementing OLS, WLS and MinT reconciliation projections and compare the results for when the base forecasts are biased and bias-adjusted (unbiased). We discuss the results next.
+Using the three sets of base forecasts for each transformation, we generate coherent forecasts using the bottom-up approach but also implementing OLS, WLS and MinT reconciliation projections and compare the results for when the base forecasts are biased and bias-adjusted (unbiased). Table \ref{tab:Results_MSE} presents the results over the $140$ rolling window replications for $1$-step-ahead forecasts. Note that the conclusions that follow extend almost identically to longer forecast horizons. We do not present these here to save space but they are available upon request.
 
-\subsection{Results and discussion}
+Recall that reconciliation approaches via projections preserve unbiasedness in the reconciled forecasts iff the base forecasts are unbiased. Hence, the two columns labelled ``Biased'' contain results for biased base but also reconciled forecasts. Using Method-1 for first bias adjusting the base forecasts and then reconciling, results in forecast improvements for all methods for both the log and the Box-Cox transformation induced bias. In this case MinT returns the lowest MSE across all forecasts. Notice that the ``Box-Cox biased'' base forecasts carry a higher bias compared to the ``log biased'' base forecasts. Even for these MinT reconciliation of bias adjusted base forecasts generates very accurate forecasts, almost as accurate as the forecasts that come from the less biased log transformation.
 
-
-%	Mean Squared Error (MSE) is used to measure the forecast accuracy and results are presented in Table \ref{tab:Results_MSE}. Recall that projections preserve the unbiasedness in reconciled forecasts only if the base forecasts are unbiased. As a consequence, the reconciled forecasts follow from the biased base forecasts will also be biased. We can see from the results that unbiased-reconciled forecasts from MinT(Shrink) and WLS are better than that of biased-reconciled forecasts although the unbiased-base forecasts are not necessarily better than the biased-base forecasts. Furthermore, unbiased MinT reconciled forecasts are outperforming all biased and unbiased forecasts. These results are true for all forecast horizons.
+In contrast to the results from using Method-1 for bias adjustment before reconciliation, using Method-2 has an adverse effect on the forecast accuracy of the reconciled forecasts. In this case the reconciled unbiased forecasts are less accurate than the biased reconciled forecasts. This reflects the fact and sends the warning that implementing an inappropriate bias adjustment, in this case using an additive factor rather than a multiplicative factor, will hinder forecast accuracy and extra care must be taken in this bias adjustment procedure.
 
 \begin{table}
-	\caption {Average {MSE($\times 10^3$)} of base and reconciled $1$-step-ahead point forecasts are presented for log transformation and Box-Cox transformation. Unbiased(Method-1) follows from the bias adjustment via Taylor's de-biasing factor whereas Unbiased(Method-2) follows from residual mean adjustment.}
+	\caption {Average {MSE($\times 10^3$)} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in  \eqref{eq:BoxCox_back-transformation} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.}
 	\label{tab:Results_MSE}
 	\centering
-	\resizebox{\linewidth}{!}{
-		\begin{tabular}{@{}lcccccc@{}}
+		\begin{tabular}{lcccccc}
 			\toprule
 			\multicolumn{1}{c}{ } & \multicolumn{3}{c}{Log Transformation} &
 			\multicolumn{3}{c}{Box-Cox Transformation}\\
 			\cmidrule(lr){2-4} \cmidrule(lr){5-7}
-			R.method & Biased & Unbiased & Unbiased & Biased & Unbiased & Unbiased \\
-			& & (Method-1) & (Method-2) && (Method-1) &(Method-2)\\ \midrule 
-			Base & 12.06 & 11.87 & 12.52 & 12.27 & 139.94 & 13.45\\
-			Bottom-up & 17.37 & 15.47 & 21.58 & 18.06 & 15.76 & 23.33\\
-			OLS & 11.59 & 11.41 & 11.98 & 11.84 & 116.91 & 12.96\\
-			WLS & 15.00 & 13.83 & 17.55 & 15.83 & 14.20 & 19.51\\
-			MinT(Shrink) & 9.36 & $\bm{9.25}$ & 10.35 & 10.27 & $\bm{10.11}$ & 12.43\\
+			Method & Biased & Unbiased & Unbiased & Biased & Unbiased & Unbiased \\
+			& & (Method-1) & (Method-2) && (Method-1) &(Method-2)\\ \midrule
+			Base      & 4.47 & 4.43 & 4.51 & 4.59 & 4.52 & 4.78\\
+			OLS       & 4.34 & 4.31 & 4.36 & 4.46 & 4.40 & 4.63\\
+			MinT      & 4.32 & \textbf{4.16} & 4.61 & 4.29 & \textbf{4.17} & 4.54\\
+			WLS       & 4.82 & 4.38 & 5.43 & 4.77 & 4.42 & 5.23\\
+			Bottom-up & 6.36 & 5.26 & 8.06 & 6.21 & 5.31 & 7.46\\
 			\bottomrule
-		\end{tabular}
-	}
-	
+		\end{tabular}	
 \end{table}
 
-
-
-Table \ref{tab:Results_MSE} presents the Mean Squared Error (MSE) over the $140$ replications for $1$-step-ahead forecasts. Note that the conclusion that follow extend almost identically to forecast horizons $2-6$. We do not present these here to save space but they are available upon request.
-
-General findings:
-
-- Bias adjusting using Method 1, i.e., a proper method improves forecast accuracy.
-- Bias adjusting using Method 2, does not. The transformations we consider here are multiplicative type transformations - the in-sample residual adjustment is an additive adjustment hence it does not help.
-
-\textcolor{red}{I have stopped here. Will continue after we have all results.}
-
-Let us first consider the results from log transformation. We see that the unbiased forecasts from Method-1 has less MSE compared to the biased forecasts in base level. This holds for all reconciled forecasts as well. It implies that the bias correction has improved the forecast accuracy. Further, unbiased reconciled forecasts from OLS and MinT perform better than the base forecasts. Moreover, Unbiased MinT reconciled forecasts are outperforming.
-We also note that the bias correction via Method-2 has not necessarily work well in this empirical example.
-
-Now turning to the results from Box-Cox transformation, we see that the bias correction via Method-1 has worsen the base forecasts. The same result holds for OLS reconciled forecasts as well. We also observed that this has happened because the bias correction is doing worst for some replications in ``Total" series as depicted in Figure \ref{fig:Total_FcVsTrue_BoxCox}. \textcolor{red}{This because for these replications the selected model has a drift term with a very large standard error. This will blow up the bias-adjusted forecasts.}
-
-However reconciled forecast from, Bottom-up, WLS or MinT has mitigate the effect from this unusual result in unbiased base forecasts. Most importantly, Unbiased MinT is outperforming all forecasts.
-
-We have presented results only for one forecast horizon. However, results for other forecast horizons follows the same conclusions.
-
-
-%%%%%%%%%%%%%%%%%%%
-	
-%\begin{table}
-%	\caption {\textcolor{red}{RESULTS FROM LOG TRANSFORMATION
-%			Average {MSE($\times 10^3$)} of base and reconciled point forecasts at forecasts horizons $h=1,...,6$ are presented. Bias and unbiased columns represent the results for biased-base/biased-reconciled and unbiased-base/unbiased-reconciled forecasts respectively. Comparisons can be made across biased vs unbiased forecasts as well as base vs reconciled forecasts.}}
-%	\label{tab:Results_MSE_LogTrans}
-%	\centering\tabcolsep=0.001cm
-%	\small
-%	\resizebox{\linewidth}{!}{
-%		\begin{tabular}{@{}lSSS@{}}
-%		
-%		R.method & Biased & Unbiased (Method-1) & Unbiased (Method-2)\\
-%		\midrule
-%		Base & 12.06 & 11.87 & 12.52\\
-%		\hline
-%		Bottom-up & 17.37 & 15.47 & 21.58\\
-%		\hline
-%		MinT(Shrink) & 9.36 & 9.25 & 10.35\\
-%		\hline
-%		OLS & 11.59 & 11.41 & 11.98\\
-%		\hline
-%		WLS & 15.00 & 13.83 & 17.55 \\
-%		\bottomrule
-%	\end{tabular}
-%}
-%
-%\end{table}
-%
-%\begin{table}
-%	\caption {\textcolor{red}{RESULTS FROM BOXCOX TRANSFORMATION
-%			Average {MSE($\times 10^3$)} of base and reconciled point forecasts at forecasts horizons $h=1,...,6$ are presented. Bias and unbiased columns represent the results for biased-base/biased-reconciled and unbiased-base/unbiased-reconciled forecasts respectively. Comparisons can be made across biased vs unbiased forecasts as well as base vs reconciled forecasts.}}
-%	\label{tab:Results_MSE_BoxCoxTrans}
-%	\centering\tabcolsep=0.08cm
-%	\resizebox{\linewidth}{!}{
-%		\begin{tabular}{@{}lSSS@{}}
-%			
-%			R.method & Biased & Unbiased (Method-1) & Unbiased (Method-2)\\
-%			\midrule
-%			Base & 12.27 & 139.94 & 13.45\\
-%			\hline
-%			Bottom-up & 18.06 & 15.76 & 23.33\\
-%			\hline
-%			MinT(Shrink) & 10.27 & 10.11 & 12.43\\
-%			\hline
-%			OLS & 11.84 & 116.91 & 12.96\\
-%			\hline
-%			WLS & 15.83 & 14.20 & 19.51\\		
-%			\bottomrule
-%		\end{tabular}
-%	}
-%	
-%\end{table}
-%	
-%	\begin{figure}
-%		\centering
-%		\small
-%		\includegraphics[width = \textwidth]{Empirical-results/Final-results/SS_MSE_Results.pdf}
-%		\caption{\textcolor{red}{include caption}}\label{fig:MSE_SkillScore}
-%	\end{figure}
-%	
-	
-	
-	
 	
 \section{Conclusions} \label{sec:conclusions}
 	
