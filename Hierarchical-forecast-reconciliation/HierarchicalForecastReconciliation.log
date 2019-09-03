@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.21)  3 SEP 2019 11:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.21)  3 SEP 2019 14:09
 entering extended mode
 **./HierarchicalForecastReconciliation.tex
 (HierarchicalForecastReconciliation.tex
@@ -1365,17 +1365,17 @@ LaTeX Font Info:    Try loading font information for U+euf on input line 168.
  ("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\ueuf.fd"
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 ) [6]
-(Figs/3D_hierarchy.tex) [7] [8] [9] [10]
+(Figs/3D_hierarchy.tex) [7] [8] [9]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 259.
- [11]
-<Figs/orth_pointforerec_schematic.pdf, id=80, 198.7425pt x 189.70876pt>
+ [10]
+<Figs/orth_pointforerec_schematic.pdf, id=77, 198.7425pt x 189.70876pt>
 File: Figs/orth_pointforerec_schematic.pdf Graphic file (type pdf)
 <use Figs/orth_pointforerec_schematic.pdf>
 Package pdftex.def Info: Figs/orth_pointforerec_schematic.pdf  used on input li
 ne 291.
 (pdftex.def)             Requested size: 277.3648pt x 264.7857pt.
- [12] [13 <./Figs/orth_pointforerec_schematic.pdf>] [14]
+ [11] [12 <./Figs/orth_pointforerec_schematic.pdf>] [13]
 Overfull \hbox (19.51671pt too wide) in paragraph at lines 321--322
 \OT1/cmr/m/n/12 Pythagorean The-o-rem (ap-pli-ca-ble to Gen-er-alised Eu-clidea
 n space) rather than the Pythagorean
@@ -1387,41 +1387,41 @@ Overfull \hbox (7.12779pt too wide) in paragraph at lines 324--325
 -tion ma-trix $\OML/cmm/b/it/12 S [][] S[]W[]$
  []
 
-[15]
-<Figs/InsampDir_1_George.pdf, id=113, 225.84375pt x 252.945pt>
+[14]
+<Figs/InsampDir_1_George.pdf, id=110, 225.84375pt x 252.945pt>
 File: Figs/InsampDir_1_George.pdf Graphic file (type pdf)
 <use Figs/InsampDir_1_George.pdf>
 Package pdftex.def Info: Figs/InsampDir_1_George.pdf  used on input line 340.
 (pdftex.def)             Requested size: 221.88762pt x 248.52896pt.
-<Figs/InsampDir_2_George.pdf, id=114, 225.84375pt x 252.945pt>
+<Figs/InsampDir_2_George.pdf, id=111, 225.84375pt x 252.945pt>
 File: Figs/InsampDir_2_George.pdf Graphic file (type pdf)
 <use Figs/InsampDir_2_George.pdf>
 Package pdftex.def Info: Figs/InsampDir_2_George.pdf  used on input line 344.
 (pdftex.def)             Requested size: 221.88762pt x 248.52896pt.
-<Figs/OrthProj_George.pdf, id=115, 225.84375pt x 252.945pt>
+<Figs/OrthProj_George.pdf, id=112, 225.84375pt x 252.945pt>
 File: Figs/OrthProj_George.pdf Graphic file (type pdf)
 <use Figs/OrthProj_George.pdf>
 Package pdftex.def Info: Figs/OrthProj_George.pdf  used on input line 348.
 (pdftex.def)             Requested size: 221.88762pt x 248.52896pt.
-<Figs/ObliqProj_George.pdf, id=116, 225.84375pt x 252.945pt>
+<Figs/ObliqProj_George.pdf, id=113, 225.84375pt x 252.945pt>
 File: Figs/ObliqProj_George.pdf Graphic file (type pdf)
 <use Figs/ObliqProj_George.pdf>
 Package pdftex.def Info: Figs/ObliqProj_George.pdf  used on input line 351.
 (pdftex.def)             Requested size: 221.88762pt x 248.52896pt.
- [16]
+ [15]
 Overfull \vbox (64.87749pt too high) has occurred while \output is active []
 
 
-[17 <./Figs/InsampDir_1_George.pdf> <./Figs/InsampDir_2_George.pdf> <./Figs/Ort
-hProj_George.pdf> <./Figs/ObliqProj_George.pdf>] [18] (Figs/Schem_3D.tex)
-[19] [20] [21] [22]
-<Empirical-results/TS-plots/Total_TSplots.pdf, id=172, 650.43pt x 614.295pt>
+[16 <./Figs/InsampDir_1_George.pdf> <./Figs/InsampDir_2_George.pdf> <./Figs/Ort
+hProj_George.pdf> <./Figs/ObliqProj_George.pdf>] [17] (Figs/Schem_3D.tex)
+[18] [19] [20] [21]
+<Empirical-results/TS-plots/Total_TSplots.pdf, id=169, 650.43pt x 614.295pt>
 File: Empirical-results/TS-plots/Total_TSplots.pdf Graphic file (type pdf)
 <use Empirical-results/TS-plots/Total_TSplots.pdf>
 Package pdftex.def Info: Empirical-results/TS-plots/Total_TSplots.pdf  used on 
 input line 431.
 (pdftex.def)             Requested size: 462.26999pt x 436.60242pt.
-<Empirical-results/TS-plots/States_Zones_Regs_TSplots1.pdf, id=173, 722.7pt x 8
+<Empirical-results/TS-plots/States_Zones_Regs_TSplots1.pdf, id=170, 722.7pt x 8
 95.345pt>
 File: Empirical-results/TS-plots/States_Zones_Regs_TSplots1.pdf Graphic file (t
 ype pdf)
@@ -1433,46 +1433,45 @@ pdf  used on input line 438.
 
 LaTeX Warning: Float too large for page by 25.00946pt on input line 440.
 
-[23] [24 <./Empirical-results/TS-plots/Total_TSplots.pdf>] [25 <./Empirical-res
+[22] [23 <./Empirical-results/TS-plots/Total_TSplots.pdf>] [24 <./Empirical-res
 ults/TS-plots/States_Zones_Regs_TSplots1.pdf>]
-<Figs/BoxPlot.pdf, id=194, 505.89pt x 289.08pt>
+<Figs/BoxPlot.pdf, id=191, 505.89pt x 289.08pt>
 File: Figs/BoxPlot.pdf Graphic file (type pdf)
 <use Figs/BoxPlot.pdf>
-Package pdftex.def Info: Figs/BoxPlot.pdf  used on input line 457.
+Package pdftex.def Info: Figs/BoxPlot.pdf  used on input line 455.
 (pdftex.def)             Requested size: 462.26999pt x 264.15714pt.
- [26
-
-] [27 <./Figs/BoxPlot.pdf>]
-Overfull \hbox (8.08847pt too wide) in paragraph at lines 497--497
+ [25 <./Figs/BoxPlot.pdf>]
+[26]
+Overfull \hbox (8.08847pt too wide) in paragraph at lines 495--495
 \OT1/cmr/m/n/12 ous/well 
  []
 
 
-Overfull \hbox (4.10657pt too wide) in paragraph at lines 497--497
+Overfull \hbox (4.10657pt too wide) in paragraph at lines 495--495
 \OT1/cmr/m/n/12 known?  
  []
 
 
-Overfull \hbox (8.08847pt too wide) in paragraph at lines 497--497
+Overfull \hbox (8.08847pt too wide) in paragraph at lines 495--495
 \OT1/cmr/m/n/12 ous/well 
  []
 
 
-Overfull \hbox (4.10657pt too wide) in paragraph at lines 497--497
+Overfull \hbox (4.10657pt too wide) in paragraph at lines 495--495
 \OT1/cmr/m/n/12 known?  
  []
 
-[28] [29] [30] (Appendix.tex [31]
+[27] [28] (Appendix.tex [29] [30]
 Overfull \vbox (112.38905pt too high) has occurred while \output is active []
 
 
-[32]) (HierarchicalForecastReconciliation.bbl [33]
+[31]) (HierarchicalForecastReconciliation.bbl [32]
 Overfull \hbox (14.49506pt too wide) in paragraph at lines 75--78
 \OT1/cmr/bx/n/12 URL: \OT1/cmr/m/it/12 http://search.ebscohost.com/login.aspx?d
 irect=true&db=bth&AN=985713&lang=pt-
  []
 
-) [34] (HierarchicalForecastReconciliation.aux)
+) [33] (HierarchicalForecastReconciliation.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -1480,7 +1479,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  32348 strings out of 492895
  675575 string characters out of 3133473
- 829599 words of memory out of 3000000
+ 825588 words of memory out of 3000000
  35705 multiletter control sequences out of 15000+200000
  569610 words of font info for 172 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1507,10 +1506,10 @@ ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti7.pfb><C:/Program Files
 /MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Program Files/MiKTeX 
 2.9/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/gathana/AppData/Roam
 ing/MiKTeX/2.9/fonts/type1/public/boondox/zxxrl8a.pfb>
-Output written on HierarchicalForecastReconciliation.pdf (34 pages, 490971 byte
+Output written on HierarchicalForecastReconciliation.pdf (33 pages, 490316 byte
 s).
 PDF statistics:
- 303 PDF objects out of 1000 (max. 8388607)
+ 300 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  149 words of extra memory for PDF output out of 10000 (max. 10000000)
 
