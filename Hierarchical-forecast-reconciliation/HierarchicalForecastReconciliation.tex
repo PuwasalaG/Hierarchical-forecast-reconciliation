@@ -96,8 +96,9 @@
 	\bigskip
 	
 	
-	\begin{abstract} 
-		A geometric interpretation is developed for so-called {\em reconciliation} methodologies which are used to forecast time series that adhere to known linear constraints.  In particular, a general framework is established nesting many existing popular reconciliation methods within the class of {\em projections}.  This interpretation facilitates the derivation of novel results that explain why and how reconciliation via projection is guaranteed to improve forecasts with respect to a specific class of loss functions.  This result is later demonstrated empirically.  The geometric interpretation is also used to provide a new proof that forecast reconciliation results in unbiased forecasts as long as the initial so-called {\em base} forecasts are also unbiased.  Approaches for dealing with biased base forecasts are proposed and explored in an extensive empirical study on Australian tourism demand.  Overall, the method of bias-correcting before carrying out reconciliation is shown to outperform alternatives that only bias-correct or only reconcile forecasts.
+	\begin{abstract}
+\spacingset{1.45}
+        A geometric interpretation is developed for so-called {\em reconciliation} methodologies used to forecast time series that adhere to known linear constraints.  In particular, a general framework is established nesting many existing popular reconciliation methods within the class of {\em projections}.  This interpretation facilitates the derivation of novel results that explain why and how reconciliation via projection is guaranteed to improve forecast accuracy with respect to a specific class of loss functions.  The result is also demonstrated empirically.  The geometric interpretation is further used to provide a new proof that forecast reconciliation results in unbiased forecasts as long as the initial so-called {\em base} forecasts are also unbiased.  Approaches for dealing with biased base forecasts are proposed and explored in an extensive empirical study on Australian tourism flows.  Overall, the method of bias-correcting before carrying out reconciliation is shown to outperform alternatives that only bias-correct or only reconcile forecasts.
 		
 	\end{abstract}
 	
@@ -128,9 +129,9 @@
 	
     We briefly define the concept of a \emph{hierarchical time series} in a fashion similar to \cite{AthEtAl2019_MacroBook}, \cite{FPP2018} and others, before elaborating on some of the limitations of this understanding.  A \emph{hierarchical time series} is a collection of $n$ variables indexed by time, where some variables are aggregates of other variables. We let $\bm{y}_t \in \mathbb{R}^n$ be a vector comprising observations of all variables in the hierarchy at time $t$. The \emph{bottom-level series} are defined as those $m$ variables that cannot be formed as aggregates of other variables; we let $\bm{b}_t \in \mathbb{R}^m$ be a vector comprised of observations of all bottom-level series at time $t$.  The hierarchical structure of the data implies that the following holds for all $t$
 
-    \begin{equation}
+    \begin{equation*}
     \bm{y}_t = \bm{Sb}_t,
-    \end{equation}
+    \end{equation*}
     where $\bm{S}$ is an $n \times m$ constant matrix that encodes the aggregation constraints.
 	
 		\begin{figure}[H]
@@ -268,18 +269,18 @@
 	
 	\begin{theo}[Distance reducing property]\label{th:distred}
 		If $\tilde{\bm{y}}_{t+h|t}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}$, where $\bm{G}$ is such that $\bm{S}\bm{G}$ is an orthogonal (in the Euclidean sense) projection onto $\mathfrak{s}$ and let $\|\bm{v}\|$ be the $L_2$ norm (in the Euclidean sense) of vector $\bm{v}$ then:
-		\begin{equation}
+		\begin{equation*}
 		\|(\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t})\|\le\|(\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t})\|.
-		\end{equation}
+		\end{equation*}
 	\end{theo}
 	\begin{proof}
 		Since, $\bm{y}_{t+h|t},\tilde{\bm{y}}_{t+h|t}\in\mathfrak{s}$ and since the projection is orthogonal, by Pythagoras' theorem
-		\begin{equation} \|(\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t})\|^2=\|(\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t})\|^2+\|(\tilde{\bm{y}}_{t+h|t}-\hat{\bm{y}}_{t+h|t})\|^2.
-		\end{equation}
+		\begin{equation*} \|(\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t})\|^2=\|(\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t})\|^2+\|(\tilde{\bm{y}}_{t+h|t}-\hat{\bm{y}}_{t+h|t})\|^2.
+		\end{equation*}
 		
 		Since $\|(\tilde{\bm{y}}_{t+h|t}-\hat{\bm{y}}_{t+h|t})\|^2\ge 0$ this implies,
-		\begin{equation} \|(\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t})\|^2\ge\|(\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t})\|^2.
-		\end{equation}
+		\begin{equation*} \|(\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t})\|^2\ge\|(\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t})\|^2.
+		\end{equation*}
 		with equality only holding when $\tilde{\bm{y}}_{t+h|t}=\hat{\bm{y}}_{t+h|t}$.  Taking the square root of both sides proves the desired result.
 	\end{proof}
 		
@@ -302,18 +303,18 @@
 	
 	It should be noted that  $\bm{S}\left(\bm{S}'\bm{W}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{W}^{-1}$ is an oblique, rather than an orthogonal projection matrix in the usual Euclidean geometry.  However this matrix can be considered to be an orthogonal projection for a different geometry defined by the norm\break $||\bm{v}||_{{\bm W}^{-1}}=\bm{v}'\bm{W}^{-1}\bm{v}$, referred to as the generalised Euclidean geometry with respect to $\bm{W}^{-1}$.  One way to understand this geometry is that it is the same as Euclidean geometry when all vectors are first transformed by pre-multiplying by $\bm{W}^{-1/2}$.  This leads to a transformed $\bm{S}$ matrix $\bm{S}^*=\bm{W}^{-1/2}\bm{S}$ and transformed $\hat{\bm{y}}$ and $\tilde{\bm{y}}$ vectors $\hat{\bm{y}}^*=\bm{W}^{-1/2}\hat{\bm{y}}$ and $\tilde{\bm{y}}^*=\bm{W}^{-1/2}\tilde{\bm{y}}$.  The transformed reconciled forecast results from an orthogonal projection in the transformed space since
 	
-	\begin{align}
+	\begin{align*}
 	\tilde{\bm{y}}^*&=\bm{W}^{-1/2}\tilde{\bm{y}}\\&=\bm{W}^{-1/2}\bm{S}\left(\bm{S}'\bm{W}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{W}^{-1}\hat{\bm{y}}
 	\\&=\bm{S}^*\left(\bm{S}^{*'}\bm{S}^*\right)^{-1}\bm{S}^{*'}\hat{\bm{y}^*}.
-	\end{align}
+	\end{align*}
 	
 Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W}^{-1}\bm{v}$ is also quite instructive when it comes to thinking about the connection between distances and loss functions. In the generalised Euclidean geometry, the distance between the reconciled forecast and the realisation is given by $(\bm{y}-\hat{\bm{y}})'\bm{W}^{-1}(\bm{y}-\hat{\bm{y}})$.  For diagonal $\bm{W}^{-1}$, this is equivalent to a weighted sum of squared error loss function and when $\bm{W}$ is a covariance matrix, this is equivalent to a Mahalanobis distance.  As such Theorem~\ref{th:distred} can easily be generalised as follows:
 	
 	\begin{theo}[General distance reducing property]\label{th:gdistred}
         If $\tilde{\bm{y}}_{t+h|t}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}$, where $\bm{G}$ is such that $\bm{S}\bm{G}$ is an orthogonal (in the generalised Euclidean sense) projection onto $\mathfrak{s}$ then:
-		\begin{equation}
+		\begin{equation*}
 		\|(\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t})\|_{{\bm W}^{-1}}\le\|(\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t})\|_{{\bm W}^{-1}}.
-		\end{equation}
+		\end{equation*}
 	\end{theo}
 	\begin{proof}
     The proof is identical to the proof for Theorem~\ref{th:distred} but relies on the generalised Pythagorean Theorem (applicable to Generalised Euclidean space) rather than the Pythagorean Theorem.
@@ -380,11 +381,11 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	We note that the above result holds when the projection $\bm{SG}$ has the coherent subspace $\mathfrak{s}$ as its image and not for all projection matrices in general. To describe this more explicitly suppose $\bm{SG}$ has as its image  $\mathfrak{L}$ which is itself a lower dimensional linear subspace of $\mathfrak{s}$, i.e. $\mathfrak{L}\subset\mathfrak{s}$. Then for $\left\{\bm{\mu}_{t+h|t}:\bm{\mu}_{t+h|t}\in\mathfrak{s},\bm{\mu}_{t+h|t}\notin\mathfrak{L}\right\}$,  $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$. This is depicted in Figure~\ref{fig:Schematic_3D} where $\bm{\mu}_{t+h|t}$ is projected to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$.  In this case, the expectation of reconciled forecast will be $\bar{\bm{\mu}}$ rather than $\bm{\mu}_{t+h|t}$ and hence biased.
 	
     This result has implications in practice. The top-down method \citep{Gross1990} has
-	\begin{equation}\label{eq:top-downG}
+	\begin{equation*}
 	\bm{G}=\begin{pmatrix}
 	\bm{p} & \bm{0}_{(m \times n-1)}
 	\end{pmatrix}
-	\end{equation}
+	\end{equation*}
     where $\bm{p} = (p_1,\dots,p_m)'$ is an $m$-dimensional vector consisting a set of proportions used to disaggregate the top-level forecast.  In this case it can be verified that $\bm{SG}$ is idempotent, i,e. $\bm{SGSG}=\bm{SG}$ and therefore $\bm{SG}$ is a projection matrix.  However the image of this projection is not an $m$-dimensional subspace but a $1$-dimensional subspace.  As such, top-down reconciliation produces biased forecasts even when the base forecasts are unbiased.
 		
 	\begin{figure}[H]
@@ -397,13 +398,11 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 		\caption{$\mathfrak{L}$ is a linear subspace of the coherent subspace $\mathfrak{s}$. If a projection is onto $\mathfrak{L}$ instead of $\mathfrak{s}$, then $\bm{\mu} \in \mathfrak{s}$ will be moved to $\bm{\mu}^* \in \mathfrak{L}$.}\label{fig:Schematic_3D}
 	\end{figure}
 	
-	Finally, it is often stated that an assumption required to prove the unbiasedness preserving property is that $\bm{SGS}=\bm{S}$ or alternatively that $\bm{GS}=\bm{I}$.  Both of these conditions are equivalent to assuming that $\bm{SG}$ is a projection matrix. However, problems arise when viewing the preservation of unbiasedness through the prism of imposing a constraint $\bm{GS}=\bm{I}$. This thinking suggests that a way to deal with biased forecasts is to select $\bm{G}$ in an unconstrained manner.  However, equipped with a geometric understanding of the problem, we would advise against this approach.  The constraint $\bm{GS}=\bm{I}$  is not just about bias. Dropping the constraint compromises all of the attractive properties of projections.  Opening the door to reconciliation methods that change already coherent base forecasts would seem to suggest an increase in the variability of the forecast.  This seems particularly perverse when the motivation for using a biased method in the first place is to reduce variance.
+	Finally, it is often stated that an assumption required to prove the unbiasedness preserving property is that $\bm{SGS}=\bm{S}$ or alternatively that $\bm{GS}=\bm{I}$.  Both of these conditions are equivalent to assuming that $\bm{SG}$ is a projection matrix (see Section \ref{app:projection-proof} in the Appendix for a proof).\todo{Rob can you please read this carefully and see if you are happy with the following statements about bias correction.} However, problems arise when viewing the preservation of unbiasedness through the prism of imposing a constraint $\bm{GS}=\bm{I}$. This thinking suggests that a way to deal with biased forecasts is to select $\bm{G}$ in an unconstrained manner.  However, equipped with a geometric understanding of the problem, we would advise against this approach.  The constraint $\bm{GS}=\bm{I}$  is not just about bias. Dropping the constraint compromises all of the attractive properties of projections.  Opening the door to reconciliation methods that change already coherent base forecasts would seem to suggest an increase in the variability of the forecast.  This seems particularly perverse when the motivation for using a biased method in the first place is to reduce variance.
 
     \subsection{Bias correction}
 	
-	Our own solution to dealing with biased forecasts is to bias correct {\em before} reconciliation.  In many cases the method for bias correction will be context specific.  For instance, in  our empirical study in Section~\ref{sec:EmpStudy} we consider a scenario where bias is induced via taking either a log transformation or a Box-Cox transformation before modelling.  In this well-known case a number of bias correction methods exist based on Taylor expansions. %\textcolor{red}{TODO: Read this again after the empirical application has been completed. I am saying this because my understanding is that we use the Guererro method to choose the lambda for the BoxCox transformation. Then we back transform the forecasts using the same lambda once with bias correcting using the factor that comes out of a Taylor series expansion around $\mu$ (programmed in fable/forecast package) and once without it hence looking at medians and not means - hence biased base forecasts. If my understanding here is correct I am not sure we can say we are using the Guererro method to bias correct.}
-
-
+	Our own solution to dealing with biased forecasts is to bias correct {\em before} reconciliation.  In many cases the method for bias correction will be context specific.  For instance, in  our empirical study in Section~\ref{sec:EmpStudy} we consider a scenario where bias is induced via taking either a log transformation or a Box-Cox transformation before modelling.  In this well-known case a number of bias correction methods exist based on Taylor expansions. 
 	
 	Alternatively, a more general purpose approach to bias correction is to simply estimate the bias by taking the sample mean of $\bm{y
 	}_{t+h}-\hat{\bm{y}}_{t+h|t}$ for all $t+h$ in the training sample.  This can be then subtracted from future forecasts.  As stated in the discussion of MinT, in-sample errors are already used to estimate the optimal direction of projection.  As such it may be possible to use the same errors to bias correct.  Geometrically, the intuition is simple.  In panel (a) of Figure \ref{fig:OthogonalVSOblique_projection}, the orange points are centered around the origin as would be expected from an unbiased forecast.  If forecasts are biased, then errors should simply be translated until they are centered at the origin.  Nonetheless there are also a number of pitfalls to such an approach.  First, for the very construction we consider, where bias is induced by taking a log or Box Cox transformation, bias should be corrected by a multiplicative rather than an additive factor.  Second, if in-sample errors are non-stationary due to model misspecification or structural breaks, then the proposed method for bias correction may break down.
@@ -411,7 +410,6 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 	\section{Empirical study} \label{sec:EmpStudy}
 	
 	
-	%\textcolor{red}{GA: I will rewrite/review this when we decide where we put all our results - I am referring to the projection results - currently I think it is best that everything goes here and we make a comment at the end of Section 3.3 guiding the reader to the results here. This will make the empirical application a bit broader not only about bias correction, i.e., both about showing how projections work and how bias correction works.}
 	Using an empirical application to forecast Australian domestic tourism flows, we illustrate the usefulness of projection based reconciliation in practice. Previous studies have found that reconciliation improves point forecast accuracy in domestic tourism flows for Australia \citep[see for example][]{Athanasopoulos2009, Hyndman2011,WicEtAl2019}. However, our motivation in this study is twofold.  First, we demonstrate the implications of Theorem~\ref{th:distred} by comparing reconciled and base forecasts. In contrast to previous studies we consider individual periods rather than computing averages over a rolling window.  Second, we demonstrate how the bias correction methods discussed in the previous section along with the projection-based reconciliation help to improve forecast accuracy.
 	
 	
@@ -499,7 +497,7 @@ Using a Taylor series expansion \todo{Rob do we need a reference here or is this
 	(\lambda \hat{w}_{t+h|t} + 1)^{1/\lambda}[1 + \frac{\sigma_h^2(1-\lambda)}{2(\lambda \hat{w}_{t+h|t} + 1)^2}]       & \text{if}~\lambda \ne 0,
 	\end{cases}
 	\end{equation}
-where, $\hat{w}_{t+h|t}$ is the $h$-step-ahead forecast from the Box-Cox transformed series and $\sigma_h^2$ is the variance of $\hat{w}_{t+h|t}$. Using the mean of the forecast distribution returns bias adjusted base forecasts compared to the simple back-transformation of \eqref{eq:BoxCox_back-transformation}. We refer to this as Method-1 in the results that follow. The second scenario of bias adjustment we explore is using the in-sample forecast error mean of the biased forecasts to adjust the out-of-sample forecasts. We refer to this as Method-2 in the results that follow.
+where, $\hat{w}_{t+h|t}$ is the $h$-step-ahead forecast from the Box-Cox transformed series and $\sigma_h^2$ is the variance of $\hat{w}_{t+h|t}$. Using the mean of the forecast distribution returns bias adjusted base forecasts compared to the simple back-transformation of Eq.~\eqref{eq:BoxCox_back-transformation}. We refer to this as ``Method-1'' in the results that follow. The second scenario of bias adjustment we explore is using the in-sample forecast error mean of the biased forecasts to adjust the out-of-sample forecasts. We refer to this as ``Method-2'' in the results that follow.
 
 Using the three sets of base forecasts from each of the two transformations, we generate coherent forecasts implementing OLS, MinT and WLS reconciliation projections, and also the bottom-up approach and compare the results for when the base forecasts are biased and bias-adjusted, i.e., unbiased. Table \ref{tab:Results_MSE} presents the results over the $140$ rolling window replications for $1$-step-ahead forecasts. We note that as was the case with Section \ref{sec:comparebase} the conclusions that follow extend almost identically to longer forecast horizons. We do not present these here to save space but they are available upon request.
 
@@ -508,7 +506,7 @@ Recall that reconciliation approaches via projections preserve unbiasedness in t
 In contrast to the results from using Method-1 for bias adjusting before reconciliation, using Method-2 has an adverse effect on the forecast accuracy of the reconciled forecasts. In this case the reconciled unbiased forecasts are less accurate than the biased reconciled forecasts. This reflects the fact and sends the warning that implementing inappropriate bias adjustment, in this case using an additive rather than a multiplicative factor, will hinder forecast accuracy and extra care must be taken in this bias adjustment procedure.
 
 \begin{table}
-	\caption {Average {MSE($\times 10^3$)} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via \eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in \eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.}
+	\caption {Average {MSE($\times 10^3$)} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.}
 	\label{tab:Results_MSE}
 	\centering
 		\begin{tabular}{lcccccc}
@@ -536,14 +534,14 @@ In contrast to the results from using Method-1 for bias adjusting before reconci
 	
 	First, it should be possible to extend to the concept of coherence to non-linear constraints.  In these cases the coherent space may need to be defined by a manifold.  Although much more challenging, it is still possible define reconciled forecasts in terms of projections onto a manifold.  Second, since we have established that the concept of bottom-level series is not crucial in forecast reconciliation an open question is whether it may be better to construct base forecasts of linear combinations of the time series rather than the time series themselves.  Finally, the geometric interpretations of hierarchical forecast reconciliation facilitates an extension into a probabilistic framework, an issue that we investigate in a separate paper.  	
 	
-	
-	\section{Appendix}
+\clearpage
+	\section{Appendix} 
 	%\thisfloatpagestyle{empty}
-	\subsection{Proof $\bm{S}\bm{G}\bm{S}=\bm{S}$ implies $\bm{S}\bm{G}$ is a projection}
+	\subsection{Proof $\bm{S}\bm{G}\bm{S}=\bm{S}$ implies $\bm{S}\bm{G}$ is a projection} \label{app:projection-proof}
 	Here we establish that if $\bm{S}\bm{G}$ is a projection onto the linear subspace spanned by $\bm{S}$ then $\bm{S}\bm{G}\bm{S}=\bm{S}$.  We also prove that the converse holds, namely that if the condition $\bm{S}\bm{G}\bm{S}=\bm{S}$ holds then $\bm{S}\bm{G}$ must be a projection onto the linear subspace spanned by $\bm{S}$.
 	
 	To establish the first statement let $\bm{s}_j$ be the $j^{th}$ column of $\bm{S}$.  Since by definition, $\bm{s}_j$ lies in $\mathfrak{s}$, it must hold that $\bm{S}\bm{G}\bm{s}_j=\bm{s}_j$.  Stacking these vectors horizontally
-	\begin{align}
+	\begin{align*}
 	\bm{S}\bm{G}\bm{S}&=\begin{pmatrix}
 	\bm{S}\bm{G}\bm{s}_1, & \bm{S}\bm{G}\bm{s}_2, & \cdots & \bm{S}\bm{G}\bm{s}_m
 	\end{pmatrix}\\
@@ -551,7 +549,7 @@ In contrast to the results from using Method-1 for bias adjusting before reconci
 	\bm{s}_1, & \bm{s}_2, & \cdots & \bm{s}_m
 	\end{pmatrix}\\
 	&=\bm{S}
-	\end{align}
+	\end{align*}
 	
 	To establish the converse it suffices to postmultiply the condition $\bm{S}\bm{G}\bm{S}=\bm{S}$ by $\bm{G}$.  This yields $\bm{S}\bm{G}\bm{S}\bm{G}=\bm{S}\bm{G}$ which in turn implies idempotence since $(\bm{S}\bm{G})^2=\bm{S}\bm{G}$.
 	
