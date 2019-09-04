@@ -1,14 +1,21 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: HierarchicalForecastReconciliation.aux
 The style file: agsm.bst
 Database file #1: References_paper1.bib
-Repeated entry---line 94 of file References_paper1.bib
+Repeated entry---line 88 of file References_paper1.bib
  : @article{Gross1990
  :                   ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 442 of file References_paper1.bib
+Repeated entry---line 436 of file References_paper1.bib
  : @article{Athanasopoulos2009
  :                            ,
 I'm skipping whatever remains of this entry
-Warning--can't use both author and editor fields in VanErven2015a
-Warning--empty publisher in VanErven2015a
-(There were 2 error messages)
+Repeated entry---line 615 of file References_paper1.bib
+ : @article{Shang2017
+ :                   ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 626 of file References_paper1.bib
+ : @article{Hyndman2016
+ :                     ,
+I'm skipping whatever remains of this entry
+Warning--can't use both volume and number fields in Mahkya2017
+(There were 4 error messages)

@@ -1,14 +1,21 @@
 \begin{thebibliography}{xx}
 
+\harvarditem[Almeida et~al.]{Almeida, Ribeiro \harvardand\
+  Gama}{2016}{Almeida2016}
+Almeida, V., Ribeiro, R. \harvardand\ Gama, J.  \harvardyearleft
+  2016\harvardyearright , Hierarchical time series forecast in electrical
+  grids, {\em in} `Information Science and Applications (ICISA) 2016',
+  Springer, pp.~995--1005.
+
 \harvarditem[Athanasopoulos et~al.]{Athanasopoulos, Ahmed \harvardand\
   Hyndman}{2009}{Athanasopoulos2009}
 Athanasopoulos, G., Ahmed, R.~A. \harvardand\ Hyndman, R.~J.  \harvardyearleft
   2009\harvardyearright , `Hierarchical forecasts for australian domestic
   tourism', {\em International Journal of Forecasting} {\bf 25}(1),~146--166.
 
-\harvarditem[Athanasopoulos et~al.]{Athanasopoulos, {Gamakumara, Puwasala
-  Panagiotelis}, Hyndman \harvardand\ Affan}{2019}{AthEtAl2019_MacroBook}
-Athanasopoulos, G., {Gamakumara, Puwasala Panagiotelis}, A., Hyndman, R.~J.
+\harvarditem[Athanasopoulos et~al.]{Athanasopoulos, Gamakumara, Hyndman
+  \harvardand\ Affan}{2019}{AthEtAl2019_MacroBook}
+Athanasopoulos, G., Gamakumara, Puwasala andM~Panagiotelis, A., Hyndman, R.~J.
   \harvardand\ Affan, M.  \harvardyearleft 2019\harvardyearright ,
   {Hierarchical Forecasting}, {\em in} {Peter Fuleky}, ed., `Macroeconomic
   Forecasting in the Era of Big Data', 1st edn, Springer, Honolulu, chapter~21,
@@ -64,6 +71,13 @@ Hyndman, R.~J., Athanasopoulos, G., Bergmeir, C., Caceres, G., Chhay, L.,
 \newblock Version 8.5.
 \newline\harvardurl{https://CRAN.R-project.org/package=forecast}
 
+\harvarditem[Hyndman et~al.]{Hyndman, Lee \harvardand\ Wang}{2016}{Hyndman2016}
+Hyndman, R.~J., Lee, A.~J. \harvardand\ Wang, E.  \harvardyearleft
+  2016\harvardyearright , `{Fast computation of reconciled forecasts for
+  hierarchical and grouped time series}', {\em Computational Statistics and
+  Data Analysis} {\bf 97},~16--32.
+\newline\harvardurl{http://dx.doi.org/10.1016/j.csda.2015.11.007}
+
 \harvarditem[Jeon et~al.]{Jeon, Panagiotelis \harvardand\
   Petropoulos}{2019}{JeoEtAl2019}
 Jeon, J., Panagiotelis, A. \harvardand\ Petropoulos, F.  \harvardyearleft
@@ -72,9 +86,14 @@ Jeon, J., Panagiotelis, A. \harvardand\ Petropoulos, F.  \harvardyearleft
   Operational Research} {\bf 279}(2),~364--379.
 
 \harvarditem{Kahn}{1998}{Kahn1998}
-Kahn, K.~B.  \harvardyearleft 1998\harvardyearright , `{Revisiting top-down
-  versus bottom-up forecasting}'.
-\newline\harvardurl{http://search.ebscohost.com/login.aspx?direct=true{\&}db=bth{\&}AN=985713{\&}lang=pt-br{\&}site=ehost-live}
+Kahn, K.~B.  \harvardyearleft 1998\harvardyearright , `Revisiting top-down
+  versus bottom-up forecasting', {\em The Journal of Business Forecasting} {\bf
+  17}(2),~14.
+
+\harvarditem{Karmy \harvardand\ Maldonado}{2019}{Karmy2019}
+Karmy, J.~P. \harvardand\ Maldonado, S.  \harvardyearleft 2019\harvardyearright
+  , `Hierarchical time series forecasting via support vector regression in the
+  european travel retail industry', {\em Expert Systems with Applications} .
 
 \harvarditem{Kourentzes \harvardand\ Athanasopoulos}{2019}{KouAth2019}
 Kourentzes, N. \harvardand\ Athanasopoulos, G.  \harvardyearleft
@@ -91,22 +110,41 @@ Li, H. \harvardand\ Tang, Q.  \harvardyearleft 2019\harvardyearright ,
   `{Analyzing Mortality Bond Indexes Via Hierarchical Forecast
   Reconciliation}', {\em ASTIN Bulletin} pp.~1--24.
 
+\harvarditem[Mahkya et~al.]{Mahkya, Ulama et~al.}{2017}{Mahkya2017}
+Mahkya, D., Ulama, B. et~al.  \harvardyearleft 2017\harvardyearright ,
+  Hierarchical time series bottom-up approach for forecast the export value in
+  central java, {\em in} `Journal of Physics: Conference Series', Vol. 893, IOP
+  Publishing, p.~012033.
+
 \harvarditem{Rao}{1974}{rao1974}
 Rao, C.~R.  \harvardyearleft 1974\harvardyearright , `Projectors, generalized
-  inverses and the blue's', {\em Journal of the Royal Statistical Society:
+  inverses and the {BLUE}' s', {\em Journal of the Royal Statistical Society:
   Series B (Methodological)} {\bf 36}(3),~442--448.
 
 \harvarditem[Schwarzkopf et~al.]{Schwarzkopf, Tersine \harvardand\
   Morris}{1988}{Schwarzkopf1988}
 Schwarzkopf, A.~B., Tersine, R.~J. \harvardand\ Morris, J.~S.  \harvardyearleft
-  1988\harvardyearright , `{Top-down versus bottom-up forecasting
-  strategies.}', {\em nternational Journal of Production Research} {\bf
-  26}(11),~1833.
+  1988\harvardyearright , `Top-down versus bottom-up forecasting strategies',
+  {\em The International Journal Of Production Research} {\bf
+  26}(11),~1833--1843.
 
-\harvarditem{{Van Erven} \harvardand\ Cugliari}{2014}{VanErven2015a}
-{Van Erven}, T. \harvardand\ Cugliari, J.  \harvardyearleft
-  2014\harvardyearright , {\em {Game-Theoretically Optimal reconciliation of
-  contemporaneous hierarchical time series forecasts}}.
+\harvarditem{Shang \harvardand\ Hyndman}{2017}{Shang2017}
+Shang, H.~L. \harvardand\ Hyndman, R.~J.  \harvardyearleft
+  2017\harvardyearright , `{Grouped Functional Time Series Forecasting: An
+  Application to Age-Specific Mortality Rates}', {\em Journal of Computational
+  and Graphical Statistics} {\bf 26}(2),~330--343.
+
+\harvarditem[Taieb et~al.]{Taieb, Taylor \harvardand\ Hyndman}{2017}{Taieb2017}
+Taieb, S.~B., Taylor, J.~W. \harvardand\ Hyndman, R.~J.  \harvardyearleft
+  2017\harvardyearright , Coherent probabilistic forecasts for hierarchical
+  time series, {\em in} `Proceedings of the 34th International Conference on
+  Machine Learning-Volume 70', JMLR. org, pp.~3348--3357.
+
+\harvarditem{Van~Erven \harvardand\ Cugliari}{2015}{VanErven2015a}
+Van~Erven, T. \harvardand\ Cugliari, J.  \harvardyearleft 2015\harvardyearright
+  , Game-theoretically optimal reconciliation of contemporaneous hierarchical
+  time series forecasts, {\em in} `Modeling and Stochastic Learning for
+  Forecasting in High Dimensions', Springer, pp.~297--317.
 
 \harvarditem[Wickramasuriya et~al.]{Wickramasuriya, Athanasopoulos \harvardand\
   Hyndman}{2019}{WicEtAl2019}
