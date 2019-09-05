@@ -108,55 +108,56 @@ Our main contribution is to propose a geometric interpretation of the entire hie
 
 First, our approach makes it clear that the defining characteristic of so-called \emph{hierarchical time series} is not aggregation but linear constraints. As a result forecast reconciliation can be applied in contexts where there are no clear candidates of \emph{bottom level} series, an insight that is not apparent when the problem is viewed through the lens of regression modelling. Second, we provide a new proof that reconciled forecasts dominate unreconciled forecasts which makes explicit the link between a reconciliation method and a loss function. We believe that this link is lacking in previous work that attempts to establish similar results, in particular \citet{VanErven2015a} and \citet{WicEtAl2019}. Futhermore, unlike \citet{VanErven2015a} and \citet{WicEtAl2019}, our proof does not require an assumption about convexity. Third, we revisit the issue of bias. We prove that reconciliation using certain projection matrices guarantees unbiased reconciled forecasts provided the base forecasts are also unbiased. A natural question that arises is what to do in the case of biased reconciled forecasts. Rather than addressing this issue by considering matrices that are not projections, we propose to bias-correct before reconciliation. This is evaluated in an extensive empirical study where we find that even when bias correction fails, the extent of the problem is mitigated by reconciling forecasts.
 
-	The remainder of this paper is structured as follows. Section~\ref{sec:CoheForecasts} deals with the concept of coherence and defines so called hierarchical time series in a way that does not depend on any notion of bottom-level series.  Section~\ref{sec:Reconciliation} defines forecast reconciliation in terms of projections and includes a proof that reconciled forecasts dominate base forecasts with respect to a specific loss function. In Section~\ref{sec:BiasInRecon} we prove the unbiasedness preserving property of reconciliation via certain projection matrices and propose methods for bias correction. In Section \ref{sec:EmpStudy} we conduct an extensive empirical application to domestic tourism flow in Australia with two objectives; first to demonstrate the theorems discussed in~\ref{sec:Reconciliation}, second to evaluate the methods for bias correction discussed in~\ref{sec:BiasInRecon}.  Section~\ref{sec:conclusions} concludes with some discussion and thoughts on the  future of research in forecast reconciliation.
-\section{Coherent forecasts}\label{sec:CoheForecasts}
-	
-	\subsection{Notation and preliminaries}\label{sec:notation}
-	
-    We briefly define the concept of a \emph{hierarchical time series} in a fashion similar to \cite{AthEtAl2019_MacroBook}, \cite{FPP2018} and others, before elaborating on some of the limitations of this understanding.  A \emph{hierarchical time series} is a collection of $n$ variables indexed by time, where some variables are aggregates of other variables. We let $\bm{y}_t \in \mathbb{R}^n$ be a vector comprising observations of all variables in the hierarchy at time $t$. The \emph{bottom-level series} are defined as those $m$ variables that cannot be formed as aggregates of other variables; we let $\bm{b}_t \in \mathbb{R}^m$ be a vector comprised of observations of all bottom-level series at time $t$.  The hierarchical structure of the data implies that the following holds for all $t$
+The remainder of this paper is structured as follows. Section~\ref{sec:CoheForecasts} deals with the concept of coherence and defines so called hierarchical time series in a way that does not depend on any notion of bottom-level series. Section~\ref{sec:Reconciliation} defines forecast reconciliation in terms of projections and includes a proof that reconciled forecasts dominate base forecasts with respect to a specific loss function. In Section~\ref{sec:BiasInRecon} we prove the unbiasedness preserving property of reconciliation via certain projection matrices and propose methods for bias correction. In Section \ref{sec:EmpStudy} we conduct an extensive empirical application to domestic tourism flow in Australia with two objectives; first to demonstrate the theorems discussed in~\ref{sec:Reconciliation}, second to evaluate the methods for bias correction discussed in~\ref{sec:BiasInRecon}. Section~\ref{sec:conclusions} concludes with some discussion and thoughts on the future of research in forecast reconciliation.
 
-    \begin{equation*}
-    \bm{y}_t = \bm{Sb}_t,
-    \end{equation*}
-    where $\bm{S}$ is an $n \times m$ constant matrix that encodes the aggregation constraints.
-	
-		\begin{figure}[H]
-			\begin{center}
-				\leaf{AA} \leaf{AB}
+\section{Coherent forecasts}\label{sec:CoheForecasts}
+
+\subsection{Notation and preliminaries}\label{sec:notation}
+
+We briefly define the concept of a \emph{hierarchical time series} in a fashion similar to \citet{AthEtAl2019_MacroBook}, \citet{FPP2018} and others, before elaborating on some of the limitations of this understanding. A \emph{hierarchical time series} is a collection of $n$ variables indexed by time, where some variables are aggregates of other variables. We let $\bm{y}_t \in \mathbb{R}^n$ be a vector comprising observations of all variables in the hierarchy at time $t$. The \emph{bottom-level series} are defined as those $m$ variables that cannot be formed as aggregates of other variables; we let $\bm{b}_t \in \mathbb{R}^m$ be a vector comprised of observations of all bottom-level series at time $t$. The hierarchical structure of the data implies that the following holds for all $t$:
+\begin{equation*}
+  \bm{y}_t = \bm{S}\bm{b}_t,
+\end{equation*}
+where $\bm{S}$ is an $n \times m$ constant matrix that encodes the aggregation constraints.
+
+\begin{figure}[!hbt]
+  \begin{center}
+    \leaf{AA} \leaf{AB}
 				\branch{2}{A}
 				\leaf{BA} \leaf{BB}
 				\branch{2}{B}
 				\branch{2}{Tot}
 				\qobitree
 			\end{center}
-			\caption{An example of a two level hierarchical structure.}\label{fig:basichier}
-		\end{figure}
-	
-	To clarify these concepts consider the example of the hierarchy in Figure \ref{fig:basichier}.  For this hierarchy, $n=7$, $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $m=4$, $\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$ and
-	\[
-	\bm{S} = \begin{pmatrix}
+  \caption{An example of a two level hierarchical structure.}\label{fig:basichier}
+\end{figure}
+
+To clarify these concepts, consider the example of the hierarchy in Figure~\ref{fig:basichier}. For this hierarchy, $n=7$, $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $m=4$, $\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$ and
+\[
+  \bm{S} = \begin{pmatrix}
 	1 & 1 & 1 & 1  \\
 	1 & 1 & 0 & 0 \\
 	0 & 0 & 1 & 1 \\
 	& \multicolumn{2}{c}{\bm{I}_4} &
 	\end{pmatrix},
-	\]
-	where $\bm{I}_4$ is the $4\times 4$ identity matrix.
-	
-	While such a definition is completely serviceable, it obscures the full generality of the literature on so-called hierarchical time series.  In fact, concepts such as coherence and reconciliation, defined in full below, only require the data to have two important characteristics; the first is that they are multivariate, the second is that they adhere to linear constraints.
-	
-	\subsection{Coherence}\label{sec:cohpointf}
-	
-	The property that data adhere to some linear constraints is referred to as {\em coherence}.  We now provide definitions aimed at providing geometric intuition of hierarchical time series.
-	
-	 \begin{definition}[Coherent subspace]\label{def:cohspace}
-	 	The $m$-dimensional linear subspace $\mathfrak{s}\subset \mathbb{R}^n$ for which a set of linear constraints holds for all $\bm{y}\in\mathfrak{s}$ is defined as the \emph{coherent subspace}.
-	 \end{definition}
-     To further illustrate, Figure \ref{fig:3D_hierarchy} depicts the most simple three variable hierarchy where $y_{Tot,t}=y_{A,t}+y_{B,t}$.  The coherent subspace is depicted as a grey $2$-dimensional plane within $3$-dimensional space, i.e. $m=2$ and $n=3$.  It is worth noting that the coherent subspace is spanned by the columns of $\bm{S}$, i.e.\ $\mathfrak{s}=\text{span}(\bm{S})$.  In Figure~\ref{fig:3D_hierarchy}, these columns are $\vec{s}_1=(1,1,0)'$ and $\vec{s}_2=(1,0,1)'$.  However, it is equally important to recognise that the hierarchy could also have been defined in terms of $y_{Tot,t}$ and $y_{A,t}$ rather than the bottom-level series, $y_{A,t}$ and $y_{B,t}$. In this case the corresponding `$\bm{S}$ matrix' would have columns $(1,0,1)'$ and $(0,1,-1)'$.  However, while there are multiple ways to define an $\bm{S}$ matrix, in all cases the columns will span the same coherent subspace, which is unique.
+\]
+where $\bm{I}_4$ is the $4\times 4$ identity matrix.
 
-     \begin{figure}[H]
-     	\centering
-     	\vspace{-0.9cm}
+While such a definition is completely serviceable, it obscures the full generality of the literature on so-called hierarchical time series. In fact, concepts such as coherence and reconciliation, defined in full below, only require the data to have two important characteristics: the first is that they are multivariate, the second is that they adhere to linear constraints.
+
+\subsection{Coherence}\label{sec:cohpointf}
+
+The property that data adhere to some linear constraints is referred to as \emph{coherence}. We now provide definitions aimed at providing geometric intuition of hierarchical time series.
+
+\begin{definition}[Coherent subspace]\label{def:cohspace}
+   The $m$-dimensional linear subspace $\mathfrak{s}\subset \mathbb{R}^n$ for which a set of linear constraints holds for all $\bm{y}\in\mathfrak{s}$ is defined as the \emph{coherent subspace}.
+\end{definition}
+
+To further illustrate, Figure~\ref{fig:3D_hierarchy} depicts the most simple three variable hierarchy where $y_{Tot,t}=y_{A,t}+y_{B,t}$. The coherent subspace is depicted as a grey $2$-dimensional plane within $3$-dimensional space; i.e. $m=2$ and $n=3$. It is worth noting that the coherent subspace is spanned by the columns of $\bm{S}$; i.e.\ $\mathfrak{s}=\text{span}(\bm{S})$. In Figure~\ref{fig:3D_hierarchy}, these columns are $\vec{s}_1=(1,1,0)'$ and $\vec{s}_2=(1,0,1)'$. However, it is equally important to recognise that the hierarchy could also have been defined in terms of $y_{Tot,t}$ and $y_{A,t}$ rather than the bottom-level series, $y_{A,t}$ and $y_{B,t}$. In this case the corresponding `$\bm{S}$ matrix' would have columns $(1,0,1)'$ and $(0,1,-1)'$. However, while there are multiple ways to define an $\bm{S}$ matrix, in all cases the columns will span the same coherent subspace, which is unique.
+
+\begin{figure}[!hbt]
+   \centering
+   \vspace{-0.9cm}
      	\small
      	\resizebox{0.8\linewidth}{!}{
      		\input{Figs/3D_hierarchy}
@@ -165,15 +166,14 @@ First, our approach makes it clear that the defining characteristic of so-called
      \end{figure}
 
 	 \begin{definition}[Hierarchical Time Series]\label{def:cohspace}
-	 	A hierarchical time series is an $n$-dimensional multivariate time series such that all observed values $\bm{y}_1,\ldots,\bm{y}_T$ and all future values $\bm{y}_{T+1},\bm{y}_{T+2},\ldots$  lie in the coherent subspace, i.e., $\bm{y}_t\in\mathfrak{s}\quad\forall t$.
-	 \end{definition}
+   A hierarchical time series is an $n$-dimensional multivariate time series such that all observed values $\bm{y}_1,\ldots,\bm{y}_T$ and all future values $\bm{y}_{T+1},\bm{y}_{T+2},\ldots$ lie in the coherent subspace, i.e., $\bm{y}_t\in\mathfrak{s}\quad\forall t$.
+\end{definition}
 
-	
-	 Despite the common use of the term {\em hierarchical time series}, it should be clear from the definition that the data need not necessarily follow a hierarchy.  Also notable by its absence in the above definition is any reference to {\em aggregation}. In some ways, terms such as {\em hierarchical} and {\em aggregation} can be misleading since the literature has covered instances that cannot be depicted in a similar fashion to Figure~\ref{fig:basichier} and/or do not involve aggregation. Examples include, temporal hierarchies which involve grouped structures \citep[see][]{AthEtAl2017}, overlapping temporal hierarchies \citep[see][]{JeoEtAl2019}, applications for which the difference rather than the aggregate is of interest \cite[see][]{LiTan2019}, or structures that involve both cross-sectional and temporal dimensions referred to as cross-temporal structures \citep[see][]{KouAth2019}. Finally, although Definition~\ref{def:cohspace} makes reference to time series, this definition can be easily generalised to any vector-valued data for which some linear constraints are known to hold for all realisations.
-	
-%	It will sometimes be useful to think of pre-multiplication by $\bm{S}$ as a mapping from $\mathbb{R}^m$ to $\mathbb{R}^n$, in which case we use the notation $s(.)$. Although the codomain of $s(.)$ is $\mathbb{R}^n$, its image is the coherent space $\mathfrak{s}$ as depicted in Figure \ref{fig2}.
-%	
-%	\begin{figure}[H]
+Despite the common use of the term \emph{hierarchical time series}, it should be clear from the definition that the data need not necessarily follow a hierarchy. Also notable by its absence in the above definition is any reference to \emph{aggregation}. In some ways, terms such as \emph{hierarchical} and \emph{aggregation} can be misleading since the literature has covered instances that cannot be depicted in a similar fashion to Figure~\ref{fig:basichier} and/or do not involve aggregation. Examples include, temporal hierarchies which involve grouped structures \citep[see][]{AthEtAl2017}, overlapping temporal hierarchies \citep[see][]{JeoEtAl2019}, applications for which the difference rather than the aggregate is of interest \cite[see][]{LiTan2019}, or structures that involve both cross-sectional and temporal dimensions referred to as cross-temporal structures \citep[see][]{KouAth2019}. Finally, although Definition~\ref{def:cohspace} makes reference to time series, this definition can be easily generalised to any vector-valued data for which some linear constraints are known to hold for all realisations.
+
+%  It will sometimes be useful to think of pre-multiplication by $\bm{S}$ as a mapping from $\mathbb{R}^m$ to $\mathbb{R}^n$, in which case we use the notation $s(.)$. Although the codomain of $s(.)$ is $\mathbb{R}^n$, its image is the coherent space $\mathfrak{s}$ as depicted in Figure~\ref{fig2}.
+%
+%  \begin{figure}[H]
 %		\begin{center}
 %			\begin{tikzpicture}[
 %			>=stealth,
@@ -216,12 +216,9 @@ First, our approach makes it clear that the defining characteristic of so-called
 
     Without any loss of generality, the above definition could also be applied to prediction for multivariate data in general, rather than just forecasting of time series.
 
+Much of the early literature that dealt with the problem of forecasting hierarchical time series \citep[see][and references therein]{Gross1990} produced forecasts at a single level of the hierarchy in the first stage. Subsequently forecasts for all series were recovered through aggregation, disaggregation according to historical or forecast proportions, or some combination of both. Consequently, incoherent forecasts were not a problem in these earlier papers.
 
-    Much of the early literature that dealt with the problem of forecasting hierarchical time series \citep[see][and references therein]{Gross1990} produced forecasts at a single level of the hierarchy in the first stage. Subsequently forecasts for all series were recovered through aggregation, disaggregation according to historical or forecast proportions or some combination of both.  As such incoherent forecasts were not a problem in these earlier papers.
-
-    Forecasting a single level of the hierarchy did not, however echo common practice within many industries. In many organisations different departments or `silos' each produced their own forecasts, often with their own information sets and judgemental adjustments. \footnote{\cite{Cha2013} discusses silos and the importance of information and data sharing across an organisation.}  This approach does have several advantages over only forecasting a single level.  First, there is no loss of information since all levels and series are modelled.  Second, modelling higher level series often identifies features such as trend and seasonality that cannot be detected in noisy disaggregate data.  However, when forecasts are produced independently at all levels, forecasts are likely to be incoherent.\footnote{There are some special cases of using simple approaches such as na\"{i}ve, which extrapolate the coherent nature of the data to the forecasts.} This problem of incoherent forecasts cannot in general be solved by multivariate modelling either.  Instead, the solution is to make an ex post adjustment that ensures coherence, a process known as {\em forecast reconciliation}
-	
-	
+Forecasting a single level of the hierarchy did not, however echo common practice within many industries. In many organisations different departments or `silos' each produced their own forecasts, often with their own information sets and judgemental adjustments. \footnote{\citet{Cha2013} discusses silos and the importance of information and data sharing across an organisation.} This approach does have several advantages over only forecasting a single level. First, there is no loss of information since all levels and series are modelled. Second, modelling higher level series often identifies features such as trend and seasonality that cannot be detected in noisy disaggregate data. However, when forecasts are produced independently at all levels, forecasts are likely to be incoherent.\footnote{There are some special cases of using simple approaches such as na\"{i}ve, which extrapolate the coherent nature of the data to the forecasts.} This problem of incoherent forecasts cannot in general be solved by multivariate modelling either. Instead, the solution is to make an ex post adjustment that ensures coherence, a process known as \emph{forecast reconciliation}
 	
 \section{Forecast reconciliation}\label{sec:Reconciliation}
 	
