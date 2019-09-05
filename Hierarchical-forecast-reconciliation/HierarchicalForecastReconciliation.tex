@@ -332,24 +332,21 @@ Figure~\ref{fig:OthogonalVSOblique_projection} provides geometrical intuition in
       \includegraphics[width=\textwidth]{Figs/ObliqProj_George.pdf}
       \caption{}
   \end{subfigure}
-  \caption{A schematic representing orthogonal and oblique reconciliations. The orange points in (a) represent in-sample errors. $\bm{R}$ shows the most likely direction of deviations from the coherent subspace $\mathfrak{s}$. Grey points in (b) indicate  potential base forecasts while the blue dot ${\hat{\bm y}}$ represents one such realisation. The black dot ${\bm y}$ denotes the (unknown) target of the forecast. (c) shows the orthogonal projection of all potential base forecasts onto the coherent subspace while (d) shows an oblique projection.} \label{fig:OthogonalVSOblique_projection}
+  \caption{A schematic representing orthogonal and oblique reconciliations. The orange points in (a) represent in-sample errors. $\bm{R}$ shows the most likely direction of deviations from the coherent subspace $\mathfrak{s}$. Grey points in (b) indicate potential base forecasts while the blue dot ${\hat{\bm y}}$ represents one such realisation. The black dot ${\bm y}$ denotes the (unknown) target of the forecast. (c) shows the orthogonal projection of all potential base forecasts onto the coherent subspace while (d) shows an oblique projection.} \label{fig:OthogonalVSOblique_projection}
 \end{figure}
 
-	
+\section{Bias in forecast reconciliation}\label{sec:BiasInRecon}
 
-	
-	\section{Bias in forecast reconciliation}\label{sec:BiasInRecon}
-	
-	Before turning our attention to the issue of bias itself it is important to state a sensible property that any reconciliation method should have.  That is if base forecasts are already coherent then reconciliation should not change the forecast.  As stated in Section~\ref{sec:Reconciliation}, this property holds only when $\bm{SG}$ is a projection matrix.  As a corollary, reconciling using an arbitrary $\bm{G}$,  may in fact change an already coherent forecast.
-	
-	The property that projections map all vectors in the coherent subspace onto themselves is also useful in proving the unbiasedness preserving property of reconciliation of \cite{WicEtAl2019}.  Before restating this proof using a  clear geometric interpretation we discuss in a precise fashion what is meant by unbiasedness.
-	
-	Suppose that the target of a point forecast is $\bm{\mu}_{t+h|t}:=\E(\bm{y}_{t+h}\mid\bm{y}_{1},\dots,\bm{y}_{t})$ where the expectation is taken over the predictive density.  Our point forecast can be thought of as an estimate of this quantity. The forecast is random due to uncertainty in the training sample and it is with respect to this uncertainty that unbiasedness is referred to.  More concretely, the point forecast will be unbiased if $\E_{1:t}(\hat{\bm{y}}_{t+h|t})=\bm{\mu}_{t+h|t}$, where the subscript $1:t$ denotes an expectation taken over the training sample.
-	
-	\begin{theo}[Unbiasedness preserving property]
-		For unbiased $\hat{\bm{y}}_{t+h|t}$, the reconciled point forecast is also an unbiased prediction as long as $\bm{SG}$ is a projection onto $\mathfrak{s}$.
-	\end{theo}
-	\begin{proof}
+Before turning our attention to the issue of bias itself it is important to state a sensible property that any reconciliation method should have. That is if base forecasts are already coherent then reconciliation should not change the forecasts. As stated in Section~\ref{sec:Reconciliation}, this property holds only when $\bm{S}\bm{G}$ is a projection matrix. As a corollary, reconciling using an arbitrary $\bm{G}$, may in fact change an already coherent forecast.
+
+The property that projections map all vectors in the coherent subspace onto themselves is also useful in proving the unbiasedness preserving property of reconciliation of \citet{WicEtAl2019}. Before restating this proof using a clear geometric interpretation, we discuss in a precise fashion what is meant by unbiasedness.
+
+Suppose that the target of a point forecast is $\bm{\mu}_{t+h|t}:=\E(\bm{y}_{t+h}\mid\bm{y}_{1},\dots,\bm{y}_{t})$ where the expectation is taken over the predictive density. Our point forecast can be thought of as an estimate of this quantity. The forecast is random due to uncertainty in the training sample and it is with respect to this uncertainty that unbiasedness is defined. Specifically, the point forecast will be unbiased if $\E_{1:t}(\hat{\bm{y}}_{t+h|t})=\bm{\mu}_{t+h|t}$, where the subscript $1:t$ denotes an expectation taken over the training sample.
+
+\begin{theo}[Unbiasedness preserving property]
+  For unbiased $\hat{\bm{y}}_{t+h|t}$, the reconciled point forecast is also an unbiased prediction as long as $\bm{S}\bm{G}$ is a projection onto $\mathfrak{s}$.
+\end{theo}
+\begin{proof}
 		The expected value of the reconciled forecast is given by
 		\[
 		\E_{1:t}(\tilde{\bm{y}}_{t+h|t})
@@ -357,41 +354,39 @@ Figure~\ref{fig:OthogonalVSOblique_projection} provides geometrical intuition in
 		= \bm{S}\bm{G}\E_{1:t}(\hat{\bm{y}}_{t+h|t})
 		= \bm{S}\bm{G}\bm{\mu}_{t+h|t}.
 		\]
-		Since $\bm{\mu}_{t+h|t}$ is an expectation taken with respect to the degenerate predictive density it must lie in $\mathfrak{s}$. We have already established that when $\bm{S}\bm{G}$ is a projection onto $\mathfrak{s}$ then it maps all vectors in $\mathfrak{s}$ onto themselves. As such $\bm{S}\bm{G}\bm{\mu}_{t+h|t}=\bm{\mu}_{t+h|t}$ when $\bm{S}\bm{G}$ is a projection matrix.
-	\end{proof}
+  Since $\bm{\mu}_{t+h|t}$ is an expectation taken with respect to the degenerate predictive density it must lie in $\mathfrak{s}$. We have already established that when $\bm{S}\bm{G}$ is a projection onto $\mathfrak{s}$ then it maps all vectors in $\mathfrak{s}$ onto themselves. As such $\bm{S}\bm{G}\bm{\mu}_{t+h|t}=\bm{\mu}_{t+h|t}$ when $\bm{S}\bm{G}$ is a projection matrix.
+\end{proof}
 
-	We note that the above result holds when the projection $\bm{SG}$ has the coherent subspace $\mathfrak{s}$ as its image and not for all projection matrices in general. To describe this more explicitly suppose $\bm{SG}$ has as its image  $\mathfrak{L}$ which is itself a lower dimensional linear subspace of $\mathfrak{s}$, i.e. $\mathfrak{L}\subset\mathfrak{s}$. Then for $\left\{\bm{\mu}_{t+h|t}:\bm{\mu}_{t+h|t}\in\mathfrak{s},\bm{\mu}_{t+h|t}\notin\mathfrak{L}\right\}$,  $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$. This is depicted in Figure~\ref{fig:Schematic_3D} where $\bm{\mu}_{t+h|t}$ is projected to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$.  In this case, the expectation of reconciled forecast will be $\bar{\bm{\mu}}$ rather than $\bm{\mu}_{t+h|t}$ and hence biased.
-	
-    This result has implications in practice. The top-down method \citep{Gross1990} has
-	\begin{equation*}
-	\bm{G}=\begin{pmatrix}
-	\bm{p} & \bm{0}_{(m \times n-1)}
-	\end{pmatrix}
-	\end{equation*}
-    where $\bm{p} = (p_1,\dots,p_m)'$ is an $m$-dimensional vector consisting a set of proportions used to disaggregate the top-level forecast.  In this case it can be verified that $\bm{SG}$ is idempotent, i,e. $\bm{SGSG}=\bm{SG}$ and therefore $\bm{SG}$ is a projection matrix.  However the image of this projection is not an $m$-dimensional subspace but a $1$-dimensional subspace.  As such, top-down reconciliation produces biased forecasts even when the base forecasts are unbiased.
-		
-	\begin{figure}[H]
-		\centering
-		\vspace{-0.9cm}
+We note that the above result holds when the projection $\bm{S}\bm{G}$ has the coherent subspace $\mathfrak{s}$ as its image and not for all projection matrices in general. To describe this more explicitly suppose $\bm{S}\bm{G}$ has as its image $\mathfrak{L}$ which is itself a lower dimensional linear subspace of $\mathfrak{s}$, i.e. $\mathfrak{L}\subset\mathfrak{s}$. Then for $\left\{\bm{\mu}_{t+h|t}:\bm{\mu}_{t+h|t}\in\mathfrak{s},\bm{\mu}_{t+h|t}\notin\mathfrak{L}\right\}$, $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$. This is depicted in Figure~\ref{fig:Schematic_3D} where $\bm{\mu}_{t+h|t}$ is projected to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$. In this case, the expectation of reconciled forecast will be $\bar{\bm{\mu}}$ rather than $\bm{\mu}_{t+h|t}$ and hence biased.
+
+This result has implications in practice. The top-down method \citep{Gross1990} has
+\begin{equation*}
+  \bm{G} = \begin{pmatrix}
+             \bm{p} & \bm{0}_{(m \times n-1)}
+           \end{pmatrix},
+\end{equation*}
+where $\bm{p} = (p_1,\dots,p_m)'$ is an $m$-dimensional vector consisting a set of proportions used to disaggregate the top-level forecast. In this case it can be verified that $\bm{S}\bm{G}$ is idempotent, i,e. $\bm{S}\bm{G}\bm{S}\bm{G}=\bm{S}\bm{G}$ and therefore $\bm{S}\bm{G}$ is a projection matrix. However the image of this projection is not an $m$-dimensional subspace but a $1$-dimensional subspace. As such, top-down reconciliation produces biased forecasts even when the base forecasts are unbiased.
+
+\begin{figure}[!hbt]
+  \centering
+  \vspace{-0.9cm}
 		\small
 		\resizebox{0.8\linewidth}{!}{
 			\input{Figs/Schem_3D}
 		}
 		\caption{$\mathfrak{L}$ is a linear subspace of the coherent subspace $\mathfrak{s}$. If a projection is onto $\mathfrak{L}$ instead of $\mathfrak{s}$, then $\bm{\mu} \in \mathfrak{s}$ will be moved to $\bm{\mu}^* \in \mathfrak{L}$.}\label{fig:Schematic_3D}
-	\end{figure}
-	
-	Finally, it is often stated that an assumption required to prove the unbiasedness preserving property is that $\bm{SGS}=\bm{S}$ or alternatively that $\bm{GS}=\bm{I}$.  Both of these conditions are equivalent to assuming that $\bm{SG}$ is a projection matrix (see Section \ref{app:projection-proof} in the Appendix for a proof).\todo{Rob can you please read this carefully and see if you are happy with the following statements about bias correction.} However, problems arise when viewing the preservation of unbiasedness through the prism of imposing a constraint $\bm{GS}=\bm{I}$. This thinking suggests that a way to deal with biased forecasts is to select $\bm{G}$ in an unconstrained manner.  However, equipped with a geometric understanding of the problem, we would advise against this approach.  The constraint $\bm{GS}=\bm{I}$  is not just about bias. Dropping the constraint compromises all of the attractive properties of projections.  Opening the door to reconciliation methods that change already coherent base forecasts would seem to suggest an increase in the variability of the forecast.  This seems particularly perverse when the motivation for using a biased method in the first place is to reduce variance.
+\end{figure}
 
-    \subsection{Bias correction}
-	
-	Our own solution to dealing with biased forecasts is to bias correct {\em before} reconciliation.  In many cases the method for bias correction will be context specific.  For instance, in  our empirical study in Section~\ref{sec:EmpStudy} we consider a scenario where bias is induced via taking either a log transformation or a Box-Cox transformation before modelling.  In this well-known case a number of bias correction methods exist based on Taylor expansions. 
-	
-	Alternatively, a more general purpose approach to bias correction is to simply estimate the bias by taking the sample mean of $\bm{y
-	}_{t+h}-\hat{\bm{y}}_{t+h|t}$ for all $t+h$ in the training sample.  This can be then subtracted from future forecasts.  As stated in the discussion of MinT, in-sample errors are already used to estimate the optimal direction of projection.  As such it may be possible to use the same errors to bias correct.  Geometrically, the intuition is simple.  In panel (a) of Figure \ref{fig:OthogonalVSOblique_projection}, the orange points are centered around the origin as would be expected from an unbiased forecast.  If forecasts are biased, then errors should simply be translated until they are centered at the origin.  Nonetheless there are also a number of pitfalls to such an approach.  First, for the very construction we consider, where bias is induced by taking a log or Box Cox transformation, bias should be corrected by a multiplicative rather than an additive factor.  Second, if in-sample errors are non-stationary due to model misspecification or structural breaks, then the proposed method for bias correction may break down.
-	
-	\section{Empirical study} \label{sec:EmpStudy}
-	
-	
+Finally, it is often stated that an assumption required to prove the unbiasedness preserving property is that $\bm{S}\bm{G}\bm{S}=\bm{S}$ or alternatively that $\bm{G}\bm{S}=\bm{I}$. Both of these conditions are equivalent to assuming that $\bm{S}\bm{G}$ is a projection matrix (see Section~\ref{app:projection-proof} in the Appendix for a proof). However, problems arise when viewing the preservation of unbiasedness through the prism of imposing a constraint $\bm{G}\bm{S}=\bm{I}$. This thinking suggests that a way to deal with biased forecasts is to select $\bm{G}$ in an unconstrained manner. However, equipped with a geometric understanding of the problem, we would advise against this approach. The constraint $\bm{G}\bm{S}=\bm{I}$ is not just about bias. Dropping the constraint compromises all of the attractive properties of projections. It also opens the door to reconciliation methods that change already coherent base forecasts, which suggests an increase in the variability of the forecasts. This seems particularly perverse when the motivation for using a biased method in the first place is to reduce variance.
+
+\subsection{Bias correction}
+
+Our own solution to dealing with biased forecasts is to bias correct \emph{before} reconciliation. In many cases the method for bias correction will be context specific. For instance, in our empirical study in Section~\ref{sec:EmpStudy} we consider a scenario where bias is induced via taking either a log transformation or a Box-Cox transformation before modelling. In this well-known case a number of bias correction methods exist based on Taylor expansions.
+
+Alternatively, a more general purpose approach to bias correction is to simply estimate the bias by taking the sample mean of $\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t}$ for all $t+h$ in the training sample. This can then be subtracted from future forecasts. As stated in the discussion of MinT, in-sample errors are already used to estimate the optimal direction of projection. As such it may be possible to use the same errors to bias correct. Geometrically, the intuition is simple. In panel~(a) of Figure~\ref{fig:OthogonalVSOblique_projection}, the orange points are centered around the origin as would be expected from an unbiased forecast. If forecasts are biased, then errors should simply be translated until they are centered at the origin. Nonetheless there are also a number of pitfalls to such an approach. First, for the very construction we consider, where bias is induced by taking a log or Box Cox transformation, bias should be corrected by a multiplicative rather than an additive factor. Second, if in-sample errors are non-stationary due to model misspecification or structural breaks, then the proposed method for bias correction may break down.
+
+\section{Empirical study} \label{sec:EmpStudy}
+
 	Using an empirical application to forecast Australian domestic tourism flows, we illustrate the usefulness of projection based reconciliation in practice. Previous studies have found that reconciliation improves point forecast accuracy in domestic tourism flows for Australia \citep[see for example][]{Athanasopoulos2009, Hyndman2011,WicEtAl2019}. However, our motivation in this study is twofold.  First, we demonstrate the implications of Theorem~\ref{th:distred} by comparing reconciled and base forecasts. In contrast to previous studies we consider individual periods rather than computing averages over a rolling window.  Second, we demonstrate how the bias correction methods discussed in the previous section along with the projection-based reconciliation help to improve forecast accuracy.
 	
 	
