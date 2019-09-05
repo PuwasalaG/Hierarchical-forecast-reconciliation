@@ -380,7 +380,7 @@ where $\bm{p} = (p_1,\dots,p_m)'$ is an $m$-dimensional vector consisting a set 
   \caption{$\mathfrak{L}$ is a linear subspace of the coherent subspace $\mathfrak{s}$. If a projection is onto $\mathfrak{L}$ instead of $\mathfrak{s}$, then $\bm{\mu} \in \mathfrak{s}$ will be moved to $\bm{\mu}^* \in \mathfrak{L}$.}\label{fig:Schematic_3D}
 \end{figure}
 
-Finally, it is often stated that an assumption required to prove the unbiasedness preserving property is that $\bm{S}\bm{G}\bm{S}=\bm{S}$ or alternatively that $\bm{G}\bm{S}=\bm{I}$. Both of these conditions are equivalent to assuming that $\bm{S}\bm{G}$ is a projection matrix (see Section~\ref{app:projection-proof} in the Appendix for a proof). However, problems arise when viewing the preservation of unbiasedness through the prism of imposing a constraint $\bm{G}\bm{S}=\bm{I}$. This thinking suggests that a way to deal with biased forecasts is to select $\bm{G}$ in an unconstrained manner. However, equipped with a geometric understanding of the problem, we would advise against this approach. The constraint $\bm{G}\bm{S}=\bm{I}$ is not just about bias. Dropping the constraint compromises all of the attractive properties of projections. It also opens the door to reconciliation methods that change already coherent base forecasts, which suggests an increase in the variability of the forecasts. This seems particularly perverse when the motivation for using a biased method in the first place is to reduce variance.
+Finally, it is often stated that an assumption required to prove the unbiasedness preserving property is that $\bm{S}\bm{G}\bm{S}=\bm{S}$ or alternatively that $\bm{G}\bm{S}=\bm{I}$. Both of these conditions are equivalent to assuming that $\bm{S}\bm{G}$ is a projection matrix (see Section~\ref{app:projection-proof} in Appendix A for a proof). However, problems arise when viewing the preservation of unbiasedness through the prism of imposing a constraint $\bm{G}\bm{S}=\bm{I}$. This thinking suggests that a way to deal with biased forecasts is to select $\bm{G}$ in an unconstrained manner. However, equipped with a geometric understanding of the problem, we would advise against this approach. The constraint $\bm{G}\bm{S}=\bm{I}$ is not just about bias. Dropping the constraint compromises all of the attractive properties of projections. It also opens the door to reconciliation methods that change already coherent base forecasts, which suggests an increase in the variability of the forecasts. This seems particularly perverse when the motivation for using a biased method in the first place is to reduce variance.
 
 \subsection{Bias correction}
 
@@ -394,7 +394,7 @@ Using an empirical application to forecast Australian domestic tourism flows, we
 
 \subsection{Data}
 
-We consider ``overnight trips'' across Australia as a measure of domestic tourism flows. The data are provided by the National Visitor Survey and are collected through telephone interviews from an annual sample of $120,000$ Australian residents aged $15$ years or more. We disaggregate tourism flows into 7 states, 27 zones and 75 regions forming a natural geographical hierarchy that is of interest to tourism operators and policy makers amongst others. Hence, there are $110$ series across the hierarchy with $75$ bottom-level series. More information about the series and the geographical hierarchy is presented in Table~\ref{table:A1} in the Appendix. The data span the period January 1998 to December 2017, which gives a total of $240$ observations per series.
+We consider ``overnight trips'' across Australia as a measure of domestic tourism flows. The data are provided by the National Visitor Survey and are collected through telephone interviews from an annual sample of $120,000$ Australian residents aged $15$ years or more. We disaggregate tourism flows into 7 states, 27 zones and 75 regions forming a natural geographical hierarchy that is of interest to tourism operators and policy makers amongst others. Hence, there are $110$ series across the hierarchy with $75$ bottom-level series. More information about the series and the geographical hierarchy is presented in Table~\ref{table:A1} in Appendix B\@. The data span the period January 1998 to December 2017, which gives a total of $240$ observations per series.
 
 Figure~\ref{fig:Total_TSplots} shows time, sub-series and seasonal plots of the aggregate overnight trips. As is usual with tourism data, these show a strong seasonal pattern with peaks observed every January corresponding to the summer vacation season in Australia. There are also some lower peaks observed in April, July and October corresponding to school term breaks. On the other hand, the month with the least overnight trips is February indicating that people travel least for the month following their summer vacation. The time plot also shows a pronounced upward trend starting from around 2010 to the end of the sample, with flows being fairly flat from the beginning of the sample and a slight downward trend during 2004--2010.
 
@@ -512,6 +512,7 @@ Defining concepts such as coherence and reconciliation in geometric terms provid
 First, it should be possible to extend the concept of coherence to non-linear constraints. In these cases the coherent space may need to be defined by a manifold. Although much more challenging, it is still possible to define reconciled forecasts in terms of projections onto a manifold. Second, since we have established that the concept of bottom-level series is not crucial in forecast reconciliation, an open question is whether it may be better to construct base forecasts of linear combinations of the time series rather than the time series themselves. Finally, the geometric interpretations of hierarchical forecast reconciliation facilitates an extension into a probabilistic framework. The latter two are issues we investigate in separate papers.
 
 \clearpage
+\appendix
 
 \section{Appendix}
 
@@ -519,7 +520,7 @@ First, it should be possible to extend the concept of coherence to non-linear co
 
 Here we establish that if $\bm{S}\bm{G}$ is a projection onto the linear subspace spanned by $\bm{S}$ then $\bm{S}\bm{G}\bm{S}=\bm{S}$. We also prove that the converse holds, namely that if the condition $\bm{S}\bm{G}\bm{S}=\bm{S}$ holds then $\bm{S}\bm{G}$ must be a projection onto the linear subspace spanned by $\bm{S}$.
 
-To establish the first statement let $\bm{s}_j$ be the $j^{th}$ column of $\bm{S}$. Since by definition, $\bm{s}_j$ lies in $\mathfrak{s}$, it must hold that $\bm{S}\bm{G}\bm{s}_j=\bm{s}_j$. Stacking these vectors horizontally
+To establish the first statement, let $\bm{s}_j$ be the $j$th column of $\bm{S}$. Since by definition, $\bm{s}_j$ lies in $\mathfrak{s}$, it must hold that $\bm{S}\bm{G}\bm{s}_j=\bm{s}_j$. Stacking these vectors horizontally
 \begin{align*}
 \bm{S}\bm{G}\bm{S}
   & = \begin{pmatrix}
@@ -531,7 +532,7 @@ To establish the first statement let $\bm{s}_j$ be the $j^{th}$ column of $\bm{S
   & = \bm{S}.
 \end{align*}
 
-To establish the converse it suffices to postmultiply the condition $\bm{S}\bm{G}\bm{S}=\bm{S}$ by $\bm{G}$. This yields $\bm{S}\bm{G}\bm{S}\bm{G}=\bm{S}\bm{G}$ which in turn implies idempotence since $(\bm{S}\bm{G})^2=\bm{S}\bm{G}$.
+To establish the converse it suffices to postmultiply the condition $\bm{S}\bm{G}\bm{S}=\bm{S}$ by $\bm{G}$. This yields $\bm{S}\bm{G}\bm{S}\bm{G}=\bm{S}\bm{G}$, which in turn implies idempotence since $(\bm{S}\bm{G})^2=\bm{S}\bm{G}$.
 
 \input{Appendix}
 \newpage
