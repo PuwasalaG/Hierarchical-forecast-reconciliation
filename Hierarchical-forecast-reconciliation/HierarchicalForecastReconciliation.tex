@@ -285,7 +285,7 @@ However, in other ways, Theorem~\ref{th:distred} is weaker than perhaps often un
 
 One justification for using an orthogonal projection is that it leads to improved forecast accuracy in terms of the root of the sum of squared errors of \emph{all} variables in the hierarchy. A clear shortcoming of this measure of forecast accuracy is that forecast errors in all series should not necessarily be treated equally. For example, in hierarchies, top-level series tend to have a much larger scale than bottom-level series. Even when two series are on a similar scale, series that are more predictable or less variable will tend to be downweighted by simply aggregating squared errors. An even more sophisticated understanding may take the correlation between series into account. All of these considerations lead towards reconciliation of the form $\tilde{\bm{y}}=\bm{S}(\bm{S}'\bm{W}^{-1}\bm{S})^{-1}\bm{S}'\bm{W}^{-1}\hat{\bm{y}}$, where $\bm{W}$ is a symmetric matrix. Generally, it is assumed that $\bm{W}$ is invertible, otherwise a pseudo inverse can be used.
 
-It should be noted that $\bm{S}(\bm{S}'\bm{W}^{-1}\bm{S})^{-1}\bm{S}'\bm{W}^{-1}$ is an oblique, rather than an orthogonal projection matrix in the usual Euclidean geometry. However this matrix can be considered to be an orthogonal projection for a different geometry defined by the norm\break $||\bm{v}||_{{\bm W}^{-1}}=\bm{v}'\bm{W}^{-1}\bm{v}$, referred to as the generalised Euclidean geometry with respect to $\bm{W}^{-1}$. One way to understand this geometry is that it is the same as Euclidean geometry when all vectors are first transformed by pre-multiplying by $\bm{W}^{-1/2}$. This leads to a transformed $\bm{S}$ matrix $\bm{S}^*=\bm{W}^{-1/2}\bm{S}$ and transformed $\hat{\bm{y}}$ and $\tilde{\bm{y}}$ vectors $\hat{\bm{y}}^*=\bm{W}^{-1/2}\hat{\bm{y}}$ and $\tilde{\bm{y}}^*=\bm{W}^{-1/2}\tilde{\bm{y}}$. The transformed reconciled forecast results from an orthogonal projection in the transformed space since
+It should be noted that $\bm{S}(\bm{S}'\bm{W}^{-1}\bm{S})^{-1}\bm{S}'\bm{W}^{-1}$ is an oblique, rather than an orthogonal projection matrix in the usual Euclidean geometry. However this matrix can be considered to be an orthogonal projection for a different geometry defined by the norm\break $||\bm{v}||_{\bm{W}^{-1}}=\bm{v}'\bm{W}^{-1}\bm{v}$, referred to as the generalised Euclidean geometry with respect to $\bm{W}^{-1}$. One way to understand this geometry is that it is the same as Euclidean geometry when all vectors are first transformed by pre-multiplying by $\bm{W}^{-1/2}$. This leads to a transformed $\bm{S}$ matrix $\bm{S}^*=\bm{W}^{-1/2}\bm{S}$ and transformed $\hat{\bm{y}}$ and $\tilde{\bm{y}}$ vectors $\hat{\bm{y}}^*=\bm{W}^{-1/2}\hat{\bm{y}}$ and $\tilde{\bm{y}}^*=\bm{W}^{-1/2}\tilde{\bm{y}}$. The transformed reconciled forecast results from an orthogonal projection in the transformed space since
 \begin{align*}
   \tilde{\bm{y}}^*
     & = \bm{W}^{-1/2}\tilde{\bm{y}} \\
@@ -298,9 +298,9 @@ Thinking of the problem in terms of a geometry defined by the norm $\bm{v}'\bm{W
 \begin{theo}[General distance reducing property]\label{th:gdistred}
   If $\tilde{\bm{y}}_{t+h|t}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}$, where $\bm{G}$ is such that $\bm{S}\bm{G}$ is an orthogonal projection (in the generalised Euclidean sense) onto $\mathfrak{s}$ then:
   \begin{equation*}
-    \|(\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t})\|_{{\bm W}^{-1}}
+    \|(\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t})\|_{\bm{W}^{-1}}
       \le\
-    |(\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t})\|_{{\bm W}^{-1}}.
+    |(\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t})\|_{\bm{W}^{-1}}.
   \end{equation*}
 \end{theo}
 \begin{proof}
@@ -360,7 +360,7 @@ Suppose that the target of a point forecast is $\bm{\mu}_{t+h|t}:=\E(\bm{y}_{t+h
   Since $\bm{\mu}_{t+h|t}$ is an expectation taken with respect to the degenerate predictive density it must lie in $\mathfrak{s}$. We have already established that when $\bm{S}\bm{G}$ is a projection onto $\mathfrak{s}$ then it maps all vectors in $\mathfrak{s}$ onto themselves. As such $\bm{S}\bm{G}\bm{\mu}_{t+h|t}=\bm{\mu}_{t+h|t}$ when $\bm{S}\bm{G}$ is a projection matrix.
 \end{proof}
 
-We note that the above result holds when the projection $\bm{S}\bm{G}$ has the coherent subspace $\mathfrak{s}$ as its image and not for all projection matrices in general. To describe this more explicitly suppose $\bm{S}\bm{G}$ has as its image $\mathfrak{L}$ which is itself a lower dimensional linear subspace of $\mathfrak{s}$, i.e. $\mathfrak{L}\subset\mathfrak{s}$. Then for $\left\{\bm{\mu}_{t+h|t}:\bm{\mu}_{t+h|t}\in\mathfrak{s},\bm{\mu}_{t+h|t}\notin\mathfrak{L}\right\}$, $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$. This is depicted in Figure~\ref{fig:Schematic_3D} where $\bm{\mu}_{t+h|t}$ is projected to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$. In this case, the expectation of reconciled forecast will be $\bar{\bm{\mu}}$ rather than $\bm{\mu}_{t+h|t}$ and hence biased.
+The above result holds when the projection $\bm{S}\bm{G}$ has the coherent subspace $\mathfrak{s}$ as its image and not for all projection matrices in general. To describe this more explicitly suppose $\bm{S}\bm{G}$ has as its image $\mathfrak{L}$ which is itself a lower dimensional linear subspace of $\mathfrak{s}$, i.e. $\mathfrak{L}\subset\mathfrak{s}$. Then for $\left\{\bm{\mu}_{t+h|t}:\bm{\mu}_{t+h|t}\in\mathfrak{s},\bm{\mu}_{t+h|t}\notin\mathfrak{L}\right\}$, $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$. This is depicted in Figure~\ref{fig:Schematic_3D} where $\bm{\mu}_{t+h|t}$ is projected to a point $\bar{\bm{\mu}}$ in $\mathfrak{L}$. In this case, the expectation of reconciled forecast will be $\bar{\bm{\mu}}$ rather than $\bm{\mu}_{t+h|t}$ and hence biased.
 
 This result has implications in practice. The top-down method \citep{Gross1990} has
 \begin{equation*}
@@ -388,20 +388,19 @@ Our own solution to dealing with biased forecasts is to bias correct \emph{befor
 
 Alternatively, a more general purpose approach to bias correction is to simply estimate the bias by taking the sample mean of $\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t}$ for all $t+h$ in the training sample. This can then be subtracted from future forecasts. As stated in the discussion of MinT, in-sample errors are already used to estimate the optimal direction of projection. As such it may be possible to use the same errors to bias correct. Geometrically, the intuition is simple. In panel~(a) of Figure~\ref{fig:OthogonalVSOblique_projection}, the orange points are centered around the origin as would be expected from an unbiased forecast. If forecasts are biased, then errors should simply be translated until they are centered at the origin. Nonetheless there are also a number of pitfalls to such an approach. First, for the very construction we consider, where bias is induced by taking a log or Box Cox transformation, bias should be corrected by a multiplicative rather than an additive factor. Second, if in-sample errors are non-stationary due to model misspecification or structural breaks, then the proposed method for bias correction may break down.
 
-\section{Empirical study} \label{sec:EmpStudy}
+\section{Empirical study}\label{sec:EmpStudy}
 
-	Using an empirical application to forecast Australian domestic tourism flows, we illustrate the usefulness of projection based reconciliation in practice. Previous studies have found that reconciliation improves point forecast accuracy in domestic tourism flows for Australia \citep[see for example][]{Athanasopoulos2009, Hyndman2011,WicEtAl2019}. However, our motivation in this study is twofold.  First, we demonstrate the implications of Theorem~\ref{th:distred} by comparing reconciled and base forecasts. In contrast to previous studies we consider individual periods rather than computing averages over a rolling window.  Second, we demonstrate how the bias correction methods discussed in the previous section along with the projection-based reconciliation help to improve forecast accuracy.
-	
-	
-	\subsection{Data}
-	
-	We consider ``overnight trips'' across Australia as a measure of domestic tourism flows. The data are provided by the National Visitor Survey and are collected through telephone interviews from an annual sample of $120,000$ Australian residents aged $15$ years or more. We disaggregate tourism flows into 7 states, 27 zones and 75 regions forming a natural geographical hierarchy that is of interest to tourism operators and policy makers amongst others. Hence, there are $110$ series across the hierarchy with $75$ bottom-level series. More information about the series and the geographical hierarchy is presented in Table \ref{table:A1} in the Appendix. The data span the period January 1998 to December 2017, which gives a total of $240$ observations per series.
+Using an empirical application to forecast Australian domestic tourism flows, we illustrate the usefulness of projection-based reconciliation in practice. Previous studies have found that reconciliation improves point forecast accuracy in domestic tourism flows for Australia \citep[see for example][]{Athanasopoulos2009, Hyndman2011,WicEtAl2019}. However, our motivation in this study is twofold. First, we demonstrate the implications of Theorem~\ref{th:distred} by comparing reconciled and base forecasts. In contrast to previous studies, we consider individual periods rather than computing averages over a rolling window. Second, we demonstrate how the bias correction methods discussed in the previous section along with the projection-based reconciliation help to improve forecast accuracy.
 
-Figure \ref{fig:Total_TSplots} shows time, sub-series and seasonal plots of the aggregate overnight trips. As is usual with tourism data, these show a strong seasonal pattern with peaks observed every January corresponding to the summer vacation season in Australia. There are also some lower peaks observed in April, July and October corresponding to school term breaks. On the other hand the month with the least overnight trips is February indicating that people travel least for the month following their summer vacation. The time plot also shows a pronounced upward trend starting from around 2010 till the end of the sample, with flows being fairly flat from the beginning of the sample and a slight downward trend during 2004-2010.
+\subsection{Data}
 
-The top panel of Figure \ref{fig:States_Zones_Regs_TSplots} shows time plots for the seven states, hence the first-level of the geographical hierarchy. The panels below show some selected series from the second-level zones and the bottom-level regions. The plots display the diversity of time series features, within but also between levels. For example, noticeable at the first-level is the asynchronous seasonal pattern between the Northern Territory and the other states. For the Northern Territory the high tourist season occurs during June-August with July being the peak, while the low season is during December-February. This reflects the tropical climate of the Northern Territory, with Australians mostly visiting the North during its dry winter-season rather than the wet summer season. Noticeable as we move to the lower levels is the variation in the signal-to-noise ratio, with the regional bottom-level series being much noisier compared to the series from levels above. This of course highlights the importance of modelling series at all levels without any loss of valuable information. We should note here that we observed an anomalous (extremely high) observation for `Adelaide Hills' for December-2002. We replaced this observation with the average overnight trips on December-2001 and December-2003 for the same destination.
-		
-	\begin{figure}
+We consider ``overnight trips'' across Australia as a measure of domestic tourism flows. The data are provided by the National Visitor Survey and are collected through telephone interviews from an annual sample of $120,000$ Australian residents aged $15$ years or more. We disaggregate tourism flows into 7 states, 27 zones and 75 regions forming a natural geographical hierarchy that is of interest to tourism operators and policy makers amongst others. Hence, there are $110$ series across the hierarchy with $75$ bottom-level series. More information about the series and the geographical hierarchy is presented in Table~\ref{table:A1} in the Appendix. The data span the period January 1998 to December 2017, which gives a total of $240$ observations per series.
+
+Figure~\ref{fig:Total_TSplots} shows time, sub-series and seasonal plots of the aggregate overnight trips. As is usual with tourism data, these show a strong seasonal pattern with peaks observed every January corresponding to the summer vacation season in Australia. There are also some lower peaks observed in April, July and October corresponding to school term breaks. On the other hand, the month with the least overnight trips is February indicating that people travel least for the month following their summer vacation. The time plot also shows a pronounced upward trend starting from around 2010 to the end of the sample, with flows being fairly flat from the beginning of the sample and a slight downward trend during 2004--2010.
+
+The top panel of Figure~\ref{fig:States_Zones_Regs_TSplots} shows time plots for the seven states, hence the first level of the geographical hierarchy. The panels below show some selected series from the second-level zones and the bottom-level regions. The plots display the diversity of time series features, within but also between levels. For example, noticeable at the first level is the asynchronous seasonal pattern between the Northern Territory and the other states. For the Northern Territory the high tourist season occurs during June-August with July being the peak, while the low season is during December-February. This reflects the tropical climate of the Northern Territory, with Australians mostly visiting the North during its dry winter-season rather than the wet summer season. Noticeable as we move to the lower levels is the variation in the signal-to-noise ratio, with the regional bottom-level series being much noisier compared to the series from levels above. This of course highlights the importance of modelling series at all levels without any loss of valuable information. We should note here that we observed an anomalous (extremely high) observation for `Adelaide Hills' for December 2002. We replaced this observation with the average overnight trips on December 2001 and December 2003 for the same destination.
+
+\begin{figure}
 		\centering
 		\small
 		\includegraphics[width = \textwidth]{Empirical-results/TS-plots/Total_TSplots.pdf}
@@ -409,32 +408,32 @@ The top panel of Figure \ref{fig:States_Zones_Regs_TSplots} shows time plots for
 	\end{figure}
 	
 \begin{figure}
-		\centering
-		\small
-		\includegraphics[width= \textwidth]{Empirical-results/TS-plots/States_Zones_Regs_TSplots1.pdf}
-		\caption{Time plot of overnight trips for some selected series from different disaggregate levels of the hierarchy. All values are presented in log scale. To avoid impact from the zero values we added a constant 1 to all observations}\label{fig:States_Zones_Regs_TSplots}
+  \centering
+  \small
+  \includegraphics[width= .95\textwidth]{Empirical-results/TS-plots/States_Zones_Regs_TSplots1.pdf}
+  \caption{Time plot of overnight trips for some selected series from different disaggregate levels of the hierarchy. All values are presented in log scale. To avoid impact from the zero values we added a constant 1 to all observations}\label{fig:States_Zones_Regs_TSplots}
 \end{figure}
 
-    \subsection{Comparison to Base Forecasts}\label{sec:comparebase}
+\subsection{Comparison to Base Forecasts}\label{sec:comparebase}
 
-    To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts.  For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package.  Using these fitted models, base forecasts are produced for $h=1$ to $12$-steps ahead for each series in the hierarchy.  This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $129~12$-steps-ahead forecasts available for forecast evaluation.
+To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts. For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package. Using these fitted models, base forecasts are produced for $h=1$ to $12$-steps ahead for each series in the hierarchy. This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $129~12$-steps-ahead forecasts available for forecast evaluation.
 
-    After obtaining the base forecasts these are reconciled using three different projection methods: OLS reconciliation, MinT using a shrinkage estimator for ${\bm W}$ and WLS reconciliation using variance scaling. Squared forecast errors are computed for each series and aggregated across the entire hierarchy, i.e., we compute the loss function described in Section~\ref{sec:orthogonal}.  We then compute the difference in this loss function between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate. We also include bottom-up forecasts in this comparison for completeness.
+After obtaining the base forecasts these are reconciled using three different projection methods: OLS reconciliation, MinT using a shrinkage estimator for $\bm{W}$ and WLS reconciliation using variance scaling. Squared forecast errors are computed for each series and aggregated across the entire hierarchy; i.e., we compute the loss function described in Section~\ref{sec:orthogonal}. We then compute the difference in this loss function between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate. We also include bottom-up forecasts in this comparison for completeness.
 
-    The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this measure over each rolling window. We only present the results for $h=1$ but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available upon request.
+The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this measure over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available upon request.
 
-    As the theory predicts, OLS reconciliation always leads to an improvement relative to base forecasts. The entire boxplot for OLS reconciliation is above zero.  This is not the case for MinT and WLS which for some windows generate forecasts less accurate than the base forecasts. The boxplots also demonstrate that OLS reconciliation is more stable than MinT and WLS reconciliation, a result not entirely unsurprising since the latter two methods require estimation of a ${\bm W}$ matrix which in practice is not trivial.  Nonetheless when averaging over the entire rolling window the MinT estimator performs best on average, which is again precisely what the theorem proved in \cite{WicEtAl2019} would suggest. The average MSE values across the entire rolling window of 140 replications are shown in Table \ref{tab:AveraveDifferences}.
+As the theory predicts, OLS reconciliation always leads to an improvement relative to base forecasts. The entire boxplot for OLS reconciliation is above zero. This is not the case for MinT and WLS which for some windows generate forecasts less accurate than the base forecasts. The boxplots also demonstrate that OLS reconciliation is more stable than MinT and WLS reconciliation, a result not entirely unsurprising since the latter two methods require estimation of a $\bm{W}$ matrix which in practice is not trivial. Nonetheless when averaging over the entire rolling window the MinT estimator performs best on average, which is again precisely what the theorem proved in \citet{WicEtAl2019} would suggest. The average MSE values across the entire rolling window of 140 replications are shown in Table \ref{tab:AveraveDifferences}.
 
-\begin{figure}[H]
-    	\centering
-    	\small
-    	\includegraphics[width = \textwidth]{Figs/BoxPlot.pdf}
-    	\caption{MSE differences between base forecasts and reconciled forecasts using OLS, MinT and WLS, and also the bottom-up approach for $h = 1$. A positive value indicates that the coherent forecasts are an improvement over the base forecasts.} \label{fig:BaseVSRecon_Fc}
+\begin{figure}[!hbt]
+    \centering
+    \small
+    \includegraphics[width = \textwidth]{Figs/BoxPlot.pdf}
+    \caption{MSE differences between base forecasts and reconciled forecasts using OLS, MinT and WLS, and also the bottom-up approach for $h = 1$. A positive value indicates that the coherent forecasts are an improvement over the base forecasts.}\label{fig:BaseVSRecon_Fc}
 \end{figure}
 
-\begin{table}[H]
-	\caption {Average {MSE($\times 10^3$)} over all 140 rolling window replications for $h=1$.} \label{tab:AveraveDifferences}
-	\centering \tabcolsep=0.4cm
+\begin{table}[!hbt]
+\caption {Average {MSE($\times 10^3$)} over all 140 rolling window replications for $h=1$.}\label{tab:AveraveDifferences}
+  \centering \tabcolsep=0.4cm
 		\begin{tabular}{lccccc}
 	\toprule
             & Base & OLS & MinT & WLS & Bottom-up \\
@@ -443,20 +442,18 @@ The top panel of Figure \ref{fig:States_Zones_Regs_TSplots} shows time plots for
     \end{tabular}
 \end{table}
 
-	\subsection{Transformations and bias adjustment}
-	
-	We first transform each series in the hierarchy using two types of transformations. Namely, we perform a log-transformation and also the more general Box-Cox transformation. A Box-Cox transformation is defined as,
-		
-\begin{equation*} \label{eq:BoxCox_transformation}
-	w_t =
-	\begin{cases}
-	\log(y_t) & \text{if}~\lambda=0;\\
-	\frac{y_t^\lambda - 1}{\lambda}  & \text{otherwise}.
-	\end{cases}
+\subsection{Transformations and bias adjustment}
+
+We first transform each series in the hierarchy using two types of transformations. Namely, we perform a log-transformation and also the more general Box-Cox transformation. A Box-Cox transformation is defined as,
+\begin{equation*}\label{eq:BoxCox_transformation}
+w_t = \begin{cases}
+        \log(y_t)                        & \text{if}~\lambda=0;\\
+        \frac{y_t^\lambda - 1}{\lambda}  & \text{otherwise}.
+      \end{cases}
 \end{equation*}
 We first set $\lambda=0$ and hence consider only a log transformation. For the second more general Box-Cox transformation we select $\lambda$ using the ``Guerrero'' method \citep{guerrero1993time} implemented in the \verb|BoxCox.lambda()| function in the \verb|forecast| package in R \citep{Rforecast}. In order to avoid extreme and volatile transformations we restrict $\lambda \in (-0.5,2)$. As zero observations exist in some of the bottom-level series, before transforming we add a constant (more specifically $1$) to each series. This overcomes the challenge of undefined transformed values for zero observations when we specifically implement the log transformation or when $\lambda$ is selected to be zero by the ``Guerrero'' method. The constant is subtracted from the final forecasts.
 
-After transformation we fit univariate ARIMA models to each transformed series. The \verb|auto.arima()| function in the \verb|forecast| package is used to choose the best model that minimises the AICc. Using the fitted models, forecasts are produced for $h=1$ to $12$-steps ahead for each series in the hierarchy. The same rolling window described in Section \ref{sec:comparebase} is used here as well.
+After transformation we fit univariate ARIMA models to each transformed series. The \verb|auto.arima()| function in the \verb|forecast| package is used to choose the best model that minimises the AICc. Using the fitted models, forecasts are produced for $h=1$ to $12$-steps ahead for each series in the hierarchy. The same rolling window described in Section~\ref{sec:comparebase} is used here as well.
 
 The forecasts are then back-transformed by simply reversing the Box-Cox transformation using,
 \begin{equation} \label{eq:BoxCox_back-transformation}
@@ -468,26 +465,23 @@ The forecasts are then back-transformed by simply reversing the Box-Cox transfor
 \end{equation}
 These back-transformed forecasts are potentially biased as they are not the mean of the forecast distribution but the median (assuming that the distribution of the transformed space is symmetric). Hence, the reconciled forecasts that follow from these forecasts will also be biased. We refer to these as ``Biased'' base forecasts in the results that follow. This is the exact scenario we want to demonstrate in this study and we next move to our proposed solution of bias correcting the base forecasts before reconciling for which we explore two scenarios.
 
-Using a Taylor series expansion \todo{Rob do we need a reference here or is this obvious/well known?} the back-transformed mean of the forecast distribution for a Box-Cox transformation is given by
+Using a Taylor series expansion \citep{guerrero1993time}, the back-transformed mean of the forecast distribution for a Box-Cox transformation is given by
+\begin{equation}\label{eq:BoxCox_BT_biasadj}
+  \hat{y}_{t+h|t} =
+    \begin{cases}
+      \exp(\hat{w}_{t+h|t})\left[1+\frac{\sigma_h^2}{2}\right] & \text{if}~\lambda = 0, \\
+      (\lambda \hat{w}_{t+h|t} + 1)^{1/\lambda}
+        \left[1 + \frac{\sigma_h^2(1-\lambda)}{2(\lambda \hat{w}_{t+h|t} + 1)^2}\right]
+                                                      & \text{if}~\lambda \ne 0,
+\end{cases}
+\end{equation}
+where $\hat{w}_{t+h|t}$ is the $h$-step-ahead forecast from the Box-Cox transformed series and $\sigma_h^2$ is the variance of $\hat{w}_{t+h|t}$. Using the mean of the forecast distribution returns bias-adjusted base forecasts compared to the simple back-transformation of Eq.~\eqref{eq:BoxCox_back-transformation}. We refer to this as ``Method-1'' in the results that follow. The second scenario of bias adjustment we explore is using the in-sample forecast error mean of the biased forecasts to adjust the out-of-sample forecasts. We refer to this as ``Method-2'' in the results that follow.
 
-\begin{equation} \label{eq:BoxCox_BT_biasadj}
-	 \hat{y}_{t+h|t} =
-	\begin{cases}
-	\exp({\hat{w}_{t+h|t}})[1+\frac{\sigma_h^2}{2}] & \text{if}~\lambda = 0, \\
-	(\lambda \hat{w}_{t+h|t} + 1)^{1/\lambda}[1 + \frac{\sigma_h^2(1-\lambda)}{2(\lambda \hat{w}_{t+h|t} + 1)^2}]       & \text{if}~\lambda \ne 0,
-	\end{cases}
-	\end{equation}
-where, $\hat{w}_{t+h|t}$ is the $h$-step-ahead forecast from the Box-Cox transformed series and $\sigma_h^2$ is the variance of $\hat{w}_{t+h|t}$. Using the mean of the forecast distribution returns bias adjusted base forecasts compared to the simple back-transformation of Eq.~\eqref{eq:BoxCox_back-transformation}. We refer to this as ``Method-1'' in the results that follow. The second scenario of bias adjustment we explore is using the in-sample forecast error mean of the biased forecasts to adjust the out-of-sample forecasts. We refer to this as ``Method-2'' in the results that follow.
+Using the three sets of base forecasts from each of the two transformations, we generate coherent forecasts implementing OLS, MinT and WLS reconciliation projections, and also the bottom-up approach and compare the results for when the base forecasts are biased and bias-adjusted, i.e., unbiased. Table~\ref{tab:Results_MSE} presents the results over the $140$ rolling window replications for $1$-step-ahead forecasts. As was the case with Section~\ref{sec:comparebase}, the conclusions that follow extend almost identically to longer forecast horizons. We do not present these here to save space but they are available upon request.
 
-Using the three sets of base forecasts from each of the two transformations, we generate coherent forecasts implementing OLS, MinT and WLS reconciliation projections, and also the bottom-up approach and compare the results for when the base forecasts are biased and bias-adjusted, i.e., unbiased. Table \ref{tab:Results_MSE} presents the results over the $140$ rolling window replications for $1$-step-ahead forecasts. We note that as was the case with Section \ref{sec:comparebase} the conclusions that follow extend almost identically to longer forecast horizons. We do not present these here to save space but they are available upon request.
-
-Recall that reconciliation approaches via projections preserve unbiasedness in the reconciled forecasts iff the base forecasts are unbiased. Hence, the two columns labelled ``Biased'' contain results for biased base but also reconciled forecasts. Using Method-1 for first bias adjusting the base forecasts and then reconciling, results in forecast improvements for all methods for both the log and the Box-Cox transformation induced bias. In this case MinT returns the lowest MSE across all forecasts. Notice that the ``Box-Cox biased'' base forecasts carry a higher bias compared to the ``log biased'' base forecasts. Even for these MinT reconciliation of bias adjusted base forecasts generates very accurate forecasts, almost as accurate as the forecasts that come from the less biased log transformation.
-
-In contrast to the results from using Method-1 for bias adjusting before reconciliation, using Method-2 has an adverse effect on the forecast accuracy of the reconciled forecasts. In this case the reconciled unbiased forecasts are less accurate than the biased reconciled forecasts. This reflects the fact and sends the warning that implementing inappropriate bias adjustment, in this case using an additive rather than a multiplicative factor, will hinder forecast accuracy and extra care must be taken in this bias adjustment procedure.
-
-\begin{table}
-	\caption {Average {MSE($\times 10^3$)} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.}
-	\label{tab:Results_MSE}
+\begin{table}[!b]
+\caption {Average {MSE($\times 10^3$)} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.}
+\label{tab:Results_MSE}
 	\centering
 		\begin{tabular}{lcccccc}
 			\toprule
@@ -505,6 +499,9 @@ In contrast to the results from using Method-1 for bias adjusting before reconci
 		\end{tabular}	
 \end{table}
 
+Recall that reconciliation approaches via projections preserve unbiasedness in the reconciled forecasts iff the base forecasts are unbiased. Hence, the two columns labelled ``Biased'' contain results for biased base but also reconciled forecasts. Using Method-1 for first bias adjusting the base forecasts and then reconciling, results in forecast improvements for all methods for both the log and the Box-Cox transformation induced bias. In this case MinT returns the lowest MSE across all forecasts. Notice that the ``Box-Cox biased'' base forecasts carry a higher bias compared to the ``log biased'' base forecasts. Even for these MinT reconciliation of bias adjusted base forecasts generates very accurate forecasts, almost as accurate as the forecasts that come from the less biased log transformation.
+
+In contrast to the results from using Method-1 for bias adjusting before reconciliation, using Method-2 has an adverse effect on the forecast accuracy of the reconciled forecasts. In this case the reconciled unbiased forecasts are less accurate than the biased reconciled forecasts. This reflects the fact and sends the warning that implementing inappropriate bias adjustment, in this case using an additive rather than a multiplicative factor, will hinder forecast accuracy and extra care must be taken in this bias adjustment procedure.
 	
 \section{Conclusions} \label{sec:conclusions}
 	
