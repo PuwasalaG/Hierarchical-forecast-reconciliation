@@ -123,28 +123,31 @@ We briefly define the concept of a \emph{hierarchical time series} in a fashion 
 \end{equation*}
 where $\bm{S}$ is an $n \times m$ constant matrix that encodes the aggregation constraints.
 
-\begin{figure}[!hbt]
-  \begin{center}
-    \leaf{AA} \leaf{AB}
-    \branch{2}{A}
-    \leaf{BA} \leaf{BB}
-    \branch{2}{B}
-    \branch{2}{Tot}
-    \qobitree
-  \end{center}
-  \caption{An example of a two level hierarchical structure.}\label{fig:basichier}
+\begin{figure}[H]
+	\begin{center}
+		\leaf{AA} \leaf{AB} \leaf{AC}
+		\branch{3}{A}
+		\leaf{BA} \leaf{BB}
+		\branch{2}{B}
+		\leaf{CA} \leaf{CB}
+		\branch{2}{C}
+		\branch{3}{Tot}
+		\qobitree
+	\end{center}
+	\caption{An example of a two level hierarchical structure.}\label{fig:basichier}
 \end{figure}
 
-To clarify these concepts, consider the example of the hierarchy in Figure~\ref{fig:basichier}. For this hierarchy, $n=7$, $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$, $m=4$, $\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{BA,t}, y_{BB,t}]'$ and
+To clarify these concepts, consider the example of the hierarchy in Figure~\ref{fig:basichier}. For this hierarchy, $n=11$, $\bm{y}_t = [y_{Tot,t},y_{A,t}, y_{B,t},y_{C,t},y_{AA,t}, y_{AB,t}, y_{AC,t}, y_{BA,t}, y_{BB,t}, y_{CA,t}, y_{CB,t}]'$, $m=7$, $\bm{b}_t = [y_{AA,t}, y_{AB,t}, y_{AC,t}, y_{BA,t}, y_{BB,t}, y_{CA,t}, y_{CB,t}]'$ and
 \[
   \bm{S} = \begin{pmatrix}
-    1 & 1 & 1 & 1 \\
-    1 & 1 & 0 & 0 \\
-    0 & 0 & 1 & 1 \\
-    & \multicolumn{2}{c}{\bm{I}_4} &
+    1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+    1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 1 & 1 \\
+    & \multicolumn{5}{c}{\bm{I}_7} &
   \end{pmatrix},
 \]
-where $\bm{I}_4$ is the $4\times 4$ identity matrix.
+where $\bm{I}_7$ is the $7 \times 7$ identity matrix.
 
 While such a definition is completely serviceable, it obscures the full generality of the literature on so-called hierarchical time series. In fact, concepts such as coherence and reconciliation, defined in full below, only require the data to have two important characteristics: the first is that they are multivariate, the second is that they adhere to linear constraints.
 
