@@ -1,0 +1,117 @@
+\documentclass[a4paper,11pt]{article}
+\newif\ifblind
+\blindfalse %Change this to \blindtrue or \blindfalse depending on whether paper should be blind.
+\usepackage{dcolumn}
+\newcolumntype{d}[1]{D{.}{.}{-1}}
+
+\usepackage{xcolor,colortbl}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{caption} %captionsf
+\usepackage{subcaption} %subcaptions
+\usepackage{bbm} % more maths symbols
+\usepackage{enumitem} % a b c itemize
+\usepackage{pdfpages} % pdf as graphic
+\makeatletter % so @ can be used
+\setlength{\@fptop}{0pt} % Start graphic at top
+\makeatother % turn off @
+\usepackage{multirow} % Multirow in table
+\usepackage{booktabs,caption,fixltx2e} % table caption with notes
+\usepackage[flushleft]{threeparttable} % table caption with notes
+\usepackage{setspace} % This is used in the title page
+\usepackage{graphicx} % This is used to load the crest in the title page
+\usepackage{geometry}
+\usepackage{bm}
+\usepackage{sectsty}
+\usepackage{amssymb} % leqslant
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\begin{document}
+	
+	%\section{GENERAL COMMENTS TO THE REVIEWERS AND EDITOR}
+	
+	\section*{Detailed Response to Referee 1: Summary}
+	
+	\textit{The authors provide a geometric interpretation for reconciliation of hierarchical forecasts. They show why and how reconciliation via projection is guaranteed to improve squared forecast errors. They explore a couple of different ways for dealing with biased base forecasts in an application to Australian tourism flows. Overall the paper is well written and the geometric interpretations are an important contribution to the growing literature on forecast reconciliation. The	authors do a very good job explaining the geometric aspects, which lead to new insights. That being said, the contribution of the paper in its current form is mainly theoretical, as the empirical evaluation is not much of a contribution.  I do not think the paper meets the high standard set by the IJF in terms of empirical evaluation. I recommend that the authors revise their paper with a particular focus on strengthening its empirical contribution to more clearly	show the practical value of the geometric insights they derive. I hope that the authors will find my comments useful for improving their paper.}\\	
+	Response.\\
+	
+	\section*{Detailed Response to Referee 1: Major comments}
+	
+	
+	\begin{enumerate}
+		
+		
+		
+		\item \textit{When the empirical evaluation is focused on bias, then it would make sense to include an error that measures bias in addition to the squared error. Moreover, simply showing the MSE without any confidence intervals or measures of significance is not sufficient for the reader to assess the results. It would also be useful to show the MSE relative to the base forecasts or	the percentage improvement that is obtained. The best performing reconciliation method is MinT with shrinkage, but the authors never state	the value of the shrinkage parameter or how it was chosen. Similarly, they compare with variance scaling without explaining what they mean by variance scaling. In addition to the above mentioned shortcomings, I think the authors should reconsider their empirical evaluation. Maybe a second case study or a simulation study is needed to show the value of the geometric insights provided. We already know that MinT is better than OLS and WLS. What is the new and better reconciliation approach that has come from the geometric insights?}\\	
+		Response.\\
+		
+		\item \textit{Improvement guarantees: The boxplot in Figure 8 shows that OLS
+		always improves MSE, while this is not the case for the other reconcili-
+		ation approaches. To gain a better understanding of the implications of
+		Theorem 3.2, it would be useful to show that the other approaches always
+		improve accuracy in their transformed spaces. What is the interpreta-
+		tion of the transformed spaces and can the authors make the connection
+		between these spaces and the choice of reconciliation approach and error
+		measure more clear? For example, Hyndman et al. (2011); van Erven and
+		Cugliari (2015) argued for selecting OLS to increase the importance of
+		forecasting the aggregate. What is the argument for WLS or MinT and
+		what is the corresponding consistent error measure?}\\
+	    Response.\\
+	    
+	    \end{enumerate}
+	    
+	    \section*{Detailed Response to Referee 1:Minor Comments}
+	    
+	    \begin{enumerate}
+	    
+	    \item \textit{In the first half of the paper it feels like every other sentence includes a however. I suggest reducing the use of however.}\\
+	    Response.\\
+	    
+	    \item \textit{P. 2, l. 11: In several places the authors talk about adjusting forecasts ex-post. Although I understand what is meant, it gives the impression that forecasts are adjusted after observing the realized values.}\\
+	    Response.\\
+	    
+	    \item \textit{P. 2, l. 12: The authors discuss the regression formulation of forecast reconciliation. It would be useful to also make the connection to the optimization formulation considered by, e.g., van Erven and Cugliari (2015); Nystrup et al. (2020). This could also be useful for clarifying the connection between reconciliation approaches and error measures.}\\
+	    Response.\\
+	    
+	    \item \textit{P. 4, l. 22: forf}\\
+	    Response.\\
+	    
+	    \item \textit{P. 10, l. 12: the comma should not be there.}\\
+	    Response.\\
+	    
+	    \item \textit{P. 11, Figure 3: usually a small square is drawn in the corner of the triangle to show orthogonality.}\\
+	    Response.\\
+	    
+	    \item \textit{P. 17, l. 18: i,e.}\\
+	    Response.\\
+	    
+	    \item \textit{P. 26, l. 14: the authors mention that the full results are available upon request. I suggest including them in an online supplementary appendix.}\\
+	    Response.\\
+	    
+	    \item \textit{P. 27, Conclusions: The authors should comment on the implications of the non-uniqueness of the S matrix for future work on cross-temporal reconciliation (Kourentzes and Athanasopoulos, 2019).}\\
+	    Response.\\
+	    
+    \end{enumerate}
+
+    \section*{Detailed Response to Referee 2}
+
+	\begin{enumerate}	
+	
+	\item \textit{This type of paper makes me regret not investing more time into geometric interpretation because as shown here, it offers an elegant and intuitive way to showcase results related to data integration and reconciliation. The paper is extremely well written, with a great flow and thoughtful considerations. Figure 4 and its description are exemplary successful in their simplicity and effectiveness. The discussion of theorem 3.1 on page 11 is another example of thoroughness and clever insight.}\\
+	Response.\\
+	
+    \item\textit{I found only one statement in the paper that could be better supported by evidence on page 8 lines 14 when the author(s) refer to multivariate modeling. State-space approaches have also been shown to be theoretically successful is solving these problems although maybe not to the large scale needed for very detailed and complex hierarchical systems. A comment or comparative discussion to the multivariate modeling may be useful.}\\
+    Response.\\
+    
+    
+    \item\textit{In the context of real-life application and either for small discussion here or future work, I am wondering if and how the author(s) coherent subspace that would be defined with hard boundaries. For example, the set of Australian tourism flow data and any forecasts that would be considered useful should be non-negative and likely upper bounded (if only by the size of the global population or other more realistic subject matter expert opinion). In many other reconciliation problems, these boundary constraints affect the feasible space. In the context here, could a convoluted case lead to an orthogonal projection be coherent but outside the desired constrained subspace?}\\
+    Response.\\
+
+    \item\textit{Please correct the minor typo just before section 2 (forf).}\\
+    Response.\\
+    
+    \end{enumerate}
+
+\end{document}
