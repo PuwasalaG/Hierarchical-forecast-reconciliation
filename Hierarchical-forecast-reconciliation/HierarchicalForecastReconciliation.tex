@@ -252,7 +252,7 @@ To address the first of these properties we make the concept of closeness more c
 
 The property that reconciliation should improve forecasts was touched upon in Section 2.3 of \citet{WicEtAl2019}. The discussion in that paper focuses on the case of MinT\@. Here we provide a new explicit proof of that result. We do so first in the case of an orthogonal projection where the geometric intuition of the proof is clear and then generalise the result to reconciliation using any projection matrix in Section~\ref{sec:oblique}.
 
-Consider the Euclidean distance between the target and a forecast. This is equivalent to the square root of the sum of squared forecast errors over the entire hierarchy. Let $\bm{y}_{t+h}$ be the realisation of the data generating process at time $t+h$. The following theorem shows that reconciliation never increases, the sum of squared errors of point forecasts.
+Consider the Euclidean distance between the target and a forecast. This is equivalent to the square root of the sum of squared forecast errors over the entire hierarchy. Let $\bm{y}_{t+h}$ be the realisation of the data generating process at time $t+h$. The following theorem shows that reconciliation never increases the sum of squared errors of point forecasts.
 
 \begin{theo}[Distance reducing property]\label{th:distred}
   If $\tilde{\bm{y}}_{t+h|t}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}$, where $\bm{G}$ is such that $\bm{S}\bm{G}$ is an orthogonal projection (in the Euclidean sense) onto $\mathfrak{s}$ and let $\|\bm{v}\|$ be the $L_2$ norm (in the Euclidean sense) of vector $\bm{v}$ then:
@@ -363,7 +363,7 @@ Suppose that the target of a point forecast is $\bm{\mu}_{t+h|t}:=\E(\bm{y}_{t+h
   Since $\bm{\mu}_{t+h|t}$ is an expectation taken with respect to the degenerate predictive density it must lie in $\mathfrak{s}$. We have already established that when $\bm{S}\bm{G}$ is a projection onto $\mathfrak{s}$ then it maps all vectors in $\mathfrak{s}$ onto themselves. As such $\bm{S}\bm{G}\bm{\mu}_{t+h|t}=\bm{\mu}_{t+h|t}$ when $\bm{S}\bm{G}$ is a projection matrix.
 \end{proof}
 
-The above result holds when the projection $\bm{S}\bm{G}$ has the coherent subspace $\mathfrak{s}$ as its image and not for all projection matrices in general. To describe this more explicitly suppose $\bm{S}\bm{G}$ has as its image $\mathfrak{L}$ which is itself a lower dimensional linear subspace of $\mathfrak{s}$, {\color{blue}i.e.,} $\mathfrak{L}\subset\mathfrak{s}$. Then for $\left\{\bm{\mu}_{t+h|t}:\bm{\mu}_{t+h|t}\in\mathfrak{s},\bm{\mu}_{t+h|t}\notin\mathfrak{L}\right\}$, $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$. This is depicted in Figure~\ref{fig:Schematic_3D} where $\bm{\mu}$ is projected to a point ${\bm{\mu}^*}$ in $\mathfrak{L}$. In this case, the expectation of reconciled forecast will be ${\bm{\mu}^*}$ rather than $\bm{\mu}$ and hence biased.
+The above result holds when the projection $\bm{S}\bm{G}$ has the coherent subspace $\mathfrak{s}$ as its image and not for all projection matrices in general. To describe this more explicitly suppose $\bm{S}\bm{G}$ has as its image $\mathfrak{L}$ which is itself a lower dimensional linear subspace of $\mathfrak{s}$, i.e., $\mathfrak{L}\subset\mathfrak{s}$. Then for $\left\{\bm{\mu}_{t+h|t}:\bm{\mu}_{t+h|t}\in\mathfrak{s},\bm{\mu}_{t+h|t}\notin\mathfrak{L}\right\}$, $\bm{S}\bm{G}\bm{\mu}_{t+h|t} \ne \bm{\mu}_{t+h|t}$. This is depicted in Figure~\ref{fig:Schematic_3D} where $\bm{\mu}$ is projected to a point ${\bm{\mu}^*}$ in $\mathfrak{L}$. In this case, the expectation of reconciled forecast will be ${\bm{\mu}^*}$ rather than $\bm{\mu}$ and hence biased.
 
 This result has implications in practice. The top-down method \citep{Gross1990} has
 \begin{equation*}
@@ -371,7 +371,7 @@ This result has implications in practice. The top-down method \citep{Gross1990} 
              \bm{p} & \bm{0}_{(m \times n-1)}
            \end{pmatrix},
 \end{equation*}
-where $\bm{p} = (p_1,\dots,p_m)'$ is an $m$-dimensional vector consisting a set of proportions used to disaggregate the top-level forecast. In this case it can be verified that $\bm{S}\bm{G}$ is idempotent, i,e. $\bm{S}\bm{G}\bm{S}\bm{G}=\bm{S}\bm{G}$ and therefore $\bm{S}\bm{G}$ is a projection matrix. However, the image of this projection is not an $m$-dimensional subspace but a $1$-dimensional subspace. As such, top-down reconciliation produces biased forecasts even when the base forecasts are unbiased.
+where $\bm{p} = (p_1,\dots,p_m)'$ is an $m$-dimensional vector consisting a set of proportions used to disaggregate the top-level forecast. In this case it can be verified that $\bm{S}\bm{G}$ is idempotent, {\color{blue} i.e.,} $\bm{S}\bm{G}\bm{S}\bm{G}=\bm{S}\bm{G}$ and therefore $\bm{S}\bm{G}$ is a projection matrix. However, the image of this projection is not an $m$-dimensional subspace but a $1$-dimensional subspace. As such, top-down reconciliation produces biased forecasts even when the base forecasts are unbiased.
 
 \begin{figure}[!hbt]
   \centering

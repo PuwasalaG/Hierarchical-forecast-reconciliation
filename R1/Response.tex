@@ -61,23 +61,21 @@
 		
 		Propose a generalised MinT. TO DO (TAS).  Demonstrating these additional contributions in the context of our existing empirical example has lengthened the paper considerably.  Therefore, we prefer to refrain from including a second empirical demonstration.\\
 		
-		\item \textit{Improvement guarantees: The boxplot in Figure 8 shows that OLS
-		always improves MSE, while this is not the case for the other reconcili-
-		ation approaches. To gain a better understanding of the implications of
-		Theorem 3.2, it would be useful to show that the other approaches always
-		improve accuracy in their transformed spaces. What is the interpreta-
-		tion of the transformed spaces and can the authors make the connection
-		between these spaces and the choice of reconciliation approach and error
-		measure more clear?}\\ 
+		\item \textit{Improvement guarantees: The boxplot in Figure 8 shows that OLS always improves MSE, while this is not the case for the other reconciliation approaches. To gain a better understanding of the implications of Theorem 3.2, it would be useful to show that the other approaches always
+		improve accuracy in their transformed spaces.}\\
 	
-	    We now report results for an MSE in the transformed space and show blah blah blah TO DO.
+	    Report results for two different error metrics and include this. TO DO\\ 
+		
+		\textit{What is the interpretation of the transformed spaces and can the authors make the connection	between these spaces and the choice of reconciliation approach and error measure more clear?}\\ 
+	
+	    Discussion to go in here TO DO (TAS).\\
 		
 		\textit{For example, Hyndman et al. (2011); van Erven and
 		Cugliari (2015) argued for selecting OLS to increase the importance of
 		forecasting the aggregate. What is the argument for WLS or MinT and
 		what is the corresponding consistent error measure?}\\
 	    
-	    We would like to point out that any argument made by Hyndman et al. (2011) or van Erven and Cugliari (2015) that OLS reconciliation somehow targets and improves the aggregate series is based on empirical rather than theoretical evidence.  Address this misconception, which appears to be common, has in fact been a major motivation behind us writing the paper.  We hope that with the revision to the paper these distinctions are clearer.\\
+	    We would like to point out that any argument made by Hyndman et al. (2011) or van Erven and Cugliari (2015) that OLS reconciliation somehow targets and improves the aggregate series is based on empirical rather than theoretical evidence.  Addressing this misconception, which appears to be common, has in fact been a major motivation behind us writing the paper.  We hope that with the revision to the paper these distinctions are clearer.\\
 	    
 	    \end{enumerate}
 	    
@@ -87,7 +85,7 @@
 	    
 	    \item \textit{In the first half of the paper it feels like every other sentence includes a however. I suggest reducing the use of however.}\\
 	    
-	    We have reduced the usage of the word however substantially, from over 12 instances to just 3.\\
+	    We have reduced the usage of the word ``however'' substantially, from twelve instances to just three.\\
 	    
 	    \item \textit{P. 2, l. 11: In several places the authors talk about adjusting forecasts ex-post. Although I understand what is meant, it gives the impression that forecasts are adjusted after observing the realized values.}\\
 	    
@@ -104,10 +102,10 @@
 	    The comma has been removed.\\
 	    
 	    \item \textit{P. 11, Figure 3: usually a small square is drawn in the corner of the triangle to show orthogonality.}\\
-	    We have made this change to all Figures. TO DO (George)\\
+	    We have made this change to all Figures. TO DO (GEORGE)\\
 	    
 	    \item \textit{P. 17, l. 18: i,e.}\\
-	    We believe that you are asking that we include a comma after this instance of `i.e' and we have made this correction.\\
+	    We have made this correction.\\
 	    
 	    \item \textit{P. 26, l. 14: the authors mention that the full results are available upon request. I suggest including them in an online supplementary appendix.}\\
 	    We now include these an an online supplement. TO DO\\
@@ -119,23 +117,20 @@
 
     \section*{Detailed Response to Referee 2}
 
-	\begin{enumerate}	
+	\noindent \textit{This type of paper makes me regret not investing more time into geometric interpretation because as shown here, it offers an elegant and intuitive way to showcase results related to data integration and reconciliation. The paper is extremely well written, with a great flow and thoughtful considerations. Figure 4 and its description are exemplary successful in their simplicity and effectiveness. The discussion of theorem 3.1 on page 11 is another example of thoroughness and clever insight.}\\
 	
-	\item \textit{This type of paper makes me regret not investing more time into geometric interpretation because as shown here, it offers an elegant and intuitive way to showcase results related to data integration and reconciliation. The paper is extremely well written, with a great flow and thoughtful considerations. Figure 4 and its description are exemplary successful in their simplicity and effectiveness. The discussion of theorem 3.1 on page 11 is another example of thoroughness and clever insight.}\\
+	\noindent We thank the referee for these kind comments.\\
 	
-	We thank the referee for these kind comments.\\
-	
-    \item\textit{I found only one statement in the paper that could be better supported by evidence on page 8 lines 14 when the author(s) refer to multivariate modeling. State-space approaches have also been shown to be theoretically successful is solving these problems although maybe not to the large scale needed for very detailed and complex hierarchical systems. A comment or comparative discussion to the multivariate modeling may be useful.}\\
+    \noindent\textit{I found only one statement in the paper that could be better supported by evidence on page 8 lines 14 when the author(s) refer to multivariate modeling. State-space approaches have also been shown to be theoretically successful is solving these problems although maybe not to the large scale needed for very detailed and complex hierarchical systems. A comment or comparative discussion to the multivariate modeling may be useful.}\\
     
-    We have rewritten this sentence and now explicitly include the case of state space models in our discussion.\\
+    \noindent We have rewritten this sentence and now explicitly include the case of state space models in our discussion.\\
     
     
-    \item\textit{In the context of real-life application and either for small discussion here or future work, I am wondering if and how the author(s) coherent subspace that would be defined with hard boundaries. For example, the set of Australian tourism flow data and any forecasts that would be considered useful should be non-negative and likely upper bounded (if only by the size of the global population or other more realistic subject matter expert opinion). In many other reconciliation problems, these boundary constraints affect the feasible space. In the context here, could a convoluted case lead to an orthogonal projection be coherent but outside the desired constrained subspace?}\\
-    It is indeed possible for an orthogonal projection to reconcile a set of positive base forecasts into a vector that includes some negative values.  This is a fairly pathological case and does not arise in the application that we consider (and many other applications that we have considered in other work).  We do agree that this problem may arise in other contexts so we now include some discussion of this issue and cite some recent work that addresses this problem. TO DO (TAS)\\
+    \noindent\textit{In the context of real-life application and either for small discussion here or future work, I am wondering if and how the author(s) coherent subspace that would be defined with hard boundaries. For example, the set of Australian tourism flow data and any forecasts that would be considered useful should be non-negative and likely upper bounded (if only by the size of the global population or other more realistic subject matter expert opinion). In many other reconciliation problems, these boundary constraints affect the feasible space. In the context here, could a convoluted case lead to an orthogonal projection be coherent but outside the desired constrained subspace?}\\
+    
+    \noindent It is indeed possible for an orthogonal projection to reconcile a set of positive base forecasts into a vector that includes some negative values.  This is a fairly pathological case and does not arise in the application that we consider (and many other applications that we have considered in other work).  We do agree that this problem may arise in other contexts so we now include some discussion of this issue and cite some recent work that addresses this problem. TO DO (TAS)\\
 
-    \item\textit{Please correct the minor typo just before section 2 (forf).}\\
+    \noindent\textit{Please correct the minor typo just before section 2 (forf).}\\
     We have made this correction.\\
     
-    \end{enumerate}
-
 \end{document}
