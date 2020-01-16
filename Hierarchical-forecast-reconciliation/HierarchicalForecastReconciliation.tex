@@ -341,6 +341,20 @@ Figure~\ref{fig:OthogonalVSOblique_projection} provides geometrical intuition in
   \caption{A schematic represention of orthogonal and oblique reconciliations. The orange points in (a) represent in-sample errors and $\bm{R}$ shows the most likely direction of deviations from the coherent subspace $\mathfrak{s}$. Grey points in (b) indicate potential base forecasts while the blue dot ${\hat{\bm y}}$ represents one such realisation. The black dot ${\bm y}$ denotes the (unknown) target of the forecast. (c) shows the orthogonal projection of all potential base forecasts onto the coherent subspace while (d) shows an oblique projection.}\label{fig:OthogonalVSOblique_projection}
 \end{figure}
 
+{\color{blue}
+
+\subsection{Generalised MinT}
+
+\begin{itemize}
+	\item Uncouple $W$ in loss function from OLS v MinT 
+	\item Assume a user defined $W$
+	\item Theorem tells us how to guarantee improvement
+	\item Does not tell us how to get best statistical properties
+	\item Minimise trace in transformed space (i.e. $W^{-1/2}\Sigma W^{-1/2}$)
+	\item Discuss degenerate cases.
+\end{itemize}
+
+}
 \section{Bias in forecast reconciliation}\label{sec:BiasInRecon}
 
 Before turning our attention to the issue of bias itself it is important to state a desirable property that any reconciliation method should have. That is if base forecasts are already coherent then reconciliation should not change the forecasts. As stated in Section~\ref{sec:Reconciliation}, this property holds only when $\bm{S}\bm{G}$ is a projection matrix. As a corollary, reconciling using an arbitrary $\bm{G}$, may in fact change an already coherent forecast.
