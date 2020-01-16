@@ -316,7 +316,7 @@ Note here that we rely here on the Generalised Pythagorean Theorem (which involv
 
 \subsection{MinT}
 
-While the properties discussed so far hold for any projection matrix, the MinT method of \citet{WicEtAl2019} has an additional optimality property. \citet{WicEtAl2019} show that for unbiased base forecasts, the trace of the forecast error covariance matrix of reconciled forecasts is minimised by an oblique projection with a particular choice of $\bm{W}$. Their choice is that $\bm{W}$ should be the forecast error covariance matrix where errors come from using the base forecasts. Although the base forecast error covariance matrix is unknown, it can be estimated using in-sample errors.
+While the properties discussed so far hold for any projection matrix, the MinT method of \citet{WicEtAl2019} has an additional optimality property. \citet{WicEtAl2019} show that for unbiased base forecasts, the trace of the forecast error covariance matrix of reconciled forecasts is minimised by the oblique projection $\bm{S}\left(\bm{S}'\bm{\Sigma}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{\Sigma}^{-1}$. Here, $\bm{\Sigma}$ is the forecast error covariance matrix with errors come from using the base forecasts. Although the base forecast error covariance matrix is unknown, it can be estimated using in-sample errors.
 
 Figure~\ref{fig:OthogonalVSOblique_projection} provides geometrical intuition into the MinT method. Suppose that the orange points in panel~(a) represent in-sample forecast errors. These provide information on the most likely direction of large deviations from the coherent subspace $\mathfrak{s}$. This direction is denoted by $\bm{R}$. Panel~(b) shows a target value of $\bm{y}$, while the grey points indicate possible values for the base forecasts (the base forecasts are of course stochastic). One possible value of the forecast is depicted in blue as $\hat{\bm{y}}$. An oblique projection of the blue point back along the direction of $\bm{R}$, yields a reconciled forecast closer to the target, especially compared to an orthogonal projection. Panel~(c) shows the orthogonal projection of every potential base forecast onto the coherent subspace. Panel~(d) depicts an oblique projection along $\bm{R}$ for all the gray points. The oblique projection yields reconciled forecasts tightly packed near the target $\bm{y}$. In this sense, the oblique MinT projection minimises the forecast error variance of the reconciled forecasts. In contrast to the result in Theorem~\ref{th:gdistred}, this property is a statistical property in the sense that MinT is optimal in expectation.
 
@@ -345,14 +345,13 @@ Figure~\ref{fig:OthogonalVSOblique_projection} provides geometrical intuition in
 
 \subsection{Generalised MinT}
 
-\begin{itemize}
-	\item Uncouple $W$ in loss function from OLS v MinT 
-	\item Assume a user defined $W$
-	\item Theorem tells us how to guarantee improvement
-	\item Does not tell us how to get best statistical properties
-	\item Minimise trace in transformed space (i.e. $W^{-1/2}\Sigma W^{-1/2}$)
-	\item Discuss degenerate cases.
-\end{itemize}
+Consider a loss function given by $\|(\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t})\|_{\bm{W}^{-1}}$.  Rather than choosing $\bm{W}$ by statistical considerations (as is the case with the MinT method), in some cases an alternative choice of $\bm{W}$ may be more appropriate in the forecasting problem.  For instance, in our empirical example on the number of tourists visiting different regions in Australia, a sensible loss function may be weighted by the average spend of each tourist in that region.  By theorem~\ref{th:gdistred} we can obtain a reconciliation method guaranteed to improve upon base forecasts according to this loss function.  This method is an orthogonal projection in the transformed space.
+
+Since MinT has been shown to outperform OLS in a number of contexts there may be some merit to generalising MinT to account for user-defined loss functions.  That is rather than aiming to minimising the trace of the variance covariance matrix of forecast errors, the aim can be to minimise the trace of the variance covariance matrix of the forecast errors \textit{after} transformation to a generalised Euclidean space defined by ${\bm W}$. The projection that minimises the trace of variance covariance matrix of ${\bm W}^{-1/2}{y-\hat{\bm y}}$ can be shown to be 
+\begin{equation*}
+\bm{S}\left(\bm{S}'{\bm W}^{-1/2}\bm{\Sigma}^{-1}{\bm W}^{-1/2}\bm{S}\right)^{-1}\bm{S}'{\bm W}^{-1/2}\bm{\Sigma}^{-1}{\bm W}^{-1/2}\,,
+\end{equation*} 
+where $\bm{W}^{-1/2}$ is any matrix such that $\bm{W}^{-1/2}\bm{W}^{-1/2}$.  To the best of our knowledge, this method, which we call generalised MinT has not been proposed so far in the literature.  Generalised MinT allows the choice of loss function to be decoupled from the choice of an oblique projection with attractive statistical properties.  In these past, these issues have often been conflated, since MinT is often defined as the oblique projection where ${\bm W}$ is set to be $\hat{{\bm \Sigma}}$.
 
 }
 \section{Bias in forecast reconciliation}\label{sec:BiasInRecon}
