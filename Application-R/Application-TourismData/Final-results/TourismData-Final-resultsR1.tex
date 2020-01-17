@@ -1,0 +1,233 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Tourism Data Analysis},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\title{Tourism Data Analysis}
+\author{}
+\date{\vspace{-2.5em}Jan 2020}
+
+\begin{document}
+\maketitle
+
+\hypertarget{log-transformation-with-100-observations-of-training-window-me-and-mse-calculated-over-140-replications}{%
+\section{Log Transformation with 100 observations of training window (ME
+and MSE calculated over 140
+replications)}\label{log-transformation-with-100-observations-of-training-window-me-and-mse-calculated-over-140-replications}}
+
+\begin{tabular}{l|r|r|r}
+\hline
+R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 99.98 & 52.70 & 140.46\\
+\hline
+Bottom-up & 176.31 & 64.42 & 271.73\\
+\hline
+MinT(Shrink) & 74.31 & 50.50 & 109.89\\
+\hline
+OLS & 50.73 & 38.64 & 65.82\\
+\hline
+WLS & 121.11 & 57.50 & 174.35\\
+\hline
+\end{tabular}
+
+\begin{tabular}{l|r|r|r}
+\hline
+R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 4.47 & 4.43 & 4.51\\
+\hline
+Bottom-up & 6.36 & 5.26 & 8.06\\
+\hline
+MinT(Shrink) & 4.32 & 4.16 & 4.61\\
+\hline
+OLS & 4.34 & 4.31 & 4.36\\
+\hline
+WLS & 4.82 & 4.38 & 5.43\\
+\hline
+\end{tabular}
+
+\hypertarget{log-transformation-with-180-observations-of-training-window-me-and-mse-calculated-over-60-replications}{%
+\section{Log Transformation with 180 observations of training window (ME
+and MSE calculated over 60
+replications)}\label{log-transformation-with-180-observations-of-training-window-me-and-mse-calculated-over-60-replications}}
+
+\begin{tabular}{l|r|r|r}
+\hline
+R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 90.45 & 67.34 & 109.95\\
+\hline
+Bottom-up & 152.69 & 98.06 & 197.11\\
+\hline
+MinT(Shrink) & 64.64 & 59.36 & 85.54\\
+\hline
+OLS & 41.62 & 35.92 & 47.51\\
+\hline
+WLS & 110.65 & 79.64 & 136.58\\
+\hline
+\end{tabular}
+
+\begin{tabular}{l|r|r|r}
+\hline
+R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 4.89 & 4.78 & 5.08\\
+\hline
+Bottom-up & 9.71 & 6.97 & 12.70\\
+\hline
+MinT(Shrink) & 4.75 & 4.63 & 5.35\\
+\hline
+OLS & 4.67 & 4.60 & 4.81\\
+\hline
+WLS & 6.33 & 5.22 & 7.58\\
+\hline
+\end{tabular}
+
+\hypertarget{boxcox-transformation-for-lambda-in--0.52-with-100-observations-of-training-window-me-and-mse-calculated-over-140-replications}{%
+\section{\texorpdfstring{BoxCox Transformation for
+\(\lambda \in (-0.5,2)\) with 100 observations of training window (ME
+and MSE calculated over 140
+replications)}{BoxCox Transformation for \textbackslash lambda \textbackslash in (-0.5,2) with 100 observations of training window (ME and MSE calculated over 140 replications)}}\label{boxcox-transformation-for-lambda-in--0.52-with-100-observations-of-training-window-me-and-mse-calculated-over-140-replications}}
+
+\begin{tabular}{l|r|r|r}
+\hline
+R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 94.38 & 59.71 & 129.50\\
+\hline
+Bottom-up & 163.07 & 71.22 & 242.39\\
+\hline
+MinT(Shrink) & 71.10 & 57.94 & 96.92\\
+\hline
+OLS & 50.70 & 43.13 & 70.16\\
+\hline
+WLS & 113.67 & 65.49 & 157.17\\
+\hline
+\end{tabular}
+
+\begin{tabular}{l|r|r|r}
+\hline
+R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 4.59 & 4.52 & 4.78\\
+\hline
+Bottom-up & 6.21 & 5.31 & 7.46\\
+\hline
+MinT(Shrink) & 4.29 & 4.17 & 4.54\\
+\hline
+OLS & 4.46 & 4.40 & 4.63\\
+\hline
+WLS & 4.77 & 4.42 & 5.23\\
+\hline
+\end{tabular}
+
+\hypertarget{boxcox-transformation-for-lambda-in--0.52-with-180-observations-of-training-window-me-and-mse-calculated-over-60-replications}{%
+\section{\texorpdfstring{BoxCox Transformation for
+\(\lambda \in (-0.5,2)\) with 180 observations of training window (ME
+and MSE calculated over 60
+replications)}{BoxCox Transformation for \textbackslash lambda \textbackslash in (-0.5,2) with 180 observations of training window (ME and MSE calculated over 60 replications)}}\label{boxcox-transformation-for-lambda-in--0.52-with-180-observations-of-training-window-me-and-mse-calculated-over-60-replications}}
+
+\begin{tabular}{l|r|r|r}
+\hline
+R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 88.91 & 73.25 & 103.24\\
+\hline
+Bottom-up & 142.37 & 98.60 & 178.09\\
+\hline
+MinT(Shrink) & 63.30 & 62.84 & 75.61\\
+\hline
+OLS & 47.03 & 44.71 & 51.25\\
+\hline
+WLS & 105.78 & 83.93 & 124.99\\
+\hline
+\end{tabular}
+
+\begin{tabular}{l|r|r|r}
+\hline
+R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 4.61 & 4.58 & 4.72\\
+\hline
+Bottom-up & 9.17 & 7.00 & 11.43\\
+\hline
+MinT(Shrink) & 4.50 & 4.53 & 4.82\\
+\hline
+OLS & 4.43 & 4.43 & 4.52\\
+\hline
+WLS & 6.24 & 5.45 & 7.11\\
+\hline
+\end{tabular}
+
+\end{document}

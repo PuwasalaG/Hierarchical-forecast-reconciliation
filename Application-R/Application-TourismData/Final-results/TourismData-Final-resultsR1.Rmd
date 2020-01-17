@@ -1,0 +1,308 @@
+---
+title: "Tourism Data Analysis"
+output:
+  pdf_document: 
+    keep_tex: yes
+  html_document: default
+date: "Jan 2020"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(Matrix)
+library(hts)
+library(readr)
+library(tibble)
+library(kableExtra)
+# library(reshape2)
+```
+
+
+<!-- # Box and whisker plots for orthogonal and oblique projections from better models -->
+
+
+
+<!-- ```{r, echo=FALSE} -->
+<!-- OvernightTrips_OriginalScale_Fc <- read.csv("OvernightTrips_OriginalScale_Fc.csv")[,-1] -->
+
+<!-- OvernightTrips_OriginalScale_Fc %>% -->
+<!--   mutate(SquaredE = (Overnight_Trips - Overnight_Trips_Fc)^2, -->
+<!--          Fc_horizon = recode(Fc_horizon, "1" = "h=1", "2" = "h=2", -->
+<!--                              "3" = "h=3", "4" = "h=4", "5" = "h=5", "6" = "h=6")) %>% -->
+<!--   group_by(`R.method`, Fc_horizon, Replication) %>% -->
+<!--   summarise(MSE = mean(SquaredE)) -> OvernightTrips_OriginalScale_MSE -->
+
+
+<!-- OvernightTrips_OriginalScale_MSE %>% -->
+<!--   filter(`R.method`%in% c("Base", "OLS", "MinT(Shrink)", "WLS")) %>% -->
+<!--   spread(key = `R.method`, value = MSE) %>% -->
+<!--   mutate("Base-OLS" = Base - OLS, -->
+<!--          "Base-MinT" = Base - `MinT(Shrink)`, -->
+<!--          "Base-WLS" = Base - WLS) %>% -->
+<!--   dplyr::select(Fc_horizon, Replication, `Base-OLS`, `Base-MinT`, `Base-WLS`) %>% -->
+<!--   rename("OLS" = "Base-OLS", "MinT" = "Base-MinT", "WLS" = "Base-WLS") %>% -->
+<!--   gather(`OLS`, `WLS`, `MinT`,  key = Method, value = MSE) %>% -->
+<!--   mutate(Method = factor(Method, levels = c("OLS", "MinT", "WLS"))) %>% -->
+<!--   ggplot(aes(x = Method, y = MSE)) + -->
+<!--   geom_boxplot() + facet_wrap(~ Fc_horizon) + -->
+<!--   ylab("MSE") + xlab("Reconciliation Method") -->
+
+<!-- library(scales) -->
+
+<!-- asinh_trans <- function(){ -->
+<!--   trans_new(name = 'asinh', transform = function(x) asinh(x),  -->
+<!--             inverse = function(x) sinh(x)) -->
+<!-- } -->
+
+<!-- OvernightTrips_OriginalScale_MSE %>% -->
+<!--   filter(`R.method`%in% c("Base", "OLS", "MinT(Shrink)", "WLS")) %>% -->
+<!--   spread(key = `R.method`, value = MSE) %>% -->
+<!--   mutate("Base-OLS" = Base - OLS, -->
+<!--          "Base-MinT" = Base - `MinT(Shrink)`, -->
+<!--          "Base-WLS" = Base - WLS) %>% -->
+<!--   dplyr::select(Fc_horizon, Replication, `Base-OLS`, `Base-MinT`, `Base-WLS`) %>% -->
+<!--   rename("OLS" = "Base-OLS", "MinT" = "Base-MinT", "WLS" = "Base-WLS") %>% -->
+<!--   gather(`OLS`, `WLS`, `MinT`,  key = Method, value = MSE) %>% -->
+<!--   mutate(Method = factor(Method, levels = c("OLS", "MinT", "WLS"))) %>% -->
+<!--   ggplot(aes(x = Method, y = MSE)) + -->
+<!--   geom_boxplot() + scale_y_continuous(trans = 'asinh',breaks=c(-10000,-1000,-100,0,100,1000,10000))+ -->
+<!--   facet_wrap(~ Fc_horizon)+ -->
+<!--   theme_bw() -->
+
+
+<!-- ``` -->
+
+<!-- # Box and whisker plots for orthogonal and oblique projections from misspecified models -->
+
+
+
+<!-- ```{r, echo=FALSE} -->
+<!-- OvernightTrips_OriginalScaleMisspecified_Fc <- read.csv("OvernightTrips_OriginalScaleMisspecified_Fc.csv")[,-1] -->
+
+<!-- OvernightTrips_OriginalScaleMisspecified_Fc %>% -->
+<!--   mutate(SquaredE = (Overnight_Trips - Overnight_Trips_Fc)^2, -->
+<!--          Fc_horizon = recode(Fc_horizon, "1" = "h=1", "2" = "h=2", -->
+<!--                              "3" = "h=3", "4" = "h=4", "5" = "h=5", "6" = "h=6")) %>% -->
+<!--   group_by(`R.method`, Fc_horizon, Replication) %>% -->
+<!--   summarise(MSE = mean(SquaredE)) -> OvernightTrips_OriginalScaleMisspecified_MSE -->
+
+
+<!-- OvernightTrips_OriginalScaleMisspecified_MSE %>% -->
+<!--   filter(`R.method`%in% c("Base", "OLS", "MinT(Shrink)", "WLS")) %>% -->
+<!--   spread(key = `R.method`, value = MSE) %>% -->
+<!--   mutate("Base-OLS" = Base - OLS, -->
+<!--          "Base-MinT" = Base - `MinT(Shrink)`, -->
+<!--          "Base-WLS" = Base - WLS) %>% -->
+<!--   dplyr::select(Fc_horizon, Replication, `Base-OLS`, `Base-MinT`, `Base-WLS`) %>% -->
+<!--   rename("OLS" = "Base-OLS", "MinT" = "Base-MinT", "WLS" = "Base-WLS") %>% -->
+<!--   gather(`OLS`, `WLS`, `MinT`,  key = Method, value = MSE) %>% -->
+<!--   mutate(Method = factor(Method, levels = c("OLS", "MinT", "WLS"))) %>% -->
+<!--   ggplot(aes(x = Method, y = MSE)) + -->
+<!--   geom_boxplot() + facet_wrap(~ Fc_horizon) + -->
+<!--   ylab("MSE") + xlab("Reconciliation Method") -->
+
+<!-- ``` -->
+
+
+# Log Transformation with 100 observations of training window (ME and MSE calculated over 140 replications) 
+
+
+```{r, echo=FALSE}
+DF_LogTrans_WL100 <- read.csv("DF_LogTrans_WL100.csv")[,-1]
+
+DF_LogTrans_WL100 <- DF_LogTrans_WL100 %>% 
+  mutate(F.method=recode(F.method, `Bias` = 'Biased')) 
+# so that we don't confuse Biased forecasts with ME
+
+DF_LogTrans_WL100 %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_LogTrans_WL100
+DF_LogTrans_WL100 %>% mutate(ME = `Actual` - `Forecasts`) -> DF_LogTrans_WL100
+
+# ME
+DF_LogTrans_WL100 %>% 
+  group_by(`F.method`, `R.method`, Forecast_Horizon) %>% 
+  summarise(ME = round(sum(ME)/1e3, digits = 2)) %>% 
+  filter(Forecast_Horizon == 1) %>% 
+  ungroup() %>% 
+  dplyr::select(-Forecast_Horizon)-> Avg_Log_WL100_ME_h1
+
+Avg_Log_WL100_ME_h1 %>% 
+  mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)", 
+                           Unbiased_M2 = "Unbiased (Method 2)")) %>% 
+  spread(key = F.method, value = ME) %>% 
+  kable(format = "latex",)
+
+#MSE
+DF_LogTrans_WL100 %>% 
+  group_by(`F.method`, `R.method`, Forecast_Horizon) %>% 
+  summarise(MSE = round(mean(SquaredE)/1e3, digits = 2)) %>% 
+  filter(Forecast_Horizon == 1) %>% 
+  ungroup() %>% 
+  dplyr::select(-Forecast_Horizon)-> Avg_Log_WL100_MSE_h1
+
+Avg_Log_WL100_MSE_h1 %>% 
+  mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)", 
+                           Unbiased_M2 = "Unbiased (Method 2)")) %>% 
+  spread(key = F.method, value = MSE) %>% 
+  kable(format = "latex")
+
+```
+
+# Log Transformation with 180 observations of training window (ME and MSE calculated over 60 replications)
+
+```{r, echo=FALSE}
+DF_LogTrans_WL180 <- read.csv("DF_LogTrans_WL180.csv")[,-1]
+
+DF_LogTrans_WL180 <- DF_LogTrans_WL180 %>% 
+  mutate(F.method=recode(F.method, `Bias` = 'Biased')) 
+# so that we don't confuse Biased forecasts with ME
+
+
+DF_LogTrans_WL180 %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_LogTrans_WL180
+DF_LogTrans_WL180 %>% mutate(ME = `Actual` - `Forecasts`) -> DF_LogTrans_WL180
+
+# ME
+DF_LogTrans_WL180 %>% 
+  group_by(`F.method`, `R.method`, Forecast_Horizon) %>% 
+  summarise(ME = round(sum(ME)/1e3, digits = 2)) %>% 
+  filter(Forecast_Horizon == 1) %>% 
+  ungroup() %>% 
+  dplyr::select(-Forecast_Horizon)-> Avg_Log_WL180_ME_h1
+
+Avg_Log_WL180_ME_h1 %>% 
+  mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)", 
+                           Unbiased_M2 = "Unbiased (Method 2)")) %>% 
+  spread(key = F.method, value = ME) %>% 
+  kable(format = "latex",)
+
+
+#MSE
+DF_LogTrans_WL180 %>% 
+  group_by(`F.method`, `R.method`, Forecast_Horizon) %>% 
+  summarise(MSE = round(mean(SquaredE)/1e3, digits = 2)) %>% 
+  filter(Forecast_Horizon == 1) %>% 
+  ungroup() %>% 
+  dplyr::select(-Forecast_Horizon)-> Avg_Log_WL180_MSE_h1
+
+Avg_Log_WL180_MSE_h1 %>% 
+  mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)", 
+                           Unbiased_M2 = "Unbiased (Method 2)")) %>% 
+  spread(key = F.method, value = MSE) %>% 
+  kable(format = "latex")
+  
+```
+
+<!-- # BoxCox Transformation for $\lambda \in (0,1)$ -->
+
+
+
+<!-- ```{r, echo=FALSE} -->
+<!-- DF_BoxCoxTrans_set1 <- read.csv("OvernightTrips_BoxCoxTrans_set1_Fc.csv")[,-1] -->
+
+<!-- DF_BoxCoxTrans_set1 %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_BoxCoxTrans_set1 -->
+
+<!-- DF_BoxCoxTrans_set1 %>% -->
+<!--   group_by(`F.method`, `R.method`, Forecast_Horizon) %>% -->
+<!--   summarise(MSE = round(mean(SquaredE)/1e3, digits = 2)) %>% -->
+<!--   filter(Forecast_Horizon == 1) %>% -->
+<!--   ungroup() %>% -->
+<!--   dplyr::select(-Forecast_Horizon)-> Avg_BoxCox_set1_MSE_h1 -->
+
+<!-- Avg_BoxCox_set1_MSE_h1 %>% -->
+<!--   mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)", -->
+<!--                            Unbiased_M2 = "Unbiased (Method 2)")) %>% -->
+<!--   spread(key = F.method, value = MSE) %>% -->
+<!--   kable(format = "latex") -->
+
+<!-- ``` -->
+
+# BoxCox Transformation for $\lambda \in (-0.5,2)$ with 100 observations of training window (ME and MSE calculated over 140 replications)
+
+
+
+```{r, echo=FALSE}
+DF_BoxCoxTrans_WL100 <- read.csv("DF_BoxCoxTrans_WL100.csv")[,-1]
+
+DF_BoxCoxTrans_WL100 <- DF_BoxCoxTrans_WL100 %>% 
+  mutate(F.method=recode(F.method, `Bias` = 'Biased')) 
+# so that we don't confuse Biased forecasts with ME
+
+DF_BoxCoxTrans_WL100 %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_BoxCoxTrans_WL100
+DF_BoxCoxTrans_WL100 %>% mutate(ME = `Actual` - `Forecasts`) -> DF_BoxCoxTrans_WL100
+
+# ME
+DF_BoxCoxTrans_WL100 %>% 
+  group_by(`F.method`, `R.method`, Forecast_Horizon) %>% 
+  summarise(ME = round(sum(ME)/1e3, digits = 2)) %>% 
+  filter(Forecast_Horizon == 1) %>% 
+  ungroup() %>% 
+  dplyr::select(-Forecast_Horizon)-> Avg_Log_WL100_ME_h1
+
+Avg_Log_WL100_ME_h1 %>% 
+  mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)", 
+                           Unbiased_M2 = "Unbiased (Method 2)")) %>% 
+  spread(key = F.method, value = ME) %>% 
+  kable(format = "latex",)
+
+#MSE
+DF_BoxCoxTrans_WL100 %>% 
+  group_by(`F.method`, `R.method`, Forecast_Horizon) %>% 
+  summarise(MSE = round(mean(SquaredE)/1e3, digits = 2)) %>% 
+  filter(Forecast_Horizon == 1) %>% 
+  ungroup() %>% 
+  dplyr::select(-Forecast_Horizon)-> Avg_Log_WL100_MSE_h1
+
+Avg_Log_WL100_MSE_h1 %>% 
+  mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)", 
+                           Unbiased_M2 = "Unbiased (Method 2)")) %>% 
+  spread(key = F.method, value = MSE) %>% 
+  kable(format = "latex")
+
+```
+
+
+# BoxCox Transformation for $\lambda \in (-0.5,2)$ with 180 observations of training window (ME and MSE calculated over 60 replications)
+
+
+```{r, echo=FALSE}
+DF_BoxCoxTrans_WL180 <- read.csv("DF_BoxCoxTrans_WL180.csv")[,-1]
+
+DF_BoxCoxTrans_WL180 <- DF_BoxCoxTrans_WL180 %>% 
+  mutate(F.method=recode(F.method, `Bias` = 'Biased')) 
+# so that we don't confuse Biased forecasts with ME
+
+DF_BoxCoxTrans_WL180 %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF_BoxCoxTrans_WL180
+DF_BoxCoxTrans_WL180 %>% mutate(ME = `Actual` - `Forecasts`) -> DF_BoxCoxTrans_WL180
+
+# ME
+DF_BoxCoxTrans_WL180 %>% 
+  group_by(`F.method`, `R.method`, Forecast_Horizon) %>% 
+  summarise(ME = round(sum(ME)/1e3, digits = 2)) %>% 
+  filter(Forecast_Horizon == 1) %>% 
+  ungroup() %>% 
+  dplyr::select(-Forecast_Horizon)-> Avg_Log_WL100_ME_h1
+
+Avg_Log_WL100_ME_h1 %>% 
+  mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)", 
+                           Unbiased_M2 = "Unbiased (Method 2)")) %>% 
+  spread(key = F.method, value = ME) %>% 
+  kable(format = "latex",)
+
+#MSE
+DF_BoxCoxTrans_WL180 %>% 
+  group_by(`F.method`, `R.method`, Forecast_Horizon) %>% 
+  summarise(MSE = round(mean(SquaredE)/1e3, digits = 2)) %>% 
+  filter(Forecast_Horizon == 1) %>% 
+  ungroup() %>% 
+  dplyr::select(-Forecast_Horizon)-> Avg_Log_WL100_MSE_h1
+
+Avg_Log_WL100_MSE_h1 %>% 
+  mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)", 
+                           Unbiased_M2 = "Unbiased (Method 2)")) %>% 
+  spread(key = F.method, value = MSE) %>% 
+  kable(format = "latex")
+
+```
+
+
