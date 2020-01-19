@@ -47,7 +47,7 @@
 		
 		\item \textit{Lack of empirical contribution: The authors apply a couple of different transformations to the tourism data before constructing base forecasts. Failing to correctly transform the base forecasts back before they are reconciled introduces a bias. That the highest accuracy is obtained when applying the correct back-transformation is a very small contribution.}\\
 		
-		While agree that if our empirical results only showed that applying the correct back-transformation improves accuracy, that this would be a very marginal contribution.  However, we would like to emphasise that the extent to which it does this, also depend on the reconciliation method. TO DO (ELABORATE).\\
+		We agree that if our empirical results only showed that applying the correct back-transformation improves accuracy, that this would be a very marginal contribution.  However, we would like to emphasise that the extent to which it does this, also depend on the reconciliation method. TO DO (ELABORATE).\\
 		
         \textit{When the authors introduce the log-transformation and in the graphs in Figures 6 and 7, they do not clarify the interplay between the transformation and the reconciliation constraints. If A + B = C then clearly $\log A + \log B \neq \log C$. In other words, a log-transformation affects the	reconciliation constraints. This needs to be explained more clearly; e.g., is the reconciliation constraint imposed on the transformed or the raw data?}\\
 		
@@ -78,7 +78,7 @@
 		
 		\textit{What is the interpretation of the transformed spaces and can the authors make the connection	between these spaces and the choice of reconciliation approach and error measure more clear?}\\ 
 	
-	    Reflecting on this issue has led us towards the development of a generalised version of MinT which we now include in the paper.  Briefly, the geometric insight allows us to decouple the issue of choice of loss function (which may be influenced by the context of the forecasting problem) from the issue of the properties of a given reconciliation method (which is a statistical question).  TO DO (TAS).\\
+	    Reflecting on this issue has led us towards the development of a generalised version of MinT which we now include in the paper.  Briefly, the geometric insight allows us to decouple the issue of choice of loss function (which may be influenced by the context of the forecasting problem) from the issue of the properties of a given reconciliation method (which is a statistical question).\\
 		
 		\textit{For example, Hyndman et al. (2011); van Erven and
 		Cugliari (2015) argued for selecting OLS to increase the importance of
@@ -103,24 +103,30 @@
 	    
 	    \item \textit{P. 2, l. 12: The authors discuss the regression formulation of forecast reconciliation. It would be useful to also make the connection to the optimization formulation considered by, e.g., van Erven and Cugliari (2015); Nystrup et al. (2020). This could also be useful for clarifying the connection between reconciliation approaches and error measures.}\\
 	    
-	    Must reread these papers and comment.  TO DO (TAS)\\
+	    We now discuss the connection to the optimisation formulation considered by these two papers on page 2 line 12 as requested.  We believe that some of the other revisions we have made, particularly the new discussion in 3.4 further clarify the connection between reconciliation approaches and error measures.\\
 	    
 	    \item \textit{P. 4, l. 22: forf}\\
+	    
 	    This has been corrected.\\
 	    
 	    \item \textit{P. 10, l. 12: the comma should not be there.}\\
+	    
 	    The comma has been removed.\\
 	    
 	    \item \textit{P. 11, Figure 3: usually a small square is drawn in the corner of the triangle to show orthogonality.}\\
+	    
 	    We have made this change to all Figures. TO DO (GEORGE)\\
 	    
 	    \item \textit{P. 17, l. 18: i,e.}\\
+	    
 	    We have made this correction.\\
 	    
 	    \item \textit{P. 26, l. 14: the authors mention that the full results are available upon request. I suggest including them in an online supplementary appendix.}\\
+	    
 	    We now include these an an online supplement. TO DO\\
 	    
 	    \item \textit{P. 27, Conclusions: The authors should comment on the implications of the non-uniqueness of the S matrix for future work on cross-temporal reconciliation (Kourentzes and Athanasopoulos, 2019).}\\
+	    
 	    TO DO (GEORGE).\\
 	    
     \end{enumerate}
@@ -141,6 +147,7 @@
     \noindent It is indeed possible for an orthogonal projection to reconcile a set of positive base forecasts into a vector that includes some negative values.  This is a fairly pathological case and does not arise in the application that we consider (and many other applications that we have considered in other work).  We do agree that this problem may arise in other contexts so we now include some discussion of this issue in the conclusion and cite some recent work that addresses this problem.\\
 
     \noindent\textit{Please correct the minor typo just before section 2 (forf).}\\
-    We have made this correction.\\
+    
+    \noindent We have made this correction.\\
     
 \end{document}
