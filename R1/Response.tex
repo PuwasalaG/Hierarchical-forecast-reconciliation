@@ -49,9 +49,11 @@
 		
 		While agree that if our empirical results only showed that applying the correct back-transformation improves accuracy, that this would be a very marginal contribution.  However, we would like to emphasise that the extent to which it does this, also depend on the reconciliation method. TO DO (ELABORATE).\\
 		
-        \textit{When the authors introduce the log-transformation and in the graphs in Figures 6 and 7, they do not clarify the interplay between the transformation and the reconciliation constraints. If A + B = C then clearly $\log A + \log B = \log C$. In other words, a log-transformation affects the	reconciliation constraints. This needs to be explained more clearly; e.g., is the reconciliation constraint imposed on the transformed or the raw data?}\\
+        \textit{When the authors introduce the log-transformation and in the graphs in Figures 6 and 7, they do not clarify the interplay between the transformation and the reconciliation constraints. If A + B = C then clearly $\log A + \log B \neq \log C$. In other words, a log-transformation affects the	reconciliation constraints. This needs to be explained more clearly; e.g., is the reconciliation constraint imposed on the transformed or the raw data?}\\
 		
-		TODO
+		The observation regarding the constraints not holding on the log scale is correct.  When series are transformed to the log scale, forecasts are first produced on the log scale and these are back transformed to the original scale (possibly with bias correction) prior to carrying out reconciliation.  Therefore while all modelling is done on the log scale, all reconciliation is carried out on the original scale.  The fact that the constraints do not hold on the log scale is therefore not relevant.\\
+		
+		On re-reading the paper we do agree with the referee that there is scope for confusion here.  Therefore we have added some additional exposition to the beginning of section 4.1.  The aim here is to make it clear that after producing forecasting on some tranformed scale, the correct sequence of steps is to 1) back-transform to the original scale, 2) bias correct and 3) reconcile. \\
 		
 		\textit{When the empirical evaluation is focused on bias, then it would make sense to include an error that measures bias in addition to the squared error.}\\
 		
