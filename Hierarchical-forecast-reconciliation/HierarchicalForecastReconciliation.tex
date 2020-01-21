@@ -11,6 +11,9 @@
 \usepackage[export]{adjustbox}
 \usepackage[section]{placeins}
 
+\usepackage{dcolumn}
+\newcolumntype{d}[1]{D{.}{.}{#1}}
+
 \usepackage[bb=boondox]{mathalfa}
 \usepackage{tikz}
 \usetikzlibrary{arrows,positioning,shapes,fit,calc}
@@ -347,13 +350,13 @@ Figure~\ref{fig:OthogonalVSOblique_projection} provides geometrical intuition in
 
 As discussed in the previous section, the MinT method has a motivation that is quite separate from the considerations of Theorem~\ref{th:gdistred}.  In spite of this, it is also true that Theorem~\ref{th:gdistred} guarantees that MinT will always improve upon base forecasts when the loss function is based on the norm $\|.\|_{\bm{\Sigma}^{-1}}$. A similar insight has already been made by \cite{VanErven2015a} and will be verified in our empirical example in Section~\ref{sec:EmpStudy}.  For this reason there is the potential to conflate the choice of loss function, with the desire to attain the attractive statistical properties of trace minimisation.  We now propose a generalisation of the MinT method that uncouples these two ideas.  Our proposed method targets more general loss functions than the sum of squared errors (in a similar vein to \cite{VanErven2015a} and \cite{NysEtAl2019}), while exploiting the correlation structure of forecast errors (in a similar vein to \cite{WicEtAl2019}).
 
-Consider a loss function based on $\|.\|_{\bm{W}^{-1}}$ where the choice of $\bm{W}$ is determined by the context of the forecasting problem, rather than by statistical considerations.  For instance, our empirical example in Section~\ref{sec:EmpStudy} considers the number of tourists visiting different regions in Australia. Here, a sensible loss function may weight tourist numbers by the average spend of tourists in each region.  Theorem~\ref{th:gdistred} provides a guarantee to improve upon base forecasts with respect to the loss function based on $\bm{W}$.  This is an orthogonal projection in the space transformed after pre-multiplying by ${\bm W}^{-1/2}$. 
+Consider a loss function based on $\|.\|_{\bm{W}^{-1}}$ where the choice of $\bm{W}$ is determined by the context of the forecasting problem, rather than by statistical considerations.  For instance, our empirical example in Section~\ref{sec:EmpStudy} considers the number of tourists visiting different regions in Australia. Here, a sensible loss function may weight tourist numbers by the average spend of tourists in each region.  Theorem~\ref{th:gdistred} provides a guarantee to improve upon base forecasts with respect to the loss function based on $\bm{W}$.  This is an orthogonal projection in the space transformed after pre-multiplying by ${\bm W}^{-1/2}$.
 
 In the case where $\bm{W}=\bm{I}$, it has been established that MinT reconciliation often outperform OLS reconciliation in a statistical sense.  Therefore we propose a generalisation of MinT that maintains trace minimising properties but also accounts for user-defined loss functions.  The aim is to minimise the trace of the variance covariance matrix of the \textit{transformed} forecast errors rather than the original errors. The projection achieves this is $\bm{S}\bm{G}^{\text{GMinT}}$, where
 \begin{equation*}
 \bm{G}^{\text{GMinT}}=\left(\bm{S}'{\bm W}^{-1/2}\bm{\Sigma}^{-1}{\bm W}^{-1/2}\bm{S}\right)^{-1}\bm{S}'{\bm W}^{-1/2}\bm{\Sigma}^{-1}{\bm W}^{-1/2}\,.
-\end{equation*} 
-We note that some of solutions to the reconciliation problem proposed by \cite{NysEtAl2019}, for example \textit{series GLASSO scaling} and \textit{series shrinkage scaling} are special cases of this method where $\bm{W}$ is diagonal.  What we seek to make clear here is the connection between $\bm{W}^{-1/2}$ (which need not be diagonal) and the loss function. In particular, Generalised MinT allows the choice of loss function to be decoupled from the choice of an oblique projection with attractive statistical properties.  
+\end{equation*}
+We note that some of solutions to the reconciliation problem proposed by \cite{NysEtAl2019}, for example \textit{series GLASSO scaling} and \textit{series shrinkage scaling} are special cases of this method where $\bm{W}$ is diagonal.  What we seek to make clear here is the connection between $\bm{W}^{-1/2}$ (which need not be diagonal) and the loss function. In particular, Generalised MinT allows the choice of loss function to be decoupled from the choice of an oblique projection with attractive statistical properties.
 
 As an important caveat, it should be noted that rank deficient choices of $\bm{W}$ will in most cases lead to no solution.  For instance, it is not uncommon in the hierarchical forecasting literature that the overall aggregate is of greatest interest. This may suggest a loss function that places a weight of one on forecast errors of the overall aggregate and a weight of zero on errors in all other series.  In this case, $\bm{S}'{\bm W}^{-1/2}\bm{\Sigma}^{-1}{\bm W}^{-1/2}\bm{S}$ is rank deficient and cannot be inverted.  To be able to accrue the benefits of reconciliation by `borrowing strength' from other series, the loss function must penalise errors in those series.
 
@@ -519,6 +522,34 @@ Using the three sets of base forecasts from each of the two transformations, we 
     MinT      & 4.32 & \textbf{4.16} & 4.61 & 4.29 & \textbf{4.17} & 4.54\\
     WLS       & 4.82 & 4.38 & 5.43 & 4.77 & 4.42 & 5.23\\
     Bottom-up & 6.36 & 5.26 & 8.06 & 6.21 & 5.31 & 7.46\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[!b]
+\caption {Average {MSE($\times 10^3$)} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.}
+\label{tab:Results_MSE}
+\setlength{\tabcolsep}{7pt}
+\centering
+  \begin{tabular}{ld{3.2}d{3.2}d{3.2}d{3.2}d{3.2}d{3.2}}
+    \toprule
+    \multicolumn{1}{c}{ } & \multicolumn{3}{c}{Log Transformation} &
+    \multicolumn{3}{c}{Box-Cox Transformation}\\
+    \cmidrule(lr){2-4} \cmidrule(lr){5-7}
+    Method & \multicolumn{1}{c}{Biased} & \multicolumn{1}{c}{Unbiased} & \multicolumn{1}{c}{Unbiased} & \multicolumn{1}{c}{Biased} & \multicolumn{1}{c}{Unbiased} & \multicolumn{1}{c}{Unbiased} \\
+    & & \multicolumn{1}{c}{(Method-1)} & \multicolumn{1}{c}{(Method-2)} && \multicolumn{1}{c}{(Method-1)} &\multicolumn{1}{c}{(Method-2)}\\ \midrule
+              & \multicolumn{6}{c}{ME}\\\cmidrule(lr){2-7}
+    Base      & 1.00 & 0.53^{\ast\dag} & 1.40^{\ast\dag} & 1.00 & 0.63^{\ast\dag} & 1.37^{\ast\dag}\\
+    OLS       & 0.51^{\ast} & 0.39^{\ast} & 0.66 & 0.54^{\ast} & 0.46^{\ast} & 0.74\\
+    MinT      & 0.74 & 0.51^{\ast\dag} & 1.10^{\dag} & 0.75 & 0.61^{\ast} & 1.03^{\dag}\\
+    WLS       & 1.21 & 0.58^{\ast\dag} & 1.74^{\ast\dag} & 1.20 & 0.69^{\ast\dag} & 1.67^{\ast\dag}\\
+    Bottom-up & 1.76^{\ast} & 0.64^{\ast\dag} & 2.72^{\ast\dag} & 1.73 & 0.75^{\ast\dag} & 2.57^{\ast\dag}\\
+              & \multicolumn{6}{c}{MSE}\\\cmidrule(lr){2-7}
+    Base      & 1.00 & 0.99 & 1.01 & 1.00 & 0.98 & 1.04\\
+    OLS       & 0.97^{\ast} & 0.96^{\ast} & 0.98^{\ast} & 0.97^{\ast} & 0.96^{\ast} & 1.01\\
+    MinT      & 0.97^{\ast} & 0.93^{\ast} & 1.03 & 0.93^{\ast} & 0.91^{\ast} & 0.99\\
+    WLS       & 1.08 & 0.98 & 1.21 & 1.04 & 0.96 & 1.14\\
+    Bottom-up & 1.42 & 1.18 & 1.80 & 1.35 & 1.16 & 1.63\\
     \bottomrule
   \end{tabular}
 \end{table}
