@@ -442,9 +442,10 @@ The top panel of Figure~\ref{fig:States_Zones_Regs_TSplots} shows time plots for
 To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts. For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package. Using these fitted models, base forecasts are produced for $h=1$ to $12$-steps ahead for each series in the hierarchy. This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $129~12$-steps-ahead forecasts available for forecast evaluation.
 
 {\color{blue} For each replication and for method $q$, the total squared error (TSE), is computed as
-	\begin{equation*}
+	\begin{equation}
+	\label{eq:tse}
 	\textrm{TSE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
-	\end{equation*}
+	\end{equation}
 	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.
 This corresponds to the loss function described in Section~\ref{sec:orthogonal}. We also consider a loss function based on a generalised Euclidean distance of the form
 \begin{equation*}
@@ -459,7 +460,7 @@ After obtaining the base forecasts these are reconciled using four different pro
 	\end{equation*}
 	where $\sigma_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}^{\text{sam}}$.  For WLS and GMinT, variance scaling is used, i.e., $\bm{W}^{\text{WLS}}=\text{diag}(\hat{\bm{\Sigma}})$ CHANGE DEPENDING ON FINAL CHOICE OF W.  For both loss function} we compute the difference between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate. 
 
-The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this measure over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available upon request.
+The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this measure over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{blue} in an online supplement.}
 
 As the theory predicts, OLS reconciliation always leads to an improvement relative to base forecasts. The entire boxplot for OLS reconciliation is above zero. This is not the case for MinT and WLS which for some windows generate forecasts less accurate than the base forecasts. The boxplots also demonstrate that OLS reconciliation is more stable than MinT and WLS reconciliation, a result not entirely unsurprising since the latter two methods require estimation of a $\bm{W}$ matrix which in practice is not trivial. Nonetheless when averaging over the entire rolling window the MinT estimator performs best on average, which is again precisely what the theorem proved in \citet{WicEtAl2019} would suggest. The average MSE values across the entire rolling window of 140 replications are shown in Table \ref{tab:AveraveDifferences}.
 
@@ -516,11 +517,11 @@ Using a Taylor series expansion \citep{guerrero1993time}, the back-transformed m
 \end{equation}
 where $\hat{w}_{t+h|t}$ is the $h$-step-ahead forecast from the Box-Cox transformed series and $\sigma_h^2$ is the variance of $\hat{w}_{t+h|t}$. Using the mean of the forecast distribution returns bias-adjusted base forecasts compared to the simple back-transformation of Eq.~\eqref{eq:BoxCox_back-transformation}. We refer to this as ``Method-1'' in the results that follow. The second scenario of bias adjustment we explore is using the in-sample forecast error mean of the biased forecasts to adjust the out-of-sample forecasts. We refer to this as ``Method-2'' in the results that follow.
 
-Using the three sets of base forecasts from each of the two transformations, we generate coherent forecasts implementing OLS, MinT and WLS reconciliation projections, and also the bottom-up approach and compare the results for when the base forecasts are biased and bias-adjusted, i.e., unbiased. {\color{blue} For each replication and for method $q$, the total error (TE) and total squared error (TSE), are computed as
+Using the three sets of base forecasts from each of the two transformations, we generate coherent forecasts implementing OLS, MinT and WLS reconciliation projections, and also the bottom-up approach and compare the results for when the base forecasts are biased and bias-adjusted, i.e., unbiased. {\color{blue} In addition to the total squared error defined in Equation~\ref{eq:tse}, the total error (TE) is used to measure bias and is computed as
 \begin{equation*}
-\textrm{TE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})\quad \textrm {and}\quad \textrm{TSE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
+\textrm{TE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})\quad \textrm {and}\quad \textrm{TSE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,.
 \end{equation*}
-where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$. The total error gives an indication of bias, while the total squared error is connected with Euclidean distance.  Table~\ref{tab:Results_MSE} reports the relative mean total error (RMTE) and relative mean total error (RMTSE) defined as  
+Table~\ref{tab:Results_MSE} reports the relative mean total error (RMTE) and relative mean total error (RMTSE) defined as  
 \begin{equation*}
 \textrm{RMTE}^{q}=\frac{\sum\limits_{t=1}^{140}\textrm{TE}^{q}_t}{\sum\limits_{t=1}^{140}\textrm{TE}^{\textrm{Base}}_t}\quad \textrm {and}\quad \textrm{RMTSE}^{q}=\frac{\sum\limits_{t=1}^{140}\textrm{TSE}^{q}_t}{\sum\limits_{t=1}^{140}\textrm{TSE}^{\textrm{Base}}_t}\,,
 \end{equation*}
