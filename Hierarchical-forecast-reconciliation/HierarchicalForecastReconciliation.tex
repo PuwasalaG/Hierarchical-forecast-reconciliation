@@ -504,30 +504,41 @@ Using a Taylor series expansion \citep{guerrero1993time}, the back-transformed m
 \end{equation}
 where $\hat{w}_{t+h|t}$ is the $h$-step-ahead forecast from the Box-Cox transformed series and $\sigma_h^2$ is the variance of $\hat{w}_{t+h|t}$. Using the mean of the forecast distribution returns bias-adjusted base forecasts compared to the simple back-transformation of Eq.~\eqref{eq:BoxCox_back-transformation}. We refer to this as ``Method-1'' in the results that follow. The second scenario of bias adjustment we explore is using the in-sample forecast error mean of the biased forecasts to adjust the out-of-sample forecasts. We refer to this as ``Method-2'' in the results that follow.
 
-Using the three sets of base forecasts from each of the two transformations, we generate coherent forecasts implementing OLS, MinT and WLS reconciliation projections, and also the bottom-up approach and compare the results for when the base forecasts are biased and bias-adjusted, i.e., unbiased. Table~\ref{tab:Results_MSE} presents the results over the $140$ rolling window replications for $1$-step-ahead forecasts. As was the case with Section~\ref{sec:comparebase}, the conclusions that follow extend almost identically to longer forecast horizons. We do not present these here to save space but they are available upon request.
+Using the three sets of base forecasts from each of the two transformations, we generate coherent forecasts implementing OLS, MinT and WLS reconciliation projections, and also the bottom-up approach and compare the results for when the base forecasts are biased and bias-adjusted, i.e., unbiased. {\color{blue} For each replication and for method $q$, the total error (TE) and total squared error (TSE), are computed as
+\begin{equation*}
+\textrm{TE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})\quad \textrm {and}\quad \textrm{TSE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
+\end{equation*}
+where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$. The total error gives an indication of bias, while the total squared error is connected with Euclidean distance.  Table~\ref{tab:Results_MSE} reports the relative mean total error (RMTE) and relative mean total error (RMTSE) defined as  
+\begin{equation*}
+\textrm{RMTE}^{q}=\frac{\sum\limits_{t=1}^{140}\textrm{TE}^{q}_t}{\sum\limits_{t=1}^{140}\textrm{TE}^{\textrm{Base}}_t}\quad \textrm {and}\quad \textrm{RMTSE}^{q}=\frac{\sum\limits_{t=1}^{140}\textrm{TSE}^{q}_t}{\sum\limits_{t=1}^{140}\textrm{TSE}^{\textrm{Base}}_t}\,,
+\end{equation*}
+where $\textrm{TE}^{\textrm{Base}}_t$ and $\textrm{TSE}^{\textrm{Base}}_t$ are the total error and total squared error of the biased base forecasts at replication $t$.  Stars indicate that the results are significantly different from the biased base forecasts using a DETAILS OF TEST HERE.  Results are shown for $1$-step-ahead forecasts and} as was the case with Section~\ref{sec:comparebase}, the conclusions that follow extend almost identically to longer forecast horizons. {\color{blue} These are provided in an online supplement}.
+
+%\begin{table}[!b]
+%\caption {Average {MSE($\times 10^3$)} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.}
+%\label{tab:Results_MSE}
+%\centering
+%  \begin{tabular}{lcccccc}
+%    \toprule
+%    \multicolumn{1}{c}{ } & \multicolumn{3}{c}{Log Transformation} &
+%    \multicolumn{3}{c}{Box-Cox Transformation}\\
+%    \cmidrule(lr){2-4} \cmidrule(lr){5-7}
+%    Method & Biased & Unbiased & Unbiased & Biased & Unbiased & Unbiased \\
+%    & & (Method-1) & (Method-2) && (Method-1) &(Method-2)\\ \midrule
+%    Base      & 4.47 & 4.43 & 4.51 & 4.59 & 4.52 & 4.78\\
+%    OLS       & 4.34 & 4.31 & 4.36 & 4.46 & 4.40 & 4.63\\
+%    MinT      & 4.32 & \textbf{4.16} & 4.61 & 4.29 & \textbf{4.17} & 4.54\\
+%    WLS       & 4.82 & 4.38 & 5.43 & 4.77 & 4.42 & 5.23\\
+%    Bottom-up & 6.36 & 5.26 & 8.06 & 6.21 & 5.31 & 7.46\\
+%    \bottomrule
+%  \end{tabular}
+%\end{table}
+
+
 
 \begin{table}[!b]
-\caption {Average {MSE($\times 10^3$)} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.}
-\label{tab:Results_MSE}
-\centering
-  \begin{tabular}{lcccccc}
-    \toprule
-    \multicolumn{1}{c}{ } & \multicolumn{3}{c}{Log Transformation} &
-    \multicolumn{3}{c}{Box-Cox Transformation}\\
-    \cmidrule(lr){2-4} \cmidrule(lr){5-7}
-    Method & Biased & Unbiased & Unbiased & Biased & Unbiased & Unbiased \\
-    & & (Method-1) & (Method-2) && (Method-1) &(Method-2)\\ \midrule
-    Base      & 4.47 & 4.43 & 4.51 & 4.59 & 4.52 & 4.78\\
-    OLS       & 4.34 & 4.31 & 4.36 & 4.46 & 4.40 & 4.63\\
-    MinT      & 4.32 & \textbf{4.16} & 4.61 & 4.29 & \textbf{4.17} & 4.54\\
-    WLS       & 4.82 & 4.38 & 5.43 & 4.77 & 4.42 & 5.23\\
-    Bottom-up & 6.36 & 5.26 & 8.06 & 6.21 & 5.31 & 7.46\\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\begin{table}[!b]
-\caption {Average {MSE($\times 10^3$)} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.}
+{\color{blue}
+\caption {Average {\color{blue} RMTE and RMTSE} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.  {\color{blue}Stars indicate significant difference from biased base forecast according to a TEST DETAILS HERE.}}
 \label{tab:Results_MSE}
 \setlength{\tabcolsep}{7pt}
 \centering
@@ -552,7 +563,9 @@ Using the three sets of base forecasts from each of the two transformations, we 
     Bottom-up & 1.42 & 1.18 & 1.80 & 1.35 & 1.16 & 1.63\\
     \bottomrule
   \end{tabular}
+}
 \end{table}
+
 
 Recall that reconciliation approaches via projections preserve unbiasedness in the reconciled forecasts iff the base forecasts are unbiased. Hence, the two columns labelled ``Biased'' contain results for biased base but also reconciled forecasts. Using Method-1 for first bias adjusting the base forecasts and then reconciling, results in forecast improvements for all methods for both the log and the Box-Cox transformation induced bias. In this case MinT returns the lowest MSE across all forecasts. Notice that the ``Box-Cox biased'' base forecasts carry a higher bias compared to the ``log biased'' base forecasts. Even for these MinT reconciliation of bias adjusted base forecasts generates very accurate forecasts, almost as accurate as the forecasts that come from the less biased log transformation.
 
