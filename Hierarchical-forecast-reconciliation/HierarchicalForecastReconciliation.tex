@@ -441,11 +441,23 @@ The top panel of Figure~\ref{fig:States_Zones_Regs_TSplots} shows time plots for
 
 To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts. For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package. Using these fitted models, base forecasts are produced for $h=1$ to $12$-steps ahead for each series in the hierarchy. This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $129~12$-steps-ahead forecasts available for forecast evaluation.
 
-After obtaining the base forecasts these are reconciled using three different projection methods: OLS, MinT and WLS.  {\color{blue}For MinT, the shrinkage estimator of \cite{Schafer2005} is used, i.e., $\bm{W}^{\text{MinT}} = \tau\text{diag}(\hat{\bm{\Sigma}}) + (1-\tau)\hat{\bm{\Sigma}}$  where $\hat{\bm{\Sigma}}$ is the sample estimate of the variance covariance matrix of the in-sample, one-step ahead forecast errors and,
+{\color{blue} For each replication and for method $q$, the total squared error (TSE), is computed as
+	\begin{equation*}
+	\textrm{TSE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
+	\end{equation*}
+	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.
+This corresponds to the loss function described in Section~\ref{sec:orthogonal}. We also consider a loss function based on a generalised Euclidean distance of the form
 \begin{equation*}
-\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{\sigma}_{ij})}{\sum_{i \neq j}{\hat{\sigma}}^2_{ij}}\,,
-\end{equation*}
-where $\sigma_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}^{\text{sam}}$.  For WLS, variance scaling is used, i.e., $\bm{W}^{\text{WLS}}=\text{diag}(\hat{\bm{\Sigma}})$.} Squared forecast errors are computed for each series and aggregated across the entire hierarchy; i.e., we compute the loss function described in Section~\ref{sec:orthogonal}. We then compute the difference in this loss function between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate. We also include bottom-up forecasts in this comparison for completeness.
+	\textrm{WSE}^{q}_t=\sum\limits_{i=1}^n w_i (y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
+	\end{equation*}
+	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.
+}
+
+After obtaining the base forecasts these are reconciled using four different projection methods: OLS,{\color{blue} WLS, MinT and GMinT.   For MinT and GMinT, the shrinkage estimator of \cite{Schafer2005} is used to estimate to covariance matrix of one step ahead forecast errors.  That is $\bm{\Sigma} = \tau\text{diag}(\hat{\bm{\Sigma}}) + (1-\tau)\hat{\bm{\Sigma}}$  where $\hat{\bm{\Sigma}}$ is the sample estimate of the variance covariance matrix of the in-sample, one-step ahead forecast errors and,
+	\begin{equation*}
+	\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{\sigma}_{ij})}{\sum_{i \neq j}{\hat{\sigma}}^2_{ij}}\,,
+	\end{equation*}
+	where $\sigma_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}^{\text{sam}}$.  For WLS and GMinT, variance scaling is used, i.e., $\bm{W}^{\text{WLS}}=\text{diag}(\hat{\bm{\Sigma}})$ CHANGE DEPENDING ON FINAL CHOICE OF W.  For both loss function} we compute the difference between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate. 
 
 The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this measure over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available upon request.
 
