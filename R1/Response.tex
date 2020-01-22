@@ -47,7 +47,7 @@
 		
 		\item \textit{Lack of empirical contribution: The authors apply a couple of different transformations to the tourism data before constructing base forecasts. Failing to correctly transform the base forecasts back before they are reconciled introduces a bias. That the highest accuracy is obtained when applying the correct back-transformation is a very small contribution.}\\
 		
-		We agree that if our empirical results only showed that applying the correct back-transformation improves accuracy, that this would be a very marginal contribution.  However, we would like to emphasise that the extent to which it does this, also depend on the reconciliation method. TO DO (ELABORATE).\\
+		We agree that if our empirical results only showed that applying the correct back-transformation improves accuracy, that this would be a very marginal contribution.  The referee's suggestions have allowed us to make additional insights that we believe have greatly improved the paper.  We discuss these in detail below.\\
 		
         \textit{When the authors introduce the log-transformation and in the graphs in Figures 6 and 7, they do not clarify the interplay between the transformation and the reconciliation constraints. If A + B = C then clearly $\log A + \log B \neq \log C$. In other words, a log-transformation affects the	reconciliation constraints. This needs to be explained more clearly; e.g., is the reconciliation constraint imposed on the transformed or the raw data?}\\
 		
@@ -57,11 +57,11 @@
 		
 		\textit{When the empirical evaluation is focused on bias, then it would make sense to include an error that measures bias in addition to the squared error.}\\
 		
-		We now also report the mean error for all methods to highlight bias. TO DO (GEORGE)\\
+		We now also report the total error for all methods to highlight bias.  Here we see that bias correction method 1 removes bias, while bias correction method 2 in fact worsens bias.  A new insight that we are able to make is to recognise that reconciliation without bias correction can mitigate bias.  For example, even if bias correction is not used at all, OLS reconciliation significantly reduces bias for both the log transformation and Box Cox transformation.  This is likely to occur since bias lies in a direction that is almost orthogonal to the coherent subspace.\\
 		
 		\textit{Moreover, simply showing the MSE without any confidence intervals or measures of significance is not sufficient for the reader to assess the results.  It would also be useful to show the MSE relative to the base forecasts or the percentage improvement that is obtained.} \\
 		
-		We now include a Nemenyi comparison of the methods and report results in terms of percentage improvement over base forecasts. TO DO (GEORGE)\\
+		We now include report all results relative to the base forecasts. We also have added starts to the tables that report our results to indicate when a method significantly upon base forecasts.\\
 	
 	    \textit{The best performing reconciliation method is MinT with shrinkage, but the authors never state	the value of the shrinkage parameter or how it was chosen.  Similarly, they compare with variance scaling without explaining what they mean by variance scaling.}\\
 	    
