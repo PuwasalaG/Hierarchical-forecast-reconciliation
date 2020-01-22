@@ -66,6 +66,10 @@ H <- 6
 L <- 100 #Size of the training sample 
 C <- nrow(AllTS) - L
 
+#Compute W for structural scaling
+
+W_struct<-diag(rowSums(S))
+
 AllTS_new <- AllTS %>% 
   ts(start = c(1998,1), frequency = 12) %>% 
   as_tsibble() %>% 
@@ -113,7 +117,7 @@ Final_DF <- tibble("index" = character(),
 
 Start <- Sys.time()
 
-for (j in 1:50) {#C=140
+for (j in 1:140) {#C=140
   
   Train <- AllTS_new %>%
     group_by(Series) %>%
@@ -223,14 +227,20 @@ for (j in 1:50) {#C=140
     Inv_Shr.cov_bias
   
   
-  #-WLS_bias G-#
-  
-  Inv_WLS_bias <- diag(1/diag(Shr.cov_bias), n, n)
+  #-WLS_bias G-# THIS HAS BEEN CHANGED TO STRUCTURAL SCALING
+  InvRt_W<- diag(1/sqrt(diag(W_struct)), n, n)
+    
+  Inv_WLS_bias <- InvRt_W%*%InvRt_W
   
   WLS_G_bias <- solve(t(S) %*% Inv_WLS_bias %*% S) %*% t(S) %*% 
     Inv_WLS_bias
   
+  #G MinT
   
+    
+    
+  GMinT.shr_G_bias <- solve(t(S) %*% InvRt_W %*%Inv_Shr.cov_bias%*% InvRt_W %*% S) %*% t(S) %*% InvRt_W%*% 
+    Inv_Shr.cov_bias%*% InvRt_W
   
 
   ####################
@@ -241,6 +251,7 @@ for (j in 1:50) {#C=140
   Recon_OLS <- t(S %*% OLS_G %*% t(Base_forecasts))
   Recon_WLS <- t(S %*% WLS_G_bias %*% t(Base_forecasts))
   Recon_MinT <- t(S %*% MinT.shr_G_bias %*% t(Base_forecasts))
+  Recon_GMinT <- t(S %*% GMinT.shr_G_bias %*% t(Base_forecasts))
   
 ##########################################################  
   #--Adding the reconcilied forecasts to the Final_DF--#
@@ -316,6 +327,22 @@ for (j in 1:50) {#C=140
   
   rbind(DF, DF_Recon_WLS) -> DF
   
+  ##--Adding GMinT Forecasts--##
+  
+  colnames(Recon_GMinT) <- Names
+  
+  Recon_GMinT %>% 
+    as_tibble() %>% 
+    add_column(index = rep(yearmonth(Index[1]) + 0:(min(H, Nrow_Test)-1))) %>% 
+    gather(-index, key = Series, value = "Overnight_Trips_Fc") %>% 
+    mutate("Fc_horizon" = rep(1:min(H, Nrow_Test), n),
+           "R-method" = rep("GMinT", min(H, Nrow_Test)*n), 
+           Series = as_factor(Series)) -> Recon_GMinT
+  
+  left_join(Recon_GMinT, test) %>% 
+    add_column(Replication = j) -> DF_Recon_GMinT 
+  
+  rbind(DF, DF_Recon_GMinT) -> DF  
   
   ###################################
       ### ADDING TO FINAL DF ###
