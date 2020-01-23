@@ -35,22 +35,54 @@ OvernightTrips_OriginalScale_Fc %>%
 
 OvernightTrips_OriginalScale_FcW %>%
   mutate(SquaredE = (Overnight_Trips - Overnight_Trips_Fc)^2,
-         WeightedSquaredE = (1/Weight)*(Overnight_Trips - Overnight_Trips_Fc)^2,
+         WeightedSquaredE = (1/Weight)*((Overnight_Trips - Overnight_Trips_Fc)^2),
          Fc_horizon = recode(Fc_horizon, "1" = "h=1", "2" = "h=2",
                              "3" = "h=3", "4" = "h=4", "5" = "h=5", "6" = "h=6")) %>%
   group_by(`R.method`, Fc_horizon, Replication) %>%
   summarise(TSE = sum(SquaredE),WSE = sum(WeightedSquaredE)) -> OvernightTrips_OriginalScale_MSE
 
 
-# OvernightTrips_OriginalScale_MSE %>%
-#   filter(`R.method`%in% c("Base", "OLS", "MinT(Shrink)", "WLS")) %>%
-#   spread(key = `R.method`, value = MSE) %>%
-#   mutate("Base-OLS" = Base - OLS,
-#          "Base-MinT" = Base - `MinT(Shrink)`,
-#          "Base-WLS" = Base - WLS) %>%
-#   filter(Replication == 10) 
-#   
-  
+OvernightTrips_OriginalScale_MSE%>%
+  filter(Fc_horizon=='h=1')%>%
+  group_by(R.method)%>%
+  summarise(MTSE=mean(TSE,na.rm = T),MWSE=mean(WSE,na.rm = T))%>%View
+
+
+#Create boxplot (TSE)
+
+
+OvernightTrips_OriginalScale_MSE %>%
+  ungroup%>%
+  #filter(`R.method`%in% c("Base", "OLS", "MinT(Shrink)", "WLS")) %>%
+  filter(Fc_horizon=='h=1')%>%
+  select(-WSE)%>%
+  spread(key = `R.method`, value = TSE) %>%
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)`,
+         "Base-WLS" = Base - WLS,
+         "Base-GMinT" = Base - GMinT) %>%
+  select(Replication,`Base-OLS`,`Base-MinT`,`Base-WLS`,`Base-GMinT`)%>%
+  pivot_longer(-Replication,names_to = "Method",values_to = "TSE")%>%
+  ggplot(aes(x=Method,y=TSE))+geom_boxplot()
+
+#Create boxplot (WSE)
+
+
+OvernightTrips_OriginalScale_MSE %>%
+  ungroup%>%
+  #filter(`R.method`%in% c("Base", "OLS", "MinT(Shrink)", "WLS")) %>%
+  filter(Fc_horizon=='h=1')%>%
+  select(-TSE)%>%
+  spread(key = `R.method`, value = WSE) %>%
+  mutate("Base-OLS" = Base - OLS,
+         "Base-MinT" = Base - `MinT(Shrink)`,
+         "Base-WLS" = Base - WLS,
+         "Base-GMinT" = Base - GMinT) %>%
+  select(Replication,`Base-OLS`,`Base-MinT`,`Base-WLS`,`Base-GMinT`)%>%
+  pivot_longer(-Replication,names_to = "Method",values_to = "WSE")%>%
+  ggplot(aes(x=Method,y=WSE))+geom_boxplot()
+
+
 # OvernightTrips_OriginalScale_Fc %>% 
 #   filter(Fc_horizon == 1, Replication == 15) %>% 
 #   summarise(Diff = )

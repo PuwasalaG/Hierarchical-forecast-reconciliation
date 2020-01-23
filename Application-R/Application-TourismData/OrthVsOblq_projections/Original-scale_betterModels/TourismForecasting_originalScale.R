@@ -355,7 +355,7 @@ for (j in 1:140) {#C=140
 
 End <- Sys.time()
 
-write.csv(x=DF, file = "Results/DF_OriginalScale_all.csv")
+write.csv(x=Final_DF, file = "Results/DF_OriginalScale_all.csv")
 save.image("Results/TourismForecasting_originalScale_all.RData")
 
 
