@@ -239,9 +239,10 @@ for (j in 1:140) {#C=140
   
     
     
-  GMinT.shr_G_bias <- solve(t(S) %*% Rt_W %*%Inv_Shr.cov_bias%*% Rt_W %*% S) %*% t(S) %*% Rt_W%*% 
+  GMinT.1 <- solve(t(S) %*% Rt_W %*%Inv_Shr.cov_bias%*% Rt_W %*% S) %*% t(S) %*% Rt_W%*% 
     Inv_Shr.cov_bias%*% Rt_W
-  
+  GMinT.2 <- solve(t(S) %*% InvRt_W %*%Inv_Shr.cov_bias%*% InvRt_W %*% S) %*% t(S) %*% InvRt_W%*% 
+    Inv_Shr.cov_bias%*% InvRt_W
 
   ####################
   #--Reconciliation--#
@@ -251,8 +252,8 @@ for (j in 1:140) {#C=140
   Recon_OLS <- t(S %*% OLS_G %*% t(Base_forecasts))
   Recon_WLS <- t(S %*% WLS_G_bias %*% t(Base_forecasts))
   Recon_MinT <- t(S %*% MinT.shr_G_bias %*% t(Base_forecasts))
-  Recon_GMinT <- t(S %*% GMinT.shr_G_bias %*% t(Base_forecasts))
-  
+  Recon_GMinT1 <- t(S %*% GMinT.1 %*% t(Base_forecasts))
+  Recon_GMinT2 <- t(S %*% GMinT.2 %*% t(Base_forecasts))
 ##########################################################  
   #--Adding the reconcilied forecasts to the Final_DF--#
 ##########################################################
@@ -327,22 +328,40 @@ for (j in 1:140) {#C=140
   
   rbind(DF, DF_Recon_WLS) -> DF
   
-  ##--Adding GMinT Forecasts--##
+  ##--Adding GMinT1 Forecasts--##
   
-  colnames(Recon_GMinT) <- Names
+  colnames(Recon_GMinT1) <- Names
   
-  Recon_GMinT %>% 
+  Recon_GMinT1 %>% 
     as_tibble() %>% 
     add_column(index = rep(yearmonth(Index[1]) + 0:(min(H, Nrow_Test)-1))) %>% 
     gather(-index, key = Series, value = "Overnight_Trips_Fc") %>% 
     mutate("Fc_horizon" = rep(1:min(H, Nrow_Test), n),
-           "R-method" = rep("GMinT", min(H, Nrow_Test)*n), 
-           Series = as_factor(Series)) -> Recon_GMinT
+           "R-method" = rep("GMinT1", min(H, Nrow_Test)*n), 
+           Series = as_factor(Series)) -> Recon_GMinT1
   
-  left_join(Recon_GMinT, test) %>% 
-    add_column(Replication = j) -> DF_Recon_GMinT 
+  left_join(Recon_GMinT1, test) %>% 
+    add_column(Replication = j) -> DF_Recon_GMinT1 
   
-  rbind(DF, DF_Recon_GMinT) -> DF  
+  rbind(DF, DF_Recon_GMinT1) -> DF  
+  
+  
+  ##--Adding GMinT2 Forecasts--##
+  
+  colnames(Recon_GMinT2) <- Names
+  
+  Recon_GMinT2 %>% 
+    as_tibble() %>% 
+    add_column(index = rep(yearmonth(Index[1]) + 0:(min(H, Nrow_Test)-1))) %>% 
+    gather(-index, key = Series, value = "Overnight_Trips_Fc") %>% 
+    mutate("Fc_horizon" = rep(1:min(H, Nrow_Test), n),
+           "R-method" = rep("GMinT2", min(H, Nrow_Test)*n), 
+           Series = as_factor(Series)) -> Recon_GMinT2
+  
+  left_join(Recon_GMinT2, test) %>% 
+    add_column(Replication = j) -> DF_Recon_GMinT2 
+  
+  rbind(DF, DF_Recon_GMinT2) -> DF  
   
   ###################################
       ### ADDING TO FINAL DF ###
