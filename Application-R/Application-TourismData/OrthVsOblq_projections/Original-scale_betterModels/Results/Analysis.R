@@ -30,8 +30,12 @@ OvernightTrips_OriginalScale_Fc %>%
 # OvernightTrips_OriginalScale_Fc <- read.csv("OvernightTrips_OriginalScale_Fc.csv")[,-1]
 
 OvernightTrips_OriginalScale_Fc %>%
+  left_join(.,read_csv('weights.csv'))->OvernightTrips_OriginalScale_FcW
+
+
+OvernightTrips_OriginalScale_FcW %>%
   mutate(SquaredE = (Overnight_Trips - Overnight_Trips_Fc)^2,
-         WeightedSquaredE = Weight*(Overnight_Trips - Overnight_Trips_Fc)^2,
+         WeightedSquaredE = (1/Weight)*(Overnight_Trips - Overnight_Trips_Fc)^2,
          Fc_horizon = recode(Fc_horizon, "1" = "h=1", "2" = "h=2",
                              "3" = "h=3", "4" = "h=4", "5" = "h=5", "6" = "h=6")) %>%
   group_by(`R.method`, Fc_horizon, Replication) %>%
