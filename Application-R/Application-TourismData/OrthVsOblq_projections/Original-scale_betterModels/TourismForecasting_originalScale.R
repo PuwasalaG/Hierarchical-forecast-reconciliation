@@ -229,7 +229,7 @@ for (j in 1:140) {#C=140
   
   #-WLS_bias G-# THIS HAS BEEN CHANGED TO STRUCTURAL SCALING
   InvRt_W<- diag(1/sqrt(diag(W_struct)), n, n)
-    
+  Rt_W<- diag(sqrt(diag(W_struct)), n, n)  
   Inv_WLS_bias <- InvRt_W%*%InvRt_W
   
   WLS_G_bias <- solve(t(S) %*% Inv_WLS_bias %*% S) %*% t(S) %*% 
@@ -239,8 +239,8 @@ for (j in 1:140) {#C=140
   
     
     
-  GMinT.shr_G_bias <- solve(t(S) %*% InvRt_W %*%Inv_Shr.cov_bias%*% InvRt_W %*% S) %*% t(S) %*% InvRt_W%*% 
-    Inv_Shr.cov_bias%*% InvRt_W
+  GMinT.shr_G_bias <- solve(t(S) %*% Rt_W %*%Inv_Shr.cov_bias%*% Rt_W %*% S) %*% t(S) %*% Rt_W%*% 
+    Inv_Shr.cov_bias%*% Rt_W
   
 
   ####################
