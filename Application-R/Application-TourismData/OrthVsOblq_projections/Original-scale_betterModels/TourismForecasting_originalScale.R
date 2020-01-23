@@ -118,7 +118,7 @@ Final_DF <- tibble("index" = character(),
 Start <- Sys.time()
 
 for (j in 1:140) {#C=140
-  
+  print(paste('replication',j))
   Train <- AllTS_new %>%
     group_by(Series) %>%
     slice(j:(L+j-1)) %>%
@@ -355,8 +355,8 @@ for (j in 1:140) {#C=140
 
 End <- Sys.time()
 
-write.csv(x=DF, file = "Results/DF_OriginalScale_1-50.csv")
-save.image("Results/TourismForecasting_originalScale_1-50.RData")
+write.csv(x=DF, file = "Results/DF_OriginalScale_all.csv")
+save.image("Results/TourismForecasting_originalScale_all.RData")
 
 
 # DF %>% mutate(SquaredE = (`Actual` - `Forecasts`)^2) -> DF
