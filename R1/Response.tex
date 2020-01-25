@@ -69,16 +69,25 @@
 	    
 	    \textit{In addition to the above mentioned shortcomings, I think the authors should reconsider their empirical evaluation. Maybe a second case study or a simulation study is needed to show the value of the geometric insights provided. We already know that MinT is better than OLS and WLS. What is the new and better reconciliation approach that has come from the geometric insights?}\\	
 		
-		We now propose a generalised version of MinT, to be used with a loss function where $\bm{W}$ is defined by the context of the problem.  In our empirical study we provide one such example of a loss function.  We show that blah blah blah. TO DO (TAS).  Demonstrating these additional contributions in the context of our existing empirical example has lengthened the paper considerably.  Therefore, we prefer to refrain from including a second empirical demonstration.\\
+		The objective of this paper is not to propose a new and better reconciliation approach but to establish new results that lead to clearer understanding of the properties of existing methods.  Therefore, while the paper does not include a new method, it does provide insights into how new methods should (or should not) be developed.  For examples of this, see the discussion on page 19 just before Section 4.1 and comments in the conclusion.\\
+		
+		In this paper, the purpose of the empirical evaluation is to provide a demonstration of the theoretical results that we have established.  We agree that this could be improved.  We have greatly expanded Section 5.2 to more clearly investigate two different loss functions and demonstrate two different understandings of optimality.\\
+		
+		Improving the existing empirical application in the ways suggested by the referee has lengthened the paper considerably.  Therefore, we prefer to refrain from including a second empirical demonstration.\\
 		
 		\item \textit{Improvement guarantees: The boxplot in Figure 8 shows that OLS always improves MSE, while this is not the case for the other reconciliation approaches. To gain a better understanding of the implications of Theorem 3.2, it would be useful to show that the other approaches always
 		improve accuracy in their transformed spaces.}\\
 	
-	    Report results for two different error metrics and include this. TO DO\\ 
+	    We now expand section 5.2 to report results for two different error metrics.  Furthermore we have added additional insights in Section 3.4 that are now also demonstrated in this section.  In particular we show that while the distance reducing property of Theorem 3.2 depends entirely on the choice of loss function, minimising the expected loss function can always be achieved by a MinT approach. TO DO.\\ 
 		
 		\textit{What is the interpretation of the transformed spaces and can the authors make the connection	between these spaces and the choice of reconciliation approach and error measure more clear?}\\ 
 	
-	    Reflecting on this issue has led us towards the development of a generalised version of MinT which we now include in the paper.  Briefly, the geometric insight allows us to decouple the issue of choice of loss function (which may be influenced by the context of the forecasting problem) from the issue of the properties of a given reconciliation method (which is a statistical question).\\
+	    
+	    Reflecting on this issue has led us towards making a number of changes.  To reiterate, we may define a loss function based on the notion of Euclidean distance.  In this case an orthogonal projection is guaranteed to lead to reconciled forecasts that are better than base forecasts.  Alternatively we may define a more general loss function, for instance by taking weights into account.  In this case, it is an orthogonal projection in the \textit{transformed} space that has the same optimality properties.\\
+	    
+	    Now consider the property of minimising expected loss when the loss is function based on Euclidean distance.  This can be achieved by the MinT estimator.  We now provide a new result proving that minimising the expected loss in a transformed space in fact leads to the same MinT estimator.\\
+	    
+	    To make the transformed space more interpretable we consider a new loss function that is driven by the example used in our empirical evaluation.  This is a loss function weighted by ... TO DO
 		
 		\textit{For example, Hyndman et al. (2011); van Erven and
 		Cugliari (2015) argued for selecting OLS to increase the importance of
