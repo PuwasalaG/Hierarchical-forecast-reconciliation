@@ -57,7 +57,7 @@
 		
 		\textit{When the empirical evaluation is focused on bias, then it would make sense to include an error that measures bias in addition to the squared error.}\\
 		
-		We now also report the total error for all methods to highlight bias.  Here we see that bias correction method 1 removes bias, while bias correction method 2 in fact worsens bias.  A new insight that we are able to make is to recognise that reconciliation without bias correction can mitigate bias.  For example, even if bias correction is not used at all, OLS reconciliation significantly reduces bias for both the log transformation and Box Cox transformation.  This is likely to occur since bias lies in a direction that is almost orthogonal to the coherent subspace.\\
+		We now also report the total error for all methods to highlight bias.  Here we see that bias correction method 1 removes bias, while bias correction method 2 in fact worsens bias.  A new insight that we are able to make is to recognise that reconciliation without bias correction can still mitigate bias.  For example, even if bias correction is not used at all, OLS reconciliation significantly reduces bias for both the log transformation and Box Cox transformation.  This is likely to occur since bias lies in a direction that is almost orthogonal to the coherent subspace.\\
 		
 		\textit{Moreover, simply showing the MSE without any confidence intervals or measures of significance is not sufficient for the reader to assess the results.  It would also be useful to show the MSE relative to the base forecasts or the percentage improvement that is obtained.} \\
 		
@@ -69,25 +69,23 @@
 	    
 	    \textit{In addition to the above mentioned shortcomings, I think the authors should reconsider their empirical evaluation. Maybe a second case study or a simulation study is needed to show the value of the geometric insights provided. We already know that MinT is better than OLS and WLS. What is the new and better reconciliation approach that has come from the geometric insights?}\\	
 		
-		The objective of this paper is not to propose a new and better reconciliation approach but to establish new results that lead to clearer understanding of the properties of existing methods that in turn motivate research into new methods.  Therefore, while the paper does not include a new method, it does provide insights into how new methods should (or should not) be developed.  For examples of this, see the discussion on page 19 just before Section 4.1 and comments in the conclusion.\\
+		The objective of this paper is not to propose a new and better reconciliation approach.  Rather it is to establish new results that lead to clearer understanding of the properties of existing methods that in turn motivate research into new methods.  Therefore, while the paper does not include a new method, it does provide insights into how new methods should (or should not) be developed.  For examples of this, see the discussion on page 19 just before Section 4.1 and comments in the conclusion.\\
 		
-		In this paper, the purpose of the empirical evaluation is to provide a demonstration of the theoretical results that we have established.  We agree that this could be improved.  We have greatly expanded Section 5.2 to more clearly investigate two different loss functions and demonstrate two different understandings of optimality.\\
+		In this paper, the purpose of the empirical evaluation is to provide a demonstration of the theoretical results that we have established.  We agree that this could be improved.  We have greatly expanded Section 5.2 to more clearly investigate three different loss functions and demonstrate the different ways in which reconciliation methods can be considered optimal.\\
 		
 		Improving the existing empirical application in the ways suggested by the referee has lengthened the paper considerably.  Therefore, we prefer to refrain from including a second empirical demonstration.\\
 		
 		\item \textit{Improvement guarantees: The boxplot in Figure 8 shows that OLS always improves MSE, while this is not the case for the other reconciliation approaches. To gain a better understanding of the implications of Theorem 3.2, it would be useful to show that the other approaches always
 		improve accuracy in their transformed spaces.}\\
 	
-	    We now expand section 5.2 to report results for two different error metrics.  Furthermore we have added additional insights in Section 3.4 that are now also demonstrated in this section.  In particular we show that while the distance reducing property of Theorem 3.2 depends entirely on the choice of loss function, minimising the expected loss function can always be achieved by a MinT approach.\\ 
+	    We now expand section 5.2 to report results for three different error metrics.  Furthermore we have added additional insights in Section 3.4 that are now also demonstrated in this section.  In particular we show that while the distance reducing property of Theorem 3.2 depends entirely on the choice of loss function, minimising the expected loss function can always be achieved by a MinT approach and does not depend on the weights used in a loss function.\\ 
 		
 		\textit{What is the interpretation of the transformed spaces and can the authors make the connection	between these spaces and the choice of reconciliation approach and error measure more clear?}\\ 
 	
 	    
-	    Reflecting on this issue has led us towards making a number of changes.  To reiterate, we may define a loss function based on the notion of Euclidean distance.  In this case an orthogonal projection is guaranteed to lead to reconciled forecasts that are better than base forecasts.  Alternatively we may define a more general loss function, for instance by taking weights into account.  In this case, it is an orthogonal projection in the \textit{transformed} space that has the same optimality properties.\\
+	    Reflecting on this issue has led us towards making a number of changes.  To reiterate, we may define a loss function based on the notion of Euclidean distance.  In this case an orthogonal projection is guaranteed to lead to reconciled forecasts that are better than base forecasts.  Alternatively we may define a more general loss function, for instance by taking weights into account.  We now consider two such loss functions, one based on the structure of the hierarchy (so-called `structural scaling') and another based on average spend in each region.  The latter of these can be interpreted in terms of tourism revenue rather than tourism numbers.  In this case, it is an orthogonal projection in the \textit{transformed} space that is guaranteed to improve upon base forecasts with respect to this loss function.\\
 	    
-	    Now consider the property of minimising expected loss when the loss is function based on Euclidean distance.  This can be achieved by the MinT estimator.  We now provide a new result proving that minimising the expected loss in a transformed space in fact leads to the same MinT estimator.\\
-	    
-	    To make the transformed space more interpretable we consider a new loss function that is driven by the example used in our empirical evaluation.  This is a loss function weighted by ... TO DO
+	    We also consider the property of minimising expected loss when the loss is function based on Euclidean distance.  This can be achieved by the MinT estimator.  We now provide a new result proving that minimising the expected loss in a transformed space in fact leads to the same MinT estimator.\\
 		
 		\textit{For example, Hyndman et al. (2011); van Erven and
 		Cugliari (2015) argued for selecting OLS to increase the importance of
