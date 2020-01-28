@@ -22,9 +22,20 @@ write_csv(weights,'Results/weights.csv')
 RegExpend <- read_csv("StateTourismExp.csv",skip = 5,col_names = TRUE)[,-(1:3)]
 
 TotRegExp <- RegExpend %>% colSums()
+
+# Find total expenditure for full hierarchy
+TotRegExp_full <- S%*%TotRegExp
+
+#Find total trips for full hierarchy
 TotTrips <- OvernightTrips_Region %>% colSums() 
+TotTrips_full <- S%*%TotTrips
 
-btm_weights <- TotRegExp/TotTrips
+weights <- (TotRegExp_full/TotTrips_full)
+write(weights,'weights_spend.csv',ncolumns = 1)
 
-AllWeights <- S %*% btm_weights
+#AllWeights <- S %*% btm_weights
 
+#Check names
+
+#reg1<-colnames(OvernightTrips_Region)
+#reg2<-attr(TotRegExp,"names")

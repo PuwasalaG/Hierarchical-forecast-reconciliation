@@ -68,12 +68,17 @@ C <- nrow(AllTS) - L
 
 #Compute W for structural scaling
 
-W_struct<-diag(rowSums(S))
+W_struct<-diag(rowSums(S)^2)
+
+#Read W for spend scaling
+
+W_spend<-1/(scan('weights_spend.csv')^2)
 
 AllTS_new <- AllTS %>% 
   ts(start = c(1998,1), frequency = 12) %>% 
   as_tsibble() %>% 
   rename("Series" = key, "Overnight_Trips" = value)
+
 
 
 
@@ -235,6 +240,12 @@ for (j in 1:140) {#C=140
   WLS_G_bias <- solve(t(S) %*% Inv_WLS_bias %*% S) %*% t(S) %*% 
     Inv_WLS_bias
   
+  #-WLS_spend G-# THIS SCALES BY MULTIPLYING BY AVERAGE SPEND
+  InvRt_W_sp<- diag(1/sqrt(diag(W_spend)), n, n)
+  Inv_WLS_sp <- InvRt_W_sp%*%InvRt_W_sp
+  
+  WLS_G_sp <- solve(t(S) %*% Inv_WLS_sp %*% S) %*% t(S) %*% Inv_WLS_sp
+  
   #G MinT
   
     
@@ -250,7 +261,8 @@ for (j in 1:140) {#C=140
   
   Recon_BU <- t(S %*% BU_G %*% t(Base_forecasts))
   Recon_OLS <- t(S %*% OLS_G %*% t(Base_forecasts))
-  Recon_WLS <- t(S %*% WLS_G_bias %*% t(Base_forecasts))
+  Recon_WLS1 <- t(S %*% WLS_G_bias %*% t(Base_forecasts))
+  Recon_WLS2 <- t(S %*% WLS_G_sp %*% t(Base_forecasts))
   Recon_MinT <- t(S %*% MinT.shr_G_bias %*% t(Base_forecasts))
   Recon_GMinT1 <- t(S %*% GMinT.1 %*% t(Base_forecasts))
   Recon_GMinT2 <- t(S %*% GMinT.2 %*% t(Base_forecasts))
@@ -311,22 +323,39 @@ for (j in 1:140) {#C=140
   rbind(DF, DF_Recon_MinT) -> DF
   
   
-  ##--Adding WLS Forecasts--##
+  ##--Adding WLS Forecasts (struct)--##
   
-  colnames(Recon_WLS) <- Names
+  colnames(Recon_WLS1) <- Names
   
-  Recon_WLS %>% 
+  Recon_WLS1 %>% 
     as_tibble() %>% 
     add_column(index = rep(yearmonth(Index[1]) + 0:(min(H, Nrow_Test)-1))) %>% 
     gather(-index, key = Series, value = "Overnight_Trips_Fc") %>% 
     mutate("Fc_horizon" = rep(1:min(H, Nrow_Test), n),
-           "R-method" = rep("WLS", min(H, Nrow_Test)*n), 
-           Series = as_factor(Series)) -> Recon_WLS
+           "R-method" = rep("WLS1", min(H, Nrow_Test)*n), 
+           Series = as_factor(Series)) -> Recon_WLS1
   
-  left_join(Recon_WLS, test) %>% 
-    add_column(Replication = j) -> DF_Recon_WLS
+  left_join(Recon_WLS1, test) %>% 
+    add_column(Replication = j) -> DF_Recon_WLS1
   
-  rbind(DF, DF_Recon_WLS) -> DF
+  rbind(DF, DF_Recon_WLS1) -> DF
+  
+  ##--Adding WLS Forecasts (spend)--##
+  
+  colnames(Recon_WLS1) <- Names
+  
+  Recon_WLS2 %>% 
+    as_tibble() %>% 
+    add_column(index = rep(yearmonth(Index[1]) + 0:(min(H, Nrow_Test)-1))) %>% 
+    gather(-index, key = Series, value = "Overnight_Trips_Fc") %>% 
+    mutate("Fc_horizon" = rep(1:min(H, Nrow_Test), n),
+           "R-method" = rep("WLS2", min(H, Nrow_Test)*n), 
+           Series = as_factor(Series)) -> Recon_WLS2
+  
+  left_join(Recon_WLS2, test) %>% 
+    add_column(Replication = j) -> DF_Recon_WLS2
+  
+  rbind(DF, DF_Recon_WLS2) -> DF
   
   ##--Adding GMinT1 Forecasts--##
   
