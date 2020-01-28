@@ -72,7 +72,7 @@ W_struct<-diag(rowSums(S)^2)
 
 #Read W for spend scaling
 
-W_spend<-1/(scan('weights_spend.csv')^2)
+W_spend<-diag(1/(scan('weights_spend.csv')^2))
 
 AllTS_new <- AllTS %>% 
   ts(start = c(1998,1), frequency = 12) %>% 
