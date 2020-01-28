@@ -386,7 +386,23 @@ The following theorem proves that the solution to this optimisation problem does
     The usual MinT reconciliation method $\tilde{\bm{y}}=\bm{S}\left(\bm{S}'\bm{\Sigma}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{\Sigma}^{-1}\hat{\bm{y}}$ solves the optimisation problem in Equation~\ref{eq:GMinTObj} for any $\bm{W}$.
 \end{theo}
 \begin{proof}
-	To be completed.
+	The loss function in Equation~\ref{eq:GMinTObj} is equivalent to Euclidean distance in the transformed space and can therefore be minimised by using the MinT method in this space.  The MinT method in the transformed space is give by 
+	\begin{equation}
+	\label{eq:MinTtran}
+	\tilde{\bm{y}}^{*}=\bm{S}^{*}\left(\bm{S}^{*'}\bm{\Sigma}^{*-1}\bm{S}^{*}\right)^{-1}\bm{S}^{*'}\bm{\Sigma}^{*-1}\hat{\bm{y}}^{*}\,,
+	\end{equation}
+	where  $\bm{y}^{*}=\bm{W}^{-1/2}\bm{y}$, $\bm{S}^{*}=\bm{W}^{-1/2}\bm{S}$, $\hat{\bm{y}}^{*}=\bm{W}^{-1/2}\hat{\bm{y}}$ and
+	\begin{align*}
+	\bm{\Sigma}^*&=E\left[(\bm{y}^{*}-\hat{\bm{y}}^{*})(\bm{y}^{*}-\hat{\bm{y}}^{*})'\right]\\
+	&=E\left[\bm{W}^{-1/2}(\bm{y}-\hat{\bm{y}})(\bm{y}-\hat{\bm{y}})'\bm{W}^{-1/2'}\right]\\
+	&=\bm{W}^{-1/2}E\left[(\bm{y}-\hat{\bm{y}})(\bm{y}-\hat{\bm{y}})'\right]\bm{W}^{-1/2'}\\
+	&=\bm{W}^{-1/2}\bm{\Sigma}\bm{W}^{-1/2'}
+	\end{align*}
+	Substituting the expressions for $\bm{\Sigma}^*$, $\bm{y}^{*}$ and $\hat{\bm{y}}^{*}$ into Equation~\ref{eq:MinTtran} yields, 
+	\begin{eqnarray*}
+	\bm{W}^{-1/2}\bm{y}=&\bm{W}^{-1/2}\bm{S}\left((\bm{W}^{-1/2}\bm{S})'(\bm{W}^{-1/2}\bm{\Sigma}\bm{W}^{-1/2'})^{*-1}\bm{W}^{-1/2}\bm{S}\right)^{-1}\\
+	&(\bm{W}^{-1/2}\bm{S})'(\bm{W}^{-1/2}\bm{\Sigma}\bm{W}^{-1/2'})^{*-1}\bm{W}^{-1/2}\hat{\bm{y}}\\
+	\end{eqnarray*}
 \end{proof}
 
  
