@@ -399,10 +399,16 @@ The following theorem proves that the solution to this optimisation problem does
 	&=\bm{W}^{-1/2}\bm{\Sigma}\bm{W}^{-1/2'}
 	\end{align*}
 	Substituting the expressions for $\bm{\Sigma}^*$, $\bm{y}^{*}$ and $\hat{\bm{y}}^{*}$ into Equation~\ref{eq:MinTtran} yields, 
-	\begin{eqnarray*}
-	\bm{W}^{-1/2}\bm{y}=&\bm{W}^{-1/2}\bm{S}\left((\bm{W}^{-1/2}\bm{S})'(\bm{W}^{-1/2}\bm{\Sigma}\bm{W}^{-1/2'})^{*-1}\bm{W}^{-1/2}\bm{S}\right)^{-1}\\
-	&(\bm{W}^{-1/2}\bm{S})'(\bm{W}^{-1/2}\bm{\Sigma}\bm{W}^{-1/2'})^{*-1}\bm{W}^{-1/2}\hat{\bm{y}}\\
-	\end{eqnarray*}
+	\begin{align*}
+	\bm{W}^{-1/2}\tilde{\bm{y}}=\bm{W}^{-1/2}\bm{S}&\left((\bm{W}^{-1/2}\bm{S})'(\bm{W}^{-1/2}\bm{\Sigma}\bm{W}^{-1/2'})^{*-1}\bm{W}^{-1/2}\bm{S}\right)^{-1}\\
+	&(\bm{W}^{-1/2}\bm{S})'(\bm{W}^{-1/2}\bm{\Sigma}\bm{W}^{-1/2'})^{*-1}\bm{W}^{-1/2}\hat{\bm{y}}
+	\end{align*}
+	Rearranging and cancelling gives
+	\begin{align*}
+    \tilde{\bm{y}}&=\bm{S}\left((\bm{S})'(\bm{W}^{-1/2})'(\bm{W}^{1/2})'\bm{\Sigma}^{-1}\bm{W}^{1/2}\bm{W}^{-1/2}\bm{S}\right)^{-1}\bm{S}'(\bm{W}^{-1/2})'(\bm{W}^{1/2})'\bm{\Sigma}^{-1}\bm{W}^{1/2}\bm{W}^{-1/2}\hat{\bm{y}}\\
+	&=\bm{S}\left((\bm{S})'\bm{\Sigma}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{\Sigma}^{-1}\hat{\bm{y}}\\
+	\end{align*}
+	which corresponds to the usual MinT method.
 \end{proof}
 
  
