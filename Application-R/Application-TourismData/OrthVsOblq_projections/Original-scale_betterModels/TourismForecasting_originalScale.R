@@ -342,7 +342,7 @@ for (j in 1:140) {#C=140
   
   ##--Adding WLS Forecasts (spend)--##
   
-  colnames(Recon_WLS1) <- Names
+  colnames(Recon_WLS2) <- Names
   
   Recon_WLS2 %>% 
     as_tibble() %>% 
