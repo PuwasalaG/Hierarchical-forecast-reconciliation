@@ -548,20 +548,21 @@ As the theory predicts, OLS reconciliation always leads to an improvement relati
 \begin{figure}[!hbt]
     \centering
     \small
-    \includegraphics[width = \textwidth]{Figs/BoxPlot.pdf}
-    \caption{MSE differences between base forecasts and reconciled forecasts using OLS, MinT and WLS, and also the bottom-up approach for $h = 1$. A positive value indicates that the coherent forecasts are an improvement over the base forecasts.}\label{fig:BaseVSRecon_Fc}
+    \includegraphics[width = \textwidth]{Figs/lossboxplots_1.pdf}
+    \caption{Differences between base forecasts and reconciled forecasts for different loss functions using different reconciliation methods for $h = 1$. A positive value indicates that the coherent forecasts are an improvement over the base forecasts.}\label{fig:BaseVSRecon_Fc}
 \end{figure}
 
-\begin{table}[!hbt]
-\caption {Average {MSE($\times 10^3$)} over all 140 rolling window replications for $h=1$.}\label{tab:AveraveDifferences}
-  \centering \tabcolsep=0.4cm
-  \begin{tabular}{lccccc}
-  \toprule
-          & Base & OLS & MinT & WLS & Bottom-up \\
-   MSE    & 4.31 & 4.20 & \textbf{4.16} & 4.48 & 5.28 \\
-  \bottomrule
-  \end{tabular}
-\end{table}
+%\begin{table}[!hbt]
+%\caption {Average {MSE($\times 10^3$)} over all 140 rolling window replications for $h=1$.}\label{tab:AveraveDifferences}
+%  \centering \tabcolsep=0.4cm
+%  \begin{tabular}{lccccc}
+%  \toprule
+%          & Base & OLS & MinT & WLS & Bottom-up \\
+%   MSE    & 4.31 & 4.20 & \textbf{4.16} & 4.48 & 5.28 \\
+%  \bottomrule
+%  \end{tabular}
+%\end{table}
+\input{Tables/lossvmethods_h_1.tex}
 
 \subsection{Transformations and bias adjustment}
 
