@@ -526,18 +526,20 @@ To demonstrate the implications of Theorem~\ref{th:distred} we consider the impr
 	\textrm{TSE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
 	\end{equation}
 	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.
-This corresponds to the loss function described in Section~\ref{sec:orthogonal}. We also consider a loss function based on a generalised Euclidean distance of the form
+This corresponds to the loss function described in Section~\ref{sec:orthogonal}. We also consider loss functions based on a generalised Euclidean distance of the form
 \begin{equation*}
-	\textrm{WSE}^{q}_t=\sum\limits_{i=1}^n w_i (y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
+	\textrm{WSE}^{q}_t=\sum\limits_{i=1}^n \left(w_i (y_{i,t}-\tilde{y}^{(q)}_{i,t})\right)^2\,,
 	\end{equation*}
-	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.
+	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.  We consider two choices of weights.  The first is the inverse of the number of bottom level series that are aggregated to form a series.  For example, for all bottom level series this weight is 1, whereas for the top level series this is 1/75.  The idea is to not ensure top level series - which due to aggregation are on a much larger scale -  do not dominate the forecast evaluation metric.  Using this weights in WLS reconciliation is equivalent to what \cite{AthEtAl2017} refer to as \textit{structural scaling}.  As such we refer to WLS based on these weights as `Structural-WLS' and the loss function based on these weights as `Structural-WSE'.  
+	
+	The second choice of weights is motivated by our empirical example.  In addition to visitor numbers per region, we also have access to data on average spend per region.  In some settings, it may be desirable to have greater forecast accuracy in regions where tourists spend more.  By using average spend per region as weights, the error metric (and transformed space associated with this metric) can be interpreted in terms of revenue measured in dollars rather than raw tourist numbers. We refer to WLS based on these weights as `Spend-WLS' and the loss function based on these weights as `Spend-WSE'.
 }
 
-After obtaining the base forecasts these are reconciled using four different projection methods: OLS,{\color{blue} WLS and MinT.   For MinT, the shrinkage estimator of \cite{Schafer2005} is used to estimate to covariance matrix of one step ahead forecast errors.  That is $\bm{\Sigma} = \tau\text{diag}(\hat{\bm{\Sigma}}) + (1-\tau)\hat{\bm{\Sigma}}$  where $\hat{\bm{\Sigma}}$ is the sample estimate of the variance covariance matrix of the in-sample, one-step ahead forecast errors and,
+After obtaining the base forecasts these are reconciled using four different projection methods: OLS,{\color{blue} Structural-WLS, Spend-WLS  and MinT.   For MinT, the shrinkage estimator of \cite{Schafer2005} is used to estimate to covariance matrix of one step ahead forecast errors.  That is $\bm{\Sigma} = \tau\text{diag}(\hat{\bm{\Sigma}}) + (1-\tau)\hat{\bm{\Sigma}}$  where $\hat{\bm{\Sigma}}$ is the sample estimate of the variance covariance matrix of the in-sample, one-step ahead forecast errors and,
 	\begin{equation*}
 	\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{\sigma}_{ij})}{\sum_{i \neq j}{\hat{\sigma}}^2_{ij}}\,,
 	\end{equation*}
-	where $\sigma_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}^{\text{sam}}$.  For WLS, variance scaling is used, i.e., $\bm{W}^{\text{WLS}}=\text{diag}(\hat{\bm{\Sigma}})$ CHANGE DEPENDING ON FINAL CHOICE OF W.  For both loss function} we compute the difference between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate. 
+	where $\sigma_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}^{\text{sam}}$.  For each loss function} we compute the difference between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate. 
 
 The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this measure over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{blue} in an online supplement.}
 
