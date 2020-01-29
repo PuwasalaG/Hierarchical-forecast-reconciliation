@@ -91,7 +91,7 @@
 
 \begin{abstract}
 \spacingset{1.45}
-  A geometric interpretation is developed for so-called \emph{reconciliation} methodologies used to forecast time series that adhere to known linear constraints. In particular, a general framework is established nesting many existing popular reconciliation methods within the class of \emph{projections}. This interpretation facilitates the derivation of novel results that explain why and how reconciliation via projection is guaranteed to improve forecast accuracy with respect to a specific class of loss functions. The geometric interpretation is further used to provide a new proof that forecast reconciliation results in unbiased forecasts provided the initial Approaches for dealing with biased base forecasts are proposed.  The implications of all theoretical results are demonstrated in an extensive empirical study on Australian tourism flows. The method of bias-correcting before carrying out reconciliation is shown to outperform alternatives that only bias-correct or only reconcile forecasts.
+  A geometric interpretation is developed for so-called \emph{reconciliation} methodologies used to forecast time series that adhere to known linear constraints. In particular, a general framework is established nesting many existing popular reconciliation methods within the class of \emph{projections}. This interpretation facilitates the derivation of novel theoretical results. First, reconciliation via projection is guaranteed to improve forecast accuracy with respect to a class of loss functions based on a generalised distance metric. Second, the MinT method minimises expected loss for this same class of loss functions.  The geometric interpretation is further used to provide a new proof that forecast reconciliation using projections results in unbiased forecasts provided the initial base forecasts are also unbiased.  Approaches for dealing with biased base forecasts are proposed and evaluated in an extensive empirical study on Australian tourism flows. The method of bias-correcting before carrying out reconciliation is shown to outperform alternatives that only bias-correct or only reconcile forecasts.  The empirical study also sheds light on the theoretical results of the paper.
 
 \end{abstract}
 
@@ -104,7 +104,7 @@
 
 \section{Introduction}\label{sec:intro}
 
-The past decade has seen rapid development in methodologies for forecasting time series that follow a hierarchical aggregation structure. Of particular prominence have been \emph{forecast reconciliation} methods involving two steps: first separate forecasts are produced for all series, then these are adjusted to ensure coherence with aggregation constraints. Forecast reconciliation has mostly been formulated using a regression model {\color{blue} that admits a generalised least squares (GLS) solution}, see \citet{Hyndman2011} and \citet{WicEtAl2019} for examples. {\color{blue} Alternatively, \cite{VanErven2015a} and \cite{NysEtAl2019} arrive at a GLS solution by formulating reconciliation as an optimisation problem to minimise weighted squared errors between coherent and incoherent forecasts}.  The regression setup can be counter-intuitive since a vector comprised of forecasts from different time series models is also assumed to be the dependent variable in a regression model. In this paper, we eschew a regression interpretation in favour of a novel, geometric understanding of forecast reconciliation. This allows us to develop novel proofs and a clearer understanding of the interplay between forecast bias and reconciliation methods.
+The past decade has seen rapid development in methodologies for forecasting time series that follow a hierarchical aggregation structure. Of particular prominence have been \emph{forecast reconciliation} methods involving two steps: first separate forecasts are produced for all series, then these are adjusted to ensure coherence with aggregation constraints. Forecast reconciliation has mostly been formulated using a regression model {\color{blue} that admits a generalised least squares (GLS) solution}, see \citet{Hyndman2011} and \citet{WicEtAl2019} for examples. {\color{blue} Alternatively, \cite{VanErven2015a} and \cite{NysEtAl2019} arrive at a GLS solution by formulating reconciliation as an optimisation problem}.  The regression setup can be counter-intuitive since a vector comprised of forecasts from different time series models is also assumed to be the dependent variable in a regression model. In this paper, we eschew a regression interpretation in favour of a novel, geometric understanding of forecast reconciliation. This allows us to develop novel proofs and a clearer understanding of the interplay between forecast bias and reconciliation methods.
 
 Multivariate time series following an aggregation structure arise in many sectors such as retail, energy, insurance, health and welfare and economics \citep[see for example][]{KarMal2019, Taieb2017, NysEtAl2019, AlmVan2016, JeoEtAl2019, Mahkya2017, LiTan2019, Shang2017, AthEtAl2019_MacroBook}. Forecasts of these series should adhere to aggregation constraints to ensure aligned decision making. Earlier studies achieved this by only forecasting a single level of the hierarchy and then either aggregating in a bottom-up fashion \citep{Dunn1976} or disaggregating in a top-down fashion \citep{Gross1990, Athanasopoulos2009}. For reviews of these approaches, including a discussion of their advantages and disadvantages, see \citet{Schwarzkopf1988, Kahn1998, Lapide1998, Fliedner2001}.
 
@@ -112,7 +112,7 @@ In contrast to these methods, \citet{Hyndman2011} proposed forecasting all serie
 
 Our main contribution is to propose a geometric interpretation of the entire hierarchical forecasting problem. In this setting, we show that reconciled forecasts have a number of attractive properties when they are obtained via projections. We believe that this is clearer and more intuitive than explanations based on regression modelling. In addition to casting existing results in a new light, the geometric interpretation also allows us to derive {\color{blue}four} new important results.
 
-First, our approach makes it clear that the defining characteristic of so-called \emph{hierarchical time series} is not aggregation but linear constraints. As a result forecast reconciliation can be applied in contexts where there are no clear candidates of \emph{bottom level} series, an insight that is not apparent when the problem is viewed through the lens of regression modelling. Second, {\color{blue} we provide a new proof of the results that reconciled forecasts dominate unreconciled forecasts, for a certain class of loss functions. The projection that achieves this need only depend on the loss function and not on the dependence in forecast errors.}  Futhermore, unlike {\color{blue} proofs of similar results by} \citet{VanErven2015a} and \citet{WicEtAl2019}, our proof does not require an assumption about convexity that may not hold in general.  {\color{blue} Third, we show that when it comes to minimising the expected value of the same class of loss functions, the optimal projection depends only on the covariance of the forecast errors.  While this is a direct consequence of the trace minimising property already established by \cite{WicEtAl2019}, we provide new intuition and also establish that the result applies to a more general class of loss functions.  Fourth}, we prove that reconciliation using certain projection matrices guarantees unbiased reconciled forecasts provided the base forecasts are also unbiased. A natural question that arises is what to do in the case of biased reconciled forecasts. Rather than addressing this issue by considering matrices that are not projections, we propose to bias-correct before reconciliation. This is evaluated in an extensive empirical study where we find that even when bias correction fails, the extent of the problem is mitigated by reconciling forecasts.
+First, our approach makes it clear that the defining characteristic of so-called \emph{hierarchical time series} is not aggregation but linear constraints. As a result forecast reconciliation can be applied in contexts where there are no clear candidates of \emph{bottom level} series, an insight that is not apparent when the problem is viewed through the lens of regression modelling. Second, {\color{blue} we provide a new proof that reconciled forecasts dominate unreconciled forecasts, for a certain class of loss functions. The projection that achieves this depends on the weights used in the loss function but not on the dependence in forecast errors.}  Futhermore, unlike {\color{blue} proofs of similar results by} \citet{VanErven2015a} and \citet{WicEtAl2019}, our proof does not require an assumption about convexity that may not hold in general.  {\color{blue} Third, we show that when it comes to minimising the expected value of the same class of loss functions, the optimal projection depends only on the covariance of the forecast errors, and not the weights used in the loss function.  In this case of equal weights, this property is a direct consequence of the trace minimising property already established by \cite{WicEtAl2019}, we now prove that this result also applies to a more general class of loss functions.  Fourth}, we prove that reconciliation using certain projection matrices guarantees unbiased reconciled forecasts provided the base forecasts are also unbiased. A natural question that arises is what to do in the case of biased reconciled forecasts. Rather than addressing this issue by considering matrices that are not projections, we propose to bias-correct before reconciliation. This is evaluated in an extensive empirical study where we find that even when bias correction fails, the extent of the problem is mitigated by reconciling forecasts.\todo{Re-check after results}
 
 The remainder of this paper is structured as follows. Section~\ref{sec:CoheForecasts} deals with the concept of coherence and defines hierarchical time series in a way that does not depend on any notion of bottom-level series. Section~\ref{sec:Reconciliation} defines forecast reconciliation in terms of projections and includes proofs that make the optimality properties of different reconciliation methods clear. In Section~\ref{sec:BiasInRecon} we prove the unbiasedness preserving property of reconciliation via certain projection matrices and propose methods for bias correction. In Section \ref{sec:EmpStudy} we conduct an extensive empirical application to domestic tourism flow in Australia with two objectives; first to demonstrate the theorems discussed in Section~\ref{sec:Reconciliation}, second to evaluate the methods for bias correction discussed in Section~\ref{sec:BiasInRecon}. Section~\ref{sec:conclusions} concludes with some discussion and thoughts on the future research directions {\color{blue}for} forecast reconciliation.
 
@@ -171,7 +171,7 @@ To further illustrate, Figure~\ref{fig:3D_hierarchy} depicts the simplest three 
    \resizebox{0.8\linewidth}{!}{
      \input{Figs/3D_hierarchy}
    }
-   \caption{Depiction of a three dimensional hierarchy with $y_{\text{Tot}} = y_{\text{A}} + y_{\text{B}}$. The gray coloured two dimensional plane depicts the coherent subspace $\mathfrak{s}$ where $\vec{s}_1 = (1,1,0)'$ and $\vec{s}_2 = (1, 0, 1)'$ are basis vectors that span $\mathfrak{s}$. The red points in $\mathfrak{s}$ represent realisations or coherent forecasts}\label{fig:3D_hierarchy}
+   \caption{Depiction of a three dimensional hierarchy with $y_{\text{Tot}} = y_{\text{A}} + y_{\text{B}}$. The gray coloured two dimensional plane depicts the coherent subspace $\mathfrak{s}$ where $\vec{s}_1 = (1,1,0)'$ and $\vec{s}_2 = (1, 0, 1)'$ are basis vectors that span $\mathfrak{s}$. The red points in $\mathfrak{s}$ represent realisations or coherent forecasts.}\label{fig:3D_hierarchy}
 \end{figure}
 
 \begin{definition}[Hierarchical Time Series]\label{def:hts}
@@ -225,9 +225,9 @@ Despite the common use of the term \emph{hierarchical time series}, it should be
 
 Without any loss of generality, the above definition could also be applied to prediction for multivariate data in general, rather than just forecasting of time series.
 
-Much of the early literature that dealt with the problem of forecasting hierarchical time series \citep[see][and references therein]{Gross1990} produced forecasts at a single level of the hierarchy in the first stage. Subsequently forecasts for all series were recovered through aggregation, disaggregation according to historical or forecast proportions, or some combination of both. Consequently, incoherent forecasts were not a problem in these earlier papers.
+Much of the early literature that dealt with the problem of forecasting hierarchical time series \citep[see][and references therein]{Gross1990} produced forecasts at a single level of the hierarchy in the first stage. Subsequently forecasts for all series were recovered through {\color{blue} either} aggregation, disaggregation according to historical or forecast proportions, or some combination of both. Consequently, incoherent forecasts were not a problem in these earlier papers.
 
-Forecasting a single level of the hierarchy did not echo common practice within many industries. In many organisations different departments or `silos' each produced their own forecasts, often with their own information sets and judgemental adjustments. \footnote{\citet{Cha2013} discusses silos and the importance of information and data sharing across an organisation.} This approach does have several advantages over only forecasting a single level. First, there is no loss of information since all levels and series are modelled. Second, modelling higher level series often identifies features such as trend and seasonality that cannot be detected in noisy disaggregate data. However, when forecasts are produced independently at all levels, forecasts are likely to be incoherent.\footnote{There are some special cases of using simple approaches such as na\"{i}ve, which extrapolate the coherent nature of the data to the forecasts.} {\color{blue}While the problem of incoherent forecasts can be addressed by some multivariate approaches, including state space models, these can not always be generalised to models with more complicated features or scaled up to high-dimensional problems.}  Instead, the solution is to make an adjustment, {\color{blue}ex post of base forecasting,} that ensures coherence, a process known as \emph{forecast reconciliation}
+Forecasting a single level of the hierarchy did not echo common practice within many industries. In many organisations different departments or `silos' each produced their own forecasts, often with their own information sets and judgemental adjustments.\footnote{\citet{Cha2013} discusses silos and the importance of information and data sharing across an organisation.} This approach does have several advantages over only forecasting a single level. First, there is no loss of information since all levels and series are modelled. Second, modelling higher level series often identifies features such as trend and seasonality that cannot be detected in noisy disaggregate data. However, when forecasts are produced independently at all levels, forecasts are likely to be incoherent.\footnote{There are some special cases of using simple approaches such as na\"{i}ve, which extrapolate the coherent nature of the data to the forecasts.} {\color{blue}While the problem of incoherent forecasts can be addressed by some multivariate approaches, including state space models, these can not always be generalised to models with more complicated features or scaled up to high-dimensional problems.}  Instead, the solution is to make an adjustment, {\color{blue}ex post of base forecasting,} that ensures coherence, a process known as \emph{forecast reconciliation}
 
 \section{Forecast reconciliation}\label{sec:Reconciliation}
 
@@ -243,22 +243,23 @@ Although pre-multiplying base forecasts by $\bm{S}\bm{G}$ will result in coheren
 
 We begin by considering the special case of an orthogonal projection whereby $\bm{G}=(\bm{S}'\bm{S})^{-1}\bm{S}'$. This is equivalent to so called OLS reconciliation as introduced by \citet{Hyndman2011}. We refrain from any discussion of regression models focusing instead on geometric interpretations. {\color{blue} Nonetheless,} the connection between OLS and orthogonal projection should be clear in the context of regression modelling predicted values from OLS are obtained via an orthogonal projection of the response onto the span of the regressors.
 
+
 \subsection{Orthogonal projection}\label{sec:orthogonal}
 
 In this section we discuss two sensible properties that can be achieved by reconciliation via orthogonal projection.
 \begin{itemize}
-\item The first is that reconciliation should adjust the base forecasts as little as possible; i.e. the base and reconciled forecasts should be `close'.  {\color{blue} This property is particularly emphasised by \cite{NysEtAl2019}}
-\item The second is that reconciliation in some sense should improve forecast accuracy, or more loosely, that the reconciled forecast should be `closer' to the realised value targeted by the forecast.  {\color{blue} This property is particularly emphasised by \cite{WicEtAl2019}.}
+\item The first is that reconciliation should adjust the base forecasts as little as possible; i.e. the base and reconciled forecasts should be `close'. 
+\item The second is that reconciliation in some sense should improve forecast accuracy, or more loosely, that the reconciled forecast should be `closer' to the realised value targeted by the forecast.
 \end{itemize}
 
-To address the first of these properties we make the concept of closeness more concrete by considering the Euclidean distance between the base forecast $\hat{\bm{y}}_{t+h|t}$ and the reconciled forecast $\tilde{\bm{y}}_{t+h|t}$. A property of an orthogonal projection is that the distance between $\hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}$ is minimal over any possible $\tilde{\bm{y}}\in\mathfrak{s}$. {\color{blue} For Euclidean distance this can be expressed as minimising a loss function $\|\hat{\bm{y}}_{t+h|t}-\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}\|$ with respect to $\bm{G}$ where $\|.\|$ denotes the $L_2$ norm.}  In this sense reconciliation via orthogonal projection {\color{blue} $\bm{G}=(\bm{S}'\bm{S})^{-1}\bm{S}'$} leads to the smallest possible adjustments of the base forecasts.
+To address the first of these properties we make the concept of closeness more concrete by considering the Euclidean distance between the base forecast $\hat{\bm{y}}_{t+h|t}$ and the reconciled forecast $\tilde{\bm{y}}_{t+h|t}$. A property of an orthogonal projection is that the distance between $\hat{\bm{y}}_{t+h|t}$ and $\tilde{\bm{y}}_{t+h|t}$ is minimal over any possible $\tilde{\bm{y}}\in\mathfrak{s}$. In this sense reconciliation via orthogonal projection {\color{blue} $\bm{G}=(\bm{S}'\bm{S})^{-1}\bm{S}'$} leads to the smallest possible adjustments of the base forecasts.  {\color{blue} Euclidean distance can be interpreted as a loss function $L(\bm{u},\bm{v})=\|\bm{u}-\bm{v}\|$ where $\|.\|$ is the L2 norm, in which case an orthogonal projection solves the optimisation problem $\underset{\bm{G}}{\min}\,L(\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t},\hat{\bm{y}}_{t+h|t})$. This is a special case of the optimisation problem considered by \cite{NysEtAl2019}, the more general case will be covered in the next section.}
 
-The {\color{blue} second property is concerned with a loss function $L({\bm{y}}_{t+h},\breve{\bm{y}}_{t+h})=\|{\bm{y}}_{t+h}-\bm{S}\bm{G}\breve{\bm{y}}_{t+h|t}\|$ where $\breve{\bm{y}}_{t+h|t}$ is either a base or reconciled forecast.  More specifically, the aim is to reconcile so that $L({\bm{y}}_{t+h},\hat{\bm{y}}_{t+h})-L({\bm{y}}_{t+h},\tilde{\bm{y}}_{t+h})$ is guaranteed to be positive.\, that is} reconciled forecasts should always be closer to the target than base forecasts. {\color{blue} This idea was} touched upon in Section 2.3 of \citet{WicEtAl2019} for the {\color{blue} special} case of MinT\@ {\color{blue} which has a slightly different loss function}. Here we provide a new explicit {\color{blue} and general} proof of that result. We do so first in the case {\color{blue} of a loss function based on Euclidean distance} where the geometric intuition of the proof is clear and then generalise the result to reconciliation using any projection matrix in Section~\ref{sec:oblique}
+The {\color{blue} aim of the second property is to guarantee that} reconciled forecasts should always be closer to the target than base forecasts {\color{blue} and is related with the difference in loss functions $L({\bm{y}}_{t+h},\hat{\bm{y}}_{t+h|t})-L({\bm{y}}_{t+h},\tilde{\bm{y}}_{t+h|t})$.  This is expressed as a minimax optimisation by \cite{VanErven2015a} and was also} touched upon in Section 2.3 of \citet{WicEtAl2019}{\color{blue}, albeit in both cases for a slightly different loss function}. Here we provide a new explicit proof of {\color{blue} this distance reducing property}. We do so first in the case {\color{blue} of the loss function defined here in terms of Euclidean distance} where the geometric intuition of the proof is clear and then generalise the result to {\color{blue} more general loss functions} Section~\ref{sec:oblique}
 
 Consider the Euclidean distance between the target and a forecast. This is equivalent to the square root of the sum of squared forecast errors over the entire hierarchy. Let $\bm{y}_{t+h}$ be the realisation of the data generating process at time $t+h$. The following theorem shows that reconciliation never increases the sum of squared errors of point forecasts.
 
 \begin{theo}[Distance reducing property]\label{th:distred}
-  If $\tilde{\bm{y}}_{t+h|t}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}$, where $\bm{G}$ is such that $\bm{S}\bm{G}$ is an orthogonal projection (in the Euclidean sense) onto $\mathfrak{s}$ and let $\|\bm{v}\|$ be the $L_2$ norm (in the Euclidean sense) of vector $\bm{v}$ then:
+  If $\tilde{\bm{y}}_{t+h|t}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}$, where $\bm{G}$ is such that $\bm{S}\bm{G}$ is an orthogonal projection (in the Euclidean sense) onto $\mathfrak{s}$ then:
   \begin{equation*}
     \|(\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t})\|\le\|(\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t})\|.
   \end{equation*}
@@ -274,28 +275,29 @@ Consider the Euclidean distance between the target and a forecast. This is equiv
   with equality only holding when $\tilde{\bm{y}}_{t+h|t}=\hat{\bm{y}}_{t+h|t}$. Taking the square root of both sides proves the desired result.
 \end{proof}
 
-The simple geometric intuition behind the proof is demonstrated in Figure~\ref{fig:Schematic_OLSRecon}. In this schematic, the coherent subspace is depicted as a black arrow, and the base forecast $\hat{\bm{y}}$ is shown as a blue dot. Since $\hat{\bm{y}}$ is incoherent, $\hat{\bm{y}}_{t+h|t}\notin\mathfrak{s}$ and in this case the inequality is strict. Reconciliation is an orthogonal projection from $\hat{\bm{y}}$ to the coherent subspace yielding the reconciled forecast $\tilde{\bm{y}}$ shown in red. Finally, the target of the forecast $\bm{y}$ is displayed as a black point, and although its exact location is unknown to the forecaster, it is known that it will lie somewhere along the coherent subspace.
+The simple geometric intuition behind the proof is demonstrated in Figure~\ref{fig:Schematic_OLSRecon}. In this schematic, the coherent subspace is depicted as a black arrow, and the base forecast $\hat{\bm{y}}$ is shown as a blue dot. Since $\hat{\bm{y}}$ is incoherent, $\hat{\bm{y}}\notin\mathfrak{s}$ and in this case the inequality is strict. Reconciliation is an orthogonal projection from $\hat{\bm{y}}$ to the coherent subspace yielding the reconciled forecast $\tilde{\bm{y}}$ shown in red. Finally, the target of the forecast $\bm{y}$ is displayed as a black point, and although its exact location is unknown to the forecaster, it is known that it will lie somewhere along the coherent subspace.
 
 \begin{figure}[!hbt]
   \centering \includegraphics[width=0.6\textwidth]{Figs/orth_pointforerec_schematic.pdf}
   \caption{Orthogonal projection of $\hat{\bm{y}}$ onto $\mathfrak{s}$ yielding the reconciled forecast $\tilde{\bm{y}}$.}\label{fig:Schematic_OLSRecon}
 \end{figure}
 
-Figure~\ref{fig:Schematic_OLSRecon} clearly shows that $\hat{\bm{y}}$, $\tilde{\bm{y}}$ and $\bm{y}$ form a right angled triangle with $\tilde{\bm{y}}$ at the right-angled vertex. In this triangle the line between $\bm{y}$ and $\hat{\bm{y}}$ is the hypotenuse and therefore must be longer than the distance between $\bm{y}$ and $\tilde{\bm{y}}$. Therefore reconciliation is guaranteed to reduce the squared error of the forecast.
+Figure~\ref{fig:Schematic_OLSRecon} clearly shows that $\hat{\bm{y}}$, $\tilde{\bm{y}}$ and $\bm{y}$ form a right angled triangle with $\tilde{\bm{y}}$ at the right-angled vertex. In this triangle the line between $\bm{y}$ and $\hat{\bm{y}}$ is the hypotenuse and therefore must be longer than the distance between $\bm{y}$ and $\tilde{\bm{y}}$. Therefore reconciliation is guaranteed to reduce {\color{blue} a loss function based on distance, or indeed any monotonic function of distance.}
 
 Theorem~\ref{th:distred} is in some ways more powerful than perhaps previously understood. Crucially, the result is not a result that requires taking expectations. This distance reducing property will hold for any realisation and any forecast and not just on average. Nothing needs to be assumed about the statistical properties of the data generating process or the process by which forecasts are made.
 
-In other ways, Theorem~\ref{th:distred} is weaker than perhaps often understood. First, when improvements in forecast accuracy are discussed in the context of the theorem, this refers to a very specific measure of forecast accuracy. In particular, this measure is the square root of the sum of squared forecast errors of \emph{all} variables in the hierarchy. Consequently, while forecast improvement is guaranteed for the hierarchy overall, {\color{blue} forecast errors are treated equally across all series} and reconciliation can {\color{blue} still} lead to less accurate forecasts for individual series. Second, although orthogonal projections are guaranteed to improve on base forecasts, they are not necessarily the projection that leads to the greatest improvement in forecast accuracy. Therefore, referring to reconciliation via orthogonal projections as `optimal' is somewhat misleading since it does not have the optimality properties of some oblique projections, in particular MinT\@. {\color{blue} We now turn our attention to the way oblique projections can address both of these shortcomings} .
+In other ways, Theorem~\ref{th:distred} is weaker than perhaps often understood. First, when improvements in forecast accuracy are discussed in the context of the theorem, this refers to a very specific measure of forecast accuracy. In particular, this measure is the square root of the sum of squared forecast errors of \emph{all} variables in the hierarchy. Consequently, while forecast improvement is guaranteed for the hierarchy overall, {\color{blue} forecast errors are treated equally across all series}. Second, although orthogonal projections are guaranteed to improve on base forecasts, they are not necessarily the projection that leads to the greatest improvement in forecast accuracy. Therefore, referring to reconciliation via orthogonal projections as `optimal' is somewhat misleading since it does not have the optimality properties of some oblique projections. {\color{blue} We now turn our attention to the way oblique projections can address both of these shortcomings.}
 
 \subsection{Oblique Projections}\label{sec:oblique}
 
-One justification for using an orthogonal projection is that it leads to improved forecast accuracy in terms of the square root of the sum of squared errors of \emph{all} variables in the hierarchy. A clear shortcoming of this measure of forecast accuracy is that forecast errors in all series should not necessarily be treated equally. For example, in hierarchies, top-level series tend to have a much larger scale than bottom-level series. Even when two series are on a similar scale, series that are more predictable or less variable will tend to be down-weighted by simply aggregating squared errors. An even more sophisticated understanding may take the correlation between series into account.  {\color{blue} Finally, the context of the forecast problem itself may suggest a loss function, for instance in our tourism example an appropriate loss function may weight forecast errors by average tourism expenditure in each reason}. All of these considerations lead towards {\color{blue} a loss function $L_{\bm W}(\bm{y}_{t+h},\breve{\bm{y}}_{t+h|t})=||{\bm{y}_{t+h}-\breve{\bm{y}}_{t+h|t}}||_{\bm{W}^{-1}}$ where $||\bm{v}||_{\bm{W}^{-1}}=\bm{v}'\bm{W}^{-1}\bm{v}$, and $\bm{W}$ is a symmetric matrix assumed to be invertible.  The geometry defined by the norm $||.||_{\bm{W}^{-1}}$, will be referred to as the generalised Euclidean geometry with respect to $\bm{W}^{-1}$. } 
+One justification for using an orthogonal projection is that it leads to improved forecast accuracy in terms of {\color{blue} a loss function based on Euclidean distance that involves \emph{all} variables in the hierarchy.} A clear shortcoming of this measure of forecast accuracy is that forecast errors in all series should not necessarily be treated equally. For example, in hierarchies, top-level series tend to have a much larger scale than bottom-level series.  {\color{blue} Alternatively, the context of the forecast problem itself may suggest a loss function that weights series differently.  For example in our tourism application in Section~\ref{sec:EmpStudy} we will consider weighting forecast errors by average tourism expenditure in each region.}\footnote{Similar consideration are taken into account for the loss function used in the M5 forecasting competition, see M5 REF HERE for more details.}  An even more sophisticated understanding may take {\color{blue}linear combinations} of series into account. All of these considerations lead towards {\color{blue} a loss function $L_{\bm W}(\bm{y}_{t+h},\tilde{\bm{y}}_{t+h|t})=||{\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t}}||_{\bm{W}}$ where $||\bm{v}||_{\bm{W}}=\bm{v}'\bm{W}\bm{v}$, and $\bm{W}$ is a symmetric matrix assumed to be invertible.  The geometry defined by the norm $||.||_{\bm{W}}$, will be referred to as the generalised Euclidean geometry with respect to $\bm{W}$. } 
 
-One way to understand the generalied Euclidean geometry is that it is the same as Euclidean geometry when all vectors are first transformed by pre-multiplying by $\bm{W}^{-1/2}$. This leads to a transformed $\bm{S}$ matrix $\bm{S}^*=\bm{W}^{-1/2}\bm{S}$ and transformed $\hat{\bm{y}}$ and $\tilde{\bm{y}}$ vectors $\hat{\bm{y}}^*=\bm{W}^{-1/2}\hat{\bm{y}}$ and $\tilde{\bm{y}}^*=\bm{W}^{-1/2}\tilde{\bm{y}}$. {\color{blue} An projection of the form $\tilde{\bm{y}}=\bm{S}(\bm{S}'\bm{W}^{-1}\bm{S})^{-1}\bm{S}'\bm{W}^{-1}\hat{\bm{y}}$, is an} orthogonal projection in the transformed space since
+One way to understand the generalied Euclidean geometry is that it is the same as Euclidean geometry when all vectors are first transformed by pre-multiplying by $\bm{W}^{1/2}$, {\color{blue} where $\bm{W}=(\bm{W}^{1/2})'\bm{W}^{1/2}$}. This leads to a transformed $\bm{S}$ matrix $\bm{S}^*=\bm{W}^{1/2}\bm{S}$ and transformed $\hat{\bm{y}}$ and $\tilde{\bm{y}}$ vectors $\hat{\bm{y}}^*=\bm{W}^{1/2}\hat{\bm{y}}$ and $\tilde{\bm{y}}^*=\bm{W}^{1/2}\tilde{\bm{y}}$. {\color{blue} A projection of the form $\tilde{\bm{y}}=\bm{S}(\bm{S}'\bm{W}\bm{S})^{-1}\bm{S}'\bm{W}\hat{\bm{y}}$, is an} orthogonal projection in the transformed space since
 \begin{align*}
   \tilde{\bm{y}}^*
-    & = \bm{W}^{-1/2}\tilde{\bm{y}} \\
-    & = \bm{W}^{-1/2}\bm{S}(\bm{S}'\bm{W}^{-1}\bm{S})^{-1}\bm{S}'\bm{W}^{-1}\hat{\bm{y}} \\
+    & = \bm{W}^{1/2}\tilde{\bm{y}} \\
+    & = \bm{W}^{1/2}\bm{S}(\bm{S}'\bm{W}\bm{S})^{-1}\bm{S}'\bm{W}\hat{\bm{y}} \\
+    &{\color{blue} = \bm{W}^{1/2}\bm{S}((\bm{W}^{1/2}\bm{S})'\bm{W}^{1/2}\bm{S})^{-1}(\bm{W}^{1/2}\bm{S})'\bm{W}^{1/2}\hat{\bm{y}}}\\
     & = \bm{S}^*(\bm{S}^{*'}\bm{S}^*)^{-1}\bm{S}^{*'}\hat{\bm{y}^*}.
 \end{align*}
 
@@ -306,22 +308,22 @@ Thinking of the generalised Euclidean space as a transformed version of Euclidea
 \begin{theo}[General distance reducing property]\label{th:gdistred}
   If $\tilde{\bm{y}}_{t+h|t}=\bm{S}\bm{G}\hat{\bm{y}}_{t+h|t}$, where $\bm{G}$ is such that $\bm{S}\bm{G}$ is an orthogonal projection (in the generalised Euclidean sense) onto $\mathfrak{s}$ then:
   \begin{equation*}
-    \|(\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t})\|_{\bm{W}^{-1}}
+    \|(\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t})\|_{\bm{W}}
       \le\
-    |(\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t})\|_{\bm{W}^{-1}}.
+    \|(\bm{y}_{t+h}-\hat{\bm{y}}_{t+h|t})\|_{\bm{W}}.
   \end{equation*}
 \end{theo}
 \begin{proof}
   The proof is identical to the proof for Theorem~\ref{th:distred} but relies on the Generalised Pythagorean Theorem (applicable to Generalised Euclidean space) rather than the Pythagorean Theorem.
   \end{proof}
 
-The implication of Theorem~\ref{th:gdistred} is that if the loss function is {\color{blue} given a priori as total sum of squared errors in some linearly transformed space,} then the projection matrix $\bm{S}(\bm{S}'\bm{W}^{-1}\bm{S})^{-1}\bm{S}'\bm{W}^{-1}$ is guaranteed to improve forecast accuracy over base forecasts.  {\color{blue}  This result does not depend on the covariance of forecast errors except in the special case where $\bm{W}$ is set to this covariance matrix.}
+The implication of Theorem~\ref{th:gdistred} is that if the loss function is of the form $L_{\bm{W}}$ {\color{blue} with some $\bm{W}$ given a priori} then the projection matrix $\bm{S}(\bm{S}'\bm{W}^{-1}\bm{S})^{-1}\bm{S}'\bm{W}^{-1}$ is guaranteed to improve forecast accuracy over base forecasts.  {\color{blue}  This result does not necessarily involve the covariance of forecast errors unless $\bm{W}$ is explicitly chosen to depend on these covariances.}
 
-Note here that we rely here on the Generalised Pythagorean Theorem (which involves an equality). In contrast, \citet{WicEtAl2019} follow \citet{VanErven2015a} in stating their result in terms of the Generalised Pythagorean Inequality. The proof of \citet{WicEtAl2019} requires an assumption of convexity so that the angle between the base forecast and coherent subspace must be greater than 90 degrees. The proof we have provided here requires no such assumption, since this may not hold for an arbitrary $\bm{W}$. As such the statement from \citet{WicEtAl2019} that \emph{``MinT reconciled forecasts are at least as good as the incoherent forecasts''} should be qualified --- this is true only with respect to a loss function that depends on {\color{blue} $||.||_{\bm{W}^{-1}}$ and only when $\bm{W}$ is the covariance matrix estimate used by MinT}. If Euclidean distance (or mean squared error) is used {\color{blue} as a loss function}, there will be realisations where the MinT estimator does not improve forecast accuracy relative to base forecasts. This will be demonstrated using a real data set in the empirical study in Section~\ref{sec:comparebase}.
+\citet{WicEtAl2019} and \citet{VanErven2015a} both prove special cases of this result, the former in the case where $\bm{W}$ is the inverse of the forecast error covariance and the latter in the case where $\bm{W}$ is diagonal.  Note here that we rely here on the Generalised Pythagorean Theorem (which involves an equality). In contrast, \citet{WicEtAl2019} follow \citet{VanErven2015a} in stating their result in terms of the Generalised Pythagorean Inequality. These proofs require an assumption of convexity so that the angle between the base forecast and coherent subspace must be greater than 90 degrees. The proof we have provided here requires no such assumption, since this may not hold for an arbitrary $\bm{W}$. As such the statement from \citet{WicEtAl2019} that \emph{``MinT reconciled forecasts are at least as good as the incoherent forecasts''} should be qualified --- this is true only with respect to a loss function that depends on {\color{blue} $||.||_{\bm{\Sigma}^{-1}}$, where $\bm{\Sigma}=E(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})'$}. If Euclidean distance (or mean squared error) is used {\color{blue} as a loss function}, there will be realisations where the MinT estimator does not improve forecast accuracy relative to base forecasts. This will be demonstrated using a real data set in the empirical study in Section~\ref{sec:comparebase}.
 
 \subsection{MinT}
 
-{\color{blue}The discussion so far provides a roadmap, such that for a given choice of $\bm{W}$, a projection method with distance-reducing properties can be derived}. While the MinT method of \citet{WicEtAl2019} {\color{blue} is a special case of such a projection, it was in fact motivated by a different optimality property of minimising the} trace of the forecast error covariance matrix of reconciled forecasts
+{\color{blue}The discussion so far provides a roadmap, such that for a given choice of $\bm{W}$, a projection with distance-reducing properties can be derived}. While the MinT method of \citet{WicEtAl2019} {\color{blue} is a special case of such a projection, it was in fact motivated by a different optimality property.  This was to minimise the} trace of the forecast error covariance matrix of reconciled forecasts, i.e,
 	
 {\color{blue}
 \begin{equation}
@@ -330,7 +332,7 @@ Note here that we rely here on the Generalised Pythagorean Theorem (which involv
 \end{equation}
 } 
 
-The solution is the oblique projection {\color{blue} $\bm{S}\left(\bm{S}'\bm{\Sigma}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{\Sigma}^{-1}$}. Here, {\color{blue}$\bm{\Sigma}=E(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})'$} is the forecast error covariance matrix where errors come from using the base forecasts. Although the base forecast error covariance matrix is unknown, it can be estimated using in-sample errors.  {\color{blue} In the subsequent discussion MinT will refer to any method that attempts to estimate $\bm{\Sigma}$, specific estimators can be found in \cite{WicEtAl2019} and also \cite{NysEtAl2019}.}
+The solution is the oblique projection {\color{blue} $\bm{S}\left(\bm{S}'\bm{\Sigma}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{\Sigma}^{-1}$}. {\color{blue} While MinT is used here to refer to the case where $\bm{\Sigma}$ is known, in practice,} it is unknown.  It can be estimated using in-sample errors, {\color{blue} with some specific estimators found in \cite{WicEtAl2019} and also \cite{NysEtAl2019}.}
 
 Figure~\ref{fig:OthogonalVSOblique_projection} provides geometrical intuition into the MinT method. Suppose that the orange points in panel~(a) represent in-sample forecast errors. These provide information on the most likely direction of large deviations from the coherent subspace $\mathfrak{s}$. This direction is denoted by $\bm{R}$. Panel~(b) shows a target value of $\bm{y}$, while the grey points indicate possible values for the base forecasts (the base forecasts are of course stochastic). One possible value of the forecast is depicted in blue as $\hat{\bm{y}}$. An oblique projection of the blue point back along the direction of $\bm{R}$, yields a reconciled forecast closer to the target, especially compared to an orthogonal projection. Panel~(c) shows the orthogonal projection of every potential base forecast onto the coherent subspace. Panel~(d) depicts an oblique projection along $\bm{R}$ for all the gray points. The oblique projection yields reconciled forecasts tightly packed near the target $\bm{y}$. In this sense, the oblique MinT projection minimises the forecast error variance of the reconciled forecasts. In contrast to the result in Theorem~\ref{th:gdistred}, this property is a statistical property in the sense that MinT is optimal in expectation.
 
@@ -357,59 +359,67 @@ Figure~\ref{fig:OthogonalVSOblique_projection} provides geometrical intuition in
 
 {\color{blue}
 
-\subsection{MinT and Loss Functions}
+\subsection{Expected loss minimisation and MinT}
 
-We now make explicit the connection betwenn the MinT and a loss function based on the Euclidean distance $L(\bm{y},\tilde{\bm{y}})=\|\bm{y}-\tilde{\bm{y}}\|$.  By the properties of the trace operator, the objective function in Equation~\ref{eq:MinTObj} can be rearranged as
+We now make explicit the connection betwenn the MinT and a loss function based on the squared Euclidean distance $L(\bm{y},\tilde{\bm{y}})=\|\bm{y}-\tilde{\bm{y}}\|^2$ before generalising to $L_{\bm W}(\bm{y},\tilde{\bm{y}})=\|\bm{y}-\tilde{\bm{y}}\|^2_{\bm W}$.  By the properties of the trace operator, the objective function in Equation~\ref{eq:MinTObj} can be rearranged as
 
 \begin{align*}
 \label{eq:MinTObj}
 \textrm{tr}(E\left[(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})'\right])&=\textrm{tr}(E\left[(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})'(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})\right])\\
 %&=E\left[(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})'(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})\right]\\
-&=E\left[\|\bm{y}-{\bm S}{\bm G}\hat{\bm{y}}\|\right]\\
+&=E\left[\|\bm{y}-{\bm S}{\bm G}\hat{\bm{y}}\|^2\right]\\
 &=E\left[L(\bm{y},\tilde{\bm{y}})\right]
 \end{align*}
 
-Note that although the loss function used here is the same as in Section~\ref{sec:orthogonal}, the sense in which reconciliation is optimal is different.  Theorem~\ref{th:distred} implies optimality in the sense that reconcilied forecasts always improve on base forecasts.  For MinT, optimality refers to minimising the expected loss function \textit{in expectation}.
+Note that trace minimisation implies a different optimality property to the distance reducing property described in Section~\ref{sec:orthogonal}.  Theorem~\ref{th:distred} implies optimality in the sense that reconcilied forecasts always improve on base forecasts.  For MinT, optimality refers to minimising the loss function \textit{in expectation}.
 
-A natural question may be to derive a reconciliation method that minimises expected loss where the loss function is the generalised Euclidean distance between the realisation and reconciled forecast.  That is to solve the optimisation problem
+Suppose the optimisation problem is generalised to a loss function based on some ${\bm W}$
 
 {\color{blue}
 	\begin{equation}
 	\label{eq:GMinTObj}
-	\underset{\bm{G}}{\min}\,\textrm{tr}(E\left[(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})'\bm{W}^{-1}(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})\right])\,.
+	\underset{\bm{G}}{\min}\,(E\left[(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})'\bm{W}(\bm{y}-{\bm S}{\bm G}\hat{\bm{y}})\right])\,.
 	\end{equation}
 }
 
 The following theorem proves that the solution to this optimisation problem does not depend of the choice of $\bm{W}$ used in the loss function.
 
-\begin{theo}[MinT minimises expected loss]\label{th:gdistred}
-    The usual MinT reconciliation method $\tilde{\bm{y}}=\bm{S}\left(\bm{S}'\bm{\Sigma}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{\Sigma}^{-1}\hat{\bm{y}}$ solves the optimisation problem in Equation~\ref{eq:GMinTObj} for any $\bm{W}$.
+\begin{theo}[Expected loss minimisation and MinT]\label{th:gmint}
+    The usual MinT reconciliation method $\tilde{\bm{y}}=\bm{S}\left(\bm{S}'\bm{\Sigma}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{\Sigma}^{-1}\hat{\bm{y}}$ solves the optimisation problem in Equation~\ref{eq:GMinTObj} for any choice of $\bm{W}$.
 \end{theo}
 \begin{proof}
-	The loss function in Equation~\ref{eq:GMinTObj} is equivalent to Euclidean distance in the transformed space and can therefore be minimised by using the MinT method in this space.  The MinT method in the transformed space is give by 
+	The loss function in Equation~\ref{eq:GMinTObj} is equivalent to Euclidean distance in the transformed space and can therefore be minimised by using the MinT method in this space.  The MinT method in the transformed space is given by 
 	\begin{equation}
 	\label{eq:MinTtran}
 	\tilde{\bm{y}}^{*}=\bm{S}^{*}\left(\bm{S}^{*'}\bm{\Sigma}^{*-1}\bm{S}^{*}\right)^{-1}\bm{S}^{*'}\bm{\Sigma}^{*-1}\hat{\bm{y}}^{*}\,,
 	\end{equation}
-	where  $\bm{y}^{*}=\bm{W}^{-1/2}\bm{y}$, $\bm{S}^{*}=\bm{W}^{-1/2}\bm{S}$, $\hat{\bm{y}}^{*}=\bm{W}^{-1/2}\hat{\bm{y}}$ and
+	where  $\bm{y}^{*}=\bm{W}^{1/2}\bm{y}$, $\bm{S}^{*}=\bm{W}^{1/2}\bm{S}$, $\hat{\bm{y}}^{*}=\bm{W}^{1/2}\hat{\bm{y}}$ and
 	\begin{align*}
 	\bm{\Sigma}^*&=E\left[(\bm{y}^{*}-\hat{\bm{y}}^{*})(\bm{y}^{*}-\hat{\bm{y}}^{*})'\right]\\
-	&=E\left[\bm{W}^{-1/2}(\bm{y}-\hat{\bm{y}})(\bm{y}-\hat{\bm{y}})'\bm{W}^{-1/2'}\right]\\
-	&=\bm{W}^{-1/2}E\left[(\bm{y}-\hat{\bm{y}})(\bm{y}-\hat{\bm{y}})'\right]\bm{W}^{-1/2'}\\
-	&=\bm{W}^{-1/2}\bm{\Sigma}\bm{W}^{-1/2'}
+	&=E\left[\bm{W}^{1/2}(\bm{y}-\hat{\bm{y}})(\bm{y}-\hat{\bm{y}})'(\bm{W}^{1/2})'\right]\\
+	&=\bm{W}^{1/2}E\left[(\bm{y}-\hat{\bm{y}})(\bm{y}-\hat{\bm{y}})'\right](\bm{W}^{1/2})'\\
+	&=\bm{W}^{1/2}\bm{\Sigma}(\bm{W}^{1/2})'
 	\end{align*}
-	Substituting the expressions for $\bm{\Sigma}^*$, $\bm{y}^{*}$ and $\hat{\bm{y}}^{*}$ into Equation~\ref{eq:MinTtran} yields, 
+	Noting that
 	\begin{align*}
-	\bm{W}^{-1/2}\tilde{\bm{y}}=\bm{W}^{-1/2}\bm{S}&\left((\bm{W}^{-1/2}\bm{S})'(\bm{W}^{-1/2}\bm{\Sigma}\bm{W}^{-1/2'})^{*-1}\bm{W}^{-1/2}\bm{S}\right)^{-1}\\
-	&(\bm{W}^{-1/2}\bm{S})'(\bm{W}^{-1/2}\bm{\Sigma}\bm{W}^{-1/2'})^{*-1}\bm{W}^{-1/2}\hat{\bm{y}}
+	(\bm{\Sigma}^{*})^{-1}&=\left(\bm{W}^{1/2}\bm{\Sigma}(\bm{W}^{1/2})'\right)^{-1}\\
+	&=(\bm{W}^{1/2'})^{-1}\bm{\Sigma}^{-1}\bm{W}^{-1/2}\\
+	\end{align*}
+	and substituting the expressions for $\bm{\Sigma}^*$, ${\bm{S}^*}$, $\bm{y}^{*}$ and $\hat{\bm{y}}^{*}$ into Equation~\ref{eq:MinTtran} yields, 
+	\begin{align*}
+	\bm{W}^{1/2}\tilde{\bm{y}}=\bm{W}^{1/2}\bm{S}&\left((\bm{W}^{1/2}\bm{S})'(\bm{W}^{1/2'})^{-1}\bm{\Sigma}^{-1}\bm{W}^{-1/2}(\bm{W}^{1/2}\bm{S})\right)^{-1}\\
+	&(\bm{W}^{1/2}\bm{S})'(\bm{W}^{1/2'})^{-1}\bm{\Sigma}^{-1}\bm{W}^{-1/2}\bm{W}^{1/2}\hat{\bm{y}}
 	\end{align*}
 	Rearranging and cancelling gives
 	\begin{align*}
-    \tilde{\bm{y}}&=\bm{S}\left((\bm{S})'(\bm{W}^{-1/2})'(\bm{W}^{1/2})'\bm{\Sigma}^{-1}\bm{W}^{1/2}\bm{W}^{-1/2}\bm{S}\right)^{-1}\bm{S}'(\bm{W}^{-1/2})'(\bm{W}^{1/2})'\bm{\Sigma}^{-1}\bm{W}^{1/2}\bm{W}^{-1/2}\hat{\bm{y}}\\
-	&=\bm{S}\left((\bm{S})'\bm{\Sigma}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{\Sigma}^{-1}\hat{\bm{y}}\\
+    \tilde{\bm{y}}&=\bm{S}\left(\bm{S}'(\bm{W}^{-1/2})'(\bm{W}^{1/2'})^{-1}\bm{\Sigma}^{-1}\bm{W}^{-1/2}\bm{W}^{1/2}\bm{S}\right)^{-1}\\
+    &\qquad\qquad\bm{S}'(\bm{W}^{-1/2})'(\bm{W}^{1/2'})^{-1}\bm{\Sigma}^{-1}\bm{W}^{-1/2}\bm{W}^{1/2}\hat{\bm{y}}\\
+	&=\bm{S}\left(\bm{S}'\bm{\Sigma}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{\Sigma}^{-1}\hat{\bm{y}}\\
 	\end{align*}
 	which corresponds to the usual MinT method.
 \end{proof}
+
+The implication of this result is that irrespective of the ${\bm W}$ used in the loss function, an oblique projection based on the forecast error covariance will always minimise {\em expected} loss (where loss is based on squared generalised Euclidean distance).  From the point of view of minimising expected loss, considerations about sensible weights for an error metric are only relevant in so far as they can estimate the forecast error covariance matrix.  This will be empirically demonstrated in Section~\ref{sec:EmpStudy}.
 
  
 
@@ -482,7 +492,7 @@ Alternatively, a more general purpose approach to bias correction is to simply e
 
 \section{Empirical study}\label{sec:EmpStudy}
 
-Using an empirical application to forecast Australian domestic tourism flows, we illustrate the usefulness of projection-based reconciliation in practice. Previous studies have found that reconciliation improves point forecast accuracy in domestic tourism flows for Australia \citep[see for example][]{Athanasopoulos2009, Hyndman2011,WicEtAl2019}. Our motivation in this study is twofold. First, we demonstrate the implications of Theorem~\ref{th:distred} by comparing reconciled and base forecasts. In contrast to previous studies, we consider individual periods rather than computing averages over a rolling window. Second, we demonstrate how the bias correction methods discussed in the previous section along with the projection-based reconciliation help to improve forecast accuracy.
+Using an empirical application to forecast Australian domestic tourism flows, we illustrate the usefulness of projection-based reconciliation in practice. Previous studies have found that reconciliation improves point forecast accuracy in domestic tourism flows for Australia \citep[see for example][]{Athanasopoulos2009, Hyndman2011,WicEtAl2019}. Our motivation in this study is twofold. First, we demonstrate the implications of Theorem~\ref{th:distred} {\color{blue} and Theorem~\ref{th:gmint}} by comparing reconciled and base forecasts. In contrast to previous studies, we consider individual periods {\color{blue} as well as} compute averages over a rolling window. Second, we demonstrate how the bias correction methods discussed in the previous section along with the projection-based reconciliation help to improve forecast accuracy.
 
 \subsection{Data}
 
@@ -508,28 +518,30 @@ The top panel of Figure~\ref{fig:States_Zones_Regs_TSplots} shows time plots for
 
 \subsection{Comparison to Base Forecasts}\label{sec:comparebase}
 
-To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts. For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package. Using these fitted models, base forecasts are produced for $h=1$ to $12$-steps ahead for each series in the hierarchy. This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $129~12$-steps-ahead forecasts available for forecast evaluation.
+To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts {\color{blue} using different loss functions}. For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package. Using these fitted models, base forecasts are produced for $h=1$ to $6$-steps ahead for each series in the hierarchy. This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $135~6$-steps-ahead forecasts available for forecast evaluation.
 
-{\color{blue} For each replication and for method $q$, the total squared error (TSE), is computed as
+{\color{blue} For each replication and for method $q$, we compute three loss functions.  The first is the total squared error (TSE), computed as
 	\begin{equation}
 	\label{eq:tse}
 	\textrm{TSE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
 	\end{equation}
 	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.
-This corresponds to the loss function described in Section~\ref{sec:orthogonal}. We also consider a loss function based on a generalised Euclidean distance of the form
+This corresponds to the loss function described in Section~\ref{sec:orthogonal}. We also consider loss functions based on a squared generalised Euclidean distance of the form
 \begin{equation*}
-	\textrm{WSE}^{q}_t=\sum\limits_{i=1}^n w_i (y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
+	\textrm{WSE}^{q}_t=\sum\limits_{i=1}^n \left(w_i (y_{i,t}-\tilde{y}^{(q)}_{i,t})\right)^2\,,
 	\end{equation*}
-	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.
+	We consider two choices of weights.  The first is the inverse of the number of bottom level series included in forming a specific aggregate.  For example, for all bottom level series this weight is 1, whereas for the top level series this is 1/75.  The idea is to ensure top level series - which are on a much larger scale -  do not dominate the forecast evaluation metric.  Using these weights in WLS reconciliation is equivalent to what \cite{AthEtAl2017} refer to as \textit{structural scaling}.  As such we refer to WLS based on these weights as `Structural-WLS' and the loss function based on these weights as `Structural-WSE'.  
+	
+	The second choice of weights is motivated by our empirical example.  In addition to visitor numbers per region, we also have access to data on average spend per region.  In some settings, it may be desirable to have greater forecast accuracy in regions where tourists spend more.  By using average spend per region as weights, the error metric (and transformed space associated with this metric) can be interpreted in terms of revenue measured in dollars rather than raw tourist numbers. We refer to WLS based on these weights as `Spend-WLS' and the loss function based on these weights as `Spend-WSE'.
 }
 
-After obtaining the base forecasts these are reconciled using four different projection methods: OLS,{\color{blue} WLS and MinT.   For MinT, the shrinkage estimator of \cite{Schafer2005} is used to estimate to covariance matrix of one step ahead forecast errors.  That is $\bm{\Sigma} = \tau\text{diag}(\hat{\bm{\Sigma}}) + (1-\tau)\hat{\bm{\Sigma}}$  where $\hat{\bm{\Sigma}}$ is the sample estimate of the variance covariance matrix of the in-sample, one-step ahead forecast errors and,
+After obtaining the base forecasts these are reconciled using four different projection methods: OLS, {\color{blue} Structural-WLS, Spend-WLS  and MinT.   For MinT, the shrinkage estimator of \cite{Schafer2005} is used to estimate  $\bm{\Sigma}$. The estimate is $\tau\text{diag}(\hat{\bm{\Sigma}}) + (1-\tau)\hat{\bm{\Sigma}}$  where $\hat{\bm{\Sigma}}$ is the sample estimate of the variance covariance matrix of the in-sample, one-step ahead forecast errors and,
 	\begin{equation*}
 	\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{\sigma}_{ij})}{\sum_{i \neq j}{\hat{\sigma}}^2_{ij}}\,,
 	\end{equation*}
-	where $\sigma_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}^{\text{sam}}$.  For WLS, variance scaling is used, i.e., $\bm{W}^{\text{WLS}}=\text{diag}(\hat{\bm{\Sigma}})$ CHANGE DEPENDING ON FINAL CHOICE OF W.  For both loss function} we compute the difference between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate. 
+	where $\hat{\sigma}_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}$.  For each loss function} we compute the difference between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate. 
 
-The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this measure over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{blue} in an online supplement.}
+The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this difference over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{blue} in an online supplement.}
 
 As the theory predicts, OLS reconciliation always leads to an improvement relative to base forecasts. The entire boxplot for OLS reconciliation is above zero. This is not the case for MinT and WLS which for some windows generate forecasts less accurate than the base forecasts. The boxplots also demonstrate that OLS reconciliation is more stable than MinT and WLS reconciliation, a result not entirely unsurprising since the latter two methods require estimation of a $\bm{W}$ matrix which in practice is not trivial. Nonetheless when averaging over the entire rolling window the MinT estimator performs best on average, which is again precisely what the theorem proved in \citet{WicEtAl2019} would suggest. The average MSE values across the entire rolling window of 140 replications are shown in Table \ref{tab:AveraveDifferences}.
 
