@@ -384,7 +384,7 @@ Suppose the optimisation problem is generalised to a loss function based on some
 
 The following theorem proves that the solution to this optimisation problem does not depend of the choice of $\bm{W}$ used in the loss function.
 
-\begin{theo}[Expected loss minimisation and MinT]\label{th:gdistred}
+\begin{theo}[Expected loss minimisation and MinT]\label{th:gmint}
     The usual MinT reconciliation method $\tilde{\bm{y}}=\bm{S}\left(\bm{S}'\bm{\Sigma}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{\Sigma}^{-1}\hat{\bm{y}}$ solves the optimisation problem in Equation~\ref{eq:GMinTObj} for any choice of $\bm{W}$.
 \end{theo}
 \begin{proof}
@@ -492,7 +492,7 @@ Alternatively, a more general purpose approach to bias correction is to simply e
 
 \section{Empirical study}\label{sec:EmpStudy}
 
-Using an empirical application to forecast Australian domestic tourism flows, we illustrate the usefulness of projection-based reconciliation in practice. Previous studies have found that reconciliation improves point forecast accuracy in domestic tourism flows for Australia \citep[see for example][]{Athanasopoulos2009, Hyndman2011,WicEtAl2019}. Our motivation in this study is twofold. First, we demonstrate the implications of Theorem~\ref{th:distred} by comparing reconciled and base forecasts. In contrast to previous studies, we consider individual periods rather than computing averages over a rolling window. Second, we demonstrate how the bias correction methods discussed in the previous section along with the projection-based reconciliation help to improve forecast accuracy.
+Using an empirical application to forecast Australian domestic tourism flows, we illustrate the usefulness of projection-based reconciliation in practice. Previous studies have found that reconciliation improves point forecast accuracy in domestic tourism flows for Australia \citep[see for example][]{Athanasopoulos2009, Hyndman2011,WicEtAl2019}. Our motivation in this study is twofold. First, we demonstrate the implications of Theorem~\ref{th:distred} {\color{blue} and Theorem~\ref{th:gmint}} by comparing reconciled and base forecasts. In contrast to previous studies, we consider individual periods {\color{blue} as well as} compute averages over a rolling window. Second, we demonstrate how the bias correction methods discussed in the previous section along with the projection-based reconciliation help to improve forecast accuracy.
 
 \subsection{Data}
 
@@ -518,30 +518,30 @@ The top panel of Figure~\ref{fig:States_Zones_Regs_TSplots} shows time plots for
 
 \subsection{Comparison to Base Forecasts}\label{sec:comparebase}
 
-To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts. For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package. Using these fitted models, base forecasts are produced for $h=1$ to $12$-steps ahead for each series in the hierarchy. This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $129~12$-steps-ahead forecasts available for forecast evaluation.
+To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts {\color{blue} using different loss functions}. For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package. Using these fitted models, base forecasts are produced for $h=1$ to $6$-steps ahead for each series in the hierarchy. This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $135~6$-steps-ahead forecasts available for forecast evaluation.
 
-{\color{blue} For each replication and for method $q$, the total squared error (TSE), is computed as
+{\color{blue} For each replication and for method $q$, we compute three loss functions.  The first is the total squared error (TSE), computed as
 	\begin{equation}
 	\label{eq:tse}
 	\textrm{TSE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
 	\end{equation}
 	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.
-This corresponds to the loss function described in Section~\ref{sec:orthogonal}. We also consider loss functions based on a generalised Euclidean distance of the form
+This corresponds to the loss function described in Section~\ref{sec:orthogonal}. We also consider loss functions based on a squared generalised Euclidean distance of the form
 \begin{equation*}
 	\textrm{WSE}^{q}_t=\sum\limits_{i=1}^n \left(w_i (y_{i,t}-\tilde{y}^{(q)}_{i,t})\right)^2\,,
 	\end{equation*}
-	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.  We consider two choices of weights.  The first is the inverse of the number of bottom level series that are aggregated to form a series.  For example, for all bottom level series this weight is 1, whereas for the top level series this is 1/75.  The idea is to not ensure top level series - which due to aggregation are on a much larger scale -  do not dominate the forecast evaluation metric.  Using this weights in WLS reconciliation is equivalent to what \cite{AthEtAl2017} refer to as \textit{structural scaling}.  As such we refer to WLS based on these weights as `Structural-WLS' and the loss function based on these weights as `Structural-WSE'.  
+	We consider two choices of weights.  The first is the inverse of the number of bottom level series included in forming a specific aggregate.  For example, for all bottom level series this weight is 1, whereas for the top level series this is 1/75.  The idea is to ensure top level series - which are on a much larger scale -  do not dominate the forecast evaluation metric.  Using these weights in WLS reconciliation is equivalent to what \cite{AthEtAl2017} refer to as \textit{structural scaling}.  As such we refer to WLS based on these weights as `Structural-WLS' and the loss function based on these weights as `Structural-WSE'.  
 	
 	The second choice of weights is motivated by our empirical example.  In addition to visitor numbers per region, we also have access to data on average spend per region.  In some settings, it may be desirable to have greater forecast accuracy in regions where tourists spend more.  By using average spend per region as weights, the error metric (and transformed space associated with this metric) can be interpreted in terms of revenue measured in dollars rather than raw tourist numbers. We refer to WLS based on these weights as `Spend-WLS' and the loss function based on these weights as `Spend-WSE'.
 }
 
-After obtaining the base forecasts these are reconciled using four different projection methods: OLS,{\color{blue} Structural-WLS, Spend-WLS  and MinT.   For MinT, the shrinkage estimator of \cite{Schafer2005} is used to estimate to covariance matrix of one step ahead forecast errors.  That is $\bm{\Sigma} = \tau\text{diag}(\hat{\bm{\Sigma}}) + (1-\tau)\hat{\bm{\Sigma}}$  where $\hat{\bm{\Sigma}}$ is the sample estimate of the variance covariance matrix of the in-sample, one-step ahead forecast errors and,
+After obtaining the base forecasts these are reconciled using four different projection methods: OLS, {\color{blue} Structural-WLS, Spend-WLS  and MinT.   For MinT, the shrinkage estimator of \cite{Schafer2005} is used to estimate  $\bm{\Sigma}$. The estimate is $\tau\text{diag}(\hat{\bm{\Sigma}}) + (1-\tau)\hat{\bm{\Sigma}}$  where $\hat{\bm{\Sigma}}$ is the sample estimate of the variance covariance matrix of the in-sample, one-step ahead forecast errors and,
 	\begin{equation*}
 	\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{\sigma}_{ij})}{\sum_{i \neq j}{\hat{\sigma}}^2_{ij}}\,,
 	\end{equation*}
-	where $\sigma_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}^{\text{sam}}$.  For each loss function} we compute the difference between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate. 
+	where $\hat{\sigma}_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}$.  For each loss function} we compute the difference between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate. 
 
-The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this measure over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{blue} in an online supplement.}
+The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this difference over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{blue} in an online supplement.}
 
 As the theory predicts, OLS reconciliation always leads to an improvement relative to base forecasts. The entire boxplot for OLS reconciliation is above zero. This is not the case for MinT and WLS which for some windows generate forecasts less accurate than the base forecasts. The boxplots also demonstrate that OLS reconciliation is more stable than MinT and WLS reconciliation, a result not entirely unsurprising since the latter two methods require estimation of a $\bm{W}$ matrix which in practice is not trivial. Nonetheless when averaging over the entire rolling window the MinT estimator performs best on average, which is again precisely what the theorem proved in \citet{WicEtAl2019} would suggest. The average MSE values across the entire rolling window of 140 replications are shown in Table \ref{tab:AveraveDifferences}.
 
