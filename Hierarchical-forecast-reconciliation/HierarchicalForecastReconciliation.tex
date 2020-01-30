@@ -541,9 +541,9 @@ After obtaining the base forecasts these are reconciled using four different pro
 	\end{equation*}
 	where $\hat{\sigma}_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}$. } 
 
-{\color{blue} For each replication we compute the ratio of the value of the loss function corresponding to each alternative reconciliation method relative to the loss function corresponding to base forecsats. A value less than 1 indicates that a reconciliation method has a lower relative error than the base forecast for that replication, while a value greater than 1 indicates the opposite. The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of these ratios over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{red} in an online supplement.}
+{\color{blue} For each replication we compute the ratio of the loss of each alternative reconciliation method to the loss of base forecasts. A value less than 1 indicates that a reconciliation method has a lower relative error than the base forecast for that replication, while a value greater than 1 indicates the opposite. The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of these ratios over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{red} in an online supplement.}
 
-For TSE, relative loss is always less than 1 only for OLS reconciliation, for Structural-WSE the same is only true for Structural-WLS and for Spend-WSE the same is only true for Spend-WLS.  Therefore, Figure~\ref{fig:BaseVSRecon_Fc} demonstrates that a reconciliation method is guaranteed to improve upon base forecasts only when the $\bm{W}$ used in the loss function and reconciliation coincide.  This is precisely what Theorem~\ref{th:distred} and Theorem~\ref{th:gdistred} would predict.  On the other hand, for every loss function, MinT will perform worse than base for some realisations.  For Theorem~\ref{th:gdistred} to hold for MinT, the loss function would need to set $\bm{W}=\bm{\Sigma}^{-1}$ and since the estimate of $\Sigma$ will change with each realisation we do not believe this is a sensible loss function to use.
+For TSE, relative loss is always less than 1 only for OLS reconciliation, for Structural-WSE the same is only true for Structural-WLS and for Spend-WSE the same is only true for Spend-WLS.  Therefore, Figure~\ref{fig:BaseVSRecon_Fc} demonstrates that a reconciliation method is guaranteed to improve upon base forecasts only when the $\bm{W}$ used in the loss function and reconciliation coincide.  This is precisely what Theorem~\ref{th:distred} and Theorem~\ref{th:gdistred} would predict.  On the other hand, for every loss function, MinT will perform worse than base for some realisations.  For Theorem~\ref{th:gdistred} to hold for MinT, the loss function would need to set $\bm{W}=\bm{\Sigma}^{-1}$. Since the estimate of ${\bm\Sigma}$ will change with each replication we do not believe this is a sensible loss function to use.
 
 
 }
@@ -570,7 +570,7 @@ For TSE, relative loss is always less than 1 only for OLS reconciliation, for St
 
 {\color{blue}
 
-The advantage of MinT however is clearly seen when loss functions are averaged.  Table~\ref{tab:lossVmethods} reports the relative total error for each loss function. For example, for TSE the relative total squared error (RMTSE) is defined as
+The advantage of MinT however is clearly seen when loss functions are averaged (an estimate of expected loss).  Table~\ref{tab:lossVmethods} reports the relative total error for each loss function. For example, for TSE the relative total squared error (RMTSE) is defined as
 \begin{equation}
 \textrm{RMTSE}^{q}=\frac{\frac{1}{140}\sum\limits_{t=1}^{140}\textrm{TSE}^{q}_t}{\frac{1}{140}\sum\limits_{t=1}^{140}\textrm{TSE}^{\textrm{Base}}_t}\,\label{eq:RTSE}
 \end{equation} 
