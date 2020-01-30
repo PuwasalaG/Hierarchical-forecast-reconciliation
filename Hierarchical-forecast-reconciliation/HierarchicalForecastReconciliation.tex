@@ -526,7 +526,7 @@ To demonstrate the implications of Theorem~\ref{th:distred} we consider the impr
 	\textrm{TSE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
 	\end{equation}
 	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.
-This corresponds to the loss function described in Section~\ref{sec:orthogonal}. We also consider loss functions based on a squared generalised Euclidean distance of the form
+This loss function is the square of the usual Euclidean distance described in Section~\ref{sec:orthogonal}. We also consider loss functions based on a squared generalised Euclidean distance of the form
 \begin{equation*}
 	\textrm{WSE}^{q}_t=\sum\limits_{i=1}^n \left(w_i (y_{i,t}-\tilde{y}^{(q)}_{i,t})\right)^2\,,
 	\end{equation*}
@@ -541,15 +541,20 @@ After obtaining the base forecasts these are reconciled using four different pro
 	\end{equation*}
 	where $\hat{\sigma}_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}$. } 
 
-{\color{blue} For each loss function we compute the relative ratio of each alternative reconciliation method to base. A value ($<1$) shows a lower relative error compared to base, while a value $(>1)$ shows a relative error greater than base. The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of these ratios over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{red} in an online supplement.}}
+{\color{blue} For each replication we compute the ratio of the value of the loss function corresponding to each alternative reconciliation method relative to the loss function corresponding to base forecsats. A value less than 1 indicates that a reconciliation method has a lower relative error than the base forecast for that replication, while a value greater than 1 indicates the opposite. The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of these ratios over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{red} in an online supplement.}
 
-As the theory predicts, OLS reconciliation always leads to an improvement relative to base forecasts. The entire boxplot for OLS reconciliation is above zero. This is not the case for MinT and WLS which for some windows generate forecasts less accurate than the base forecasts. The boxplots also demonstrate that OLS reconciliation is more stable than MinT and WLS reconciliation, a result not entirely unsurprising since the latter two methods require estimation of a $\bm{W}$ matrix which in practice is not trivial. Nonetheless when averaging over the entire rolling window the MinT estimator performs best on average, which is again precisely what the theorem proved in \citet{WicEtAl2019} would suggest. The average MSE values across the entire rolling window of 140 replications are shown in Table \ref{tab:AveraveDifferences}.
+For TSE, relative loss is always less than 1 only for OLS reconciliation, for Structural-WSE the same is only true for Structural-WLS and for Spend-WSE the same is only true for Spend-WLS.  Therefore, Figure~\ref{fig:BaseVSRecon_Fc} demonstrates that a reconciliation method is guaranteed to improve upon base forecasts only when the $\bm{W}$ used in the loss function and reconciliation coincide.  This is precisely what Theorem~\ref{th:distred} and Theorem~\ref{th:gdistred} would predict.  On the other hand, for every loss function, MinT will perform worse than base for some realisations.  For Theorem~\ref{th:gdistred} to hold for MinT, the loss function would need to set $\bm{W}=\bm{\Sigma}^{-1}$ and since the estimate of $\Sigma$ will change with each realisation we do not believe this is a sensible loss function to use.
+
+
+}
+
+%As the theory predicts, OLS reconciliation always leads to an improvement relative to base forecasts. The entire boxplot for OLS reconciliation is above zero. This is not the case for MinT and WLS which for some windows generate forecasts less accurate than the base forecasts. The boxplots also demonstrate that OLS reconciliation is more stable than MinT and WLS reconciliation, a result not entirely unsurprising since the latter two methods require estimation of a $\bm{W}$ matrix which in practice is not trivial. Nonetheless when averaging over the entire rolling window the MinT estimator performs best on average, which is again precisely what the theorem proved in \citet{WicEtAl2019} would suggest. The average MSE values across the entire rolling window of 140 replications are shown in Table \ref{tab:AveraveDifferences}.
 
 \begin{figure}[!hbt]
     \centering
     \small
     \includegraphics[width = \textwidth, height=14cm]{Figs/lossboxplots_1.pdf}
-    \caption{Differences between base forecasts and reconciled forecasts for different loss functions using different reconciliation methods for $h = 1$. A positive value indicates that the coherent forecasts are an improvement over the base forecasts.}\label{fig:BaseVSRecon_Fc}
+    \caption{Differences between base forecasts and reconciled forecasts for different loss functions using different reconciliation methods for $h = 1$. A value less than 1 indicates that the coherent forecasts improvement upon base forecasts. }\label{fig:BaseVSRecon_Fc}
 \end{figure}
 
 %\begin{table}[!hbt]
@@ -564,11 +569,12 @@ As the theory predicts, OLS reconciliation always leads to an improvement relati
 %\end{table}
 
 {\color{blue}
-Table~\ref{tab:lossVmethods} reports the relative total error for each loss function. For example, for TSE the relative total squared error (RTSE) is defined as
+
+The advantage of MinT however is clearly seen when loss functions are averaged.  Table~\ref{tab:lossVmethods} reports the relative total error for each loss function. For example, for TSE the relative total squared error (RMTSE) is defined as
 \begin{equation}
-\textrm{RTSE}^{q}=\frac{\sum\limits_{t=1}^{140}\textrm{TSE}^{q}_t}{\sum\limits_{t=1}^{140}\textrm{TSE}^{\textrm{Base}}_t}\,\label{eq:RTSE}
+\textrm{RMTSE}^{q}=\frac{\frac{1}{140}\sum\limits_{t=1}^{140}\textrm{TSE}^{q}_t}{\frac{1}{140}\sum\limits_{t=1}^{140}\textrm{TSE}^{\textrm{Base}}_t}\,\label{eq:RTSE}
 \end{equation} 
-where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base forecasts at replication $t$. 
+where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base forecasts at replication $t$.  In contrast with what is displayed in the boxplots, here the average is taken over the replications before taking a ratio.  Table~\ref{tab:lossVmethods} shows that the average loss for MinT is lower than for all other reconciliation methods, irrespective of the loss function used.  This is precisely what would be expected from Theorem~\ref{th:gmint}.
 }
 
 \input{Tables/lossvmethods_h_1.tex}
