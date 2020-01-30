@@ -95,18 +95,18 @@ OvernightTrips_OriginalScale_MSE %>%
   filter(Fc_horizon==hor)%>%
   select(-Fc_horizon)%>%
   pivot_wider(id_cols = Replication,names_from = `R.method`,values_from = c('TSE',`Structural-WSE`,`Spend-WSE`))%>%
-    mutate("TSE_OLS" = TSE_Base - TSE_OLS,
-         "TSE_MinT" = TSE_Base - `TSE_MinT(Shrink)`,
-         "TSE_Structural-WLS" = TSE_Base - TSE_WLS1,
-         "TSE_Spend-WLS" = TSE_Base - TSE_WLS2,
-         "Structural-WSE_OLS" = `Structural-WSE_Base` - `Structural-WSE_OLS`,
-         "Structural-WSE_MinT" = `Structural-WSE_Base` - `Structural-WSE_MinT(Shrink)`,
-         "Structural-WSE_Structural-WLS" = `Structural-WSE_Base` - `Structural-WSE_WLS1`,
-         "Structural-WSE_Spend-WLS" = `Structural-WSE_Base` - `Structural-WSE_WLS2`,
-         "Spend-WSE_OLS" = `Spend-WSE_Base` - `Spend-WSE_OLS`,
-         "Spend-WSE_MinT" = `Spend-WSE_Base` - `Spend-WSE_MinT(Shrink)`,
-         "Spend-WSE_Structural-WLS" = `Spend-WSE_Base` - `Spend-WSE_WLS1`,
-         "Spend-WSE_Spend-WLS" = `Spend-WSE_Base` - `Spend-WSE_WLS2`) %>%
+    mutate("TSE_OLS" = 1/(TSE_Base / TSE_OLS),
+         "TSE_MinT" = 1/(TSE_Base/  `TSE_MinT(Shrink)`),
+         "TSE_Structural-WLS" = 1/(TSE_Base / TSE_WLS1),
+         "TSE_Spend-WLS" = 1/(TSE_Base / TSE_WLS2),
+         "Structural-WSE_OLS" = 1/(`Structural-WSE_Base` / `Structural-WSE_OLS`),
+         "Structural-WSE_MinT" = 1/(`Structural-WSE_Base` / `Structural-WSE_MinT(Shrink)`),
+         "Structural-WSE_Structural-WLS" = 1/(`Structural-WSE_Base` / `Structural-WSE_WLS1`),
+         "Structural-WSE_Spend-WLS" = 1/(`Structural-WSE_Base` / `Structural-WSE_WLS2`),
+         "Spend-WSE_OLS" = 1/(`Spend-WSE_Base` / `Spend-WSE_OLS`),
+         "Spend-WSE_MinT" = 1/(`Spend-WSE_Base` / `Spend-WSE_MinT(Shrink)`),
+         "Spend-WSE_Structural-WLS" = 1/(`Spend-WSE_Base` / `Spend-WSE_WLS1`),
+         "Spend-WSE_Spend-WLS" = 1/(`Spend-WSE_Base` / `Spend-WSE_WLS2`)) %>%
   select(Replication,`TSE_OLS`,`TSE_MinT`,`TSE_Structural-WLS`,`TSE_Spend-WLS`,
          `Structural-WSE_OLS`,`Structural-WSE_MinT`,`Structural-WSE_Structural-WLS`,`Structural-WSE_Spend-WLS`,
          `Spend-WSE_OLS`,`Spend-WSE_MinT`,`Spend-WSE_Structural-WLS`,`Spend-WSE_Spend-WLS`)%>%
