@@ -554,7 +554,7 @@ For TSE, relative loss is always less than 1 only for OLS reconciliation, for St
     \centering
     \small
     \includegraphics[width = \textwidth, height=14cm]{Figs/lossboxplots_1.pdf}
-    \caption{Differences between base forecasts and reconciled forecasts for different loss functions using different reconciliation methods for $h = 1$. A value less than 1 indicates that the coherent forecasts improvement upon base forecasts. }\label{fig:BaseVSRecon_Fc}
+    \caption{Differences between base forecasts and reconciled forecasts for different loss functions using different reconciliation methods for $h = 1$. A value less than 1 indicates that the coherent forecasts improvement upon base forecasts.  Although it is not clearly apparent in the plot, for OLS there are some values in the Spend-WSE that are slightly greater than 1.}\label{fig:BaseVSRecon_Fc}
 \end{figure}
 
 %\begin{table}[!hbt]
@@ -577,7 +577,21 @@ The advantage of MinT however is clearly seen when loss functions are averaged. 
 where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base forecasts at replication $t$.  In contrast with what is displayed in the boxplots, here the average is taken over the replications before taking a ratio.  Table~\ref{tab:lossVmethods} shows that the average loss for MinT is lower than for all other reconciliation methods, irrespective of the loss function used.  This is precisely what would be expected from Theorem~\ref{th:gmint}.
 }
 
-\input{Tables/lossvmethods_h_1.tex}
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{lrrrrrr}
+		\hline
+		Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\ 
+		\hline
+		TSE & 1.00 & 1.22 & 0.97 & 1.13 & 0.98 & 0.96 \\ 
+		Structural WSE & 1.00 & 1.01 & 0.96 & 0.98 & 1.00 & 0.93 \\ 
+		Spend WSE & 1.00 & 1.20 & 0.97 & 1.12 & 0.98 & 0.96 \\ 
+		\hline
+	\end{tabular}
+
+	\caption{Means of different loss functions for 1-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.}
+	\label{tab:lossVmethods} 
+\end{table}
 
 \subsection{Transformations and bias adjustment}
 
