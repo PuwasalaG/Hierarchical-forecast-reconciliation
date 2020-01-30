@@ -290,9 +290,9 @@ In other ways, Theorem~\ref{th:distred} is weaker than perhaps often understood.
 
 \subsection{Oblique Projections}\label{sec:oblique}
 
-One justification for using an orthogonal projection is that it leads to improved forecast accuracy in terms of {\color{blue} a loss function based on Euclidean distance that involves \emph{all} variables in the hierarchy.} A clear shortcoming of this measure of forecast accuracy is that forecast errors in all series should not necessarily be treated equally. For example, in hierarchies, top-level series tend to have a much larger scale than bottom-level series.  {\color{blue} Alternatively, the context of the forecast problem itself may suggest a loss function that weights series differently.  For example in our tourism application in Section~\ref{sec:EmpStudy} we will consider weighting forecast errors by average tourism expenditure in each region.}\footnote{Similar consideration are taken into account for the loss function used in the M5 forecasting competition, see M5 REF HERE for more details.}  An even more sophisticated understanding may take {\color{blue}linear combinations} of series into account. All of these considerations lead towards {\color{blue} a loss function $L_{\bm W}(\bm{y}_{t+h},\tilde{\bm{y}}_{t+h|t})=||{\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t}}||_{\bm{W}}$ where $||\bm{v}||_{\bm{W}}=\bm{v}'\bm{W}\bm{v}$, and $\bm{W}$ is a symmetric matrix assumed to be invertible.  The geometry defined by the norm $||.||_{\bm{W}}$, will be referred to as the generalised Euclidean geometry with respect to $\bm{W}$. }
+One justification for using an orthogonal projection is that it leads to improved forecast accuracy in terms of {\color{blue} a loss function based on Euclidean distance that involves \emph{all} variables in the hierarchy.} A clear shortcoming of this measure of forecast accuracy is that forecast errors in all series should not necessarily be treated equally. For example, in hierarchies, top-level series tend to have a much larger scale than bottom-level series.  {\color{blue} Alternatively, the context of the forecast problem itself may suggest a loss function that weights series differently.  For example in our tourism application in Section~\ref{sec:EmpStudy} we will consider weighting forecast errors by average tourism expenditure in each region.}\footnote{Similar consideration are taken into account for the loss function used in the M5 forecasting competition, see M5 REF HERE for more details. Add Athanasopoulos and Kourentzes (2020) discussion paper}  An even more sophisticated understanding may take {\color{blue}linear combinations} of series into account. All of these considerations lead towards {\color{blue} a loss function $L_{\bm W}(\bm{y}_{t+h},\tilde{\bm{y}}_{t+h|t})=||{\bm{y}_{t+h}-\tilde{\bm{y}}_{t+h|t}}||_{\bm{W}}$ where $||\bm{v}||_{\bm{W}}=\bm{v}'\bm{W}\bm{v}$, and $\bm{W}$ is a symmetric matrix assumed to be invertible.  The geometry defined by the norm $||.||_{\bm{W}}$, will be referred to as the generalised Euclidean geometry with respect to $\bm{W}$. }
 
-One way to understand the generalied Euclidean geometry is that it is the same as Euclidean geometry when all vectors are first transformed by pre-multiplying by $\bm{W}^{1/2}$, {\color{blue} where $\bm{W}=(\bm{W}^{1/2})'\bm{W}^{1/2}$}. This leads to a transformed $\bm{S}$ matrix $\bm{S}^*=\bm{W}^{1/2}\bm{S}$ and transformed $\hat{\bm{y}}$ and $\tilde{\bm{y}}$ vectors $\hat{\bm{y}}^*=\bm{W}^{1/2}\hat{\bm{y}}$ and $\tilde{\bm{y}}^*=\bm{W}^{1/2}\tilde{\bm{y}}$. {\color{blue} A projection of the form $\tilde{\bm{y}}=\bm{S}(\bm{S}'\bm{W}\bm{S})^{-1}\bm{S}'\bm{W}\hat{\bm{y}}$, is an} orthogonal projection in the transformed space since
+One way to understand the generalised Euclidean geometry is that it is the same as Euclidean geometry when all vectors are first transformed by pre-multiplying by $\bm{W}^{1/2}$, {\color{blue} where $\bm{W}=(\bm{W}^{1/2})'\bm{W}^{1/2}$}. This leads to a transformed $\bm{S}$ matrix $\bm{S}^*=\bm{W}^{1/2}\bm{S}$ and transformed $\hat{\bm{y}}$ and $\tilde{\bm{y}}$ vectors $\hat{\bm{y}}^*=\bm{W}^{1/2}\hat{\bm{y}}$ and $\tilde{\bm{y}}^*=\bm{W}^{1/2}\tilde{\bm{y}}$. {\color{blue} A projection of the form $\tilde{\bm{y}}=\bm{S}(\bm{S}'\bm{W}\bm{S})^{-1}\bm{S}'\bm{W}\hat{\bm{y}}$, is an} orthogonal projection in the transformed space since
 \begin{align*}
   \tilde{\bm{y}}^*
     & = \bm{W}^{1/2}\tilde{\bm{y}} \\
@@ -361,7 +361,7 @@ Figure~\ref{fig:OthogonalVSOblique_projection} provides geometrical intuition in
 
 \subsection{Expected loss minimisation and MinT}
 
-We now make explicit the connection betwenn the MinT and a loss function based on the squared Euclidean distance $L(\bm{y},\tilde{\bm{y}})=\|\bm{y}-\tilde{\bm{y}}\|^2$ before generalising to $L_{\bm W}(\bm{y},\tilde{\bm{y}})=\|\bm{y}-\tilde{\bm{y}}\|^2_{\bm W}$.  By the properties of the trace operator, the objective function in Equation~\ref{eq:MinTObj} can be rearranged as
+We now make explicit the connection between the MinT and a loss function based on the squared Euclidean distance $L(\bm{y},\tilde{\bm{y}})=\|\bm{y}-\tilde{\bm{y}}\|^2$ before generalising to $L_{\bm W}(\bm{y},\tilde{\bm{y}})=\|\bm{y}-\tilde{\bm{y}}\|^2_{\bm W}$.  By the properties of the trace operator, the objective function in Eq.~\eqref{eq:MinTObj} can be rearranged as
 
 \begin{align*}
 \label{eq:MinTObj}
@@ -385,10 +385,10 @@ Suppose the optimisation problem is generalised to a loss function based on some
 The following theorem proves that the solution to this optimisation problem does not depend of the choice of $\bm{W}$ used in the loss function.
 
 \begin{theo}[Expected loss minimisation and MinT]\label{th:gmint}
-    The usual MinT reconciliation method $\tilde{\bm{y}}=\bm{S}\left(\bm{S}'\bm{\Sigma}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{\Sigma}^{-1}\hat{\bm{y}}$ solves the optimisation problem in Equation~\ref{eq:GMinTObj} for any choice of $\bm{W}$.
+    The usual MinT reconciliation method $\tilde{\bm{y}}=\bm{S}\left(\bm{S}'\bm{\Sigma}^{-1}\bm{S}\right)^{-1}\bm{S}'\bm{\Sigma}^{-1}\hat{\bm{y}}$ solves the optimisation problem in Eq.~\eqref{eq:GMinTObj} for any choice of $\bm{W}$.
 \end{theo}
 \begin{proof}
-	The loss function in Equation~\ref{eq:GMinTObj} is equivalent to Euclidean distance in the transformed space and can therefore be minimised by using the MinT method in this space.  The MinT method in the transformed space is given by
+	The loss function in Eq.~\eqref{eq:GMinTObj} is equivalent to Euclidean distance in the transformed space and can therefore be minimised by using the MinT method in this space. The MinT method in the transformed space is given by
 	\begin{equation}
 	\label{eq:MinTtran}
 	\tilde{\bm{y}}^{*}=\bm{S}^{*}\left(\bm{S}^{*'}\bm{\Sigma}^{*-1}\bm{S}^{*}\right)^{-1}\bm{S}^{*'}\bm{\Sigma}^{*-1}\hat{\bm{y}}^{*}\,,
@@ -405,7 +405,7 @@ The following theorem proves that the solution to this optimisation problem does
 	(\bm{\Sigma}^{*})^{-1}&=\left(\bm{W}^{1/2}\bm{\Sigma}(\bm{W}^{1/2})'\right)^{-1}\\
 	&=(\bm{W}^{1/2'})^{-1}\bm{\Sigma}^{-1}\bm{W}^{-1/2}\\
 	\end{align*}
-	and substituting the expressions for $\bm{\Sigma}^*$, ${\bm{S}^*}$, $\bm{y}^{*}$ and $\hat{\bm{y}}^{*}$ into Equation~\ref{eq:MinTtran} yields,
+	and substituting the expressions for $\bm{\Sigma}^*$, ${\bm{S}^*}$, $\bm{y}^{*}$ and $\hat{\bm{y}}^{*}$ into Eq.~\ref{eq:MinTtran} yields,
 	\begin{align*}
 	\bm{W}^{1/2}\tilde{\bm{y}}=\bm{W}^{1/2}\bm{S}&\left((\bm{W}^{1/2}\bm{S})'(\bm{W}^{1/2'})^{-1}\bm{\Sigma}^{-1}\bm{W}^{-1/2}(\bm{W}^{1/2}\bm{S})\right)^{-1}\\
 	&(\bm{W}^{1/2}\bm{S})'(\bm{W}^{1/2'})^{-1}\bm{\Sigma}^{-1}\bm{W}^{-1/2}\bm{W}^{1/2}\hat{\bm{y}}
@@ -539,16 +539,16 @@ After obtaining the base forecasts these are reconciled using four different pro
 	\begin{equation*}
 	\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{\sigma}_{ij})}{\sum_{i \neq j}{\hat{\sigma}}^2_{ij}}\,,
 	\end{equation*}
-	where $\hat{\sigma}_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}$.  For each loss function} we compute the difference between base forecasts and reconciled forecasts, where positive values indicate that reconciled forecasts are more accurate.
+	where $\hat{\sigma}_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}$. } 
 
-The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of this difference over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{blue} in an online supplement.}
+{\color{blue} For each loss function we compute the relative ratio of each alternative reconciliation method to base. A value ($<1$) shows a lower relative error compared to base, while a value $(>1)$ shows a relative error greater than base. The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of these ratios over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{red} in an online supplement.}}
 
 As the theory predicts, OLS reconciliation always leads to an improvement relative to base forecasts. The entire boxplot for OLS reconciliation is above zero. This is not the case for MinT and WLS which for some windows generate forecasts less accurate than the base forecasts. The boxplots also demonstrate that OLS reconciliation is more stable than MinT and WLS reconciliation, a result not entirely unsurprising since the latter two methods require estimation of a $\bm{W}$ matrix which in practice is not trivial. Nonetheless when averaging over the entire rolling window the MinT estimator performs best on average, which is again precisely what the theorem proved in \citet{WicEtAl2019} would suggest. The average MSE values across the entire rolling window of 140 replications are shown in Table \ref{tab:AveraveDifferences}.
 
 \begin{figure}[!hbt]
     \centering
     \small
-    \includegraphics[width = \textwidth]{Figs/lossboxplots_1.pdf}
+    \includegraphics[width = \textwidth, height=14cm]{Figs/lossboxplots_1.pdf}
     \caption{Differences between base forecasts and reconciled forecasts for different loss functions using different reconciliation methods for $h = 1$. A positive value indicates that the coherent forecasts are an improvement over the base forecasts.}\label{fig:BaseVSRecon_Fc}
 \end{figure}
 
@@ -562,6 +562,15 @@ As the theory predicts, OLS reconciliation always leads to an improvement relati
 %  \bottomrule
 %  \end{tabular}
 %\end{table}
+
+{\color{blue}
+Table~\ref{tab:lossVmethods} reports the relative total error for each loss function. For example, for TSE the relative total squared error (RTSE) is defined as
+\begin{equation}
+\textrm{RTSE}^{q}=\frac{\sum\limits_{t=1}^{140}\textrm{TSE}^{q}_t}{\sum\limits_{t=1}^{140}\textrm{TSE}^{\textrm{Base}}_t}\,\label{eq:RTSE}
+\end{equation} 
+where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base forecasts at replication $t$. 
+}
+
 \input{Tables/lossvmethods_h_1.tex}
 
 \subsection{Transformations and bias adjustment}
@@ -599,15 +608,16 @@ Using a Taylor series expansion \citep{guerrero1993time}, the back-transformed m
 \end{equation}
 where $\hat{w}_{t+h|t}$ is the $h$-step-ahead forecast from the Box-Cox transformed series and $\sigma_h^2$ is the variance of $\hat{w}_{t+h|t}$. Using the mean of the forecast distribution returns bias-adjusted base forecasts compared to the simple back-transformation of Eq.~\eqref{eq:BoxCox_back-transformation}. We refer to this as ``Method-1'' in the results that follow. The second scenario of bias adjustment we explore is using the in-sample forecast error mean of the biased forecasts to adjust the out-of-sample forecasts. We refer to this as ``Method-2'' in the results that follow.
 
-Using the three sets of base forecasts from each of the two transformations, we generate coherent forecasts implementing OLS, MinT and WLS reconciliation projections, and also the bottom-up approach and compare the results for when the base forecasts are biased and bias-adjusted, i.e., unbiased. {\color{blue} In addition to the total squared error defined in Equation~\ref{eq:tse}, the total error (TE) is used to measure bias and is computed as
+Using the three sets of base forecasts from each of the two transformations, we generate coherent forecasts implementing OLS, MinT and WLS reconciliation projections, and also the bottom-up approach and compare the results for when the base forecasts are biased and bias-adjusted, i.e., unbiased. {\color{blue} In addition to the relative total squared error (RTSE) defined in Eq.~\eqref{eq:RTSE}, the relative absolute total error (RATE) is used to measure bias. Total error (TE) is first calculated for each series $i$, 
 \begin{equation*}
-\textrm{TE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})\,.
+\textrm{TE}^{q}_i=\sum\limits_{t=1}^{140}(y_{i,t}-\tilde{y}^{(q)}_{i,t})\,
 \end{equation*}
-Table~\ref{tab:Results_MSE} reports the relative mean total error (RMTE) and relative mean total error (RMTSE) defined as
+and RATE is defined as,
 \begin{equation*}
-\textrm{RMTE}^{q}=\frac{\sum\limits_{t=1}^{140}\textrm{TE}^{q}_t}{\sum\limits_{t=1}^{140}\textrm{TE}^{\textrm{Base}}_t}\quad \textrm {and}\quad \textrm{RMTSE}^{q}=\frac{\sum\limits_{t=1}^{140}\textrm{TSE}^{q}_t}{\sum\limits_{t=1}^{140}\textrm{TSE}^{\textrm{Base}}_t}\,,
-\end{equation*}
-where $\textrm{TE}^{\textrm{Base}}_t$ and $\textrm{TSE}^{\textrm{Base}}_t$ are the total error and total squared error of the biased base forecasts at replication $t$.  Stars indicate that the results are significantly different from the biased base forecasts using a DETAILS OF TEST HERE.  Results are shown for $1$-step-ahead forecasts and} as was the case with Section~\ref{sec:comparebase}, the conclusions that follow extend almost identically to longer forecast horizons. {\color{blue} These are provided in an online supplement}.
+\textrm{RATE}^{q}=\frac{\sum\limits_{i=1}^{110}|\textrm{TE}^{q}_i|}{\sum\limits_{i=1}^{110}|\textrm{TE}^{\textrm{Base}}_i|} \end{equation*}
+
+Table~\ref{tab:Results_MSE} reports both RTSE and RATE. A star indicates that forecasts are significantly different from the biased base forecasts, while a dagger indicates that the unbiased forecasts are significantly different from the biased base forecasts from the same reconciliation method. Statistical significance of the differences in the forecast errors is based on the non-parametric Friedman and post-hoc Nemenyi tests, at a 5\% level of significance \citep{HolEtAl2013}. The Friedman test first establishes whether at least one of the forecasts is significantly different from the rest. If this is the case, we use the Nemenyi test to identify groups of forecasts for which there is no evidence of statistically significant differences. This testing approach does not impose any distributional assumptions and does not require multiple pairwise testing between forecasts, which would distort the outcome of the tests.We use the implementation of the tests available in the tsutils \citep{tsutils} package for R.}
+
 
 %\begin{table}[!b]
 %\caption {Average {MSE($\times 10^3$)} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.}
@@ -633,7 +643,7 @@ where $\textrm{TE}^{\textrm{Base}}_t$ and $\textrm{TSE}^{\textrm{Base}}_t$ are t
 
 \begin{table}[!b]
 {\color{blue}
-\caption {Average {\color{blue} RMTE and RMTSE} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.  {\color{blue}Stars indicate significant difference from biased base forecast according to a TEST DETAILS HERE.}}
+\caption {{\color{blue} RATE and RTSE} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.  {\color{blue} A star indicates a statistically significant difference from the biased base forecasts, while a dagger indicates a statistically significant difference from the biased base forecasts from the same reconciliation approach.}}
 \label{tab:Results_MSE}
 \setlength{\tabcolsep}{7pt}
 \centering
@@ -648,13 +658,11 @@ where $\textrm{TE}^{\textrm{Base}}_t$ and $\textrm{TSE}^{\textrm{Base}}_t$ are t
     Base      & 1.00        & 0.58^{\ast\dag} & 1.40^{\ast\dag} & 1.00        & 0.73^{\ast\dag} & 1.38^{\ast\dag}\\
     OLS       & 0.63^{\ast} & 0.54^{\ast}     & 0.76^{\dag}     & 0.65^{\ast} & 0.67^{\ast}     & 0.86 \\
     MinT      & 0.77^{\ast} & 0.57^{\ast\dag} & 1.15^{\dag}     & 0.77^{\ast} & 0.70^{\ast}     & 1.09^{\dag}\\
-    WLS       & 1.22        & 0.63^{\ast\dag} & 1.75^{\ast}     & 1.22        & 0.79^{\ast\dag} & 1.68^{\ast\dag}\\
     Bottom-up & 1.76^{\ast} & 0.69^{\ast\dag} & 2.72^{\ast\dag} & 1.73        & 0.84^{\ast\dag} & 2.57^{\ast\dag}\\
               & \multicolumn{6}{c}{MSE}\\\cmidrule(lr){2-7}
     Base      & 1.00 & 0.99 & 1.01 & 1.00 & 0.98 & 1.04\\
     OLS       & 0.97^{\ast} & 0.96^{\ast} & 0.98^{\ast} & 0.97^{\ast} & 0.96^{\ast} & 1.01\\
     MinT      & 0.97^{\ast} & 0.93^{\ast} & 1.03 & 0.93^{\ast} & 0.91^{\ast} & 0.99\\
-    WLS       & 1.08 & 0.98 & 1.21 & 1.04 & 0.96 & 1.14\\
     Bottom-up & 1.42 & 1.18 & 1.80 & 1.35 & 1.16 & 1.63\\
     \bottomrule
   \end{tabular}
