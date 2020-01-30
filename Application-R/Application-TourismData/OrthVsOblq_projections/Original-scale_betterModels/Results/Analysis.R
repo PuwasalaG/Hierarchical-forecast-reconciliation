@@ -112,7 +112,7 @@ OvernightTrips_OriginalScale_MSE %>%
          `Spend-WSE_OLS`,`Spend-WSE_MinT`,`Spend-WSE_Structural-WLS`,`Spend-WSE_Spend-WLS`)%>%
   pivot_longer(-Replication,names_to=c('Loss Function','Method'),names_sep='_',values_to = 'Loss')%>%
   mutate('Loss Function'=factor(`Loss Function`,levels=c('TSE','Structural-WSE','Spend-WSE')))%>%
-  mutate('Method'=factor(Method,levels=c('OLS','Structural-WLS','Spend-WLS','MinT')))#%>%
+  mutate('Method'=factor(Method,levels=c('OLS','Structural-WLS','Spend-WLS','MinT')))%>%
   ggplot(aes(x=Method,y=Loss))+geom_boxplot()+scale_y_log10()+facet_wrap(~`Loss Function`,ncol = 1,scales = 'free_y')
   ggsave(file=paste0('lossboxplots_',j,'.pdf'))
 
