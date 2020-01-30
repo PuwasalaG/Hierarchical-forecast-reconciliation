@@ -539,7 +539,7 @@ After obtaining the base forecasts these are reconciled using four different pro
 	\begin{equation*}
 	\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{\sigma}_{ij})}{\sum_{i \neq j}{\hat{\sigma}}^2_{ij}}\,,
 	\end{equation*}
-	where $\hat{\sigma}_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}$. } 
+	where $\hat{\sigma}_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}$. }
 
 {\color{blue} For each replication we compute the ratio of the loss of each alternative reconciliation method to the loss of base forecasts. A value less than 1 indicates that a reconciliation method has a lower relative error than the base forecast for that replication, while a value greater than 1 indicates the opposite. The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of these ratios over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{red} in an online supplement.}
 
@@ -570,11 +570,11 @@ For TSE, relative loss is always less than 1 only for OLS reconciliation, for St
 
 {\color{blue}
 
-The advantage of MinT however is clearly seen when loss functions are averaged (an estimate of expected loss).  Table~\ref{tab:lossVmethods} reports the relative total error for each loss function. For example, for TSE the relative total squared error (RMTSE) is defined as
+The advantage of MinT however is clearly seen when loss functions are averaged (an estimate of expected loss).  Table~\ref{tab:lossVmethods} reports the relative total error for each loss function. For example, for TSE the relative mean total squared error (RMTSE) is defined as
 \begin{equation}
 \textrm{RMTSE}^{q}=\frac{\frac{1}{140}\sum\limits_{t=1}^{140}\textrm{TSE}^{q}_t}{\frac{1}{140}\sum\limits_{t=1}^{140}\textrm{TSE}^{\textrm{Base}}_t}\,\label{eq:RTSE}
-\end{equation} 
-where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base forecasts at replication $t$.  In contrast with what is displayed in the boxplots, here the average is taken over the replications before taking a ratio.  Table~\ref{tab:lossVmethods} shows that the average loss for MinT is lower than for all other reconciliation methods, irrespective of the loss function used.  This is precisely what would be expected from Theorem~\ref{th:gmint}.
+\end{equation}
+where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base forecasts at replication $t$.  In contrast with what is displayed in the boxplots, here the average is taken over the replications before taking a ratio.  Table~\ref{tab:lossVmethods} shows that the average loss for MinT is lower than for all other reconciliation methods, irrespective of the loss function used.  This is precisely what would be expected from Theorem~\ref{th:gmint}. {\color{red}Should we add a comment about significance?}
 }
 
 \begin{table}[ht]
@@ -582,16 +582,16 @@ where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base fo
 {\color{blue}	
 	\begin{tabular}{lrrrrrr}
 		\hline
-		Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\ 
+		Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\
 		\hline
-		TSE & 1.00 & 1.22 & 0.97 & 1.13 & 0.98 & 0.96 \\ 
-		Structural WSE & 1.00 & 1.01 & 0.96 & 0.98 & 1.00 & 0.93 \\ 
-		Spend WSE & 1.00 & 1.20 & 0.97 & 1.12 & 0.98 & 0.96 \\ 
+		TSE & 1.00 & 1.22 & 0.97 & 1.13 & 0.98 & 0.96 \\
+		Structural WSE & 1.00 & 1.01 & 0.96 & 0.98 & 1.00 & 0.93 \\
+		Spend WSE & 1.00 & 1.20 & 0.97 & 1.12 & 0.98 & 0.96 \\
 		\hline
     \end{tabular}
 }
-	\caption{{\color{blue}Means of different loss functions for 1-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.  The lowest mean is always provided by MinT, for structural-WSE, the average loss for MinT is significantly than every other method.}}
-	\label{tab:lossVmethods} 
+	\caption{{\color{blue}Means of different loss functions for 1-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.  The lowest mean is always provided by MinT, for structural-WSE, the average loss for MinT is significantly than every other method.}{\color{red} I wonder what the Nemenyi matrix tests will look like here. Maybe these will show some stat significances worth reporting.}}
+	\label{tab:lossVmethods}
 \end{table}
 
 \subsection{Transformations and bias adjustment}
@@ -629,42 +629,23 @@ Using a Taylor series expansion \citep{guerrero1993time}, the back-transformed m
 \end{equation}
 where $\hat{w}_{t+h|t}$ is the $h$-step-ahead forecast from the Box-Cox transformed series and $\sigma_h^2$ is the variance of $\hat{w}_{t+h|t}$. Using the mean of the forecast distribution returns bias-adjusted base forecasts compared to the simple back-transformation of Eq.~\eqref{eq:BoxCox_back-transformation}. We refer to this as ``Method-1'' in the results that follow. The second scenario of bias adjustment we explore is using the in-sample forecast error mean of the biased forecasts to adjust the out-of-sample forecasts. We refer to this as ``Method-2'' in the results that follow.
 
-Using the three sets of base forecasts from each of the two transformations, we generate coherent forecasts implementing OLS, MinT and WLS reconciliation projections, and also the bottom-up approach and compare the results for when the base forecasts are biased and bias-adjusted, i.e., unbiased. {\color{blue} In addition to the relative total squared error (RTSE) defined in Eq.~\eqref{eq:RTSE}, the relative absolute total error (RATE) is used to measure bias. Total error (TE) is first calculated for each series $i$, 
+Using the three sets of base forecasts from each of the two transformations, we generate coherent forecasts implementing OLS, MinT and WLS reconciliation projections, and also the bottom-up approach and compare the results for when the base forecasts are biased and bias-adjusted, i.e., unbiased. {\color{blue} In addition to the relative mean total squared error (RMTSE) defined in Eq.~\eqref{eq:RTSE}, the relative mean absolute total error (RMATE) is used to measure bias. Total error (TE) is first calculated
 \begin{equation*}
 \textrm{TE}^{q}_i=\sum\limits_{t=1}^{140}(y_{i,t}-\tilde{y}^{(q)}_{i,t})\,
 \end{equation*}
-and RATE is defined as,
+reflecting the total bias of method $q$ across the 140 iterations for each series $i$. Taking the absolute value of each of these, so that positive and negative biases do not cancel across series, and then averaging over the 110 series, RMATE is defined as,
 \begin{equation*}
-\textrm{RATE}^{q}=\frac{\sum\limits_{i=1}^{110}|\textrm{TE}^{q}_i|}{\sum\limits_{i=1}^{110}|\textrm{TE}^{\textrm{Base}}_i|} \end{equation*}
+\textrm{RMATE}^{q}=\frac{\frac{1}{110}\sum\limits_{i=1}^{110}|\textrm{TE}^{q}_i|}{\frac{1}{110}\sum\limits_{i=1}^{110}|\textrm{TE}^{\textrm{Base}}_i|} \end{equation*}
+{\color{red} I have added M mean to both RTSE and RATE. Does this help or should it be dropped for simplicity}.
 
-Table~\ref{tab:Results_MSE} reports both RTSE and RATE. A star indicates that forecasts are significantly different from the biased base forecasts, while a dagger indicates that the unbiased forecasts are significantly different from the biased base forecasts from the same reconciliation method. Statistical significance of the differences in the forecast errors is based on the non-parametric Friedman and post-hoc Nemenyi tests, at a 5\% level of significance \citep{HolEtAl2013}. The Friedman test first establishes whether at least one of the forecasts is significantly different from the rest. If this is the case, we use the Nemenyi test to identify groups of forecasts for which there is no evidence of statistically significant differences. This testing approach does not impose any distributional assumptions and does not require multiple pairwise testing between forecasts, which would distort the outcome of the tests.We use the implementation of the tests available in the tsutils \citep{tsutils} package for R.}
-
-
-%\begin{table}[!b]
-%\caption {Average {MSE($\times 10^3$)} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.}
-%\label{tab:Results_MSE}
-%\centering
-%  \begin{tabular}{lcccccc}
-%    \toprule
-%    \multicolumn{1}{c}{ } & \multicolumn{3}{c}{Log Transformation} &
-%    \multicolumn{3}{c}{Box-Cox Transformation}\\
-%    \cmidrule(lr){2-4} \cmidrule(lr){5-7}
-%    Method & Biased & Unbiased & Unbiased & Biased & Unbiased & Unbiased \\
-%    & & (Method-1) & (Method-2) && (Method-1) &(Method-2)\\ \midrule
-%    Base      & 4.47 & 4.43 & 4.51 & 4.59 & 4.52 & 4.78\\
-%    OLS       & 4.34 & 4.31 & 4.36 & 4.46 & 4.40 & 4.63\\
-%    MinT      & 4.32 & \textbf{4.16} & 4.61 & 4.29 & \textbf{4.17} & 4.54\\
-%    WLS       & 4.82 & 4.38 & 5.43 & 4.77 & 4.42 & 5.23\\
-%    Bottom-up & 6.36 & 5.26 & 8.06 & 6.21 & 5.31 & 7.46\\
-%    \bottomrule
-%  \end{tabular}
-%\end{table}
+Table~\ref{tab:Results_MSE} reports both RMTSE and RMATE for 1-step-ahead forecasts. \footnote{{\color{blue} Results and conclusions that follow are almost identical for the other longer forecast horizons I HOPE. Doing those today. We do not present these here to save space but they are available in an online supplement.}}
 
 
+An asterisk ($^\ast$) indicates that forecasts are significantly different from the biased base forecasts, while a dagger ($^\dag$) indicates that the unbiased forecasts are significantly different from the biased base forecasts from the same reconciliation method $q$. Statistical significance of the differences in the forecast errors is based on the non-parametric Friedman and post-hoc Nemenyi tests, at a 5\% level of significance \citep{HolEtAl2013}. The Friedman test first establishes whether at least one of the forecasts is significantly different from the rest. If this is the case, we use the Nemenyi test to identify groups of forecasts for which there is no evidence of statistically significant differences. This testing approach does not impose any distributional assumptions and does not require multiple pairwise testing between forecasts, which would distort the outcome of the tests. We use the implementation of the tests available in the \verb"tsutils " \citep{tsutils} package for R.}
 
 \begin{table}[!b]
 {\color{blue}
-\caption {{\color{blue} RATE and RTSE} of $1$-step-ahead point forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.  {\color{blue} A star indicates a statistically significant difference from the biased base forecasts, while a dagger indicates a statistically significant difference from the biased base forecasts from the same reconciliation approach.}}
+\caption {{\color{blue} RMATE and RMTSE} of $1$-step-ahead forecasts from log and Box-Cox transformed series. Biased denotes forecasts from simply reversing the transformation via Eq.~\eqref{eq:BoxCox_back-transformation}. Unbiased(Method-1) performs bias adjustment via a Taylor series expansion as shown in Eq.~\eqref{eq:BoxCox_BT_biasadj} whereas Unbiased(Method-2) bias adjusts by subtracting the in-sample forecast error mean.}
 \label{tab:Results_MSE}
 \setlength{\tabcolsep}{7pt}
 \centering
@@ -675,22 +656,28 @@ Table~\ref{tab:Results_MSE} reports both RTSE and RATE. A star indicates that fo
     \cmidrule(lr){2-4} \cmidrule(lr){5-7}
     Method & \multicolumn{1}{c}{Biased} & \multicolumn{1}{c}{Unbiased} & \multicolumn{1}{c}{Unbiased} & \multicolumn{1}{c}{Biased} & \multicolumn{1}{c}{Unbiased} & \multicolumn{1}{c}{Unbiased} \\
     & & \multicolumn{1}{c}{(Method-1)} & \multicolumn{1}{c}{(Method-2)} && \multicolumn{1}{c}{(Method-1)} &\multicolumn{1}{c}{(Method-2)}\\ \midrule
-              & \multicolumn{6}{c}{ME}\\\cmidrule(lr){2-7}
+              & \multicolumn{6}{c}{RMATE}\\\cmidrule(lr){2-7}
     Base      & 1.00        & 0.58^{\ast\dag} & 1.40^{\ast\dag} & 1.00        & 0.73^{\ast\dag} & 1.38^{\ast\dag}\\
     OLS       & 0.63^{\ast} & 0.54^{\ast}     & 0.76^{\dag}     & 0.65^{\ast} & 0.67^{\ast}     & 0.86 \\
     MinT      & 0.77^{\ast} & 0.57^{\ast\dag} & 1.15^{\dag}     & 0.77^{\ast} & 0.70^{\ast}     & 1.09^{\dag}\\
     Bottom-up & 1.76^{\ast} & 0.69^{\ast\dag} & 2.72^{\ast\dag} & 1.73        & 0.84^{\ast\dag} & 2.57^{\ast\dag}\\
-              & \multicolumn{6}{c}{MSE}\\\cmidrule(lr){2-7}
+              & \multicolumn{6}{c}{RMTSE}\\\cmidrule(lr){2-7}
     Base      & 1.00 & 0.99 & 1.01 & 1.00 & 0.98 & 1.04\\
     OLS       & 0.97^{\ast} & 0.96^{\ast} & 0.98^{\ast} & 0.97^{\ast} & 0.96^{\ast} & 1.01\\
     MinT      & 0.97^{\ast} & 0.93^{\ast} & 1.03 & 0.93^{\ast} & 0.91^{\ast} & 0.99\\
     Bottom-up & 1.42 & 1.18 & 1.80 & 1.35 & 1.16 & 1.63\\
     \bottomrule
   \end{tabular}
-}
+}    {\color{blue} $^\ast$ indicates a statistically significant difference from the biased base forecasts.$^\dag$ indicates a statistically significant difference from the biased base forecasts from the same reconciliation method.}
+    
 \end{table}
 
-
+Messages:
+\begin{itemize}
+  \item Bias correcting correctly using Method-1 and then reconciling returns the best results for both RMATE and RMTSE. The improvements over the biased base forecasts are statistically significant for both RMATE and RMTSE. OLS returns the best results for RMATE while MinT returns the best results for RMTSE.
+  \item Reconciliation helps with accounting for some of the bias. The improvements in the reconciled biased base forecasts are statistically significant compared to the base biased forecasts for both RMATE and RMTSE.
+  \item Bias correcting incorrectly has dier consequences as shown by Method-2.
+\end{itemize}
 Recall that reconciliation approaches via projections preserve unbiasedness in the reconciled forecasts iff the base forecasts are unbiased. Hence, the two columns labelled ``Biased'' contain results for biased base but also reconciled forecasts. Using Method-1 for first bias adjusting the base forecasts and then reconciling, results in forecast improvements for all methods for both the log and the Box-Cox transformation induced bias. In this case MinT returns the lowest MSE across all forecasts. Notice that the ``Box-Cox biased'' base forecasts carry a higher bias compared to the ``log biased'' base forecasts. Even for these MinT reconciliation of bias adjusted base forecasts generates very accurate forecasts, almost as accurate as the forecasts that come from the less biased log transformation.
 
 In contrast to the results from using Method-1 for bias adjusting before reconciliation, using Method-2 has an adverse effect on the forecast accuracy of the reconciled forecasts. In this case the reconciled unbiased forecasts are less accurate than the biased reconciled forecasts. This reflects the fact and sends the warning that implementing inappropriate bias adjustment, in this case using an additive rather than a multiplicative factor, will hinder forecast accuracy and extra care must be taken in this bias adjustment procedure.
