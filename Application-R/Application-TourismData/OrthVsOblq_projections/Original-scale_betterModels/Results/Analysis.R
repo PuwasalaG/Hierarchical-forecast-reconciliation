@@ -118,8 +118,7 @@ OvernightTrips_OriginalScale_MSE %>%
 
 
 }
-#Create boxplot (WSE)
-
+  
 
 # #Create boxplot (TSE)
 # 
