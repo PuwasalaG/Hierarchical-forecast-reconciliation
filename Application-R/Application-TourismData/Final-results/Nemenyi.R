@@ -23,6 +23,8 @@ DF_LogTrans_WL100 %>% mutate(ME = `Actual` - `Forecasts`) -> DF_LogTrans_WL100
 #   summarise(ME = sum(ME)/1e3) %>% 
 #   arrange(ME)
 
+DF_LogTrans_WL100 %>%  head()
+
 # Nemenyi for ME
 DF_LogTrans_WL100 %>% 
   filter(Forecast_Horizon == 1) %>% 
@@ -33,11 +35,31 @@ DF_LogTrans_WL100 %>%
   select(Replication, ME ,method) %>% 
   spread(method,ME) %>% as.matrix() -> m
 
+  m %>%  head()
+
   m <- m[,-1] 
   class(m) <- "numeric"
 
   nemenyi(m,conf.level=0.95,plottype="matrix")
 
+  
+# New Nemenyi for ME
+  DF_LogTrans_WL100 %>% 
+    filter(Forecast_Horizon == 1) %>% 
+    group_by(Series, F.method, R.method) %>% 
+    summarise(ME = sum(ME)/1e3) %>%
+    mutate(AME=abs(ME)) %>% 
+    mutate(method=paste(F.method,R.method, sep='_')) %>% 
+    ungroup() %>% 
+    select(Series, AME ,method) %>% 
+    spread(method,AME) %>% as.matrix() -> m
+  
+  m <- m[,-1] 
+  class(m) <- "numeric"
+  
+  nemenyi(m,conf.level=0.95,plottype="matrix")
+  
+  
 # dm.test(e1,e2, alternative = "two.sided", h = 1, power = 2)
 
 # colSums(m) %>% as.matrix() -> ME
@@ -53,6 +75,7 @@ DF_LogTrans_WL100 %>%
 #   arrange(MSE)
 
 # Nemenyi for MSE
+
 DF_LogTrans_WL100 %>%
   filter(Forecast_Horizon == 1) %>% 
   group_by(Replication, F.method, R.method) %>% 

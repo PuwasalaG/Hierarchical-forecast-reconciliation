@@ -85,26 +85,67 @@
 and MSE calculated over 140
 replications)}\label{log-transformation-with-100-observations-of-training-window-me-and-mse-calculated-over-140-replications}}
 
+\begin{verbatim}
+## [1] "ME"
+\end{verbatim}
+
 \begin{tabular}{l|r|r|r}
 \hline
-R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\\hline
-Base & 1.00 & 0.53 & 1.40\\ \hline
-Bottom-up & 1.76 & 0.64 & 2.72\\ \hline
-MinT(Shrink) & 0.74 & 0.51 & 1.10\\\hline
-OLS & 0.51 & 0.39 & 0.66\\\hline
+R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 1.00 & 0.53 & 1.40\\
+\hline
+Bottom-up & 1.76 & 0.64 & 2.72\\
+\hline
+MinT(Shrink) & 0.74 & 0.51 & 1.10\\
+\hline
+OLS & 0.51 & 0.39 & 0.66\\
+\hline
 WLS & 1.21 & 0.58 & 1.74\\
 \hline
 \end{tabular}
 
+\begin{verbatim}
+## [1] "New ME"
+\end{verbatim}
+
 \begin{tabular}{l|r|r|r}
 \hline
-R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\\hline
-Base & 1.00 & 0.99 & 1.01\\\hline
-Bottom-up & 1.42 & 1.18 & 1.80\\\hline
-MinT(Shrink) & 0.97 & 0.93 & 1.03\\\hline
-OLS & 0.97 & 0.96 & 0.98\\\hline
-WLS & 1.08 & 0.98 & 1.21\\\hline
+R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 1.00 & 0.58 & 1.40\\
+\hline
+Bottom-up & 1.76 & 0.69 & 2.72\\
+\hline
+MinT(Shrink) & 0.77 & 0.57 & 1.15\\
+\hline
+OLS & 0.63 & 0.54 & 0.76\\
+\hline
+WLS & 1.22 & 0.63 & 1.75\\
+\hline
 \end{tabular}
+
+\begin{verbatim}
+## [1] "MSE"
+\end{verbatim}
+
+\begin{tabular}{l|r|r|r}
+\hline
+R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 1.00 & 0.99 & 1.01\\
+\hline
+Bottom-up & 1.42 & 1.18 & 1.80\\
+\hline
+MinT(Shrink) & 0.97 & 0.93 & 1.03\\
+\hline
+OLS & 0.97 & 0.96 & 0.98\\
+\hline
+WLS & 1.08 & 0.98 & 1.21\\
+\hline
+\end{tabular}
+
+\newpage
 
 \hypertarget{boxcox-transformation-for-lambda-in--0.52-with-100-observations-of-training-window-me-and-mse-calculated-over-140-replications}{%
 \section{\texorpdfstring{BoxCox Transformation for
@@ -114,23 +155,58 @@ replications)}{BoxCox Transformation for \textbackslash lambda \textbackslash in
 
 \begin{tabular}{l|r|r|r}
 \hline
-R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\\hline
-Base & 1.00 & 0.63 & 1.37\\\hline
-Bottom-up & 1.73 & 0.75 & 2.57\\\hline
-MinT(Shrink) & 0.75 & 0.61 & 1.03\\\hline
-OLS & 0.54 & 0.46 & 0.74\\\hline
-WLS & 1.20 & 0.69 & 1.67\\\hline
+R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 1.00 & 0.63 & 1.37\\
+\hline
+Bottom-up & 1.73 & 0.75 & 2.57\\
+\hline
+MinT(Shrink) & 0.75 & 0.61 & 1.03\\
+\hline
+OLS & 0.54 & 0.46 & 0.74\\
+\hline
+WLS & 1.20 & 0.69 & 1.67\\
+\hline
 \end{tabular}
+
+\begin{verbatim}
+## [1] "New ME"
+\end{verbatim}
 
 \begin{tabular}{l|r|r|r}
 \hline
 R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
 \hline
-Base & 1.00 & 0.98 & 1.04\\\hline
-Bottom-up & 1.35 & 1.16 & 1.63\\\hline
-MinT(Shrink) & 0.93 & 0.91 & 0.99\\\hline
-OLS & 0.97 & 0.96 & 1.01\\\hline
-WLS & 1.04 & 0.96 & 1.14\\\hline
+Base & 1.00 & 0.73 & 1.38\\
+\hline
+Bottom-up & 1.73 & 0.84 & 2.57\\
+\hline
+MinT(Shrink) & 0.77 & 0.70 & 1.09\\
+\hline
+OLS & 0.65 & 0.67 & 0.86\\
+\hline
+WLS & 1.22 & 0.79 & 1.68\\
+\hline
+\end{tabular}
+
+\begin{verbatim}
+## [1] "MSE"
+\end{verbatim}
+
+\begin{tabular}{l|r|r|r}
+\hline
+R.method & Biased & Unbiased (Method 1) & Unbiased (Method 2)\\
+\hline
+Base & 1.00 & 0.98 & 1.04\\
+\hline
+Bottom-up & 1.35 & 1.16 & 1.63\\
+\hline
+MinT(Shrink) & 0.93 & 0.91 & 0.99\\
+\hline
+OLS & 0.97 & 0.96 & 1.01\\
+\hline
+WLS & 1.04 & 0.96 & 1.14\\
+\hline
 \end{tabular}
 
 \end{document}

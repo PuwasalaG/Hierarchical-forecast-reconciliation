@@ -38,28 +38,50 @@ DF_LogTrans_WL100 %>% mutate(ME = `Actual` - `Forecasts`) -> DF_LogTrans_WL100
 # ME
 DF_LogTrans_WL100 %>%  
   group_by(`F.method`, `R.method`, Forecast_Horizon) %>% 
-  summarise(ME = round(sum(ME)/1e3, digits = 2)) %>% 
+  summarise(ME = sum(ME)/1e3) %>% 
   filter(Forecast_Horizon == 1) %>% 
   ungroup() %>% 
   dplyr::select(-Forecast_Horizon) -> Avg_Log_WL100_ME_h1
+
+# New ME
+DF_LogTrans_WL100 %>% 
+  group_by(F.method, R.method, Series, Forecast_Horizon) %>% 
+  summarise(ME = sum(ME)/1e3) %>%
+  filter(Forecast_Horizon == 1) %>% 
+  group_by(F.method,R.method) %>% 
+  summarise(AME=sum(abs(ME))) %>% 
+  ungroup() -> Avg_Log_WL100_ME_h1_new
+
 
 # Make everything percentage improvement
 Avg_Log_WL100_ME_h1 <- Avg_Log_WL100_ME_h1 %>% 
   mutate(ME=ME/Avg_Log_WL100_ME_h1[1,]$ME)
 
+Avg_Log_WL100_ME_h1_new <- Avg_Log_WL100_ME_h1_new %>%
+  mutate(AME=AME/Avg_Log_WL100_ME_h1_new[1,]$AME)
+
+print("ME")
 Avg_Log_WL100_ME_h1 %>% 
   mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)", 
                            Unbiased_M2 = "Unbiased (Method 2)")) %>% 
   spread(key = F.method, value = ME) %>% 
   kable(format = "latex",digits = 2)
 
-#MSE
+print("New ME")
+Avg_Log_WL100_ME_h1_new %>% 
+  mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)", 
+                           Unbiased_M2 = "Unbiased (Method 2)")) %>% 
+  spread(key = F.method, value = AME) %>% 
+  kable(format = "latex",digits = 2)
+
+print("MSE")
 DF_LogTrans_WL100 %>% 
   group_by(`F.method`, `R.method`, Forecast_Horizon) %>% 
   summarise(MSE = round(mean(SquaredE)/1e3, digits = 2)) %>% 
   filter(Forecast_Horizon == 1) %>% 
   ungroup() %>% 
   dplyr::select(-Forecast_Horizon)-> Avg_Log_WL100_MSE_h1
+
 
 # Make everything percentage improvement
 Avg_Log_WL100_MSE_h1 <- Avg_Log_WL100_MSE_h1 %>% 
@@ -74,6 +96,7 @@ Avg_Log_WL100_MSE_h1 %>%
 
 ```
 
+\newpage
 # BoxCox Transformation for $\lambda \in (-0.5,2)$ with 100 observations of training window (ME and MSE calculated over 140 replications)
 
 
@@ -95,9 +118,22 @@ DF_BoxCoxTrans_WL100 %>%
   ungroup() %>% 
   dplyr::select(-Forecast_Horizon)-> Avg_BoxCox_WL100_ME_h1
 
+# New ME
+DF_BoxCoxTrans_WL100 %>% 
+  group_by(F.method, R.method, Series, Forecast_Horizon) %>% 
+  summarise(ME = sum(ME)/1e3) %>%
+  filter(Forecast_Horizon == 1) %>% 
+  group_by(F.method,R.method) %>% 
+  summarise(AME=sum(abs(ME))) %>% 
+  ungroup() -> Avg_BoxCox_WL100_ME_h1_new
+
 # Make everything percentage improvement
 Avg_BoxCox_WL100_ME_h1 <- Avg_BoxCox_WL100_ME_h1 %>% 
   mutate(ME=ME/Avg_BoxCox_WL100_ME_h1[1,]$ME)
+
+Avg_BoxCox_WL100_ME_h1_new <- Avg_BoxCox_WL100_ME_h1_new %>%
+  mutate(AME=AME/Avg_BoxCox_WL100_ME_h1_new[1,]$AME)
+
 
 Avg_BoxCox_WL100_ME_h1 %>% 
   mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)", 
@@ -105,7 +141,14 @@ Avg_BoxCox_WL100_ME_h1 %>%
   spread(key = F.method, value = ME) %>% 
   kable(format = "latex",digits = 2)
 
-#MSE
+print("New ME")
+Avg_BoxCox_WL100_ME_h1_new %>% 
+  mutate(F.method = recode(F.method, Unbiased_M1 = "Unbiased (Method 1)", 
+                           Unbiased_M2 = "Unbiased (Method 2)")) %>% 
+  spread(key = F.method, value = AME) %>% 
+  kable(format = "latex",digits = 2)
+
+print("MSE")
 DF_BoxCoxTrans_WL100 %>% 
   group_by(`F.method`, `R.method`, Forecast_Horizon) %>% 
   summarise(MSE = round(mean(SquaredE)/1e3, digits = 2)) %>% 
