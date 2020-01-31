@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
 \usepackage[margin=2cm]{geometry}
-\usepackage{graphicx,psfrag,epsf}
+\usepackage{graphicx,psfrag,epsf,siunitx, multirow,booktabs}
 \usepackage{enumerate}
 
 \title{\bf Supplementary Results for ``Forecast reconciliation: A geometric view with new insights on bias correction''}
@@ -10,7 +10,7 @@
   \section{Results for $h=2$ to $h=6$ for Section~5.2}
   	
   	
-  	Figures~\ref{fig:BaseVSRecon_Fch2} through to~\ref{fig:BaseVSRecon_Fch6} show results for $h=2$ to $h=6$ corresponding to the application studied in Section~5.2.  These demonstrate the distance reducing properties of Theorem 3.1 and Theorem 3.2. The loss function TSE refers to total squared error (squared Euclidean distance).  The other two loss functions are weighted squared errors (squared generalised Euclidean distance) with the weights either determined by the structure of the hierarchy (Structural-WSE) or the average spend per region (Spend-WSE).  The reconciliation methods used are Base, bottom up, OLS, MinT WLS with the weights corresponding to either the `structural' or `spend weights.' 
+  	Figures~\ref{fig:BaseVSRecon_Fch2} through to~\ref{fig:BaseVSRecon_Fch6} show results for $h=2$ to $h=6$ corresponding to the application studied in Section~5.2.  These demonstrate the distance reducing properties of Theorem 3.1 and Theorem 3.2. The loss function TSE refers to total squared error (squared Euclidean distance).  The other two loss functions are weighted squared errors (squared generalised Euclidean distance) with the weights either determined by the structure of the hierarchy (Structural-WSE) or the average spend per region (Spend-WSE).  The reconciliation methods used are Base, bottom up, OLS, MinT WLS with the weights corresponding to either the `structural' or `spend weights.'
   	
   	\begin{figure}[!hbt]
   		\centering
@@ -48,83 +48,115 @@
 	\label{fig:BaseVSRecon_Fch6}
 \end{figure}
   	
-  	Tables ~\ref{tab:sec52h2} through to~\ref{tab:sec52h6} demonstrate Theorem 3.3; namely that MinT minimises expected loss irrespective of the choice of the weighting matrix.  For these results, an average loss is taken over all replications.  These averages are all expressed relative to base.  
+  	Tables ~\ref{tab:sec52h2} through to~\ref{tab:sec52h6} demonstrate Theorem 3.3; namely that MinT minimises expected loss irrespective of the choice of the weighting matrix.  For these results, an average loss is taken over all replications.  These averages are all expressed relative to base.
   	
   	
   	\begin{table}[ht]
   		\centering
   		\begin{tabular}{lrrrrrr}
   			\hline
-  			Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\ 
+  			Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\
   			\hline
-  			TSE & 1.00 & 1.27 & 0.97 & 1.17 & 0.98 & 0.97 \\ 
-  			Structural WSE & 1.00 & 1.01 & 0.96 & 0.98 & 0.99 & 0.93 \\ 
-  			Spend WSE & 1.00 & 1.25 & 0.97 & 1.16 & 0.98 & 0.96 \\ 
+  			TSE & 1.00 & 1.27 & 0.97 & 1.17 & 0.98 & 0.97 \\
+  			Structural WSE & 1.00 & 1.01 & 0.96 & 0.98 & 0.99 & 0.93 \\
+  			Spend WSE & 1.00 & 1.25 & 0.97 & 1.16 & 0.98 & 0.96 \\
   			\hline
   		\end{tabular}
   		\caption{Means of different loss functions for 2-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.}
-  		\label{tab:sec52h2} 
+  		\label{tab:sec52h2}
   	\end{table}
   	
   	\begin{table}[ht]
   		\centering
   		\begin{tabular}{lrrrrrr}
   			\hline
-  			Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\ 
+  			Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\
   			\hline
-  			TSE & 1.00 & 1.25 & 0.97 & 1.16 & 0.98 & 0.97 \\ 
-  			Structural WSE & 1.00 & 1.00 & 0.96 & 0.98 & 1.00 & 0.93 \\ 
-  			Spend WSE & 1.00 & 1.23 & 0.97 & 1.15 & 0.98 & 0.96 \\ 
+  			TSE & 1.00 & 1.25 & 0.97 & 1.16 & 0.98 & 0.97 \\
+  			Structural WSE & 1.00 & 1.00 & 0.96 & 0.98 & 1.00 & 0.93 \\
+  			Spend WSE & 1.00 & 1.23 & 0.97 & 1.15 & 0.98 & 0.96 \\
   			\hline
   		\end{tabular}
-  		\caption{Means of different loss functions for 3-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.} 
+  		\caption{Means of different loss functions for 3-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.}
   	\end{table}
   	
   	\begin{table}[ht]
   		\centering
   		\begin{tabular}{lrrrrrr}
   			\hline
-  			Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\ 
+  			Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\
   			\hline
-  			TSE & 1.00 & 1.27 & 0.98 & 1.17 & 0.98 & 0.97 \\ 
-  			Structural WSE & 1.00 & 1.01 & 0.96 & 0.98 & 0.99 & 0.92 \\ 
-  			Spend WSE & 1.00 & 1.26 & 0.97 & 1.16 & 0.98 & 0.97 \\ 
+  			TSE & 1.00 & 1.27 & 0.98 & 1.17 & 0.98 & 0.97 \\
+  			Structural WSE & 1.00 & 1.01 & 0.96 & 0.98 & 0.99 & 0.92 \\
+  			Spend WSE & 1.00 & 1.26 & 0.97 & 1.16 & 0.98 & 0.97 \\
   			\hline
   		\end{tabular}
-  		\caption{Means of different loss functions for 4-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.} 
+  		\caption{Means of different loss functions for 4-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.}
   	\end{table}
-  
+
   \begin{table}[ht]
   	\centering
   	\begin{tabular}{lrrrrrr}
   		\hline
-  		Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\ 
+  		Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\
   		\hline
-  		TSE & 1.00 & 1.28 & 0.98 & 1.18 & 0.98 & 0.97 \\ 
-  		Structural WSE & 1.00 & 1.01 & 0.96 & 0.98 & 0.99 & 0.92 \\ 
-  		Spend WSE & 1.00 & 1.26 & 0.97 & 1.17 & 0.98 & 0.96 \\ 
+  		TSE & 1.00 & 1.28 & 0.98 & 1.18 & 0.98 & 0.97 \\
+  		Structural WSE & 1.00 & 1.01 & 0.96 & 0.98 & 0.99 & 0.92 \\
+  		Spend WSE & 1.00 & 1.26 & 0.97 & 1.17 & 0.98 & 0.96 \\
   		\hline
   	\end{tabular}
-  	\caption{Means of different loss functions for 5-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.} 
+  	\caption{Means of different loss functions for 5-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.}
   \end{table}
 
   \begin{table}[ht]
     \centering
 	\begin{tabular}{lrrrrrr}
 		\hline
-		Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\ 
+		Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\
 		\hline
-		TSE & 1.00 & 1.21 & 0.98 & 1.13 & 0.99 & 0.97 \\ 
-		Structural WSE & 1.00 & 1.00 & 0.97 & 0.98 & 1.00 & 0.93 \\ 
-		Spend WSE & 1.00 & 1.20 & 0.98 & 1.12 & 0.98 & 0.97 \\ 
+		TSE & 1.00 & 1.21 & 0.98 & 1.13 & 0.99 & 0.97 \\
+		Structural WSE & 1.00 & 1.00 & 0.97 & 0.98 & 1.00 & 0.93 \\
+		Spend WSE & 1.00 & 1.20 & 0.98 & 1.12 & 0.98 & 0.97 \\
 		\hline
 	\end{tabular}
 	\caption{Means of different loss functions for 6-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.}
-	\label{tab:sec52h6} 
+	\label{tab:sec52h6}
   \end{table}
 
   \section{Results for $h=2$ to $h=6$ for Section~5.3}
-  
+
   George to include
-   
-\end{document}
+
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[htbp]
+  \centering\footnotesize
+  \caption{Add caption}
+    \begin{tabular}{lrrrrrrrrrrrrr}
+    \toprule
+    & \multicolumn{6}{c}{Log Transformation}         &       & \multicolumn{6}{c}{Box-Cox Transformation} \\\cmidrule(lr){2-7}\cmidrule(lr){9-14}
+    Forecast horizon  & 1     & 2     & 3     & 4     & 5     & 6     &       & 1     & 2     & 3     & 4     & 5     & 6 \\\midrule
+          & \multicolumn{13}{c}{RMATE} \\ \cmidrule(lr){2-14}
+    Biased Base             & 1.00  & 1.00  & 1.00  & 1.00  & 1.00  & 1.00  &       & 1.00  & 1.00  & 1.00  & 1.00  & 1.00  & 1.00 \\
+    Biased Bottom-up        & 1.76  & 1.69  & 1.73  & 1.72  & 1.64  & 1.60  &       & 1.73  & 1.69  & 1.67  & 1.66  & 1.59  & 1.55 \\
+    Biased MinT             & 0.77  & 0.81  & 0.79  & 0.78  & 0.80  & 0.81  &       & 0.77  & 0.78  & 0.77  & 0.75  & 0.79  & 0.80 \\
+    Biased OLS              & 0.63  & 0.65  & 0.65  & 0.65  & 0.68  & 0.70  &       & 0.65  & 0.67  & 0.67  & 0.68  & 0.70  & 0.72 \\
+    Unbiased Base           & 0.58  & 0.62  & 0.64  & 0.65  & 0.68  & 0.69  &       & 0.73  & 0.75  & 0.76  & 0.77  & 0.78  & 0.79 \\
+    Unbiased Bottom-up      & 0.69  & 0.73  & 0.79  & 0.82  & 0.81  & 0.81  &       & 0.84  & 0.86  & 0.88  & 0.90  & 0.88  & 0.87 \\
+    Unbiased MinT           & 0.57  & 0.62  & 0.61  & 0.61  & 0.65  & 0.66  &       & 0.70  & 0.71  & 0.71  & 0.70  & 0.74  & 0.75 \\
+    Unbiased OLS            & 0.54  & 0.56  & 0.56  & 0.58  & 0.61  & 0.63  &       & 0.67  & 0.69  & 0.69  & 0.70  & 0.71  & 0.72 \\
+          & \multicolumn{13}{c}{RMTSE} \\\cmidrule(lr){2-14}
+    Biased Base             & 1.00  & 1.00  & 1.00  & 1.00  & 1.00  & 1.00  &       & 1.00  & 1.00  & 1.00  & 1.00  & 1.00  & 1.00 \\
+    Biased Bottom-up        & 1.42  & 1.48  & 1.56  & 1.53  & 1.52  & 1.50  &       & 1.35  & 1.37  & 1.39  & 1.39  & 1.37  & 1.32 \\
+    Biased MinT             & 0.97  & 0.98  & 1.02  & 0.98  & 0.98  & 0.98  &       & 0.93  & 0.95  & 0.96  & 0.96  & 0.96  & 0.94 \\
+    Biased OLS              & 0.97  & 0.97  & 0.97  & 0.97  & 0.97  & 0.97  &       & 0.97  & 0.97  & 0.97  & 0.97  & 0.97  & 0.97 \\
+    Unbiased Base           & 0.99  & 0.99  & 0.99  & 0.99  & 0.99  & 0.99  &       & 0.99  & 0.99  & 0.99  & 0.99  & 0.99  & 0.99 \\
+    Unbiased Bottom-up      & 1.18  & 1.21  & 1.27  & 1.24  & 1.23  & 1.20  &       & 1.16  & 1.15  & 1.17  & 1.17  & 1.14  & 1.11 \\
+    Unbiased MinT           & 0.93  & 0.94  & 0.97  & 0.94  & 0.94  & 0.93  &       & 0.91  & 0.92  & 0.93  & 0.93  & 0.93  & 0.91 \\
+    Unbiased OLS            & 0.96  & 0.96  & 0.96  & 0.96  & 0.96  & 0.96  &       & 0.96  & 0.96  & 0.96  & 0.96  & 0.96  & 0.96 \\\bottomrule
+    \end{tabular}
+  \label{tab:addlabel}%
+\end{table}%
+
+
+\end{document} 
