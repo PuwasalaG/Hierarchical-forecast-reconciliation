@@ -112,7 +112,7 @@ In contrast to these methods, \citet{Hyndman2011} proposed forecasting all serie
 
 Our main contribution is to propose a geometric interpretation of the entire hierarchical forecasting problem. In this setting, we show that reconciled forecasts have a number of attractive properties when they are obtained via projections. We believe that this is clearer and more intuitive than explanations based on regression modelling. In addition to casting existing results in a new light, the geometric interpretation also allows us to derive {\color{blue}four} new important results.
 
-First, our approach makes it clear that the defining characteristic of so-called \emph{hierarchical time series} is not aggregation but linear constraints. As a result forecast reconciliation can be applied in contexts where there are no clear candidates of \emph{bottom level} series, an insight that is not apparent when the problem is viewed through the lens of regression modelling. Second, {\color{blue} we provide a new proof that reconciled forecasts dominate unreconciled forecasts, for a certain class of loss functions. The projection that achieves this depends on the weights used in the loss function but not on the dependence in forecast errors.}  Futhermore, unlike {\color{blue} proofs of similar results by} \citet{VanErven2015a} and \citet{WicEtAl2019}, our proof does not require an assumption about convexity that may not hold in general.  {\color{blue} Third, we show that when it comes to minimising the expected value of the same class of loss functions, the optimal projection depends only on the covariance of the forecast errors, and not the weights used in the loss function.  In this case of equal weights, this property is a direct consequence of the trace minimising property already established by \cite{WicEtAl2019}, we now prove that this result also applies to a more general class of loss functions.  Fourth}, we prove that reconciliation using certain projection matrices guarantees unbiased reconciled forecasts provided the base forecasts are also unbiased. A natural question that arises is what to do in the case of biased reconciled forecasts. Rather than addressing this issue by considering matrices that are not projections, we propose to bias-correct before reconciliation. This is evaluated in an extensive empirical study where we find that even when bias correction fails, the extent of the problem is mitigated by reconciling forecasts.\todo{Re-check after results}
+First, our approach makes it clear that the defining characteristic of so-called \emph{hierarchical time series} is not aggregation but linear constraints. As a result forecast reconciliation can be applied in contexts where there are no clear candidates of \emph{bottom-level} series, an insight that is not apparent when the problem is viewed through the lens of regression modelling. Second, {\color{blue} we provide a new proof that reconciled forecasts dominate unreconciled forecasts, for a certain class of loss functions. The projection that achieves this depends on the weights used in the loss function but not on the dependence in forecast errors.}  Futhermore, unlike {\color{blue} proofs of similar results by} \citet{VanErven2015a} and \citet{WicEtAl2019}, our proof does not require an assumption about convexity that may not hold in general.  {\color{blue} Third, we show that when it comes to minimising the expected value of the same class of loss functions, the optimal projection depends only on the covariance of the forecast errors, and not the weights used in the loss function.  In this case of equal weights, this property is a direct consequence of the trace minimising property already established by \cite{WicEtAl2019}, we now prove that this result also applies to a more general class of loss functions.  Fourth}, we prove that reconciliation using certain projection matrices guarantees unbiased reconciled forecasts provided the base forecasts are also unbiased. A natural question that arises is what to do in the case of biased reconciled forecasts. Rather than addressing this issue by considering matrices that are not projections, we propose to bias-correct before reconciliation. This is evaluated in an extensive empirical study where we find that even when bias correction fails, the extent of the problem is mitigated by reconciling forecasts.\todo{Re-check after results}
 
 The remainder of this paper is structured as follows. Section~\ref{sec:CoheForecasts} deals with the concept of coherence and defines hierarchical time series in a way that does not depend on any notion of bottom-level series. Section~\ref{sec:Reconciliation} defines forecast reconciliation in terms of projections and includes proofs that make the optimality properties of different reconciliation methods clear. In Section~\ref{sec:BiasInRecon} we prove the unbiasedness preserving property of reconciliation via certain projection matrices and propose methods for bias correction. In Section \ref{sec:EmpStudy} we conduct an extensive empirical application to domestic tourism flow in Australia with two objectives; first to demonstrate the theorems discussed in Section~\ref{sec:Reconciliation}, second to evaluate the methods for bias correction discussed in Section~\ref{sec:BiasInRecon}. Section~\ref{sec:conclusions} concludes with some discussion and thoughts on the future research directions {\color{blue}for} forecast reconciliation.
 
@@ -516,11 +516,17 @@ The top panel of Figure~\ref{fig:States_Zones_Regs_TSplots} shows time plots for
   \caption{Time plot of overnight trips for some selected series from different disaggregate levels of the hierarchy. All values are presented in log scale. To avoid impact from the zero values we added a constant 1 to all observations}\label{fig:States_Zones_Regs_TSplots}
 \end{figure}
 
+\clearpage
+
+{\color{red} I've done a clear page here so we can see the flow better. We will remove this}
+
 \subsection{Comparison to Base Forecasts}\label{sec:comparebase}
 
 To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts {\color{blue} using different loss functions}. For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package. Using these fitted models, base forecasts are produced for $h=1$ to $6$-steps ahead for each series in the hierarchy. This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $135~6$-steps-ahead forecasts available for forecast evaluation.
 
-{\color{blue} For each replication and for method $q$, we compute three loss functions.  The first is the total squared error (TSE), computed as
+{\color{red} I think the flow here is a bit confusing. I see that we need to talk about the loss functions before the reconciliation methods because of Spend-WLS. I suggest the following. We first introduce the three typical reconciliation methods - OLS, Structural-WLS and MinT and move the paragraph that introduces these above. Then when we introduce the loss functions we introduce in the second paragraph, starting ``The second choice'' Spend-WLS. I've re-written 5.2 based on this thought and called it -George in the end. See what do you think? Please delete appropriately.}
+
+{\color{blue} For each replication {\color{red} and for method $q$,- I don't think we need this here - $q$ is defined over the page} we compute three loss functions.  The first is the total squared error (TSE), computed as
 	\begin{equation}
 	\label{eq:tse}
 	\textrm{TSE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
@@ -530,7 +536,7 @@ This loss function is the square of the usual Euclidean distance described in Se
 \begin{equation*}
 	\textrm{WSE}^{q}_t=\sum\limits_{i=1}^n \left(w_i (y_{i,t}-\tilde{y}^{(q)}_{i,t})\right)^2\,,
 	\end{equation*}
-	We consider two choices of weights.  The first is the inverse of the number of bottom level series included in forming a specific aggregate.  For example, for all bottom level series this weight is 1, whereas for the top level series this is 1/75.  The idea is to ensure top level series - which are on a much larger scale -  do not dominate the forecast evaluation metric.  Using these weights in WLS reconciliation is equivalent to what \cite{AthEtAl2017} refer to as \textit{structural scaling}.  As such we refer to WLS based on these weights as `Structural-WLS' and the loss function based on these weights as `Structural-WSE'.
+	We consider two choices of weights.  The first is the inverse of the number of bottom-level series included in forming a specific aggregate.  For example, for all bottom-level series this weight is 1, whereas for the top-level series this is 1/75.  The idea is to ensure top-level series, which are on a much larger scale, do not dominate the forecast evaluation metric.  Using these weights in WLS reconciliation is equivalent to what \cite{AthEtAl2017} refer to as \textit{structural scaling}.  As such we refer to WLS based on these weights as `Structural-WLS' and the loss function based on these weights as `Structural-WSE'.
 	
 	The second choice of weights is motivated by our empirical example.  In addition to visitor numbers per region, we also have access to data on average spend per region.  In some settings, it may be desirable to have greater forecast accuracy in regions where tourists spend more.  By using average spend per region as weights, the error metric (and transformed space associated with this metric) can be interpreted in terms of revenue measured in dollars rather than raw tourist numbers. We refer to WLS based on these weights as `Spend-WLS' and the loss function based on these weights as `Spend-WSE'.
 }
@@ -540,6 +546,34 @@ After obtaining the base forecasts these are reconciled using four different pro
 	\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{\sigma}_{ij})}{\sum_{i \neq j}{\hat{\sigma}}^2_{ij}}\,,
 	\end{equation*}
 	where $\hat{\sigma}_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}$. }
+
+\clearpage
+\subsection*{Comparison to Base Forecasts - George}\label{sec:comparebase}
+
+To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts {\color{blue} using different loss functions}. For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package. Using these fitted models, base forecasts are produced for $h=1$ to $6$-steps ahead for each series in the hierarchy. This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $135~6$-steps-ahead forecasts available for forecast evaluation.
+
+After obtaining the base forecasts these are reconciled using various projection methods. In particular: OLS reconciliation; WLS reconciliation using structural scaling introduced by \cite{AthEtAl2017} which we refer to as Structural-WLS; and MinT using the shrinkage estimator of \cite{Schafer2005} to estimate  $\bm{\Sigma}$. The estimate is $\tau\text{diag}(\hat{\bm{\Sigma}}) + (1-\tau)\hat{\bm{\Sigma}}$  where $\hat{\bm{\Sigma}}$ is the sample estimate of the variance covariance matrix of the in-sample, one-step ahead forecast errors and,
+	\begin{equation*}
+	\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{\sigma}_{ij})}{\sum_{i \neq j}{\hat{\sigma}}^2_{ij}}\,,
+	\end{equation*}
+	where $\hat{\sigma}_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}$. 
+
+{\color{blue} For each method we compute three loss functions.  The first is the total squared error (TSE), computed as
+	\begin{equation}
+	\label{eq:tse}
+	\textrm{TSE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
+	\end{equation}
+	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.
+This loss function is the square of the usual Euclidean distance described in Section~\ref{sec:orthogonal}. We also consider loss functions based on a squared generalised Euclidean distance of the form
+\begin{equation*}
+	\textrm{WSE}^{q}_t=\sum\limits_{i=1}^n \left(w_i (y_{i,t}-\tilde{y}^{(q)}_{i,t})\right)^2\,,
+	\end{equation*}
+	We consider two choices of weights.  The first is the inverse of the number of bottom-level series included in forming a specific aggregate.  For example, for all bottom-level series this weight is 1, whereas for the top-level series this is 1/75.  The idea is to ensure top-level series, which are on a much larger scale, do not dominate the forecast evaluation metric.  These are the weights used in the Structural-WLS reconciliation approach introduced in the previous paragraph. As such we refer to the loss function based on these weights as `Structural-WSE'.
+	
+	The second choice of weights is motivated by our empirical example.  In addition to visitor numbers per region, we also have access to data on average spend per region.  In some settings, it may be desirable to have greater forecast accuracy in regions where tourists spend more.  By using average spend per region as weights, the error metric (and transformed space associated with this metric) can be interpreted in terms of revenue measured in dollars rather than raw tourist numbers. Using these weights we introduce an alternative WLS reconciliation approach which we refer to as `Spend-WLS'. Correspondingly we refer to the loss function based on these weights as `Spend-WSE'.
+}
+
+{\color{red} My rewrite of 5.2 ends here}
 
 {\color{blue} For each replication we compute the ratio of the loss of each alternative reconciliation method to the loss of base forecasts. A value less than 1 indicates that a reconciliation method has a lower relative error than the base forecast for that replication, while a value greater than 1 indicates the opposite. The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of these ratios over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{red} in an online supplement.}
 
@@ -574,7 +608,7 @@ The advantage of MinT however is clearly seen when loss functions are averaged (
 \begin{equation}
 \textrm{RMTSE}^{q}=\frac{\frac{1}{140}\sum\limits_{t=1}^{140}\textrm{TSE}^{q}_t}{\frac{1}{140}\sum\limits_{t=1}^{140}\textrm{TSE}^{\textrm{Base}}_t}\,\label{eq:RTSE}
 \end{equation}
-where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base forecasts at replication $t$.  In contrast with what is displayed in the boxplots, here the average is taken over the replications before taking a ratio.  Table~\ref{tab:lossVmethods} shows that the average loss for MinT is lower than for all other reconciliation methods, irrespective of the loss function used.  This is precisely what would be expected from Theorem~\ref{th:gmint}. {\color{red}Should we add a comment about significance?}
+where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base forecasts at replication $t$.  In contrast with what is displayed in the boxplots, here the average is taken over the replications before taking a ratio.  Table~\ref{tab:lossVmethods} shows that the average loss for MinT is lower than for all other reconciliation methods, irrespective of the loss function used.  This is precisely what would be expected from Theorem~\ref{th:gmint}. {\color{red} You said you commented on statistical significance but I cannot see it. I wonder what the Nemenyi matrix tests will look like here. Maybe these will show some stat significances worth reporting. --- Ok I see it is in the caption but the sentence needs fixing. Maybe it is best to have in the text rather than the caption.}
 }
 
 \begin{table}[ht]
@@ -585,14 +619,15 @@ where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base fo
 		Loss Function & Base & Bottom-up & OLS & Structural-WLS & Spend-WLS & MinT \\
 		\hline
 		TSE & 1.00 & 1.22 & 0.97 & 1.13 & 0.98 & 0.96 \\
-		Structural WSE & 1.00 & 1.01 & 0.96 & 0.98 & 1.00 & 0.93 \\
-		Spend WSE & 1.00 & 1.20 & 0.97 & 1.12 & 0.98 & 0.96 \\
+		Structural-WSE & 1.00 & 1.01 & 0.96 & 0.98 & 1.00 & 0.93 \\
+		Spend-WSE & 1.00 & 1.20 & 0.97 & 1.12 & 0.98 & 0.96 \\
 		\hline
     \end{tabular}
 }
-	\caption{{\color{blue}Means of different loss functions for 1-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.  The lowest mean is always provided by MinT, for structural-WSE, the average loss for MinT is significantly than every other method.}{\color{red} I wonder what the Nemenyi matrix tests will look like here. Maybe these will show some stat significances worth reporting.}}
+	\caption{{\color{blue}Means of different loss functions for 1-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.  The lowest mean is always provided by MinT, for Structural-WSE, the average loss for MinT is significantly than every other method.}}
 	\label{tab:lossVmethods}
 \end{table}
+
 
 \subsection{Transformations and bias adjustment}
 
@@ -672,7 +707,7 @@ Recall that reconciliation approaches via projections preserve unbiasedness in t
 
 In contrast to the results from using Method-1 for bias adjusting before reconciliation, using Method-2 has an adverse effect on the forecast accuracy of the reconciled forecasts. In this case the reconciled unbiased forecasts {\color{blue}leads to a significantly worse RMATE and RMTSE compared to base forecasts.}. This sends the warning that implementing inappropriate bias adjustment, in this case using an additive rather than a multiplicative factor, will hinder forecast accuracy and extra care must be taken in this bias adjustment procedure.
 
-{\color{blue} Also  of interest is the fact that reconciliation can to some extent mitigate bias even without bias correction.  In particular, using OLS reconciliation without bias correction leads to a statistically significant reduction in bias relative to base forecasts.  This is likely to occur since the direction of bias lies in a direction that is close to orthogonal to the coherent subspace.  Projection therefore eliminates this bias to some extent.}
+{\color{blue} Also  of interest is the fact that reconciliation can to some extent mitigate bias even without bias correction.  In particular, using OLS reconciliation without bias correction leads to a statistically significant reduction in bias relative to base forecasts.  This is likely to occur since the direction of bias lies in a direction that is close to orthogonal to the coherent subspace.  Projection therefore eliminates this bias to some extent.}{\color{red} I now see that maybe the daggers should go since we are not talking about them. Please feel free to remove.}.
 
 \section{Conclusions}\label{sec:conclusions}
 
