@@ -317,7 +317,7 @@ Thinking of the generalised Euclidean space as a transformed version of Euclidea
   The proof is identical to the proof for Theorem~\ref{th:distred} but relies on the Generalised Pythagorean Theorem (applicable to Generalised Euclidean space) rather than the Pythagorean Theorem.
   \end{proof}
 
-The implication of Theorem~\ref{th:gdistred} is that if the loss function is a monotonic function of $L_{\bm{W}}$ {\color{blue} with some $\bm{W}$ given a priori} then the projection matrix $\bm{S}(\bm{S}'\bm{W}^{-1}\bm{S})^{-1}\bm{S}'\bm{W}^{-1}$ is guaranteed to improve forecast accuracy over base forecasts.  {\color{blue}  This result does not necessarily involve the covariance of forecast errors unless $\bm{W}$ is explicitly chosen to depend on these covariances.}
+The implication of Theorem~\ref{th:gdistred} is that if the loss function is a monotonic function of $L_{\bm{W}}$ {\color{blue} with some $\bm{W}$ given a priori} then the projection matrix $\bm{S}(\bm{S}'\bm{W}\bm{S})^{-1}\bm{S}'\bm{W}$ is guaranteed to improve forecast accuracy over base forecasts.  {\color{blue}  This result does not necessarily involve the covariance of forecast errors unless $\bm{W}$ is explicitly chosen to depend on these covariances.}
 
 \citet{WicEtAl2019} and \citet{VanErven2015a} both prove special cases of this result, the former in the case where $\bm{W}$ is the inverse of the forecast error covariance and the latter in the case where $\bm{W}$ is diagonal.  Note here that we rely here on the Generalised Pythagorean Theorem (which involves an equality). In contrast, \citet{WicEtAl2019} follow \citet{VanErven2015a} in stating their result in terms of the Generalised Pythagorean Inequality. These proofs require an assumption of convexity so that the angle between the base forecast and coherent subspace must be greater than 90 degrees. The proof we have provided here requires no such assumption, since this may not hold for an arbitrary $\bm{W}$. As such the statement from \citet{WicEtAl2019} that \emph{``MinT reconciled forecasts are at least as good as the incoherent forecasts''} should be qualified --- this is true only for loss {\color{blue}that is a monotonic function of $L_{\bm{\Sigma}^{-1}}$, where $\bm{\Sigma}=E(\bm{y}-\hat{\bm{y}})(\bm{y}-\hat{\bm{y}})'$}. If Euclidean distance (or mean squared error) is used {\color{blue} as a loss function}, there will be realisations where the MinT estimator does not improve forecast accuracy relative to base forecasts. This will be demonstrated using a real data set in the empirical study in Section~\ref{sec:comparebase}.
 
@@ -419,7 +419,7 @@ The following theorem proves that the solution to this optimisation problem does
 	which corresponds to the usual MinT method.
 \end{proof}
 
-The implication of this result is that irrespective of the ${\bm W}$ used in the loss function, an oblique projection based on the forecast error covariance will always minimise {\em expected} loss (where loss is based on squared generalised Euclidean distance).  From the point of view of minimising expected loss, for loss defined in Equation~\ref{eq:GMinTObj}, considerations about sensible weights for an error metric are not relevant.  This will be empirically demonstrated in Section~\ref{sec:EmpStudy}.
+The implication of this result is that irrespective of the ${\bm W}$ used in the loss function, an oblique projection based on the forecast error covariance will always minimise {\em expected} loss (where loss is based on squared generalised Euclidean distance).  From the point of view of minimising expected loss, for loss defined in Equation~\ref{eq:GMinTObj}, considerations about sensible weights for an error metric are not relevant.  This is an important caveat to the statement by \cite{VanErven2015a} that \textit{``one should not assume that the choice ${\bm\Sigma}^{-1}=\bm{W}$ will adequately take care of sharing information between hierarchical levels!''}.  While this statement is correct in the context of Theorem~\ref{th:gdistred}, which is the case considered by \cite{VanErven2015a}, it is not true for the objective described in Equation~\ref{eq:GMinTObj}. This will be empirically demonstrated in Section~\ref{sec:EmpStudy}.}
 
 
 
@@ -439,7 +439,7 @@ The implication of this result is that irrespective of the ${\bm W}$ used in the
 %
 %As an important caveat, it should be noted that rank deficient choices of $\bm{W}$ will in most cases lead to no solution.  For instance, it is not uncommon in the hierarchical forecasting literature that the overall aggregate is of greatest interest. This may suggest a loss function that places a weight of one on forecast errors of the overall aggregate and a weight of zero on errors in all other series.  In this case, $\bm{S}'{\bm W}^{-1/2}\bm{\Sigma}^{-1}{\bm W}^{-1/2}\bm{S}$ is rank deficient and cannot be inverted.  To be able to accrue the benefits of reconciliation by `borrowing strength' from other series, the loss function must penalise errors in those series.
 
-}
+
 \section{Bias in forecast reconciliation}\label{sec:BiasInRecon}
 
 Before turning our attention to the issue of bias itself it is important to state a desirable property that any reconciliation method should have. That is if base forecasts are already coherent then reconciliation should not change the forecasts. As stated in Section~\ref{sec:Reconciliation}, this property holds only when $\bm{S}\bm{G}$ is a projection matrix. As a corollary, reconciling using an arbitrary $\bm{G}$, may in fact change an already coherent forecast.
@@ -516,12 +516,9 @@ The top panel of Figure~\ref{fig:States_Zones_Regs_TSplots} shows time plots for
   \caption{Time plot of overnight trips for some selected series from different disaggregate levels of the hierarchy. All values are presented in log scale. To avoid impact from the zero values we added a constant 1 to all observations}\label{fig:States_Zones_Regs_TSplots}
 \end{figure}
 
-\clearpage
-
-{\color{red} I've done a clear page here so we can see the flow better. We will remove this}
 
 
-\subsection*{Comparison to Base Forecasts}\label{sec:comparebase}
+\subsection{Comparison to Base Forecasts}\label{sec:comparebase}
 
 To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts {\color{blue} using different loss functions}. For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package. Using these fitted models, base forecasts are produced for $h=1$ to $6$-steps ahead for each series in the hierarchy. This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $135~6$-steps-ahead forecasts available for forecast evaluation.
 
@@ -580,7 +577,7 @@ The advantage of MinT however is clearly seen when loss functions are averaged (
 \textrm{RMTSE}^{q}=\frac{\frac{1}{140}\sum\limits_{t=1}^{140}\textrm{TSE}^{q}_t}{\frac{1}{140}\sum\limits_{t=1}^{140}\textrm{TSE}^{\textrm{Base}}_t}\,\label{eq:RTSE}
 \end{equation}
 where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base forecasts at replication $t$.  In contrast with what is displayed in the boxplots, here the average is taken over the replications before taking a ratio.  Table~\ref{tab:lossVmethods} shows that the average loss for MinT is lower than for all other reconciliation methods, irrespective of the loss function used.  This is precisely what would be expected from Theorem~\ref{th:gmint}. For Structural-WSE, a Diebold Mariano test confirms that the average loss for MinT is significantly lower when tested against every other method\footnote{{\color{blue} While differences are not significant for the other loss functions, the scale of the aggregate series leads to a large variance in loss, reducing the power of the test.  Strutural-WSE stablises this effect.}}.
-
+}
 
 \begin{table}[ht]
 	\centering
@@ -684,9 +681,23 @@ In contrast to the results from using Method-1 for bias adjusting before reconci
 
 %By redefining coherent point forecast and point forecast reconciliation, we rehash all existing reconciliation methods into a single projection-based geometric framework. We have also established new theoretical results that support the use of projections for point forecast reconciliation. We show that projection of unbiased base forecasts onto the coherent subspace will always produce unbiased reconciled forecasts. Yet the projection-based reconciliation can be used to reconciled bias base forecasts after bias adjustments. Empirical results from the application of these methods to forecasting Australian domestic tourism flow show that reconciled forecast follows from bias-adjusted base improves the forecast accuracy and unbiased MinT reconciliation is outperforming.
 
-Defining concepts such as coherence and reconciliation in geometric terms provides new insights into hierarchical forecasting methods. We have also provided evidence that bias correction before reconciliation improves forecast accuracy compared to approaches that do not bias correct and/or do not use reconciliation. Our intention in proposing a geometric interpretation is also to provoke research into new areas. We now discuss three such possibilities.
+Defining concepts such as coherence and reconciliation in geometric terms provides new insights into hierarchical forecasting methods. {\color{blue} We recommend the following steps for practitioners
+\begin{enumerate}
+	\item Choose an objective, either
+	\begin{enumerate}
+		\item To guarantee that reconciled forecasts improve upon base forecasts.
+		\item To find the reconciliation method that is best on average.
+	\end{enumerate}
+    \item Select a ${\bm W}$ to use in loss function $L^2_{\bm W}$ that is well suited to the empirical problem.  For objective (a) our results also apply to any monotonic function of $L^2_{\bm W}$.
+    \item Select a reconciliation method.  For objective:
+    \begin{enumerate}
+    	\item This should be ${\bm G}=({\bm S}'\bm{W}\bm{S})^{-1}\bm{S}'\bm{W}$. The dependence in forecast errors is not relevant.
+    	\item This should be ${\bm G}=({\bm S}'\bm{\Sigma}^{-1}\bm{S})^{-1}\bm{S}'\bm{\Sigma}^{-1}$. The choice of ${\bm W}$ is not relevant.
+    \end{enumerate}
+\end{enumerate}}
+{\color{blue} Furthermore, for the second objective, base forecasts must be unbiased.  We recommend carrying out} bias correction before reconciliation {\color{blue} and provide evidence that this} improves forecast accuracy compared to approaches that do not bias correct and/or do not use reconciliation. 
 
-First, it should be possible to extend the concept of coherence {\color{blue}to examples where the coherent space is not a linear plane in $\mathbb{R}^n$.  This includes the case where in addition to aggregation constraints, forecasts are also constrained to be non-negative. We note the work of \cite{wickramasuriya2019optimal} as an attempt to address this issue.  Another possibility is} non-linear constraints where the coherent space may need to be defined by a manifold. Although much more challenging, it is still possible to define reconciled forecasts in terms of projections onto a manifold. Second, since we have established that the concept of bottom-level series is not crucial in forecast reconciliation, an open question is whether it may be better to construct base forecasts of linear combinations of the time series rather than the time series themselves. Finally, the geometric interpretations of hierarchical forecast reconciliation facilitates an extension into a probabilistic framework. The latter two are issues we investigate in separate papers.
+Our intention in proposing a geometric interpretation is also to provoke research into new areas. We now discuss three such possibilities.  First, it should be possible to extend the concept of coherence {\color{blue}to examples where the coherent space is not a linear plane in $\mathbb{R}^n$.  This includes the case where in addition to aggregation constraints, forecasts are also constrained to be non-negative. We note the work of \cite{wickramasuriya2019optimal} as an attempt to address this issue.  Another possibility is} non-linear constraints where the coherent space may need to be defined by a manifold. Although much more challenging, it is still possible to define reconciled forecasts in terms of projections onto a manifold. Second, since we have established that the concept of bottom-level series is not crucial in forecast reconciliation, an open question is whether it may be better to construct base forecasts of linear combinations of the time series rather than the time series themselves. Finally, the geometric interpretations of hierarchical forecast reconciliation facilitates an extension into a probabilistic framework. The latter two are issues we investigate in separate papers.
 
 \clearpage
 \appendix
