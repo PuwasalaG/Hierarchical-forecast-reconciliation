@@ -47,7 +47,7 @@
 		
 		\item \textit{Lack of empirical contribution: The authors apply a couple of different transformations to the tourism data before constructing base forecasts. Failing to correctly transform the base forecasts back before they are reconciled introduces a bias. That the highest accuracy is obtained when applying the correct back-transformation is a very small contribution.}\\
 		
-		We agree that if our empirical results only showed that applying the correct back-transformation improves accuracy, that this would be a very marginal contribution.  The referee's suggestions have allowed us to make additional insights that we believe have greatly improved the paper.  We discuss these in detail below.\\
+		We agree that if our empirical results only showed that applying the correct back-transformation improves accuracy, that this would be a very marginal contribution.  The referee's suggestions have allowed us to make additional insights that we believe have greatly improved the paper.  We discuss these in detail at the relevant points below.\\
 		
         \textit{When the authors introduce the log-transformation and in the graphs in Figures 6 and 7, they do not clarify the interplay between the transformation and the reconciliation constraints. If A + B = C then clearly $\log A + \log B \neq \log C$. In other words, a log-transformation affects the	reconciliation constraints. This needs to be explained more clearly; e.g., is the reconciliation constraint imposed on the transformed or the raw data?}\\
 		
@@ -57,7 +57,7 @@
 		
 		\textit{When the empirical evaluation is focused on bias, then it would make sense to include an error that measures bias in addition to the squared error.}\\
 		
-		We now also report the total error for all methods to highlight bias.  Here we see that bias correction method 1 removes bias, while bias correction method 2 in fact worsens bias.  A new insight that we are able to make is to recognise that reconciliation without bias correction can still mitigate bias.  For example, even if bias correction is not used at all, OLS reconciliation significantly reduces bias for both the log transformation and Box Cox transformation.  This is likely to occur since bias lies in a direction that is almost orthogonal to the coherent subspace.\\
+		We now also report a measure of bias, defined in section 5.2.  Here we see that bias correction method 1 removes bias, while bias correction method 2 in fact worsens bias.  A new insight that we are able to make is to recognise that reconciliation without bias correction can still mitigate bias.  For example, even if bias correction is not used at all, OLS reconciliation significantly reduces bias for both the log transformation and Box Cox transformation.  This is likely to occur since bias lies in a direction that is almost orthogonal to the coherent subspace.\\
 		
 		\textit{Moreover, simply showing the MSE without any confidence intervals or measures of significance is not sufficient for the reader to assess the results.  It would also be useful to show the MSE relative to the base forecasts or the percentage improvement that is obtained.} \\
 		
@@ -65,27 +65,29 @@
 	
 	    \textit{The best performing reconciliation method is MinT with shrinkage, but the authors never state	the value of the shrinkage parameter or how it was chosen.  Similarly, they compare with variance scaling without explaining what they mean by variance scaling.}\\
 	    
-	    The shrinkage estimator is that of Sch\"afer and Strimmer~(2005). Details on this method (including the choice of shrinkage parameter) are now provided.  Similarly, we now provide more detail on variance scaling, which simply refers to using the variance of one step ahead in-sample forecast errors.\\
+	    The shrinkage estimator is that of Sch\"afer and Strimmer~(2005). Details on this method (including the choice of shrinkage parameter) are now provided.  Due to other changes in the paper we no longer consider variance scaling, we do however consider two alternative WLS reconciliation methods.  The weights for these are explained in Section 5.2.\\
 	    
 	    \textit{In addition to the above mentioned shortcomings, I think the authors should reconsider their empirical evaluation. Maybe a second case study or a simulation study is needed to show the value of the geometric insights provided. We already know that MinT is better than OLS and WLS. What is the new and better reconciliation approach that has come from the geometric insights?}\\	
 		
-		The objective of this paper is not to propose a new and better reconciliation approach.  Rather it is to establish new results that lead to clearer understanding of the properties of existing methods that in turn motivate research into new methods.  Therefore, while the paper does not include a new method, it does provide insights into how new methods should (or should not) be developed.  For examples of this, see the discussion on page 19 just before Section 4.1 and comments in the conclusion.\\
+		We introduce a new form of WLS (Spend-WLS) that is admittedly somewhat context specific.  The objective of this paper is not to propose a new and better reconciliation approach.  Rather it is to establish new results that lead to clearer understanding of the properties of existing methods that can assist practitioners and in turn motivate research into new methods.  Our recommendations to practitioners are now summarised in an expanded conclusion.  Some insights into how new methods should (or should not) be developed by researchers are also provided in the conclusion and also in the just before Section 4.1.\\
 		
 		In this paper, the purpose of the empirical evaluation is to provide a demonstration of the theoretical results that we have established.  We agree that this could be improved.  We have greatly expanded Section 5.2 to more clearly investigate three different loss functions and demonstrate the different ways in which reconciliation methods can be considered optimal.\\
 		
-		Improving the existing empirical application in the ways suggested by the referee has lengthened the paper considerably.  Therefore, we prefer to refrain from including a second empirical demonstration.\\
+		Improving the existing empirical application in the ways suggested by the referee, as well as some new material, has lengthened the paper considerably.  Therefore, we prefer to refrain from including a second empirical demonstration.\\
 		
 		\item \textit{Improvement guarantees: The boxplot in Figure 8 shows that OLS always improves MSE, while this is not the case for the other reconciliation approaches. To gain a better understanding of the implications of Theorem 3.2, it would be useful to show that the other approaches always
 		improve accuracy in their transformed spaces.}\\
 	
-	    We now expand section 5.2 to report results for three different error metrics.  Furthermore we have added additional insights in Section 3.4 that are now also demonstrated in this section.  In particular we show that while the distance reducing property of Theorem 3.2 depends entirely on the choice of loss function, minimising the expected loss function can always be achieved by a MinT approach and does not depend on the weights used in a loss function.\\ 
+	    We now expand section 5.2 to report results for three different error metrics.  In each case we show that the improvement guarantee only holds if the reconciliation method is aligned with the choice of error metric / loss function (we use error metric and loss function synonymously here).  
+	    
+	    This result holds in a special case for MinT, when the loss function depends on the error covariance matrix, but since this matrix has to be reestimated for each replication, we do not believe this is a sensible loss function.  Instead we now highlight that MinT has a rather different optimality property.  While we briefly discussed this in the previous submission, we have now greatly expanded this discussion (mostly in Section 3.4).  In particular we now show that MinT minimises expected loss for any loss function that is a squared generalised Euclidean distance.  The choice of $\bm{W}$ is irrelevant in this setting.\\ 
 		
 		\textit{What is the interpretation of the transformed spaces and can the authors make the connection	between these spaces and the choice of reconciliation approach and error measure more clear?}\\ 
 	
 	    
-	    Reflecting on this issue has led us towards making a number of changes.  To reiterate, we may define a loss function based on the notion of Euclidean distance.  In this case an orthogonal projection is guaranteed to lead to reconciled forecasts that are better than base forecasts.  Alternatively we may define a more general loss function, for instance by taking weights into account.  We now consider two such loss functions, one based on the structure of the hierarchy (so-called `structural scaling') and another based on average spend in each region.  To highlight how the transformed space can be interpreted in some contexts we have added the following sentence to the manuscript: ``By using average spend per region as weights, the error metric (and transformed space associated with this metric) can be interpreted in terms of revenue measured in dollars rather than raw tourist numbers.''
+	    Reflecting on this issue has led us towards making a number of changes.  To reiterate, we may define a loss function based on the notion of Euclidean distance.  In this case an orthogonal projection is guaranteed to lead to reconciled forecasts that are better than base forecasts.  Alternatively we may define a more general loss function, for instance by taking weights into account.  We now consider two such loss functions, one based on the structure of the hierarchy (so-called `structural scaling') and another based on average spend in each region.  To highlight how the transformed space can be interpreted in the latter context, we have added the following sentence to the manuscript: ``By using average spend per region as weights, the error metric (and transformed space associated with this metric) can be interpreted in terms of revenue measured in dollars rather than raw tourist numbers.''
 	    
-	    In cases where the transformed space cannot be easily be interpreted in terms of the empirical example, it is nevertheless it is an important construction in our proofs.  This includes a new proof that MinT minimises expected loss even for loss functions based on generalised Euclidean distance.  \\
+	    In cases where the transformed space cannot be easily be interpreted in terms of the empirical example, it is nevertheless it is an important construction in our proofs.  This includes the new proof that MinT minimises expected loss even for loss functions that is squared generalised Euclidean distance.  In the revision we believe that we have more clearly decoupled the notion of optimality, loss functions and reconciliation methods that should be used in each case.  The transformed space is critical to this understanding.\\
 		
 		\textit{For example, Hyndman et al. (2011); van Erven and
 		Cugliari (2015) argued for selecting OLS to increase the importance of
@@ -102,7 +104,7 @@
 	    
 	    \item \textit{In the first half of the paper it feels like every other sentence includes a however. I suggest reducing the use of however.}\\
 	    
-	    We have reduced the usage of the word ``however'' substantially, from twelve instances to just three.\\
+	    We have reduced the usage of the word ``however'' substantially, from twelve instances to just four.\\
 	    
 	    \item \textit{P. 2, l. 11: In several places the authors talk about adjusting forecasts ex-post. Although I understand what is meant, it gives the impression that forecasts are adjusted after observing the realized values.}\\
 	    
@@ -122,7 +124,7 @@
 	    
 	    \item \textit{P. 11, Figure 3: usually a small square is drawn in the corner of the triangle to show orthogonality.}\\
 	    
-	    We have made this change to all Figures. TO DO (GEORGE)\\
+	    We have made this change.\\
 	    
 	    \item \textit{P. 17, l. 18: i,e.}\\
 	    
@@ -130,11 +132,11 @@
 	    
 	    \item \textit{P. 26, l. 14: the authors mention that the full results are available upon request. I suggest including them in an online supplementary appendix.}\\
 	    
-	    We now include these an an online supplement. TO DO\\
+	    We now include these an an online supplement. {\color{red} Eventually add link}\\
 	    
 	    \item \textit{P. 27, Conclusions: The authors should comment on the implications of the non-uniqueness of the S matrix for future work on cross-temporal reconciliation (Kourentzes and Athanasopoulos, 2019).}\\
 	    
-	    TO DO (GEORGE).\\
+	    It is not clear to us how the implications for the non-uniqueness of the S matrix for cross-temporal reconciliation are substantial (or at least more substantial than for any other paper in the literature).  To reiterate, while S is not unique, the span of the columns of S is unique.  While the S matrix used to construct a projection onto this linear subspace is non-unique, the final reconciled forecast will be the same.\\
 	    
     \end{enumerate}
 
