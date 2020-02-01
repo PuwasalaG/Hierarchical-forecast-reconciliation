@@ -492,7 +492,7 @@ Alternatively, a more general purpose approach to bias correction is to simply e
 
 \section{Empirical study}\label{sec:EmpStudy}
 
-Using an empirical application to forecast Australian domestic tourism flows, we illustrate the usefulness of projection-based reconciliation in practice. Previous studies have found that reconciliation improves point forecast accuracy in domestic tourism flows for Australia \citep[see for example][]{Athanasopoulos2009, Hyndman2011,WicEtAl2019}. Our motivation in this study is twofold. First, we demonstrate the implications of Theorem~\ref{th:distred} {\color{blue} and Theorem~\ref{th:gmint}} by comparing reconciled and base forecasts. In contrast to previous studies, we consider individual periods {\color{blue} as well as} compute averages over a rolling window. Second, we demonstrate how the bias correction methods discussed in the previous section along with the projection-based reconciliation help to improve forecast accuracy.
+Using an empirical application to forecast Australian domestic tourism flows, we illustrate the usefulness of projection-based reconciliation in practice. Previous studies have found that reconciliation improves point forecast accuracy in domestic tourism flows for Australia \citep[see for example][]{Athanasopoulos2009, Hyndman2011,WicEtAl2019}. Our motivation in this study is twofold. First, we demonstrate the implications of Theorems~\ref{th:distred}{\color{blue},~\ref{th:gdistred} and~\ref{th:gmint}} by comparing reconciled and base forecasts. In contrast to previous studies, we consider individual periods {\color{blue} as well as} compute averages over a rolling window. Second, we demonstrate how the bias correction methods discussed in the previous section along with the projection-based reconciliation help to improve forecast accuracy.
 
 \subsection{Data}
 
@@ -500,7 +500,7 @@ We consider ``overnight trips'' across Australia as a measure of domestic touris
 
 Figure~\ref{fig:Total_TSplots} shows time, sub-series and seasonal plots of the aggregate overnight trips. As is usual with tourism data, these show a strong seasonal pattern with peaks observed every January corresponding to the summer vacation season in Australia. There are also some lower peaks observed in April, July and October corresponding to school term breaks. On the other hand, the month with the least overnight trips is February indicating that people travel least for the month following their summer vacation. The time plot also shows a pronounced upward trend starting from around 2010 to the end of the sample, with flows being fairly flat from the beginning of the sample and a slight downward trend during 2004--2010.
 
-The top panel of Figure~\ref{fig:States_Zones_Regs_TSplots} shows time plots for the seven states, hence the first level of the geographical hierarchy. The panels below show some selected series from the second-level zones and the bottom-level regions. The plots display the diversity of time series features, within but also between levels. For example, noticeable at the first level is the asynchronous seasonal pattern between the Northern Territory and the other states. For the Northern Territory the high tourist season occurs during June-August with July being the peak, while the low season is during December-February. This reflects the tropical climate of the Northern Territory, with Australians mostly visiting the North during its dry winter-season rather than the wet summer season. Noticeable as we move to the lower levels is the variation in the signal-to-noise ratio, with the regional bottom-level series being much noisier compared to the series from levels above. This of course highlights the importance of modelling series at all levels without any loss of valuable information. We should note here that we observed an anomalous (extremely high) observation for `Adelaide Hills' for December 2002. We replaced this observation with the average overnight trips on December 2001 and December 2003 for the same destination.
+The top panel of Figure~\ref{fig:States_Zones_Regs_TSplots} shows time plots for the six states and Northern Territory, hence the first level of the geographical hierarchy. The panels below show some selected series from the second-level zones and the bottom-level regions. The plots display the diversity of time series features, within but also between levels. For example, noticeable at the first level is the asynchronous seasonal pattern between the Northern Territory and the states. For the Northern Territory the high tourist season occurs during June-August with July being the peak, while the low season is during December-February. This reflects the tropical climate of the Northern Territory, with Australians mostly visiting the north during its dry winter-season rather than the wet summer season. Noticeable as we move to the lower levels is the variation in the signal-to-noise ratio, with the regional bottom-level series being much noisier compared to the series from levels above. This of course highlights the importance of modelling series at all levels without any loss of valuable information. We should note here that we observed an anomalous (extremely high) observation for `Adelaide Hills' for December 2002. We replaced this observation with the average overnight trips on December 2001 and December 2003 for the same destination.
 
 \begin{figure}
   \centering
@@ -520,39 +520,12 @@ The top panel of Figure~\ref{fig:States_Zones_Regs_TSplots} shows time plots for
 
 {\color{red} I've done a clear page here so we can see the flow better. We will remove this}
 
-\subsection{Comparison to Base Forecasts}\label{sec:comparebase}
+
+\subsection*{Comparison to Base Forecasts}\label{sec:comparebase}
 
 To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts {\color{blue} using different loss functions}. For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package. Using these fitted models, base forecasts are produced for $h=1$ to $6$-steps ahead for each series in the hierarchy. This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $135~6$-steps-ahead forecasts available for forecast evaluation.
 
-{\color{red} I think the flow here is a bit confusing. I see that we need to talk about the loss functions before the reconciliation methods because of Spend-WLS. I suggest the following. We first introduce the three typical reconciliation methods - OLS, Structural-WLS and MinT and move the paragraph that introduces these above. Then when we introduce the loss functions we introduce in the second paragraph, starting ``The second choice'' Spend-WLS. I've re-written 5.2 based on this thought and called it -George in the end. See what do you think? Please delete appropriately.}
-
-{\color{blue} For each replication {\color{red} and for method $q$,- I don't think we need this here - $q$ is defined over the page} we compute three loss functions.  The first is the total squared error (TSE), computed as
-	\begin{equation}
-	\label{eq:tse}
-	\textrm{TSE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
-	\end{equation}
-	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.
-This loss function is the square of the usual Euclidean distance described in Section~\ref{sec:orthogonal}. We also consider loss functions based on a squared generalised Euclidean distance of the form
-\begin{equation*}
-	\textrm{WSE}^{q}_t=\sum\limits_{i=1}^n \left(w_i (y_{i,t}-\tilde{y}^{(q)}_{i,t})\right)^2\,,
-	\end{equation*}
-	We consider two choices of weights.  The first is the inverse of the number of bottom-level series included in forming a specific aggregate.  For example, for all bottom-level series this weight is 1, whereas for the top-level series this is 1/75.  The idea is to ensure top-level series, which are on a much larger scale, do not dominate the forecast evaluation metric.  Using these weights in WLS reconciliation is equivalent to what \cite{AthEtAl2017} refer to as \textit{structural scaling}.  As such we refer to WLS based on these weights as `Structural-WLS' and the loss function based on these weights as `Structural-WSE'.
-	
-	The second choice of weights is motivated by our empirical example.  In addition to visitor numbers per region, we also have access to data on average spend per region.  In some settings, it may be desirable to have greater forecast accuracy in regions where tourists spend more.  By using average spend per region as weights, the error metric (and transformed space associated with this metric) can be interpreted in terms of revenue measured in dollars rather than raw tourist numbers. We refer to WLS based on these weights as `Spend-WLS' and the loss function based on these weights as `Spend-WSE'.
-}
-
-After obtaining the base forecasts these are reconciled using four different projection methods: OLS, {\color{blue} Structural-WLS, Spend-WLS  and MinT.   For MinT, the shrinkage estimator of \cite{Schafer2005} is used to estimate  $\bm{\Sigma}$. The estimate is $\tau\text{diag}(\hat{\bm{\Sigma}}) + (1-\tau)\hat{\bm{\Sigma}}$  where $\hat{\bm{\Sigma}}$ is the sample estimate of the variance covariance matrix of the in-sample, one-step ahead forecast errors and,
-	\begin{equation*}
-	\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{\sigma}_{ij})}{\sum_{i \neq j}{\hat{\sigma}}^2_{ij}}\,,
-	\end{equation*}
-	where $\hat{\sigma}_{ij}$ denotes the $(i,j)$th element of $\hat{\bm{\Sigma}}$. }
-
-\clearpage
-\subsection*{Comparison to Base Forecasts - George}\label{sec:comparebase}
-
-To demonstrate the implications of Theorem~\ref{th:distred} we consider the improvement of different reconciliation methods over base forecasts {\color{blue} using different loss functions}. For each series the ARIMA model minimising AICc is chosen using the \verb|auto.arima()| function in the \verb|forecast| package. Using these fitted models, base forecasts are produced for $h=1$ to $6$-steps ahead for each series in the hierarchy. This is first carried out with a training sample of $100$ observations, i.e., Jan-$1998$ to Apr-$2006$. The training window is then rolled forward one observation at a time until the end of the sample. This generates $140~1$-step-ahead, $139~2$-steps-ahead through to $135~6$-steps-ahead forecasts available for forecast evaluation.
-
-After obtaining the base forecasts these are reconciled using various projection methods. In particular: OLS reconciliation; WLS reconciliation using structural scaling introduced by \cite{AthEtAl2017} which we refer to as Structural-WLS; and MinT using the shrinkage estimator of \cite{Schafer2005} to estimate  $\bm{\Sigma}$. The estimate is $\tau\text{diag}(\hat{\bm{\Sigma}}) + (1-\tau)\hat{\bm{\Sigma}}$  where $\hat{\bm{\Sigma}}$ is the sample estimate of the variance covariance matrix of the in-sample, one-step ahead forecast errors and,
+After obtaining the base forecasts these are reconciled using various projection methods. In particular: OLS reconciliation, MinT and WLS reconciliation with two different choices of weights that are defined below.  For MinT the shrinkage estimator of \cite{Schafer2005} is used to estimate  $\bm{\Sigma}$. It is given by $\tau\text{diag}(\hat{\bm{\Sigma}}) + (1-\tau)\hat{\bm{\Sigma}}$  where $\hat{\bm{\Sigma}}$ is the sample estimate of the variance covariance matrix of the in-sample, one-step ahead forecast errors and,
 	\begin{equation*}
 	\tau = \frac{\sum_{i \neq j}\hat{\var}(\hat{\sigma}_{ij})}{\sum_{i \neq j}{\hat{\sigma}}^2_{ij}}\,,
 	\end{equation*}
@@ -564,16 +537,14 @@ After obtaining the base forecasts these are reconciled using various projection
 	\textrm{TSE}^{q}_t=\sum\limits_{i=1}^n(y_{i,t}-\tilde{y}^{(q)}_{i,t})^2\,,
 	\end{equation}
 	where $\tilde{y}^{(q)}$ is the reconciled forecast using method $q$ for series $i$ and replication $t$.
-This loss function is the square of the usual Euclidean distance described in Section~\ref{sec:orthogonal}. We also consider loss functions based on a squared generalised Euclidean distance of the form
+This loss function is $L^2$, the square of the usual Euclidean distance described in Section~\ref{sec:Reconciliation}. We also consider weighted squared error
 \begin{equation*}
-	\textrm{WSE}^{q}_t=\sum\limits_{i=1}^n \left(w_i (y_{i,t}-\tilde{y}^{(q)}_{i,t})\right)^2\,,
+	\textrm{WSE}^{q}_t=\sum\limits_{i=1}^n w_i\left( (y_{i,t}-\tilde{y}^{(q)}_{i,t})\right)^2\,,
 	\end{equation*}
-	We consider two choices of weights.  The first is the inverse of the number of bottom-level series included in forming a specific aggregate.  For example, for all bottom-level series this weight is 1, whereas for the top-level series this is 1/75.  The idea is to ensure top-level series, which are on a much larger scale, do not dominate the forecast evaluation metric.  These are the weights used in the Structural-WLS reconciliation approach introduced in the previous paragraph. As such we refer to the loss function based on these weights as `Structural-WSE'.
+	which is a loss functions based on a squared generalised Euclidean distance $L_{\bm{W}}^2$, with diagonal $\bm{W}$.  We consider two choices of weights.  The first is the squared inverse of the number of bottom-level series included in forming a specific aggregate.  For example, for all bottom-level series this weight is 1, whereas for the top-level series this is 1/75.  The idea is to ensure top-level series, which are on a much larger scale, do not dominate the forecast evaluation metric.  Using these weights in WLS reconciliation is equivalent to what \cite{AthEtAl2017} refer to as \textit{structural scaling}.  As such we refer to the reconciliation method that uses these weights as `Stuctural-WLS' and the loss function based on these weights as `Structural-WSE'.
 	
-	The second choice of weights is motivated by our empirical example.  In addition to visitor numbers per region, we also have access to data on average spend per region.  In some settings, it may be desirable to have greater forecast accuracy in regions where tourists spend more.  By using average spend per region as weights, the error metric (and transformed space associated with this metric) can be interpreted in terms of revenue measured in dollars rather than raw tourist numbers. Using these weights we introduce an alternative WLS reconciliation approach which we refer to as `Spend-WLS'. Correspondingly we refer to the loss function based on these weights as `Spend-WSE'.
+	The second choice of weights is motivated by our empirical example.  In addition to visitor numbers per region, we also have access to data on average spend per region.  In some settings, it may be desirable to have greater forecast accuracy in regions where tourists spend more.  By using average spend per region as weights, the error metric (and transformed space associated with this metric) can be interpreted in terms of revenue, measured in dollars, rather than raw tourist numbers.  We refer to the reconciliation method that uses these weights as `Stuctural-WLS' and the loss function based on these weights as `Structural-WSE'.
 }
-
-{\color{red} My rewrite of 5.2 ends here}
 
 {\color{blue} For each replication we compute the ratio of the loss of each alternative reconciliation method to the loss of base forecasts. A value less than 1 indicates that a reconciliation method has a lower relative error than the base forecast for that replication, while a value greater than 1 indicates the opposite. The boxplots in Figure~\ref{fig:BaseVSRecon_Fc} summarise the distribution of these ratios over each rolling window. We only present the results for $h=1$, but the results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available {\color{red} in an online supplement.}
 
@@ -608,8 +579,8 @@ The advantage of MinT however is clearly seen when loss functions are averaged (
 \begin{equation}
 \textrm{RMTSE}^{q}=\frac{\frac{1}{140}\sum\limits_{t=1}^{140}\textrm{TSE}^{q}_t}{\frac{1}{140}\sum\limits_{t=1}^{140}\textrm{TSE}^{\textrm{Base}}_t}\,\label{eq:RTSE}
 \end{equation}
-where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base forecasts at replication $t$.  In contrast with what is displayed in the boxplots, here the average is taken over the replications before taking a ratio.  Table~\ref{tab:lossVmethods} shows that the average loss for MinT is lower than for all other reconciliation methods, irrespective of the loss function used.  This is precisely what would be expected from Theorem~\ref{th:gmint}. {\color{red} You said you commented on statistical significance but I cannot see it. I wonder what the Nemenyi matrix tests will look like here. Maybe these will show some stat significances worth reporting. --- Ok I see it is in the caption but the sentence needs fixing. Maybe it is best to have in the text rather than the caption.}
-}
+where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base forecasts at replication $t$.  In contrast with what is displayed in the boxplots, here the average is taken over the replications before taking a ratio.  Table~\ref{tab:lossVmethods} shows that the average loss for MinT is lower than for all other reconciliation methods, irrespective of the loss function used.  This is precisely what would be expected from Theorem~\ref{th:gmint}. For Structural-WSE, a Diebold Mariano test confirms that the average loss for MinT is significantly lower when tested against every other method\footnote{{\color{blue} While differences are not significant for the other loss functions, the scale of the aggregate series leads to a large variance in loss, reducing the power of the test.  Strutural-WSE stablises this effect.}}.
+
 
 \begin{table}[ht]
 	\centering
@@ -624,7 +595,7 @@ where $\textrm{TSE}^{\textrm{Base}}_t$ is the total squared error of the base fo
 		\hline
     \end{tabular}
 }
-	\caption{{\color{blue}Means of different loss functions for 1-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.  The lowest mean is always provided by MinT, for Structural-WSE, the average loss for MinT is significantly than every other method.}}
+	\caption{{\color{blue}Means of different loss functions for 1-step ahead forecasts using different reconciliation methods in the tourism application.  All figures are reported relative to base forecasts.}}
 	\label{tab:lossVmethods}
 \end{table}
 
@@ -672,7 +643,7 @@ reflecting the total bias of method $q$ across the 140 iterations for each serie
 \begin{equation*}
 \textrm{RMATE}^{q}=\frac{\frac{1}{110}\sum\limits_{i=1}^{110}|\textrm{TE}^{q}_i|}{\frac{1}{110}\sum\limits_{i=1}^{110}|\textrm{TE}^{\textrm{Base}}_i|} \end{equation*}
 
-Table~\ref{tab:Results_MSE} reports both RMTSE and RMATE for 1-step-ahead forecasts. \footnote{{\color{blue} Results and conclusions that follow are almost identical for the other longer forecast horizons I HOPE. Doing those today. We do not present these here to save space but they are available in an online supplement.}}  An asterisk ($^\ast$) indicates that forecasts are significantly different from the biased base forecasts, while a dagger ($^\dag$) indicates that the unbiased forecasts are significantly different from the biased base forecasts from the same reconciliation method $q$. Statistical significance of the differences in the forecast errors is based on the non-parametric Friedman and post-hoc Nemenyi tests, at a 5\% level of significance \citep{HolEtAl2013}. The Friedman test first establishes whether at least one of the forecasts is significantly different from the rest. If this is the case, we use the Nemenyi test to identify groups of forecasts for which there is no evidence of statistically significant differences. This testing approach does not impose any distributional assumptions and does not require multiple pairwise testing between forecasts, which would distort the outcome of the tests. We use the implementation of the tests available in the \verb"tsutils " \citep{tsutils} package for R.}
+Table~\ref{tab:Results_MSE} reports both RMTSE and RMATE for 1-step-ahead forecasts.\footnote{{\color{blue} Results and conclusions that follow are almost identical for the other longer forecast horizons. We do not present these here to save space but they are available in an online supplement.}}  An asterisk ($^\ast$) indicates that forecasts are significantly different from the biased base forecasts, while a dagger ($^\dag$) indicates that the unbiased forecasts are significantly different from the biased forecasts from the same reconciliation method $q$. Statistical significance of the differences in the forecast errors is based on the non-parametric Friedman and post-hoc Nemenyi tests, at a 5\% level of significance \citep{HolEtAl2013}. The Friedman test first establishes whether at least one of the forecasts is significantly different from the rest. If this is the case, we use the Nemenyi test to identify groups of forecasts for which there is no evidence of statistically significant differences. This testing approach does not impose any distributional assumptions and does not require multiple pairwise testing between forecasts, which would distort the outcome of the tests. We use the implementation of the tests available in the \verb"tsutils " \citep{tsutils} package for R.}
 
 \begin{table}[!b]
 {\color{blue}
@@ -699,7 +670,7 @@ Table~\ref{tab:Results_MSE} reports both RMTSE and RMATE for 1-step-ahead foreca
     Bottom-up & 1.42 & 1.18 & 1.80 & 1.35 & 1.16 & 1.63\\
     \bottomrule
   \end{tabular}
-}    {\color{blue} $^\ast$ indicates a statistically significant difference from the biased base forecasts.$^\dag$ indicates a statistically significant difference from the biased base forecasts from the same reconciliation method.}
+}    {\color{blue} $^\ast$ indicates a statistically significant difference from the biased base forecasts.$^\dag$ indicates a statistically significant difference from the biased forecasts from the same reconciliation method (same row).}
 
 \end{table}
 
