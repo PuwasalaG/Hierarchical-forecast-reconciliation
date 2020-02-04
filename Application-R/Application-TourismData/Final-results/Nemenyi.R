@@ -40,6 +40,8 @@ DF_LogTrans_WL100 %>%
   m <- m[,-1] 
   class(m) <- "numeric"
 
+  m[,1]
+  
   nemenyi(m,conf.level=0.95,plottype="matrix")
 
   

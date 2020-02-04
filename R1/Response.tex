@@ -65,80 +65,79 @@
 		We now report all results relative to the base forecasts. We also have added stars to the tables that report our results to indicate when a method significantly upon base forecasts.\\
 	
 	    \textit{The best performing reconciliation method is MinT with shrinkage, but the authors never state	the value of the shrinkage parameter or how it was chosen.  Similarly, they compare with variance scaling without explaining what they mean by variance scaling.}\\
-	    
+	
 	    The shrinkage estimator is that of Sch\"afer and Strimmer~(2005). Details on this method (including the choice of shrinkage parameter) are now provided.  Due to other changes in the paper we no longer consider variance scaling, we do however consider two alternative WLS reconciliation methods.  The weights for these are explained in Section 5.2.\\
-	    
+	
 	    \textit{In addition to the above mentioned shortcomings, I think the authors should reconsider their empirical evaluation. Maybe a second case study or a simulation study is needed to show the value of the geometric insights provided. We already know that MinT is better than OLS and WLS. What is the new and better reconciliation approach that has come from the geometric insights?}\\	
 		
-		We introduce a new form of WLS (Spend-WLS) that is admittedly somewhat context specific.  The objective of this paper is not to propose a new and better reconciliation approach.  Rather it is to establish new results that lead to clearer understanding of the properties of existing methods that can assist practitioners and in turn motivate research into new methods.  Our recommendations to practitioners are now summarised in an expanded conclusion.  Some insights into how new methods should (or should not) be developed by researchers are also provided in the conclusion and also in the just before Section 4.1.\\
+        The objective of this paper is not to propose a new and better reconciliation approach.  Rather it is to establish new results that lead to clearer understanding of the properties of existing methods that can assist practitioners and in turn motivate research into new methods.  Our recommendations to practitioners are now summarised in an expanded conclusion.  Some insights into how new methods should (or should not) be developed by researchers are also provided in the conclusion and also in the just before Section 4.1.  Furthermore, we note that Spend-WLS is a new reconciliation method (albeit somewhat context specific).  \\
 		
-		In this paper, the purpose of the empirical evaluation is to provide a demonstration of the theoretical results that we have established.  We agree that this could be improved.  We have greatly expanded Section 5.2 to more clearly investigate three different loss functions and demonstrate the different ways in which reconciliation methods can be considered optimal.\\
-		
-		Improving the existing empirical application in the ways suggested by the referee, as well as some new material, has lengthened the paper considerably.  Therefore, we prefer to refrain from including a second empirical demonstration.\\
+		In this paper, the purpose of the empirical evaluation is to provide a demonstration of the theoretical results that we have established.  We have now improved the empirical evaluation.  We have greatly expanded Section 5.2 to more clearly investigate three different loss functions and demonstrate the different ways in which reconciliation methods can be considered optimal.\\
+
 		
 		\item \textit{Improvement guarantees: The boxplot in Figure 8 shows that OLS always improves MSE, while this is not the case for the other reconciliation approaches. To gain a better understanding of the implications of Theorem 3.2, it would be useful to show that the other approaches always
 		improve accuracy in their transformed spaces.}\\
 	
-	    We now expand section 5.2 to report results for three different error metrics.  In each case we show that the improvement guarantee only holds if the reconciliation method is aligned with the choice of error metric / loss function (we use error metric and loss function synonymously here).  
-	    
-	    This result holds in a special case for MinT, when the loss function depends on the error covariance matrix, but since this matrix has to be reestimated for each replication, we do not believe this is a sensible loss function.  Instead we now highlight that MinT has a rather different optimality property.  While we briefly discussed this in the previous submission, we have now greatly expanded this discussion (mostly in Section 3.4).  In particular we now show that MinT minimises expected loss for any loss function that is a squared generalised Euclidean distance.  The choice of $\bm{W}$ is irrelevant in this setting.\\ 
-		
-		\textit{What is the interpretation of the transformed spaces and can the authors make the connection	between these spaces and the choice of reconciliation approach and error measure more clear?}\\ 
+	    We now expand Section 5.2 to report results for three different error metrics.  In each case we show that the improvement guarantee only holds if the reconciliation method is aligned with the choice of error metric / loss function (we use error metric and loss function synonymously here).
 	
-	    
+	    This result holds in a special case for MinT, when the loss function depends on the error covariance matrix, but since this matrix has to be reestimated for each replication, we do not believe this is a sensible loss function.  Instead we now highlight that MinT has a rather different optimality property.  While we briefly discussed this in the previous submission, we have now greatly expanded this discussion (mostly in Section 3.4).  In particular we now show that MinT minimises expected loss for any loss function that is a squared generalised Euclidean distance.  The choice of $\bm{W}$ is irrelevant in this setting.\\
+		
+		\textit{What is the interpretation of the transformed spaces and can the authors make the connection	between these spaces and the choice of reconciliation approach and error measure more clear?}\\
+	
+	
 	    Reflecting on this issue has led us towards making a number of changes.  To reiterate, we may define a loss function based on the notion of Euclidean distance.  In this case an orthogonal projection is guaranteed to lead to reconciled forecasts that are better than base forecasts.  Alternatively we may define a more general loss function, for instance by taking weights into account.  We now consider two such loss functions, one based on the structure of the hierarchy (so-called `structural scaling') and another based on average spend in each region.  To highlight how the transformed space can be interpreted in the latter context, we have added the following sentence to the manuscript: ``By using average spend per region as weights, the error metric (and transformed space associated with this metric) can be interpreted in terms of revenue measured in dollars rather than raw tourist numbers.''
-	    
-	    In cases where the transformed space cannot be easily be interpreted in terms of the empirical example, it is nevertheless it is an important construction in our proofs.  This includes the new proof that MinT minimises expected loss even for loss functions that is squared generalised Euclidean distance.  In the revision we believe that we have more clearly decoupled the notion of optimality, loss functions and reconciliation methods that should be used in each case.  The transformed space is critical to this understanding.\\
+	
+	    In cases where the transformed space cannot be easily interpreted in terms of the empirical example, it is nevertheless an important construction in our proofs.  This includes the new proof that MinT minimises expected loss for loss functions based on squared generalised Euclidean distance.  In the revision we believe that we have more clearly decoupled the notion of optimality, loss functions and reconciliation methods that should be used in each case.  The transformed space is critical to this understanding.\\
 		
 		\textit{For example, Hyndman et al. (2011); van Erven and
 		Cugliari (2015) argued for selecting OLS to increase the importance of
 		forecasting the aggregate. What is the argument for WLS or MinT and
 		what is the corresponding consistent error measure?}\\
-	    
+	
 	    We would like to point out that any argument made by Hyndman et al. (2011) or van Erven and Cugliari (2015) that OLS reconciliation somehow targets and improves the aggregate series is based on empirical rather than theoretical evidence.  Addressing this misconception, which appears to be common, has in fact been a major motivation behind us writing the paper.  We hope that with the revision to the paper these distinctions are clearer.\\
-	    
+	
 	    \end{enumerate}
-	    
+	
 	    \section*{Detailed Response to Referee 1:Minor Comments}
-	    
+	
 	    \begin{enumerate}
-	    
+	
 	    \item \textit{In the first half of the paper it feels like every other sentence includes a however. I suggest reducing the use of however.}\\
-	    
+	
 	    We have reduced the usage of the word ``however'' substantially, from twelve instances to just four.\\
-	    
+	
 	    \item \textit{P. 2, l. 11: In several places the authors talk about adjusting forecasts ex-post. Although I understand what is meant, it gives the impression that forecasts are adjusted after observing the realized values.}\\
-	    
-	    We have either removed all use of the term `ex post' or stated `ex post of base forecasting' to avoid the potential for confusion.\\
-	    
+	
+	    We have either removed all use of the term `ex post' to avoid the potential for confusion.\\
+	
 	    \item \textit{P. 2, l. 12: The authors discuss the regression formulation of forecast reconciliation. It would be useful to also make the connection to the optimization formulation considered by, e.g., van Erven and Cugliari (2015); Nystrup et al. (2020). This could also be useful for clarifying the connection between reconciliation approaches and error measures.}\\
-	    
+	
 	    We now discuss the connection to the optimisation formulation considered by these two papers on page 2 line 12 as requested.  We believe that some of the other revisions we have made, particularly the new discussion in 3.4 further clarify the connection between reconciliation approaches and error measures.\\
-	    
+	
 	    \item \textit{P. 4, l. 22: forf}\\
-	    
+	
 	    This has been corrected.\\
-	    
+	
 	    \item \textit{P. 10, l. 12: the comma should not be there.}\\
-	    
+	
 	    The comma has been removed.\\
-	    
+	
 	    \item \textit{P. 11, Figure 3: usually a small square is drawn in the corner of the triangle to show orthogonality.}\\
-	    
+	
 	    We have made this change.\\
-	    
+	
 	    \item \textit{P. 17, l. 18: i,e.}\\
-	    
+	
 	    We have made this correction.\\
-	    
+	
 	    \item \textit{P. 26, l. 14: the authors mention that the full results are available upon request. I suggest including them in an online supplementary appendix.}\\
-	    
+	
 	    We now include these an an online supplement available at\\ \href{https://anastasiospanagiotelis.netlify.com/papers/GeomRecoSupplement.pdf}{https://anastasiospanagiotelis.netlify.com/papers/GeomRecoSupplement.pdf}\\
-	    
+	
 	    \item \textit{P. 27, Conclusions: The authors should comment on the implications of the non-uniqueness of the S matrix for future work on cross-temporal reconciliation (Kourentzes and Athanasopoulos, 2019).}\\
-	    
+	
 	    It is not clear to us how the implications for the non-uniqueness of the S matrix for cross-temporal reconciliation are substantial (or at least more substantial than for any other paper in the literature).  To reiterate, while S is not unique, the span of the columns of S is unique.  While the S matrix used to construct a projection onto this linear subspace is non-unique, the final reconciled forecast will be the same.\\
-	    
+	
     \end{enumerate}
 
     \section*{Detailed Response to Referee 2}
@@ -148,16 +147,16 @@
 	\noindent We thank the referee for these kind comments.\\
 	
     \noindent\textit{I found only one statement in the paper that could be better supported by evidence on page 8 lines 14 when the author(s) refer to multivariate modeling. State-space approaches have also been shown to be theoretically successful is solving these problems although maybe not to the large scale needed for very detailed and complex hierarchical systems. A comment or comparative discussion to the multivariate modeling may be useful.}\\
-    
+
     \noindent We have rewritten this sentence and now explicitly include the case of state space models in our discussion.\\
-    
-    
+
+
     \noindent\textit{In the context of real-life application and either for small discussion here or future work, I am wondering if and how the author(s) coherent subspace that would be defined with hard boundaries. For example, the set of Australian tourism flow data and any forecasts that would be considered useful should be non-negative and likely upper bounded (if only by the size of the global population or other more realistic subject matter expert opinion). In many other reconciliation problems, these boundary constraints affect the feasible space. In the context here, could a convoluted case lead to an orthogonal projection be coherent but outside the desired constrained subspace?}\\
-    
+
     \noindent It is indeed possible for an orthogonal projection to reconcile a set of positive base forecasts into a vector that includes some negative values.  This is a fairly pathological case and does not arise in the application that we consider (and many other applications that we have considered in other work).  We do agree that this problem may arise in other contexts so we now include some discussion of this issue in the conclusion and cite some recent work that addresses this problem.\\
 
     \noindent\textit{Please correct the minor typo just before section 2 (forf).}\\
-    
+
     \noindent We have made this correction.\\
-    
-\end{document}
+
+\end{document} 
