@@ -14,5 +14,6 @@
 *.synctex\.gz
 *.out
 *.csv
+*.synctex
 
 .Rproj.user
