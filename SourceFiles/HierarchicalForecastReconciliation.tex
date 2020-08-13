@@ -19,10 +19,6 @@
 \usetikzlibrary{arrows,positioning,shapes,fit,calc}
 \usepackage{amsfonts}
 
-%\pdfminorversion=4
-% NOTE: To produce blinded version, replace "0" with "1" below.
-\newcommand{\blind}{1}
-
 % DON'T change margins - should be 1 inch all around.
 \addtolength{\oddsidemargin}{-.5in}%
 \addtolength{\evensidemargin}{-.5in}%
@@ -50,18 +46,24 @@
 \def\spacingset#1{\renewcommand{\baselinestretch}%
     {#1}\small\normalsize} \spacingset{1}
 
-\begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\if1\blind
-{
-\title{\bf Forecast reconciliation: A geometric view with new insights on bias correction}
+% NOTE: To produce blinded version
+\makeatletter
+\newif\if@blind
+\@blindtrue %uncomment to hide author names
+%\@blindfalse %uncomment to show author names
+
+\if@blind
+  \author{}
+  \def\titlepage{\maketitle}
+\else
   \author{Anastasios Panagiotelis\\
     Department of Econometrics and Business Statistics,\\
     Monash University, VIC 3145, Australia.\\
     Email: Anastasios.Panagiotelis@monash.edu \\[0.6cm]
-    George Athanasopoulos\thanks{Corresponding Author. The authors gratefully acknowledge the support of Australian Research Council Grant DP140103220. We also thank Professor Mervyn Silvapulle for valuable
+    George Athanasopoulos\thanks{Corresponding Author. The authors gratefully acknowledge the support of Australian Research Council Grant DP140103220. We also thank Professor Mervyn Silvapulle for valuable comments.}\\
     Department of Econometrics and Business Statistics,\\
     Monash University, VIC 3145, Australia.\\
     Email: George.Athanasopoulos@monash.edu \\[0.6cm]
@@ -72,22 +74,16 @@
     Rob J Hyndman\\
     Department of Econometrics and Business Statistics,\\
     Monash University, VIC 3800, Australia.\\
-    Email: Rob.Hyndman@monash.edu\\[1.5cm]}
-  \maketitle
-} \fi
+    Email: Rob.Hyndman@monash.edu\\[1.5cm]
+  }
+  \def\titlepage{\maketitle\newpage}
+\fi
+\makeatother
 
-\if0\blind
-{
-  \bigskip
-  \bigskip
-  \bigskip
-  \begin{center}
-    {\LARGE\bf Forecast reconciliation: A geometric view with new insights on bias correction}
-  \end{center}
-  \medskip
-} \fi
+\title{\bf Forecast reconciliation: A geometric view with new insights on bias correction}
 
-\newpage
+\begin{document}
+\titlepage
 
 \begin{abstract}
 \spacingset{1.45}
